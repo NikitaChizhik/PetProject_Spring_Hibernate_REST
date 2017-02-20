@@ -7,7 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Timetable {
+	private int id;
 	private List<Lesson> lessons;
+	private Timetable requiredTimetable;
+	private Calendar requiredDate;
+	private Calendar lessonDate;
 
 	public Timetable() {
 		lessons = new ArrayList<Lesson>();
@@ -18,11 +22,11 @@ public class Timetable {
 			throw new IllegalArgumentException();
 		}
 
-		Timetable teachersTimetableForDay = new Timetable();
-		Calendar requiredDate = Calendar.getInstance();
+		requiredTimetable = new Timetable();
+		requiredDate = Calendar.getInstance();
 		requiredDate.setTime(date);
-		System.out.println(requiredDate.get(Calendar.YEAR));
-		Calendar lessonDate = Calendar.getInstance();
+
+		lessonDate = Calendar.getInstance();
 
 		for (Lesson lesson : lessons) {
 
@@ -33,11 +37,11 @@ public class Timetable {
 					&& lessonDate.get(Calendar.DAY_OF_MONTH) == requiredDate.get(Calendar.DAY_OF_MONTH)
 					&& lesson.getTeacher().equals(teacher)) {
 
-				teachersTimetableForDay.addLesson(lesson);
+				requiredTimetable.addLesson(lesson);
 			}
 		}
 
-		return teachersTimetableForDay;
+		return requiredTimetable;
 
 	}
 
@@ -45,16 +49,22 @@ public class Timetable {
 		if (teacher == null || date == null) {
 			throw new IllegalArgumentException();
 		}
-		Timetable teachersTimetableForMonth = new Timetable();
+		requiredTimetable = new Timetable();
+		requiredDate = Calendar.getInstance();
+		requiredDate.setTime(date);
+
+		lessonDate = Calendar.getInstance();
 
 		for (Lesson lesson : lessons) {
+			lessonDate.setTime(lesson.getDate());
 
-			if (lesson.getDate().getYear() == date.getYear() && lesson.getDate().getMonth() == date.getMonth()
+			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
+					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
 					&& lesson.getTeacher().equals(teacher)) {
-				teachersTimetableForMonth.addLesson(lesson);
+				requiredTimetable.addLesson(lesson);
 			}
 		}
-		return teachersTimetableForMonth;
+		return requiredTimetable;
 
 	}
 
@@ -62,16 +72,21 @@ public class Timetable {
 		if (student == null || date == null) {
 			throw new IllegalArgumentException();
 		}
-		Timetable studentsTimetableForMonth = new Timetable();
+		requiredTimetable = new Timetable();
+		requiredDate = Calendar.getInstance();
+		requiredDate.setTime(date);
 
+		lessonDate = Calendar.getInstance();
 		for (Lesson lesson : lessons) {
+			lessonDate.setTime(lesson.getDate());
 
-			if (lesson.getDate().getYear() == date.getYear() && lesson.getDate().getMonth() == date.getMonth()
+			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
+					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
 					&& lesson.getGroup().getStudents().contains(student)) {
-				studentsTimetableForMonth.addLesson(lesson);
+				requiredTimetable.addLesson(lesson);
 			}
 		}
-		return studentsTimetableForMonth;
+		return requiredTimetable;
 
 	}
 
@@ -79,16 +94,22 @@ public class Timetable {
 		if (student == null || date == null) {
 			throw new IllegalArgumentException();
 		}
-		Timetable studentsTimetableForDay = new Timetable();
+		requiredTimetable = new Timetable();
+		requiredDate = Calendar.getInstance();
+		requiredDate.setTime(date);
 
+		lessonDate = Calendar.getInstance();
 		for (Lesson lesson : lessons) {
+			lessonDate.setTime(lesson.getDate());
 
-			if (lesson.getDate().getYear() == date.getYear() && lesson.getDate().getMonth() == date.getMonth()
-					&& lesson.getDate().getDay() == date.getDay() && lesson.getGroup().getStudents().contains(student)) {
-				studentsTimetableForDay.addLesson(lesson);
+			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
+					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
+					&& lessonDate.get(Calendar.DAY_OF_MONTH) == requiredDate.get(Calendar.DAY_OF_MONTH)
+					&& lesson.getGroup().getStudents().contains(student)) {
+				requiredTimetable.addLesson(lesson);
 			}
 		}
-		return studentsTimetableForDay;
+		return requiredTimetable;
 
 	}
 

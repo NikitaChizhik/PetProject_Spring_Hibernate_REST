@@ -3,12 +3,11 @@ package com.nikitachizhik91.university;
 import java.util.List;
 
 public class Faculty {
-
+	private int id;
 	private String name;
 	private List<Department> departments;
 	private List<Group> groups;
 
-	
 	public void addGroup(Group group) {
 		groups.add(group);
 	}
@@ -47,6 +46,14 @@ public class Faculty {
 
 	public void setGroups(List<Group> groups) {
 		this.groups = groups;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.nikitachizhik91.university;
 import java.util.List;
 
 public class University {
+	private int id;
 	private List<Faculty> faculties;
 	private List<Room> rooms;
 	private Timetable timetable;

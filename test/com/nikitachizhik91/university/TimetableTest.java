@@ -206,16 +206,16 @@ public class TimetableTest {
 	public void getStudentsTimetableForDay() throws ParseException {
 
 		dateFormat = new SimpleDateFormat("dd-M-yyyy");
-		dateString = "17-03-2017";
+		dateString = "16-02-2017";
 		dateToCheck = dateFormat.parse(dateString);
 
 		expectedLessons = new ArrayList<Lesson>();
-		expectedLessons.add(lesson2);
+		expectedLessons.add(lesson1);
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
 		Assert.assertEquals(expectedTimetable.getLessons().get(0), university.getTimetable()
-				.getStudentsTimetableForDay(student1, dateToCheck).getLessons().get(0));
+				.getStudentsTimetableForDay(student3, dateToCheck).getLessons().get(0));
 
 	}
 

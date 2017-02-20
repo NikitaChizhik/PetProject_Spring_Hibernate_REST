@@ -3,6 +3,7 @@ package com.nikitachizhik91.university;
 import java.util.Date;
 
 public class Lesson {
+	private int id;
 	private int number;
 	private Subject subject;
 	private Teacher teacher;
@@ -56,6 +57,14 @@ public class Lesson {
 
 	public void setRoom(Room room) {
 		this.room = room;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
