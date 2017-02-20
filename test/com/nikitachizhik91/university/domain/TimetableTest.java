@@ -1,4 +1,6 @@
-package com.nikitachizhik91.university;
+package com.nikitachizhik91.university.domain;
+
+import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,21 +8,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+// писать мессадж в assert
 public class TimetableTest {
-	University university = new University();
-	List<Faculty> faculties = new ArrayList<Faculty>();
-	Faculty faculty1 = new Faculty();
-	ArrayList<Department> departments = new ArrayList<Department>();
-	Department department1 = new Department();
-	List<Subject> subjects = new ArrayList<Subject>();
-	List<Teacher> teachers = new ArrayList<Teacher>();
-	List<Group> groups = new ArrayList<Group>();
-	List<Room> rooms = new ArrayList<Room>();
-	Timetable timetable = new Timetable();
+	University university;
+	List<Faculty> faculties;
+	Faculty faculty1;
+	ArrayList<Department> departments;
+	Department department1;
+	List<Subject> subjects;
+	List<Teacher> teachers;
+	List<Group> groups;
+	List<Room> rooms;
+	Timetable timetable;
 	Teacher teacher1;
 	Teacher teacher2;
 	Lesson lesson1;
@@ -35,6 +37,17 @@ public class TimetableTest {
 
 	@Before
 	public void initialize() throws ParseException {
+
+		university = new University();
+		faculties = new ArrayList<Faculty>();
+		faculty1 = new Faculty();
+		departments = new ArrayList<Department>();
+		department1 = new Department();
+		subjects = new ArrayList<Subject>();
+		teachers = new ArrayList<Teacher>();
+		groups = new ArrayList<Group>();
+		rooms = new ArrayList<Room>();
+		timetable = new Timetable();
 
 		department1.setId(1);
 		department1.setName("Phonetics");
@@ -148,7 +161,7 @@ public class TimetableTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void getTeachersTimetableForMonth_Null() throws ParseException {
 
-		university.getTimetable().getStudentsTimetableForMonth(null, null).getLessons().get(0);
+		university.getTimetable().getStudentsTimetableForMonth(null, null);
 
 	}
 
@@ -164,8 +177,8 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		Assert.assertEquals(expectedTimetable.getLessons().get(0), university.getTimetable()
-				.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons().get(0));
+		assertEquals(expectedTimetable.getLessons(),
+				university.getTimetable().getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
 
 	}
 
@@ -181,8 +194,8 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		Assert.assertEquals(expectedTimetable.getLessons().get(0), university.getTimetable()
-				.getTeachersTimetableForMonth(teacher2, dateToCheck).getLessons().get(0));
+		assertEquals(expectedTimetable.getLessons(),
+				university.getTimetable().getTeachersTimetableForMonth(teacher2, dateToCheck).getLessons());
 
 	}
 
@@ -197,8 +210,8 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		Assert.assertEquals(expectedTimetable.getLessons().get(0), university.getTimetable()
-				.getStudentsTimetableForMonth(student3, dateToCheck).getLessons().get(0));
+		assertEquals(expectedTimetable.getLessons(),
+				university.getTimetable().getStudentsTimetableForMonth(student3, dateToCheck).getLessons());
 
 	}
 
@@ -214,8 +227,8 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		Assert.assertEquals(expectedTimetable.getLessons().get(0), university.getTimetable()
-				.getStudentsTimetableForDay(student3, dateToCheck).getLessons().get(0));
+		assertEquals(expectedTimetable.getLessons(),
+				university.getTimetable().getStudentsTimetableForDay(student3, dateToCheck).getLessons());
 
 	}
 
@@ -230,8 +243,29 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		Assert.assertEquals(expectedTimetable.getLessons().get(0), university.getTimetable()
-				.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons().get(0));
+		assertEquals(expectedTimetable.getLessons(),
+				university.getTimetable().getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
+
+	}
+
+	@Test
+	public void addFaculty() {
+		Faculty faculty = new Faculty();
+		faculty.setId(2);
+		university.addFaculty(faculty);
+		List<Faculty> faculties2 = university.getFaculties();
+
+		assertEquals(university.getFaculties(), faculties2);
+
+	}
+
+	@Test
+	public void addFaculty_Null() {
+
+		university.addFaculty(null);
+		List<Faculty> faculties2 = university.getFaculties();
+
+		assertEquals(university.getFaculties(), faculties2);
 
 	}
 
