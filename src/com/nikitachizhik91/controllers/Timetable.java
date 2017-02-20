@@ -14,6 +14,9 @@ public class Timetable {
 	}
 
 	public Timetable getTeachersTimetableForDay(Teacher teacher, Date date) {
+		if (teacher == null || date == null) {
+			throw new IllegalArgumentException();
+		}
 
 		Timetable teachersTimetableForDay = new Timetable();
 		Calendar requiredDate = Calendar.getInstance();
@@ -39,6 +42,9 @@ public class Timetable {
 	}
 
 	public Timetable a(Teacher teacher, Date date) {
+		if (teacher == null || date == null) {
+			throw new IllegalArgumentException();
+		}
 		Timetable teachersTimetableForMonth = new Timetable();
 
 		for (Lesson lesson : lessons) {
@@ -53,6 +59,9 @@ public class Timetable {
 	}
 
 	public Timetable getStudentsTimetableForMonth(Student student, Date date) {
+		if (student == null || date == null) {
+			throw new IllegalArgumentException();
+		}
 		Timetable studentsTimetableForMonth = new Timetable();
 
 		for (Lesson lesson : lessons) {
@@ -67,6 +76,9 @@ public class Timetable {
 	}
 
 	public Timetable getStudentsTimetableForDay(Student student, Date date) {
+		if (student == null || date == null) {
+			throw new IllegalArgumentException();
+		}
 		Timetable studentsTimetableForDay = new Timetable();
 
 		for (Lesson lesson : lessons) {
