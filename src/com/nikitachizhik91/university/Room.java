@@ -1,4 +1,4 @@
-package com.nikitachizhik91.controllers;
+package com.nikitachizhik91.university;
 
 public class Room {
 	private String number;

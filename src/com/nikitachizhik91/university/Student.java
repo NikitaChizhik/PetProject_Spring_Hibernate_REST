@@ -1,8 +1,10 @@
-package com.nikitachizhik91.controllers;
+package com.nikitachizhik91.university;
 
-public class Subject {
+public class Student {
+
 	private int id;
 	private String name;
+	private Group group;
 
 	public int getId() {
 		return id;
@@ -20,4 +22,13 @@ public class Subject {
 		this.name = name;
 	}
 
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
+	
 }

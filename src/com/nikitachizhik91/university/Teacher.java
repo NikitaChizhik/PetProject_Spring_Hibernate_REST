@@ -1,10 +1,9 @@
-package com.nikitachizhik91.controllers;
+package com.nikitachizhik91.university;
 
-public class Student {
-
+public class Teacher {
 	private int id;
 	private String name;
-	private Group group;
+	private Subject subject;
 
 	public int getId() {
 		return id;
@@ -22,13 +21,12 @@ public class Student {
 		this.name = name;
 	}
 
-	public Group getGroup() {
-		return group;
+	public Subject getSubject() {
+		return subject;
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setSubject(Subject subject) {
+		this.subject = subject;
 	}
 
-	
 }

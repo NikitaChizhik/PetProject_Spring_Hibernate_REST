@@ -1,4 +1,4 @@
-package com.nikitachizhik91.controllers;
+package com.nikitachizhik91.university;
 
 import java.time.Month;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class Timetable {
 
 	}
 
-	public Timetable a(Teacher teacher, Date date) {
+	public Timetable getTeachersTimetableForMonth(Teacher teacher, Date date) {
 		if (teacher == null || date == null) {
 			throw new IllegalArgumentException();
 		}

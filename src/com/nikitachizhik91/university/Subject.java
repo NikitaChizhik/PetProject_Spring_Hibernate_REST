@@ -1,9 +1,8 @@
-package com.nikitachizhik91.controllers;
+package com.nikitachizhik91.university;
 
-public class Teacher {
+public class Subject {
 	private int id;
 	private String name;
-	private Subject subject;
 
 	public int getId() {
 		return id;
@@ -19,14 +18,6 @@ public class Teacher {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
 	}
 
 }
