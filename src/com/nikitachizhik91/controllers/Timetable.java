@@ -1,6 +1,8 @@
 package com.nikitachizhik91.controllers;
 
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,11 +16,20 @@ public class Timetable {
 	public Timetable getTeachersTimetableForDay(Teacher teacher, Date date) {
 
 		Timetable teachersTimetableForDay = new Timetable();
+		Calendar requiredDate = Calendar.getInstance();
+		requiredDate.setTime(date);
+		System.out.println(requiredDate.get(Calendar.YEAR));
+		Calendar lessonDate = Calendar.getInstance();
 
 		for (Lesson lesson : lessons) {
-			System.out.println(lesson.getDate());
-			if (lesson.getDate().getYear() == date.getYear() && lesson.getDate().getMonth() == date.getMonth()
-					&& lesson.getDate().getDay() == date.getDay() && lesson.getTeacher().equals(teacher)) {
+
+			lessonDate.setTime(lesson.getDate());
+
+			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
+					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
+					&& lessonDate.get(Calendar.DAY_OF_MONTH) == requiredDate.get(Calendar.DAY_OF_MONTH)
+					&& lesson.getTeacher().equals(teacher)) {
+
 				teachersTimetableForDay.addLesson(lesson);
 			}
 		}
@@ -27,11 +38,11 @@ public class Timetable {
 
 	}
 
-	public Timetable getTeachersTimetableForMonth(Teacher teacher, Date date) {
+	public Timetable a(Teacher teacher, Date date) {
 		Timetable teachersTimetableForMonth = new Timetable();
 
 		for (Lesson lesson : lessons) {
-			System.out.println(lesson.getDate());
+
 			if (lesson.getDate().getYear() == date.getYear() && lesson.getDate().getMonth() == date.getMonth()
 					&& lesson.getTeacher().equals(teacher)) {
 				teachersTimetableForMonth.addLesson(lesson);
@@ -41,31 +52,31 @@ public class Timetable {
 
 	}
 
-	public Timetable getStudentsTimetableForDay(Student student, Date date) {
-		Timetable studentsTimetableForDay = new Timetable();
-
-		for (Lesson lesson : lessons) {
-			System.out.println(lesson.getDate());
-			if (lesson.getDate().getYear() == date.getYear() && lesson.getDate().getMonth() == date.getMonth()
-					&& lesson.getDate().getDay() == date.getDay() && lesson.getGroup().getStudents().contains(student)) {
-				studentsTimetableForDay.addLesson(lesson);
-			}
-		}
-		return studentsTimetableForDay;
-
-	}
-
 	public Timetable getStudentsTimetableForMonth(Student student, Date date) {
 		Timetable studentsTimetableForMonth = new Timetable();
 
 		for (Lesson lesson : lessons) {
-			System.out.println(lesson.getDate());
+
 			if (lesson.getDate().getYear() == date.getYear() && lesson.getDate().getMonth() == date.getMonth()
 					&& lesson.getGroup().getStudents().contains(student)) {
 				studentsTimetableForMonth.addLesson(lesson);
 			}
 		}
 		return studentsTimetableForMonth;
+
+	}
+
+	public Timetable getStudentsTimetableForDay(Student student, Date date) {
+		Timetable studentsTimetableForDay = new Timetable();
+
+		for (Lesson lesson : lessons) {
+
+			if (lesson.getDate().getYear() == date.getYear() && lesson.getDate().getMonth() == date.getMonth()
+					&& lesson.getDate().getDay() == date.getDay() && lesson.getGroup().getStudents().contains(student)) {
+				studentsTimetableForDay.addLesson(lesson);
+			}
+		}
+		return studentsTimetableForDay;
 
 	}
 
