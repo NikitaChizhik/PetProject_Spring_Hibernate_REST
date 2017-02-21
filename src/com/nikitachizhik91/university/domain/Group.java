@@ -8,10 +8,17 @@ public class Group {
 	private List<Student> students;
 
 	public void addStudent(Student student) {
+		if (student == null) {
+			throw new IllegalArgumentException();
+		}
+
 		students.add(student);
 	}
 
 	public void deleteStudent(Student student) {
+		if (student == null) {
+			throw new IllegalArgumentException();
+		}
 		students.remove(student);
 	}
 

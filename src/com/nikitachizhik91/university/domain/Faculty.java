@@ -9,18 +9,30 @@ public class Faculty {
 	private List<Group> groups;
 
 	public void addGroup(Group group) {
+		if (group == null) {
+			throw new IllegalArgumentException();
+		}
 		groups.add(group);
 	}
 
 	public void deleteGroup(Group group) {
+		if (group == null) {
+			throw new IllegalArgumentException();
+		}
 		groups.remove(group);
 	}
 
 	public void addDepartment(Department department) {
+		if (department == null) {
+			throw new IllegalArgumentException();
+		}
 		departments.add(department);
 	}
 
 	public void deleteDepartment(Department department) {
+		if (department == null) {
+			throw new IllegalArgumentException();
+		}
 		departments.remove(department);
 	}
 

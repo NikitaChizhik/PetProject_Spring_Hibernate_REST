@@ -9,18 +9,30 @@ public class University {
 	private Timetable timetable;
 
 	public void addFaculty(Faculty faculty) {
+		if (faculty == null) {
+			throw new IllegalArgumentException();
+		}
 		faculties.add(faculty);
 	}
 
 	public void deleteFaculty(Faculty faculty) {
+		if (faculty == null) {
+			throw new IllegalArgumentException();
+		}
 		faculties.remove(faculty);
 	}
 
 	public void addRoom(Room room) {
+		if (room == null) {
+			throw new IllegalArgumentException();
+		}
 		rooms.add(room);
 	}
 
 	public void deleteRoom(Room room) {
+		if (room == null) {
+			throw new IllegalArgumentException();
+		}
 		rooms.remove(room);
 	}
 

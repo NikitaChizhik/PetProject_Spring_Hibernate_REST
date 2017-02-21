@@ -9,18 +9,30 @@ public class Department {
 	private List<Subject> subjects;
 
 	public void addTeacher(Teacher teacher) {
+		if (teacher == null) {
+			throw new IllegalArgumentException();
+		}
 		teachers.add(teacher);
 	}
 
 	public void deleteTeacher(Teacher teacher) {
+		if (teacher == null) {
+			throw new IllegalArgumentException();
+		}
 		teachers.remove(teacher);
 	}
 
 	public void addSubject(Subject subject) {
+		if (subject == null) {
+			throw new IllegalArgumentException();
+		}
 		subjects.add(subject);
 	}
 
 	public void deleteSubjectr(Subject subject) {
+		if (subject == null) {
+			throw new IllegalArgumentException();
+		}
 		subjects.remove(subject);
 	}
 

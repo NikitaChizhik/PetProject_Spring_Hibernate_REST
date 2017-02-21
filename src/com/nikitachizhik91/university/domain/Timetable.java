@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-//зачем вот эта колбаса ? lesson.getGroup().getStudents().contains(student)
-
 /**
  * @author nikita
  *
@@ -87,7 +85,7 @@ public class Timetable {
 
 			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
 					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
-					&& lesson.getGroup().getStudents().contains(student)) {
+					&& lesson.getGroup().equals(student.getGroup())) {
 				requiredTimetable.addLesson(lesson);
 			}
 		}
@@ -110,7 +108,7 @@ public class Timetable {
 			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
 					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
 					&& lessonDate.get(Calendar.DAY_OF_MONTH) == requiredDate.get(Calendar.DAY_OF_MONTH)
-					&& lesson.getGroup().getStudents().contains(student)) {
+					&& lesson.getGroup().equals(student.getGroup())) {
 				requiredTimetable.addLesson(lesson);
 			}
 		}
@@ -119,10 +117,16 @@ public class Timetable {
 	}
 
 	public void addLesson(Lesson lesson) {
+		if (lesson == null) {
+			throw new IllegalArgumentException();
+		}
 		lessons.add(lesson);
 	}
 
 	public void deleteLesson(Lesson lesson) {
+		if (lesson == null) {
+			throw new IllegalArgumentException();
+		}
 		lessons.remove(lesson);
 	}
 
