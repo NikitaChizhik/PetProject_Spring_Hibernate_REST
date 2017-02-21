@@ -1,17 +1,19 @@
 package com.nikitachizhik91.university.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-// писать мессадж в assert
 public class TimetableTest {
 	University university;
 	List<Faculty> faculties;
@@ -22,6 +24,7 @@ public class TimetableTest {
 	List<Teacher> teachers;
 	List<Group> groups;
 	List<Room> rooms;
+	Room room1;
 	Timetable timetable;
 	Teacher teacher1;
 	Teacher teacher2;
@@ -96,12 +99,14 @@ public class TimetableTest {
 		student3 = new Student();
 		student3.setId(1);
 		student3.setName("David");
+		student3.setGroup(group1);
 		students2.add(student3);
 		Student student4 = new Student();
 		students2.add(student4);
 		group1.setStudents(students2);
 		groups.add(group1);
 
+		faculty1.setId(4455);
 		faculty1.setGroups(groups);
 		faculty1.setName("Faculty of English Language");
 
@@ -109,7 +114,7 @@ public class TimetableTest {
 
 		university.setFaculties(faculties);
 
-		Room room1 = new Room();
+		room1 = new Room();
 		room1.setNumber("11");
 		Room room2 = new Room();
 		room2.setNumber("12");
@@ -159,7 +164,7 @@ public class TimetableTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void getTeachersTimetableForMonth_Null() throws ParseException {
+	public void getTeachersTimetableForMonth_NullandNull() throws ParseException {
 
 		university.getTimetable().getStudentsTimetableForMonth(null, null);
 
@@ -177,8 +182,8 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		assertEquals(expectedTimetable.getLessons(),
-				university.getTimetable().getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
+		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
+				.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
 
 	}
 
@@ -194,8 +199,8 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		assertEquals(expectedTimetable.getLessons(),
-				university.getTimetable().getTeachersTimetableForMonth(teacher2, dateToCheck).getLessons());
+		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
+				.getTeachersTimetableForMonth(teacher2, dateToCheck).getLessons());
 
 	}
 
@@ -210,8 +215,8 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		assertEquals(expectedTimetable.getLessons(),
-				university.getTimetable().getStudentsTimetableForMonth(student3, dateToCheck).getLessons());
+		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
+				.getStudentsTimetableForMonth(student3, dateToCheck).getLessons());
 
 	}
 
@@ -227,8 +232,8 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		assertEquals(expectedTimetable.getLessons(),
-				university.getTimetable().getStudentsTimetableForDay(student3, dateToCheck).getLessons());
+		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
+				.getStudentsTimetableForDay(student3, dateToCheck).getLessons());
 
 	}
 
@@ -243,30 +248,157 @@ public class TimetableTest {
 		expectedTimetable = new Timetable();
 		expectedTimetable.setLessons(expectedLessons);
 
-		assertEquals(expectedTimetable.getLessons(),
-				university.getTimetable().getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
+		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
+				.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
+
+	}
+
+	@Test
+	public void getTeachersTimetableForMonth_requiredDate() throws ParseException {
+
+		dateFormat = new SimpleDateFormat("M-yyyy");
+		dateString = "02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		Date recivedDate = university.getTimetable().getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons()
+				.get(0).getDate();
+
+		Calendar inputDate = Calendar.getInstance();
+		inputDate.setTime(dateToCheck);
+
+		Calendar expectedDate = Calendar.getInstance();
+		inputDate.setTime(recivedDate);
+
+		assertEquals("Month is wrong.", expectedDate.get(Calendar.MONTH), inputDate.get(Calendar.MONTH));
+		assertEquals("Year is wrong.", expectedDate.get(Calendar.YEAR), inputDate.get(Calendar.YEAR));
+
+	}
+
+	@Test
+	public void getTeachersTimetableForMonth_requiredTeacher() throws ParseException {
+		dateFormat = new SimpleDateFormat("M-yyyy");
+		dateString = "02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		Teacher recivedTeacher = university.getTimetable().getTeachersTimetableForMonth(teacher1, dateToCheck)
+				.getLessons().get(0).getTeacher();
+
+		assertEquals("teacher is wrong.", teacher1, recivedTeacher);
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getTeachersTimetableForMonth_NullandOK() throws ParseException {
+		dateFormat = new SimpleDateFormat("M-yyyy");
+		dateString = "02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+		university.getTimetable().getTeachersTimetableForMonth(null, dateToCheck);
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getTeachersTimetableForMonth_OkandNull() {
+		university.getTimetable().getTeachersTimetableForMonth(teacher1, null);
 
 	}
 
 	@Test
 	public void addFaculty() {
-		Faculty faculty = new Faculty();
-		faculty.setId(2);
-		university.addFaculty(faculty);
-		List<Faculty> faculties2 = university.getFaculties();
+		Faculty facultyTest = new Faculty();
+		facultyTest.setId(52234);
+		university.addFaculty(facultyTest);
 
-		assertEquals(university.getFaculties(), faculties2);
+		assertTrue("faculty is not added", university.getFaculties().contains(facultyTest));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addFaculty_Null() {
+
+		university.addFaculty(null);
 
 	}
 
 	@Test
-	public void addFaculty_Null() {
+	public void deleteFaculty() {
 
-		university.addFaculty(null);
-		List<Faculty> faculties2 = university.getFaculties();
+		university.deleteFaculty(faculty1);
+		;
 
-		assertEquals(university.getFaculties(), faculties2);
+		assertFalse("faculty is not deleted", university.getFaculties().contains(faculty1));
 
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void deleteFaculty_Null() {
+
+		university.deleteFaculty(null);
+
+	}
+
+	@Test
+	public void addRoom() {
+		Room roomTest = new Room();
+		roomTest.setId(12);
+		university.getRooms().add(roomTest);
+
+		assertTrue("room is not added", university.getRooms().contains(roomTest));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addRoom_Null() {
+
+		university.addRoom(null);
+
+	}
+
+	@Test
+	public void deleteRoom() {
+
+		university.getRooms().remove(room1);
+
+		assertFalse("room is not deleted", university.getFaculties().contains(room1));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void deleteRoom_Null() {
+
+		university.deleteRoom(null);
+
+	}
+
+	@Test
+	public void addLesson() {
+		Lesson lessonTest = new Lesson();
+		lessonTest.setId(2525);
+		university.getTimetable().addLesson(lessonTest);
+
+		assertTrue("lesson is not added.", university.getTimetable().getLessons().contains(lessonTest));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addLesson_Null() {
+
+		university.getTimetable().addLesson(null);
+
+	}
+
+	@Test
+	public void deleteLesson() {
+
+		university.getTimetable().getLessons().remove(lesson2);
+
+		assertFalse("lesson is not deleted.", university.getTimetable().getLessons().contains(lesson2));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void deleteLesson_Null() {
+
+		university.getTimetable().deleteLesson(null);
+
+	}
 }
