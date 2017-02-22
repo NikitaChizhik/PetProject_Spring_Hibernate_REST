@@ -2,7 +2,6 @@ package com.nikitachizhik91.university.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,9 +12,6 @@ import java.util.List;
 public class Timetable {
 	private int id;
 	private List<Lesson> lessons;
-	private Timetable requiredTimetable;
-	private Calendar requiredDate;
-	private Calendar lessonDate;
 
 	public Timetable() {
 		lessons = new ArrayList<Lesson>();
@@ -26,19 +22,12 @@ public class Timetable {
 			throw new IllegalArgumentException();
 		}
 
-		requiredTimetable = new Timetable();
-		requiredDate = Calendar.getInstance();
-		requiredDate.setTime(date);
-
-		lessonDate = Calendar.getInstance();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
+		Timetable requiredTimetable = new Timetable();
 
 		for (Lesson lesson : lessons) {
 
-			lessonDate.setTime(lesson.getDate());
-
-			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
-					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
-					&& lessonDate.get(Calendar.DAY_OF_MONTH) == requiredDate.get(Calendar.DAY_OF_MONTH)
+			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
 					&& lesson.getTeacher().equals(teacher)) {
 
 				requiredTimetable.addLesson(lesson);
@@ -53,17 +42,12 @@ public class Timetable {
 		if (teacher == null || date == null) {
 			throw new IllegalArgumentException();
 		}
-		requiredTimetable = new Timetable();
-		requiredDate = Calendar.getInstance();
-		requiredDate.setTime(date);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
+		Timetable requiredTimetable = new Timetable();
 
-		lessonDate = Calendar.getInstance();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		for (Lesson lesson : lessons) {
-			lessonDate.setTime(lesson.getDate());
 
-			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
-					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
+			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
 					&& lesson.getTeacher().equals(teacher)) {
 				requiredTimetable.addLesson(lesson);
 			}
@@ -76,16 +60,12 @@ public class Timetable {
 		if (student == null || date == null) {
 			throw new IllegalArgumentException();
 		}
-		requiredTimetable = new Timetable();
-		requiredDate = Calendar.getInstance();
-		requiredDate.setTime(date);
+		Timetable requiredTimetable = new Timetable();
 
-		lessonDate = Calendar.getInstance();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
 		for (Lesson lesson : lessons) {
-			lessonDate.setTime(lesson.getDate());
 
-			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
-					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
+			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
 					&& lesson.getGroup().equals(student.getGroup())) {
 				requiredTimetable.addLesson(lesson);
 			}
@@ -98,7 +78,7 @@ public class Timetable {
 		if (student == null || date == null) {
 			throw new IllegalArgumentException();
 		}
-		requiredTimetable = new Timetable();
+		Timetable requiredTimetable = new Timetable();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 
@@ -145,39 +125,12 @@ public class Timetable {
 		this.id = id;
 	}
 
-	public Timetable getRequiredTimetable() {
-		return requiredTimetable;
-	}
-
-	public void setRequiredTimetable(Timetable requiredTimetable) {
-		this.requiredTimetable = requiredTimetable;
-	}
-
-	public Calendar getRequiredDate() {
-		return requiredDate;
-	}
-
-	public void setRequiredDate(Calendar requiredDate) {
-		this.requiredDate = requiredDate;
-	}
-
-	public Calendar getLessonDate() {
-		return lessonDate;
-	}
-
-	public void setLessonDate(Calendar lessonDate) {
-		this.lessonDate = lessonDate;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-		result = prime * result + ((lessonDate == null) ? 0 : lessonDate.hashCode());
 		result = prime * result + ((lessons == null) ? 0 : lessons.hashCode());
-		result = prime * result + ((requiredDate == null) ? 0 : requiredDate.hashCode());
-		result = prime * result + ((requiredTimetable == null) ? 0 : requiredTimetable.hashCode());
 		return result;
 	}
 
@@ -192,25 +145,10 @@ public class Timetable {
 		Timetable other = (Timetable) obj;
 		if (id != other.id)
 			return false;
-		if (lessonDate == null) {
-			if (other.lessonDate != null)
-				return false;
-		} else if (!lessonDate.equals(other.lessonDate))
-			return false;
 		if (lessons == null) {
 			if (other.lessons != null)
 				return false;
 		} else if (!lessons.equals(other.lessons))
-			return false;
-		if (requiredDate == null) {
-			if (other.requiredDate != null)
-				return false;
-		} else if (!requiredDate.equals(other.requiredDate))
-			return false;
-		if (requiredTimetable == null) {
-			if (other.requiredTimetable != null)
-				return false;
-		} else if (!requiredTimetable.equals(other.requiredTimetable))
 			return false;
 		return true;
 	}

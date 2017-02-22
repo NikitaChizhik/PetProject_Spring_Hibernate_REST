@@ -14,6 +14,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+//razbit klassi
+//ubrat lishnuu inizializaziu
 public class TimetableTest {
 	University university;
 	List<Faculty> faculties;
@@ -68,7 +70,7 @@ public class TimetableTest {
 		department1.setSubjects(subjects);
 
 		teacher1 = new Teacher();
-		teacher1.setId(2);
+		teacher1.setId(1);
 		teacher1.setName("Nikita Chizhik");
 		teacher1.setSubject(subject1);
 		teachers.add(teacher1);
@@ -488,76 +490,6 @@ public class TimetableTest {
 	public void deleteDepartment_Null() {
 
 		university.getFaculties().get(0).deleteDepartment(null);
-
-	}
-
-	@Test
-	public void addTeacher() {
-		Teacher teacherTest = new Teacher();
-		teacherTest.setId(9900);
-		university.getFaculties().get(0).getDepartments().get(0).addTeacher(teacherTest);
-
-		assertTrue("teacher is not added.", university.getFaculties().get(0).getDepartments().get(0).getTeachers()
-				.contains(teacherTest));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void addTeacher_Null() {
-
-		university.getFaculties().get(0).getDepartments().get(0).addTeacher(null);
-
-	}
-
-	@Test
-	public void deleteTeacher() {
-
-		university.getFaculties().get(0).getDepartments().get(0).deleteTeacher(teacher1);
-
-		assertFalse("teacher is not deleted.", university.getFaculties().get(0).getDepartments().get(0).getTeachers()
-				.contains(teacher1));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deleteTeacher_Null() {
-
-		university.getFaculties().get(0).getDepartments().get(0).deleteTeacher(null);
-
-	}
-
-	@Test
-	public void addSubject() {
-		Subject subjectTest = new Subject();
-		university.getFaculties().get(0).getDepartments().get(0).addSubject(subjectTest);
-
-		assertTrue("Subject is not added.", university.getFaculties().get(0).getDepartments().get(0).getSubjects()
-				.contains(subjectTest));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void addSubject_Null() {
-
-		university.getFaculties().get(0).getDepartments().get(0).addSubject(null);
-
-	}
-
-	@Test
-	public void deleteSubject() {
-
-		university.getFaculties().get(0).getDepartments().get(0).deleteSubject(subject1);
-		;
-
-		assertFalse("Subject is not deleted.", university.getFaculties().get(0).getDepartments().get(0).getSubjects()
-				.contains(subject1));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deleteSubject_Null() {
-
-		university.getFaculties().get(0).getDepartments().get(0).deleteSubject(null);
 
 	}
 
