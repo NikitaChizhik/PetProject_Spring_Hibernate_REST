@@ -17,7 +17,6 @@ public class DepartmentTest {
 	List<Teacher> teachers;
 	Subject subject1;
 	Teacher teacher1;
-	
 
 	@Before
 	public void initialize() throws ParseException {
