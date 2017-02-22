@@ -1,5 +1,8 @@
 package com.nikitachizhik91.university.domain;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Test;
 
 public class GroupTest {
 	University university;
@@ -157,5 +161,40 @@ public class GroupTest {
 		timetable.addLesson(lesson2);
 
 		university.setTimetable(timetable);
+	}
+
+	@Test
+	public void addStudent() {
+		Student studentTest = new Student();
+		studentTest.setId(6655);
+		university.getFaculties().get(0).getGroups().get(0).addStudent(studentTest);
+
+		assertTrue("student is not added.",
+				university.getFaculties().get(0).getGroups().get(0).getStudents().contains(studentTest));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addStudent_Null() {
+
+		university.getFaculties().get(0).getGroups().get(0).addStudent(null);
+
+	}
+
+	@Test
+	public void deleteStudent() {
+
+		university.getFaculties().get(0).getGroups().get(0).deleteStudent(student1);
+
+		assertFalse("student is not deleted.", university.getFaculties().get(0).getGroups().get(0).getStudents()
+				.contains(student1));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void deleteStudent_Null() {
+
+		university.getFaculties().get(0).getGroups().get(0).deleteStudent(null);
+
 	}
 }

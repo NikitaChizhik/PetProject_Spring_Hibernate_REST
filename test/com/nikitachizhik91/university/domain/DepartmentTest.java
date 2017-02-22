@@ -21,6 +21,14 @@ public class DepartmentTest {
 	}
 
 	@Test
+	public void addTeacherToNewDepartment() {
+
+		Teacher teacher = new Teacher();
+		department1.addTeacher(teacher);
+		assertTrue("Fails to add " + teacher + "to the " + department1, department1.getTeachers().contains(teacher));
+	}
+
+	@Test
 	public void addTeacher() {
 		List<Teacher> teachers = new ArrayList<Teacher>();
 		department1.setTeachers(teachers);
@@ -35,7 +43,8 @@ public class DepartmentTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void addTeacher_Null() {
-
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		department1.setTeachers(teachers);
 		department1.addTeacher(null);
 
 	}
@@ -58,47 +67,52 @@ public class DepartmentTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deleteTeacher_Null() {
-
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		department1.setTeachers(teachers);
 		department1.deleteTeacher(null);
 
 	}
 
-	// subjects = new ArrayList<Subject>();
-	// subject1 = new Subject();
-	// subjects.add(subject1);
-	// department1.setSubjects(subjects);
-
 	// @Test
 	// public void addSubject() {
+	// ArrayList<Subject> subjects = new ArrayList<Subject>();
+	// department1.setSubjects(subjects);
+	//
 	// Subject subjectTest = new Subject();
 	// department1.addSubject(subjectTest);
 	//
-	// assertTrue("Subject is not added.",
-	// departments.get(0).getSubjects().contains(subjectTest));
+	// assertTrue("Subject is not added.", subjects.contains(subjectTest));
 	//
 	// }
 	//
 	// @Test(expected = IllegalArgumentException.class)
 	// public void addSubject_Null() {
-	//
-	// departments.get(0).addSubject(null);
+	// ArrayList<Subject> subjects = new ArrayList<Subject>();
+	// department1.setSubjects(subjects);
+	// department1.addSubject(null);
 	//
 	// }
 	//
 	// @Test
 	// public void deleteSubject() {
 	//
-	// departments.get(0).deleteSubject(subject1);
+	// ArrayList<Subject> subjects = new ArrayList<Subject>();
+	// department1.setSubjects(subjects);
+	//
+	// Subject subjectTest = new Subject();
+	// department1.addSubject(subjectTest);
+	// department1.deleteSubject(subjectTest);
 	//
 	// assertFalse("Subject is not deleted.",
-	// departments.get(0).getSubjects().contains(subject1));
+	// department1.getSubjects().contains(subjectTest));
 	//
 	// }
 	//
 	// @Test(expected = IllegalArgumentException.class)
 	// public void deleteSubject_Null() {
-	//
-	// departments.get(0).deleteSubject(null);
+	// ArrayList<Subject> subjects = new ArrayList<Subject>();
+	// department1.setSubjects(subjects);
+	// department1.deleteSubject(null);
 	//
 	// }
 

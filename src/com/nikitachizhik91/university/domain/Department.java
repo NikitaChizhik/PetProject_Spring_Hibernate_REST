@@ -1,5 +1,6 @@
 package com.nikitachizhik91.university.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Department {
@@ -8,9 +9,17 @@ public class Department {
 	private List<Teacher> teachers;
 	private List<Subject> subjects;
 
+	public Department() {
+		teachers = new ArrayList<Teacher>();
+		subjects = new ArrayList<Subject>();
+	}
+
 	public void addTeacher(Teacher teacher) {
 		if (teacher == null) {
 			throw new IllegalArgumentException();
+		}
+		if (teachers == null) {
+			teachers = new ArrayList<Teacher>();
 		}
 		teachers.add(teacher);
 	}
@@ -19,22 +28,25 @@ public class Department {
 		if (teacher == null) {
 			throw new IllegalArgumentException();
 		}
+		if (teachers == null) {
+			teachers = new ArrayList<Teacher>();
+		}
 		teachers.remove(teacher);
 	}
 
-	public void addSubject(Subject subject) {
-		if (subject == null) {
-			throw new IllegalArgumentException();
-		}
-		subjects.add(subject);
-	}
-
-	public void deleteSubject(Subject subject) {
-		if (subject == null) {
-			throw new IllegalArgumentException();
-		}
-		subjects.remove(subject);
-	}
+	// public void addSubject(Subject subject) {
+	// if (subject == null) {
+	// throw new IllegalArgumentException();
+	// }
+	// subjects.add(subject);
+	// }
+	//
+	// public void deleteSubject(Subject subject) {
+	// if (subject == null) {
+	// throw new IllegalArgumentException();
+	// }
+	// subjects.remove(subject);
+	// }
 
 	public int getId() {
 		return id;

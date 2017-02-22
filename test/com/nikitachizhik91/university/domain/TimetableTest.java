@@ -14,8 +14,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-//razbit klassi
-//ubrat lishnuu inizializaziu
 public class TimetableTest {
 	University university;
 	List<Faculty> faculties;
@@ -289,74 +287,6 @@ public class TimetableTest {
 
 	}
 
-	// ////////////////////////////////////////////////////////////////////////////////////
-	@Test
-	public void addFaculty() {
-		Faculty facultyTest = new Faculty();
-		facultyTest.setId(52234);
-		university.addFaculty(facultyTest);
-
-		assertTrue("faculty is not added", university.getFaculties().contains(facultyTest));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void addFaculty_Null() {
-
-		university.addFaculty(null);
-
-	}
-
-	@Test
-	public void deleteFaculty() {
-
-		university.deleteFaculty(faculty1);
-		;
-
-		assertFalse("faculty is not deleted", university.getFaculties().contains(faculty1));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deleteFaculty_Null() {
-
-		university.deleteFaculty(null);
-
-	}
-
-	@Test
-	public void addRoom() {
-		Room roomTest = new Room();
-		roomTest.setId(12);
-		university.getRooms().add(roomTest);
-
-		assertTrue("room is not added", university.getRooms().contains(roomTest));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void addRoom_Null() {
-
-		university.addRoom(null);
-
-	}
-
-	@Test
-	public void deleteRoom() {
-
-		university.getRooms().remove(room1);
-
-		assertFalse("room is not deleted", university.getFaculties().contains(room1));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deleteRoom_Null() {
-
-		university.deleteRoom(null);
-
-	}
-
 	@Test
 	public void addLesson() {
 		Lesson lessonTest = new Lesson();
@@ -387,41 +317,6 @@ public class TimetableTest {
 	public void deleteLesson_Null() {
 
 		university.getTimetable().deleteLesson(null);
-
-	}
-
-	@Test
-	public void addStudent() {
-		Student studentTest = new Student();
-		studentTest.setId(6655);
-		university.getFaculties().get(0).getGroups().get(0).addStudent(studentTest);
-
-		assertTrue("student is not added.",
-				university.getFaculties().get(0).getGroups().get(0).getStudents().contains(studentTest));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void addStudent_Null() {
-
-		university.getFaculties().get(0).getGroups().get(0).addStudent(null);
-
-	}
-
-	@Test
-	public void deleteStudent() {
-
-		university.getFaculties().get(0).getGroups().get(0).deleteStudent(student1);
-
-		assertFalse("student is not deleted.", university.getFaculties().get(0).getGroups().get(0).getStudents()
-				.contains(student1));
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void deleteStudent_Null() {
-
-		university.getFaculties().get(0).getGroups().get(0).deleteStudent(null);
 
 	}
 

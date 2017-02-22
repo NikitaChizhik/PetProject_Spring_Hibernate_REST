@@ -1,36 +1,46 @@
 package com.nikitachizhik91.university.domain;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Main {
+import org.junit.Before;
+import org.junit.Test;
 
-	public static void main(String[] args) throws ParseException {
-		University university;
-		List<Faculty> faculties;
-		Faculty faculty1;
-		ArrayList<Department> departments;
-		Department department1;
-		List<Subject> subjects;
-		List<Teacher> teachers;
-		List<Group> groups;
-		List<Room> rooms;
-		Room room1;
-		Timetable timetable;
-		Teacher teacher1;
-		Teacher teacher2;
-		Lesson lesson1;
-		Lesson lesson2;
-		Student student1;
-		Student student3;
-		SimpleDateFormat dateFormat;
-		String dateString;
-		Date dateToCheck;
-		Timetable expectedTimetable;
-		List<Lesson> expectedLessons;
+public class UniversityTest {
+
+	University university;
+	List<Faculty> faculties;
+	Faculty faculty1;
+	ArrayList<Department> departments;
+	Department department1;
+	List<Subject> subjects;
+	List<Teacher> teachers;
+	List<Group> groups;
+	List<Room> rooms;
+	Room room1;
+	Group group1;
+	Subject subject1;
+	Timetable timetable;
+	Teacher teacher1;
+	Teacher teacher2;
+	Lesson lesson1;
+	Lesson lesson2;
+	Student student1;
+	Student student3;
+	SimpleDateFormat dateFormat;
+	String dateString;
+	Date dateToCheck;
+	Timetable expectedTimetable;
+	List<Lesson> expectedLessons;
+
+	@Before
+	public void initialize() throws ParseException {
 
 		university = new University();
 		faculties = new ArrayList<Faculty>();
@@ -46,7 +56,7 @@ public class Main {
 		department1.setId(1);
 		department1.setName("Phonetics");
 
-		Subject subject1 = new Subject();
+		subject1 = new Subject();
 		subject1.setId(1);
 		subject1.setName("english speaking practice");
 		subjects.add(subject1);
@@ -57,7 +67,7 @@ public class Main {
 		department1.setSubjects(subjects);
 
 		teacher1 = new Teacher();
-		teacher1.setId(2);
+		teacher1.setId(1);
 		teacher1.setName("Nikita Chizhik");
 		teacher1.setSubject(subject1);
 		teachers.add(teacher1);
@@ -83,7 +93,7 @@ public class Main {
 		group2.setStudents(students);
 		groups.add(group2);
 
-		Group group1 = new Group();
+		group1 = new Group();
 		group1.setId(1);
 		group1.setName("36");
 		List<Student> students2 = new ArrayList<Student>();
@@ -152,13 +162,72 @@ public class Main {
 		timetable.addLesson(lesson2);
 
 		university.setTimetable(timetable);
+	}
 
-		dateFormat = new SimpleDateFormat("dd-M-yyyy");
-		dateString = "16-02-2017";
-		dateToCheck = dateFormat.parse(dateString);
-		// university.getTimetable().getStudentsTimetableForDay(student3,
-		// dateToCheck);
-		// university.getTimetable().getTeachersTimetableForMonth(teacher1, dateToCheck);
+	@Test
+	public void addFaculty() {
+		Faculty facultyTest = new Faculty();
+		facultyTest.setId(52234);
+		university.addFaculty(facultyTest);
+
+		assertTrue("faculty is not added", university.getFaculties().contains(facultyTest));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addFaculty_Null() {
+
+		university.addFaculty(null);
+
+	}
+
+	@Test
+	public void deleteFaculty() {
+
+		university.deleteFaculty(faculty1);
+		;
+
+		assertFalse("faculty is not deleted", university.getFaculties().contains(faculty1));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void deleteFaculty_Null() {
+
+		university.deleteFaculty(null);
+
+	}
+
+	@Test
+	public void addRoom() {
+		Room roomTest = new Room();
+		roomTest.setId(12);
+		university.getRooms().add(roomTest);
+
+		assertTrue("room is not added", university.getRooms().contains(roomTest));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addRoom_Null() {
+
+		university.addRoom(null);
+
+	}
+
+	@Test
+	public void deleteRoom() {
+
+		university.getRooms().remove(room1);
+
+		assertFalse("room is not deleted", university.getFaculties().contains(room1));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void deleteRoom_Null() {
+
+		university.deleteRoom(null);
 
 	}
 
