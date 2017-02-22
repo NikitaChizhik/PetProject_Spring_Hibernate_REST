@@ -23,28 +23,15 @@ public class DepartmentTest {
 	public void initialize() throws ParseException {
 
 		department1 = new Department();
+
 		subjects = new ArrayList<Subject>();
-		teachers = new ArrayList<Teacher>();
-
-		department1.setId(1);
-
 		subject1 = new Subject();
-		subject1.setId(1);
-
 		subjects.add(subject1);
-		Subject subject2 = new Subject();
-		subject2.setId(2);
-		subjects.add(subject2);
 		department1.setSubjects(subjects);
 
+		teachers = new ArrayList<Teacher>();
 		teacher1 = new Teacher();
-		teacher1.setId(1);
-
 		teachers.add(teacher1);
-		teacher2 = new Teacher();
-		teacher2.setId(2);
-
-		teachers.add(teacher2);
 		department1.setTeachers(teachers);
 
 	}
