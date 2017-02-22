@@ -4,18 +4,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class DepartmentTest {
-	University university;
-	List<Faculty> faculties;
-	Faculty faculty1;
+
 	ArrayList<Department> departments;
 	Department department1;
 	List<Subject> subjects;
@@ -27,9 +23,6 @@ public class DepartmentTest {
 	@Before
 	public void initialize() throws ParseException {
 
-		university = new University();
-		faculties = new ArrayList<Faculty>();
-		faculty1 = new Faculty();
 		departments = new ArrayList<Department>();
 		department1 = new Department();
 		subjects = new ArrayList<Subject>();
@@ -57,13 +50,6 @@ public class DepartmentTest {
 		department1.setTeachers(teachers);
 
 		departments.add(department1);
-		faculty1.setDepartments(departments);
-
-		faculty1.setId(4455);
-
-		faculties.add(faculty1);
-
-		university.setFaculties(faculties);
 
 	}
 
@@ -71,69 +57,64 @@ public class DepartmentTest {
 	public void addTeacher() {
 		Teacher teacherTest = new Teacher();
 		teacherTest.setId(9900);
-		university.getFaculties().get(0).getDepartments().get(0).addTeacher(teacherTest);
+		departments.get(0).addTeacher(teacherTest);
 
-		assertTrue("teacher is not added.", university.getFaculties().get(0).getDepartments().get(0).getTeachers()
-				.contains(teacherTest));
+		assertTrue("teacher is not added.", departments.get(0).getTeachers().contains(teacherTest));
 
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void addTeacher_Null() {
 
-		university.getFaculties().get(0).getDepartments().get(0).addTeacher(null);
+		departments.get(0).addTeacher(null);
 
 	}
 
 	@Test
 	public void deleteTeacher() {
 
-		university.getFaculties().get(0).getDepartments().get(0).deleteTeacher(teacher1);
+		departments.get(0).deleteTeacher(teacher1);
 
-		assertFalse("teacher is not deleted.", university.getFaculties().get(0).getDepartments().get(0).getTeachers()
-				.contains(teacher1));
+		assertFalse("teacher is not deleted.", departments.get(0).getTeachers().contains(teacher1));
 
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deleteTeacher_Null() {
 
-		university.getFaculties().get(0).getDepartments().get(0).deleteTeacher(null);
+		departments.get(0).deleteTeacher(null);
 
 	}
 
 	@Test
 	public void addSubject() {
 		Subject subjectTest = new Subject();
-		university.getFaculties().get(0).getDepartments().get(0).addSubject(subjectTest);
+		departments.get(0).addSubject(subjectTest);
 
-		assertTrue("Subject is not added.", university.getFaculties().get(0).getDepartments().get(0).getSubjects()
-				.contains(subjectTest));
+		assertTrue("Subject is not added.", departments.get(0).getSubjects().contains(subjectTest));
 
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void addSubject_Null() {
 
-		university.getFaculties().get(0).getDepartments().get(0).addSubject(null);
+		departments.get(0).addSubject(null);
 
 	}
 
 	@Test
 	public void deleteSubject() {
 
-		university.getFaculties().get(0).getDepartments().get(0).deleteSubject(subject1);
-		;
+		departments.get(0).deleteSubject(subject1);
 
-		assertFalse("Subject is not deleted.", university.getFaculties().get(0).getDepartments().get(0).getSubjects()
-				.contains(subject1));
+		assertFalse("Subject is not deleted.", departments.get(0).getSubjects().contains(subject1));
 
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deleteSubject_Null() {
 
-		university.getFaculties().get(0).getDepartments().get(0).deleteSubject(null);
+		departments.get(0).deleteSubject(null);
 
 	}
 
