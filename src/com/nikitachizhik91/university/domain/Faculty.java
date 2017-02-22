@@ -110,7 +110,7 @@ public class Faculty {
 
 	@Override
 	public String toString() {
-		return "Faculty [id=" + id + ", name=" + name + ", departments=" + departments + ", groups=" + groups + "]";
+		return "Faculty [id=" + id + ", name=" + name + "]";
 	}
 
 }

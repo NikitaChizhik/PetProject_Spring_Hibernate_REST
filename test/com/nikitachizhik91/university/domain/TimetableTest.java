@@ -173,12 +173,11 @@ public class TimetableTest {
 	}
 
 	@Test
-	public void getTeachersTimetableForMonth() throws ParseException {
+	public void getTeachersTimetableForMonth_general() throws ParseException {
 
 		dateFormat = new SimpleDateFormat("M-yyyy");
 		dateString = "02-2017";
 		dateToCheck = dateFormat.parse(dateString);
-
 		expectedLessons = new ArrayList<Lesson>();
 		expectedLessons.add(lesson1);
 		expectedTimetable = new Timetable();
@@ -190,7 +189,7 @@ public class TimetableTest {
 	}
 
 	@Test
-	public void getTeachersTimetableForDay() throws ParseException {
+	public void getTeachersTimetableForDay_general() throws ParseException {
 
 		dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		dateString = "17-03-2017";
@@ -207,7 +206,7 @@ public class TimetableTest {
 	}
 
 	@Test
-	public void getStudentsTimetableForMonth() throws ParseException {
+	public void getStudentsTimetableForMonth_general() throws ParseException {
 		dateFormat = new SimpleDateFormat("M-yyyy");
 		dateString = "02-2017";
 		dateToCheck = dateFormat.parse(dateString);
@@ -223,7 +222,7 @@ public class TimetableTest {
 	}
 
 	@Test
-	public void getStudentsTimetableForDay() throws ParseException {
+	public void getStudentsTimetableForDay_general() throws ParseException {
 
 		dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		dateString = "16-02-2017";
@@ -236,22 +235,6 @@ public class TimetableTest {
 
 		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
 				.getStudentsTimetableForDay(student3, dateToCheck).getLessons());
-
-	}
-
-	@Test
-	public void getTeachersTimetableForMonth_Teacher() throws ParseException {
-
-		dateFormat = new SimpleDateFormat("M-yyyy");
-		dateString = "02-2017";
-		dateToCheck = dateFormat.parse(dateString);
-		expectedLessons = new ArrayList<Lesson>();
-		expectedLessons.add(lesson1);
-		expectedTimetable = new Timetable();
-		expectedTimetable.setLessons(expectedLessons);
-
-		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
-				.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
 
 	}
 
@@ -304,6 +287,7 @@ public class TimetableTest {
 
 	}
 
+	// ////////////////////////////////////////////////////////////////////////////////////
 	@Test
 	public void addFaculty() {
 		Faculty facultyTest = new Faculty();

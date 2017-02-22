@@ -82,7 +82,7 @@ public class Group {
 
 	@Override
 	public String toString() {
-		return "Group [id=" + id + ", name=" + name + ", students=" + students + "]";
+		return "Group [id=" + id + ", name=" + name + "]";
 	}
 
 }

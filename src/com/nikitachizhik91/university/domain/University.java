@@ -102,8 +102,7 @@ public class University {
 
 	@Override
 	public String toString() {
-		return "University [id=" + id + ", faculties=" + faculties + ", rooms=" + rooms + ", timetable=" + timetable
-				+ "]";
+		return "University [id=" + id + " timetable=" + timetable + "]";
 	}
 
 }
