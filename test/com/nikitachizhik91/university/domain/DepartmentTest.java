@@ -45,14 +45,15 @@ public class DepartmentTest {
 
 	@Test
 	public void deleteTeacher() {
-		Teacher teacher = new Teacher();
-		// Teacher teacherTest = new Teacher();
-		// teacherTest.setId(9900);
-		// department.addTeacher(teacherTest);
 
-		department.deleteTeacher(teacher);
+		Teacher teacherTest = new Teacher();
+		teacherTest.setId(9900);
+		department.addTeacher(teacherTest);
 
-		assertFalse("Fails to delete " + teacher + "from the " + department, department.getTeachers().contains(teacher));
+		department.deleteTeacher(teacherTest);
+
+		assertFalse("Fails to delete " + teacherTest + "from the " + department,
+				department.getTeachers().contains(teacherTest));
 	}
 
 	// @Test
