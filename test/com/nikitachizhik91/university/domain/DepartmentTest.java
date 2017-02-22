@@ -55,12 +55,6 @@ public class DepartmentTest {
 		assertFalse("Fails to delete " + teacher + "from the " + department, department.getTeachers().contains(teacher));
 	}
 
-	
-	public void deleteTeacher_Null() {
-
-		department.deleteTeacher(null);
-	}
-
 	// @Test
 	// public void addSubject() {
 	// ArrayList<Subject> subjects = new ArrayList<Subject>();
