@@ -12,40 +12,50 @@ import org.junit.Test;
 
 public class DepartmentTest {
 
-	Department department1;
+	Department department;
 
 	@Before
 	public void initialize() throws ParseException {
 
-		department1 = new Department();
+		department = new Department();
 	}
 
 	@Test
-	public void addTeacherToNewDepartment() {
+	public void addTeacherToNull() {
 
 		Teacher teacher = new Teacher();
-		department1.addTeacher(teacher);
-		assertTrue("Fails to add " + teacher + "to the " + department1, department1.getTeachers().contains(teacher));
+		department.setTeachers(null);
+		department.addTeacher(teacher);
+		assertTrue("Fails to add " + teacher + "to the " + department, department.getTeachers().contains(teacher));
+	}
+
+	@Test
+	public void addTeacher2() {
+
+		Teacher teacher = new Teacher();
+		department.addTeacher(teacher);
+		assertTrue("Fails to add " + teacher + "to the " + department, department.getTeachers().contains(teacher));
 	}
 
 	@Test
 	public void addTeacher() {
 		List<Teacher> teachers = new ArrayList<Teacher>();
-		department1.setTeachers(teachers);
+		department.setTeachers(teachers);
 
 		Teacher teacherTest = new Teacher();
 		teacherTest.setId(9900);
-		department1.addTeacher(teacherTest);
+		department.addTeacher(teacherTest);
 
-		assertTrue("teacher is not added.", department1.getTeachers().contains(teacherTest));
+		assertTrue("Fails to add " + teacherTest + "to the " + department,
+				department.getTeachers().contains(teacherTest));
 
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void addTeacher_Null() {
 		List<Teacher> teachers = new ArrayList<Teacher>();
-		department1.setTeachers(teachers);
-		department1.addTeacher(null);
+		department.setTeachers(teachers);
+		department.addTeacher(null);
 
 	}
 
@@ -53,23 +63,23 @@ public class DepartmentTest {
 	public void deleteTeacher() {
 
 		List<Teacher> teachers = new ArrayList<Teacher>();
-		department1.setTeachers(teachers);
+		department.setTeachers(teachers);
 
 		Teacher teacherTest = new Teacher();
 		teacherTest.setId(9900);
-		department1.addTeacher(teacherTest);
+		department.addTeacher(teacherTest);
 
-		department1.deleteTeacher(teacherTest);
+		department.deleteTeacher(teacherTest);
 
-		assertFalse("teacher is not deleted.", department1.getTeachers().contains(teacherTest));
+		assertFalse("teacher is not deleted.", department.getTeachers().contains(teacherTest));
 
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deleteTeacher_Null() {
 		List<Teacher> teachers = new ArrayList<Teacher>();
-		department1.setTeachers(teachers);
-		department1.deleteTeacher(null);
+		department.setTeachers(teachers);
+		department.deleteTeacher(null);
 
 	}
 
