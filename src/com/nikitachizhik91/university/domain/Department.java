@@ -34,19 +34,22 @@ public class Department {
 		teachers.remove(teacher);
 	}
 
-	// public void addSubject(Subject subject) {
-	// if (subject == null) {
-	// throw new IllegalArgumentException();
-	// }
-	// subjects.add(subject);
-	// }
-	//
-	// public void deleteSubject(Subject subject) {
-	// if (subject == null) {
-	// throw new IllegalArgumentException();
-	// }
-	// subjects.remove(subject);
-	// }
+	public void addSubject(Subject subject) {
+		if (subject == null) {
+			throw new IllegalArgumentException();
+		}
+		if (subjects == null) {
+			subjects = new ArrayList<Subject>();
+		}
+		subjects.add(subject);
+	}
+
+	public void deleteSubject(Subject subject) {
+		if (subject == null) {
+			throw new IllegalArgumentException();
+		}
+		subjects.remove(subject);
+	}
 
 	public int getId() {
 		return id;
