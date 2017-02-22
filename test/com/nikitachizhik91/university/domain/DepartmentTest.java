@@ -13,30 +13,18 @@ import org.junit.Test;
 public class DepartmentTest {
 
 	Department department1;
-	List<Subject> subjects;
-	List<Teacher> teachers;
-	Subject subject1;
-	Teacher teacher1;
 
 	@Before
 	public void initialize() throws ParseException {
 
 		department1 = new Department();
-
-		subjects = new ArrayList<Subject>();
-		subject1 = new Subject();
-		subjects.add(subject1);
-		department1.setSubjects(subjects);
-
-		teachers = new ArrayList<Teacher>();
-		teacher1 = new Teacher();
-		teachers.add(teacher1);
-		department1.setTeachers(teachers);
-
 	}
 
 	@Test
 	public void addTeacher() {
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		department1.setTeachers(teachers);
+
 		Teacher teacherTest = new Teacher();
 		teacherTest.setId(9900);
 		department1.addTeacher(teacherTest);
@@ -55,9 +43,16 @@ public class DepartmentTest {
 	@Test
 	public void deleteTeacher() {
 
-		department1.deleteTeacher(teacher1);
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		department1.setTeachers(teachers);
 
-		assertFalse("teacher is not deleted.", department1.getTeachers().contains(teacher1));
+		Teacher teacherTest = new Teacher();
+		teacherTest.setId(9900);
+		department1.addTeacher(teacherTest);
+
+		department1.deleteTeacher(teacherTest);
+
+		assertFalse("teacher is not deleted.", department1.getTeachers().contains(teacherTest));
 
 	}
 
@@ -67,6 +62,11 @@ public class DepartmentTest {
 		department1.deleteTeacher(null);
 
 	}
+
+	// subjects = new ArrayList<Subject>();
+	// subject1 = new Subject();
+	// subjects.add(subject1);
+	// department1.setSubjects(subjects);
 
 	// @Test
 	// public void addSubject() {
