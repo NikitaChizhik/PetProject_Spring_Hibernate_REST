@@ -25,9 +25,9 @@ public class Department {
 	}
 
 	public void deleteTeacher(Teacher teacher) {
-		if (teacher == null) {
-			throw new IllegalArgumentException();
-		}
+		// if (teacher == null) {
+		// throw new IllegalArgumentException();
+		// }
 		if (teachers == null) {
 			teachers = new ArrayList<Teacher>();
 		}
@@ -47,6 +47,9 @@ public class Department {
 	public void deleteSubject(Subject subject) {
 		if (subject == null) {
 			throw new IllegalArgumentException();
+		}
+		if (subjects == null) {
+			subjects = new ArrayList<Subject>();
 		}
 		subjects.remove(subject);
 	}

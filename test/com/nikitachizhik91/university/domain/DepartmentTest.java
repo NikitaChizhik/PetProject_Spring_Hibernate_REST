@@ -45,18 +45,17 @@ public class DepartmentTest {
 
 	@Test
 	public void deleteTeacher() {
+		Teacher teacher = new Teacher();
+		// Teacher teacherTest = new Teacher();
+		// teacherTest.setId(9900);
+		// department.addTeacher(teacherTest);
 
-		Teacher teacherTest = new Teacher();
-		teacherTest.setId(9900);
-		department.addTeacher(teacherTest);
+		department.deleteTeacher(teacher);
 
-		department.deleteTeacher(teacherTest);
-
-		assertFalse("Fails to delete " + teacherTest + "from the " + department,
-				department.getTeachers().contains(teacherTest));
+		assertFalse("Fails to delete " + teacher + "from the " + department, department.getTeachers().contains(teacher));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	
 	public void deleteTeacher_Null() {
 
 		department.deleteTeacher(null);
