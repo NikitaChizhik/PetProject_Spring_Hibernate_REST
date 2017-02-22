@@ -29,7 +29,7 @@ public class Department {
 		subjects.add(subject);
 	}
 
-	public void deleteSubjectr(Subject subject) {
+	public void deleteSubject(Subject subject) {
 		if (subject == null) {
 			throw new IllegalArgumentException();
 		}
@@ -110,7 +110,7 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", name=" + name + ", teachers=" + teachers + ", subjects=" + subjects + "]";
+		return "Department [id=" + id + ", name=" + name + "]";
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.nikitachizhik91.university.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,7 +58,7 @@ public class Timetable {
 		requiredDate.setTime(date);
 
 		lessonDate = Calendar.getInstance();
-
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		for (Lesson lesson : lessons) {
 			lessonDate.setTime(lesson.getDate());
 
@@ -98,18 +99,16 @@ public class Timetable {
 			throw new IllegalArgumentException();
 		}
 		requiredTimetable = new Timetable();
-		requiredDate = Calendar.getInstance();
-		requiredDate.setTime(date);
 
-		lessonDate = Calendar.getInstance();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
+
 		for (Lesson lesson : lessons) {
-			lessonDate.setTime(lesson.getDate());
 
-			if (lessonDate.get(Calendar.YEAR) == requiredDate.get(Calendar.YEAR)
-					&& lessonDate.get(Calendar.MONTH) == requiredDate.get(Calendar.MONTH)
-					&& lessonDate.get(Calendar.DAY_OF_MONTH) == requiredDate.get(Calendar.DAY_OF_MONTH)
+			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
 					&& lesson.getGroup().equals(student.getGroup())) {
+
 				requiredTimetable.addLesson(lesson);
+
 			}
 		}
 		return requiredTimetable;
@@ -218,8 +217,7 @@ public class Timetable {
 
 	@Override
 	public String toString() {
-		return "Timetable [id=" + id + ", lessons=" + lessons + ", requiredTimetable=" + requiredTimetable
-				+ ", requiredDate=" + requiredDate + ", lessonDate=" + lessonDate + "]";
+		return "Timetable [id=" + id + "]";
 	}
 
 }
