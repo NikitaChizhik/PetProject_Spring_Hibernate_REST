@@ -7,7 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +20,8 @@ public class GroupTest {
 	Faculty faculty1;
 	ArrayList<Department> departments;
 	Department department1;
-	List<Subject> subjects;
-	List<Teacher> teachers;
+	Set<Subject> subjects;
+	Set<Teacher> teachers;
 	List<Group> groups;
 	List<Room> rooms;
 	Room room1;
@@ -46,8 +48,8 @@ public class GroupTest {
 		faculty1 = new Faculty();
 		departments = new ArrayList<Department>();
 		department1 = new Department();
-		subjects = new ArrayList<Subject>();
-		teachers = new ArrayList<Teacher>();
+		subjects = new HashSet<Subject>();
+		teachers = new HashSet<Teacher>();
 		groups = new ArrayList<Group>();
 		rooms = new ArrayList<Room>();
 		timetable = new Timetable();

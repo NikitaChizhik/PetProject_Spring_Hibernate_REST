@@ -1,17 +1,17 @@
 package com.nikitachizhik91.university.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Department {
 	private int id;
 	private String name;
-	private List<Teacher> teachers;
-	private List<Subject> subjects;
+	private Set<Teacher> teachers;
+	private Set<Subject> subjects;
 
 	public Department() {
-		teachers = new ArrayList<Teacher>();
-		subjects = new ArrayList<Subject>();
+		teachers = new HashSet<Teacher>();
+		subjects = new HashSet<Subject>();
 	}
 
 	public void addTeacher(Teacher teacher) {
@@ -19,7 +19,7 @@ public class Department {
 			throw new IllegalArgumentException();
 		}
 		if (teachers == null) {
-			teachers = new ArrayList<Teacher>();
+			teachers = new HashSet<Teacher>();
 		}
 		teachers.add(teacher);
 	}
@@ -27,7 +27,8 @@ public class Department {
 	public void deleteTeacher(Teacher teacher) {
 
 		if (teachers == null) {
-			teachers = new ArrayList<Teacher>();
+
+			teachers = new HashSet<Teacher>();
 		}
 		teachers.remove(teacher);
 	}
@@ -37,7 +38,7 @@ public class Department {
 			throw new IllegalArgumentException();
 		}
 		if (subjects == null) {
-			subjects = new ArrayList<Subject>();
+			subjects = new HashSet<Subject>();
 		}
 		subjects.add(subject);
 	}
@@ -45,7 +46,7 @@ public class Department {
 	public void deleteSubject(Subject subject) {
 
 		if (subjects == null) {
-			subjects = new ArrayList<Subject>();
+			subjects = new HashSet<Subject>();
 		}
 		subjects.remove(subject);
 	}
@@ -66,19 +67,19 @@ public class Department {
 		this.name = name;
 	}
 
-	public List<Teacher> getTeachers() {
+	public Set<Teacher> getTeachers() {
 		return teachers;
 	}
 
-	public void setTeachers(List<Teacher> teachers) {
+	public void setTeachers(Set<Teacher> teachers) {
 		this.teachers = teachers;
 	}
 
-	public List<Subject> getSubjects() {
+	public Set<Subject> getSubjects() {
 		return subjects;
 	}
 
-	public void setSubjects(List<Subject> subjects) {
+	public void setSubjects(Set<Subject> subjects) {
 		this.subjects = subjects;
 	}
 
