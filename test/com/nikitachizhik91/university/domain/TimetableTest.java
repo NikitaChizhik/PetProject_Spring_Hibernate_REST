@@ -81,7 +81,7 @@ public class TimetableTest {
 		department1.setTeachers(teachers);
 
 		departments.add(department1);
-		faculty1.setDepartments(departments);
+		// faculty1.setDepartments(departments);
 
 		Group group2 = new Group();
 		group2.setId(2);
@@ -111,7 +111,7 @@ public class TimetableTest {
 		groups.add(group1);
 
 		faculty1.setId(4455);
-		faculty1.setGroups(groups);
+		// faculty1.setGroups(groups);
 		faculty1.setName("Faculty of English Language");
 
 		faculties.add(faculty1);

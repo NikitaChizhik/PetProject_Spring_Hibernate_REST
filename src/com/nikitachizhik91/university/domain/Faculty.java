@@ -1,40 +1,43 @@
 package com.nikitachizhik91.university.domain;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Faculty {
 	private int id;
 	private String name;
-	private List<Department> departments;
-	private List<Group> groups;
+	private Set<Department> departments;
+	private Set<Group> groups;
 
 	public void addGroup(Group group) {
 		if (group == null) {
 			throw new IllegalArgumentException();
 		}
+		if (groups == null) {
+			groups = new HashSet<Group>();
+		}
 		groups.add(group);
 	}
 
 	public void deleteGroup(Group group) {
-		if (group == null) {
-			throw new IllegalArgumentException();
+		if (groups != null) {
+			groups.remove(group);
 		}
-		groups.remove(group);
 	}
 
-	public void addDepartment(Department department) {
-		if (department == null) {
-			throw new IllegalArgumentException();
-		}
-		departments.add(department);
-	}
-
-	public void deleteDepartment(Department department) {
-		if (department == null) {
-			throw new IllegalArgumentException();
-		}
-		departments.remove(department);
-	}
+	// public void addDepartment(Department department) {
+	// if (department == null) {
+	// throw new IllegalArgumentException();
+	// }
+	// departments.add(department);
+	// }
+	//
+	// public void deleteDepartment(Department department) {
+	// if (department == null) {
+	// throw new IllegalArgumentException();
+	// }
+	// departments.remove(department);
+	// }
 
 	public String getName() {
 		return name;
@@ -44,19 +47,19 @@ public class Faculty {
 		this.name = name;
 	}
 
-	public List<Department> getDepartments() {
+	public Set<Department> getDepartments() {
 		return departments;
 	}
 
-	public void setDepartments(List<Department> departments) {
+	public void setDepartments(Set<Department> departments) {
 		this.departments = departments;
 	}
 
-	public List<Group> getGroups() {
+	public Set<Group> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<Group> groups) {
+	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
 	}
 

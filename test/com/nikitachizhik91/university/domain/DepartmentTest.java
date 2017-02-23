@@ -20,14 +20,14 @@ public class DepartmentTest {
 	}
 
 	@Test
-	public void departmentConstructorInit_Teachers() {
+	public void constructorShouldInitTeachersWithEmptyCollection() {
 
 		assertNotNull("Teachers is null.", department.getTeachers());
 		assertTrue("Teachers is not empty.", department.getTeachers().isEmpty());
 	}
 
 	@Test
-	public void departmentConstructorInit_SubjectsShouldBeNullandEmpty() {
+	public void constructorShouldInitSubjectsWithEmptyCollection() {
 
 		assertNotNull("Subjects is null.", department.getSubjects());
 		assertTrue("Subjects is not empty.", department.getSubjects().isEmpty());
