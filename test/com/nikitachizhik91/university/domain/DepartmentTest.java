@@ -23,29 +23,17 @@ public class DepartmentTest {
 	}
 
 	@Test
-	public void departmentConstructorInit_TeachersShouldBeNotNull() {
-
-		assertNotNull("Teachers is null", department.getTeachers());
-	}
-
-	@Test
-	public void departmentConstructorInit_SubjectsShouldBeNotNull() {
-
-		assertNotNull("Subjects is null", department.getSubjects());
-	}
-
-	@Test
-	public void departmentConstructorInit_TeachersShouldBeEmpty() {
+	public void departmentConstructorInit_Teachers() {
 		List<Teacher> expectedTeachers = new ArrayList<Teacher>();
-
+		assertNotNull("Teachers is null", department.getTeachers());
 		assertTrue("Fails to initialize " + expectedTeachers + "in " + department, department.getTeachers().isEmpty());
 	}
 
 	@Test
-	public void departmentConstructorInit_SubjectsShouldBeEmpty() {
+	public void departmentConstructorInit_SubjectsShouldBeNullandEmpty() {
 
 		List<Subject> expectedSubjects = new ArrayList<Subject>();
-
+		assertNotNull("Subjects is null", department.getSubjects());
 		assertTrue("Fails to initialize " + expectedSubjects + "in " + department, department.getSubjects().isEmpty());
 	}
 
