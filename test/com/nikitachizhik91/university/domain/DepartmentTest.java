@@ -1,9 +1,10 @@
 package com.nikitachizhik91.university.domain;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,22 +14,20 @@ public class DepartmentTest {
 	Department department;
 
 	@Before
-	public void initialize() throws ParseException {
+	public void initializeDepartment() throws ParseException {
 
 		department = new Department();
 	}
 
 	@Test
-	public void addTeacherSetNullBefore() {
+	public void departmentConstructorInitialize() {
+		List<Teacher> expected = new ArrayList<Teacher>();
 
-		Teacher teacher = new Teacher();
-		department.setTeachers(null);
-		department.addTeacher(teacher);
-		assertTrue("Fails to add " + teacher + "to the " + department, department.getTeachers().contains(teacher));
+		assertEquals("Fails to initialize " + expected + "in " + department, expected, department.getTeachers());
 	}
 
 	@Test
-	public void addTeacher() {
+	public void addTeacher_Teacher() {
 
 		Teacher teacherTest = new Teacher();
 		teacherTest.setId(9900);
@@ -44,7 +43,7 @@ public class DepartmentTest {
 	}
 
 	@Test
-	public void deleteTeacher() {
+	public void deleteTeacher_Teacher() {
 
 		Teacher teacherTest = new Teacher();
 		teacherTest.setId(9900);
