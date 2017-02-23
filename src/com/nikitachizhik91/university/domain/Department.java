@@ -26,11 +26,9 @@ public class Department {
 
 	public void deleteTeacher(Teacher teacher) {
 
-		if (teachers == null) {
-
-			teachers = new HashSet<Teacher>();
+		if (teachers != null) {
+			teachers.remove(teacher);
 		}
-		teachers.remove(teacher);
 	}
 
 	public void addSubject(Subject subject) {
@@ -45,10 +43,9 @@ public class Department {
 
 	public void deleteSubject(Subject subject) {
 
-		if (subjects == null) {
-			subjects = new HashSet<Subject>();
+		if (subjects != null) {
+			subjects.remove(subject);
 		}
-		subjects.remove(subject);
 	}
 
 	public int getId() {
