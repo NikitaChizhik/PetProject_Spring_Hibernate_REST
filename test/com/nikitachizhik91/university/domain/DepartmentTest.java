@@ -2,6 +2,7 @@ package com.nikitachizhik91.university.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
@@ -22,14 +23,30 @@ public class DepartmentTest {
 	}
 
 	@Test
-	public void departmentConstructorInitialize() {
+	public void departmentConstructorInit_TeachersShouldBeNotNull() {
+
+		assertNotNull("Teachers is null", department.getTeachers());
+	}
+
+	@Test
+	public void departmentConstructorInit_SubjectsShouldBeNotNull() {
+
+		assertNotNull("Subjects is null", department.getSubjects());
+	}
+
+	@Test
+	public void departmentConstructorInit_TeachersShouldBeEmpty() {
 		List<Teacher> expectedTeachers = new ArrayList<Teacher>();
-		assertEquals("Fails to initialize " + expectedTeachers + "in " + department, expectedTeachers,
-				department.getTeachers());
+
+		assertTrue("Fails to initialize " + expectedTeachers + "in " + department, department.getTeachers().isEmpty());
+	}
+
+	@Test
+	public void departmentConstructorInit_SubjectsShouldBeEmpty() {
 
 		List<Subject> expectedSubjects = new ArrayList<Subject>();
-		assertEquals("Fails to initialize " + expectedSubjects + "in " + department, expectedSubjects,
-				department.getSubjects());
+
+		assertTrue("Fails to initialize " + expectedSubjects + "in " + department, department.getSubjects().isEmpty());
 	}
 
 	@Test
@@ -53,7 +70,7 @@ public class DepartmentTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addTeacher_addNullMustThrowException() {
+	public void addTeacher_addNull_MustThrowException() {
 
 		department.addTeacher(null);
 	}
