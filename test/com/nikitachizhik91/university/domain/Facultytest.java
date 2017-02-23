@@ -17,48 +17,6 @@ public class Facultytest {
 		faculty = new Faculty();
 	}
 
-	//
-	// @Test(expected = IllegalArgumentException.class)
-	// public void deleteGroup_Null() {
-	//
-	// university.getFaculties().get(0).deleteGroup(null);
-	//
-	// }
-	//
-	// @Test
-	// public void addDepartment() {
-	// Department departmentTest = new Department();
-	// departmentTest.setId(7788);
-	// university.getFaculties().get(0).addDepartment(departmentTest);
-	//
-	// assertTrue("department is not added.",
-	// university.getFaculties().get(0).getDepartments().contains(departmentTest));
-	//
-	// }
-	//
-	// @Test(expected = IllegalArgumentException.class)
-	// public void addDepartment_Null() {
-	//
-	// university.getFaculties().get(0).addDepartment(null);
-	//
-	// }
-	//
-	// @Test
-	// public void deleteDepartment() {
-	//
-	// university.getFaculties().get(0).getDepartments().remove(department1);
-	//
-	// assertFalse("department is not deleted.",
-	// university.getFaculties().get(0).getDepartments().contains(department1));
-	//
-	// }
-	//
-	// @Test(expected = IllegalArgumentException.class)
-	// public void deleteDepartment_Null() {
-	//
-	// university.getFaculties().get(0).deleteDepartment(null);
-	//
-	// }
 	@Test
 	public void constructorShouldInitDepartmentsWithEmptyCollection() {
 
@@ -71,6 +29,53 @@ public class Facultytest {
 
 		assertNotNull("Groups is null.", faculty.getGroups());
 		assertTrue("Groups is not empty.", faculty.getGroups().isEmpty());
+	}
+
+	@Test
+	public void addDepartment_ShouldAddDepartmentOnNull() {
+
+		Department departmentTest = new Department();
+		faculty.setDepartments(null);
+		faculty.addDepartment(departmentTest);
+
+		assertTrue("Fails to add." + departmentTest + "to the " + faculty,
+				faculty.getDepartments().contains(departmentTest));
+	}
+
+	@Test
+	public void addDepartment_ShouldAddDepartment() {
+
+		Department departmentTest = new Department();
+		departmentTest.setId(2233);
+		faculty.addDepartment(departmentTest);
+
+		assertTrue("Fails to add." + departmentTest + "to the " + faculty,
+				faculty.getDepartments().contains(departmentTest));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addDepartment_addNull_MustThrowException() {
+
+		faculty.addDepartment(null);
+	}
+
+	@Test
+	public void deleteDepartment_ShouldDeleteDepartment() {
+
+		Department departmentTest = new Department();
+		departmentTest.setId(2233);
+		faculty.addDepartment(departmentTest);
+		faculty.deleteDepartment(departmentTest);
+
+		assertFalse("Fails to delete." + departmentTest + "from the " + faculty,
+				faculty.getDepartments().contains(departmentTest));
+	}
+
+	@Test
+	public void deleteDepartment_ShouldDeleteDepartmentOnNull() {
+
+		faculty.setDepartments(null);
+		faculty.deleteDepartment(null);
 	}
 
 	@Test
@@ -94,7 +99,7 @@ public class Facultytest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addGroup_Null() {
+	public void addGroup_addNull_MustThrowException() {
 
 		faculty.addGroup(null);
 	}
@@ -111,7 +116,7 @@ public class Facultytest {
 	}
 
 	@Test
-	public void addGroup_ShouldDeleteGroupOnNull() {
+	public void deleteGroup_ShouldDeleteGroupOnNull() {
 
 		faculty.setGroups(null);
 		faculty.deleteGroup(null);

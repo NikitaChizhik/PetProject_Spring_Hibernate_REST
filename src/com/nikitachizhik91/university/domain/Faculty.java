@@ -14,6 +14,22 @@ public class Faculty {
 		groups = new HashSet<Group>();
 	}
 
+	public void addDepartment(Department department) {
+		if (department == null) {
+			throw new IllegalArgumentException();
+		}
+		if (departments == null) {
+			departments = new HashSet<Department>();
+		}
+		departments.add(department);
+	}
+
+	public void deleteDepartment(Department department) {
+		if (departments != null) {
+			departments.remove(department);
+		}
+	}
+
 	public void addGroup(Group group) {
 		if (group == null) {
 			throw new IllegalArgumentException();
@@ -29,20 +45,6 @@ public class Faculty {
 			groups.remove(group);
 		}
 	}
-
-	// public void addDepartment(Department department) {
-	// if (department == null) {
-	// throw new IllegalArgumentException();
-	// }
-	// departments.add(department);
-	// }
-	//
-	// public void deleteDepartment(Department department) {
-	// if (department == null) {
-	// throw new IllegalArgumentException();
-	// }
-	// departments.remove(department);
-	// }
 
 	public String getName() {
 		return name;
