@@ -53,7 +53,7 @@ public class DepartmentTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addTeacher_NullMustThrowException() {
+	public void addTeacher_addNullMustThrowException() {
 
 		department.addTeacher(null);
 	}
