@@ -25,16 +25,16 @@ public class DepartmentTest {
 	@Test
 	public void departmentConstructorInit_Teachers() {
 		List<Teacher> expectedTeachers = new ArrayList<Teacher>();
-		assertNotNull("Teachers is null", department.getTeachers());
-		assertTrue("Fails to initialize " + expectedTeachers + "in " + department, department.getTeachers().isEmpty());
+		assertNotNull("Teachers is null.", department.getTeachers());
+		assertTrue("Teachers is not empty." + expectedTeachers + "in " + department, department.getTeachers().isEmpty());
 	}
 
 	@Test
 	public void departmentConstructorInit_SubjectsShouldBeNullandEmpty() {
 
 		List<Subject> expectedSubjects = new ArrayList<Subject>();
-		assertNotNull("Subjects is null", department.getSubjects());
-		assertTrue("Fails to initialize " + expectedSubjects + "in " + department, department.getSubjects().isEmpty());
+		assertNotNull("Subjects is null.", department.getSubjects());
+		assertTrue("Subjects is not empty." + expectedSubjects + "in " + department, department.getSubjects().isEmpty());
 	}
 
 	@Test
@@ -43,7 +43,7 @@ public class DepartmentTest {
 		Teacher teacherTest = new Teacher();
 		department.setTeachers(null);
 		department.addTeacher(teacherTest);
-		assertTrue("Fails to add " + teacherTest + "to the " + department,
+		assertTrue("Fails to add." + teacherTest + "to the " + department,
 				department.getTeachers().contains(teacherTest));
 	}
 
@@ -53,7 +53,7 @@ public class DepartmentTest {
 		Teacher teacherTest = new Teacher();
 		teacherTest.setId(9900);
 		department.addTeacher(teacherTest);
-		assertTrue("Fails to add " + teacherTest + "to the " + department,
+		assertTrue("Fails to add." + teacherTest + "to the " + department,
 				department.getTeachers().contains(teacherTest));
 	}
 
@@ -72,7 +72,7 @@ public class DepartmentTest {
 
 		department.deleteTeacher(teacherTest);
 
-		assertFalse("Fails to delete " + teacherTest + "from the " + department,
+		assertFalse("Fails to delete." + teacherTest + "from the " + department,
 				department.getTeachers().contains(teacherTest));
 	}
 
