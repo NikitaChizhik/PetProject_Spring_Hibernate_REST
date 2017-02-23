@@ -4,9 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +12,7 @@ public class Facultytest {
 	Faculty faculty;
 
 	@Before
-	public void init() throws ParseException {
+	public void init() {
 
 		faculty = new Faculty();
 	}
@@ -63,14 +60,14 @@ public class Facultytest {
 	//
 	// }
 	@Test
-	public void facultyConstructorInit_Department() {
+	public void constructorShouldInitDepartmentsWithEmptyCollection() {
 
 		assertNotNull("Departments is null.", faculty.getDepartments());
 		assertTrue("Departments is not empty.", faculty.getDepartments().isEmpty());
 	}
 
 	@Test
-	public void facultyConstructorInit_Groups() {
+	public void constructorShouldInitGroupsWithEmptyCollection() {
 
 		assertNotNull("Groups is null.", faculty.getGroups());
 		assertTrue("Groups is not empty.", faculty.getGroups().isEmpty());

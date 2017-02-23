@@ -9,6 +9,11 @@ public class Faculty {
 	private Set<Department> departments;
 	private Set<Group> groups;
 
+	public Faculty() {
+		departments = new HashSet<Department>();
+		groups = new HashSet<Group>();
+	}
+
 	public void addGroup(Group group) {
 		if (group == null) {
 			throw new IllegalArgumentException();

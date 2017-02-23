@@ -4,8 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.text.ParseException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +12,7 @@ public class DepartmentTest {
 	Department department;
 
 	@Before
-	public void init() throws ParseException {
+	public void init() {
 
 		department = new Department();
 	}
@@ -73,37 +71,55 @@ public class DepartmentTest {
 	}
 
 	@Test
-	public void addTeacher_ShouldDeleteTeacherOnNull() {
+	public void deleteTeacher_ShouldDeleteTeacherOnNull() {
 
 		department.setTeachers(null);
 		department.deleteTeacher(null);
 	}
 
-	// @Test
-	// public void addSubject() {
-	//
-	// Subject subjectTest = new Subject();
-	// subjectTest.setId(5544);
-	// department.addSubject(subjectTest);
-	//
-	// assertTrue("Fails to add " + subjectTest + "to the " + department,
-	// department.getSubjects().contains(subjectTest));
-	// }
-	//
-	// @Test(expected = IllegalArgumentException.class)
-	// public void addSubject_Null() {
-	//
-	// department.addSubject(null);
-	// }
-	//
-	// @Test
-	// public void deleteSubject() {
-	//
-	// Subject subjectTest = new Subject();
-	// department.deleteSubject(subjectTest);
-	//
-	// assertFalse("Fails to delete " + subjectTest + "to the " + department,
-	// department.getSubjects().contains(subjectTest));
-	// }
+	@Test
+	public void addSubject_ShouldAddSubjectOnNull() {
+
+		Subject subjectTest = new Subject();
+		department.setSubjects(null);
+		department.addSubject(subjectTest);
+		assertTrue("Fails to add." + subjectTest + "to the " + department,
+				department.getSubjects().contains(subjectTest));
+	}
+
+	@Test
+	public void addSubject_ShouldAddSubject() {
+
+		Subject subjectTest = new Subject();
+		subjectTest.setId(5544);
+		department.addSubject(subjectTest);
+
+		assertTrue("Fails to add " + subjectTest + "to the " + department,
+				department.getSubjects().contains(subjectTest));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void addSubject_Null() {
+
+		department.addSubject(null);
+	}
+
+	@Test
+	public void deleteSubject() {
+
+		Subject subjectTest = new Subject();
+		department.addSubject(subjectTest);
+		department.deleteSubject(subjectTest);
+
+		assertFalse("Fails to delete " + subjectTest + "to the " + department,
+				department.getSubjects().contains(subjectTest));
+	}
+
+	@Test
+	public void deleteSubject_ShouldDeleteSubjectOnNull() {
+
+		department.setSubjects(null);
+		department.deleteSubject(null);
+	}
 
 }
