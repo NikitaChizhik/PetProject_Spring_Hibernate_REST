@@ -1,6 +1,8 @@
 package com.nikitachizhik91.university.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -14,20 +16,34 @@ public class DepartmentTest {
 	Department department;
 
 	@Before
-	public void initializeDepartment() throws ParseException {
+	public void init() throws ParseException {
 
 		department = new Department();
 	}
 
 	@Test
 	public void departmentConstructorInitialize() {
-		List<Teacher> expected = new ArrayList<Teacher>();
+		List<Teacher> expectedTeachers = new ArrayList<Teacher>();
+		assertEquals("Fails to initialize " + expectedTeachers + "in " + department, expectedTeachers,
+				department.getTeachers());
 
-		assertEquals("Fails to initialize " + expected + "in " + department, expected, department.getTeachers());
+		List<Subject> expectedSubjects = new ArrayList<Subject>();
+		assertEquals("Fails to initialize " + expectedSubjects + "in " + department, expectedSubjects,
+				department.getSubjects());
 	}
 
 	@Test
-	public void addTeacher_Teacher() {
+	public void addTeacher_ShouldAddTeacherOnNull() {
+
+		Teacher teacherTest = new Teacher();
+		department.setTeachers(null);
+		department.addTeacher(teacherTest);
+		assertTrue("Fails to add " + teacherTest + "to the " + department,
+				department.getTeachers().contains(teacherTest));
+	}
+
+	@Test
+	public void addTeacher_ShouldAddTeacher() {
 
 		Teacher teacherTest = new Teacher();
 		teacherTest.setId(9900);
@@ -37,13 +53,13 @@ public class DepartmentTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addTeacher_Null() {
+	public void addTeacher_NullMustThrowException() {
 
 		department.addTeacher(null);
 	}
 
 	@Test
-	public void deleteTeacher_Teacher() {
+	public void deleteTeacher_ShouldDeleteTeacher() {
 
 		Teacher teacherTest = new Teacher();
 		teacherTest.setId(9900);
@@ -55,47 +71,38 @@ public class DepartmentTest {
 				department.getTeachers().contains(teacherTest));
 	}
 
+	@Test
+	public void addTeacher_ShouldDeleteTeacherOnNull() {
+
+		department.setTeachers(null);
+		department.deleteTeacher(null);
+	}
+
 	// @Test
 	// public void addSubject() {
-	// ArrayList<Subject> subjects = new ArrayList<Subject>();
-	// department.setSubjects(subjects);
 	//
 	// Subject subjectTest = new Subject();
+	// subjectTest.setId(5544);
 	// department.addSubject(subjectTest);
 	//
-	// assertTrue("Subject is not added.", subjects.contains(subjectTest));
-	//
+	// assertTrue("Fails to add " + subjectTest + "to the " + department,
+	// department.getSubjects().contains(subjectTest));
 	// }
 	//
 	// @Test(expected = IllegalArgumentException.class)
 	// public void addSubject_Null() {
-	// ArrayList<Subject> subjects = new ArrayList<Subject>();
-	// department.setSubjects(subjects);
-	// department.addSubject(null);
 	//
+	// department.addSubject(null);
 	// }
-
+	//
 	// @Test
 	// public void deleteSubject() {
 	//
-	// ArrayList<Subject> subjects = new ArrayList<Subject>();
-	// department.setSubjects(subjects);
-	//
 	// Subject subjectTest = new Subject();
-	// department.addSubject(subjectTest);
-	// department.deleteTeacher(subjectTest);
+	// department.deleteSubject(subjectTest);
 	//
-	// assertFalse("Subject is not deleted.",
+	// assertFalse("Fails to delete " + subjectTest + "to the " + department,
 	// department.getSubjects().contains(subjectTest));
-	//
-	// }
-	//
-	// @Test(expected = IllegalArgumentException.class)
-	// public void deleteSubject_Null() {
-	// ArrayList<Subject> subjects = new ArrayList<Subject>();
-	// department.setSubjects(subjects);
-	// department.deleteSubject(null);
-	//
 	// }
 
 }
