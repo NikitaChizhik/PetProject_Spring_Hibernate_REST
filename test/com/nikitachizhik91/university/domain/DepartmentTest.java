@@ -24,17 +24,16 @@ public class DepartmentTest {
 
 	@Test
 	public void departmentConstructorInit_Teachers() {
-		List<Teacher> expectedTeachers = new ArrayList<Teacher>();
+
 		assertNotNull("Teachers is null.", department.getTeachers());
-		assertTrue("Teachers is not empty." + expectedTeachers + "in " + department, department.getTeachers().isEmpty());
+		assertTrue("Teachers is not empty.", department.getTeachers().isEmpty());
 	}
 
 	@Test
 	public void departmentConstructorInit_SubjectsShouldBeNullandEmpty() {
 
-		List<Subject> expectedSubjects = new ArrayList<Subject>();
 		assertNotNull("Subjects is null.", department.getSubjects());
-		assertTrue("Subjects is not empty." + expectedSubjects + "in " + department, department.getSubjects().isEmpty());
+		assertTrue("Subjects is not empty.", department.getSubjects().isEmpty());
 	}
 
 	@Test
