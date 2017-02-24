@@ -54,7 +54,7 @@ public class Facultytest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addDepartment_addNull_MustThrowException() {
+	public void addDepartment_AddNull_MustThrowException() {
 
 		faculty.addDepartment(null);
 	}
@@ -99,7 +99,7 @@ public class Facultytest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addGroup_addNull_MustThrowException() {
+	public void addGroup_AddNull_MustThrowException() {
 
 		faculty.addGroup(null);
 	}

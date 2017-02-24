@@ -54,7 +54,7 @@ public class UniversityTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addFaculty_addNull_MustThrowException() {
+	public void addFaculty_AddNull_MustThrowException() {
 
 		university.addFaculty(null);
 	}
@@ -99,7 +99,7 @@ public class UniversityTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addRoom_addNull_MustThrowException() {
+	public void addRoom_AddNull_MustThrowException() {
 
 		university.addRoom(null);
 	}

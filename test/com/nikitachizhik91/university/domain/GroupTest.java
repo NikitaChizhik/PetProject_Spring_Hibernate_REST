@@ -44,7 +44,7 @@ public class GroupTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addStudent_addNull_MustThrowException() {
+	public void addStudent_AddNull_MustThrowException() {
 
 		group.addStudent(null);
 	}

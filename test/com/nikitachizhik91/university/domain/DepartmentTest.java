@@ -52,7 +52,7 @@ public class DepartmentTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addTeacher_addNull_MustThrowException() {
+	public void addTeacher_AddNull_MustThrowException() {
 
 		department.addTeacher(null);
 	}
@@ -99,13 +99,13 @@ public class DepartmentTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void addSubject_Null() {
+	public void addSubject_AddNull__MustThrowException() {
 
 		department.addSubject(null);
 	}
 
 	@Test
-	public void deleteSubject() {
+	public void deleteSubject_ShouldDeleteSubject() {
 
 		Subject subjectTest = new Subject();
 		department.addSubject(subjectTest);
