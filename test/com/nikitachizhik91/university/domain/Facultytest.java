@@ -18,14 +18,14 @@ public class Facultytest {
 	}
 
 	@Test
-	public void constructorShouldInitDepartmentsWithEmptyCollection() {
+	public void constructor_ShouldInitDepartmentsWithEmptyCollection() {
 
 		assertNotNull("Departments is null.", faculty.getDepartments());
 		assertTrue("Departments is not empty.", faculty.getDepartments().isEmpty());
 	}
 
 	@Test
-	public void constructorShouldInitGroupsWithEmptyCollection() {
+	public void constructor_ShouldInitGroupsWithEmptyCollection() {
 
 		assertNotNull("Groups is null.", faculty.getGroups());
 		assertTrue("Groups is not empty.", faculty.getGroups().isEmpty());

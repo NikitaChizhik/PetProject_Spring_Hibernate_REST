@@ -1,54 +1,72 @@
 package com.nikitachizhik91.university.domain;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class University {
 	private int id;
-	private List<Faculty> faculties;
-	private List<Room> rooms;
+	private Set<Faculty> faculties;
+	private Set<Room> rooms;
 	private Timetable timetable;
+
+	public University() {
+		faculties = new HashSet<Faculty>();
+		rooms = new HashSet<Room>();
+	}
 
 	public void addFaculty(Faculty faculty) {
 		if (faculty == null) {
 			throw new IllegalArgumentException();
 		}
+		if (faculties == null) {
+			faculties = new HashSet<Faculty>();
+		}
 		faculties.add(faculty);
 	}
 
 	public void deleteFaculty(Faculty faculty) {
-		if (faculty == null) {
-			throw new IllegalArgumentException();
+		if (faculties != null) {
+			faculties.remove(faculty);
 		}
-		faculties.remove(faculty);
 	}
 
 	public void addRoom(Room room) {
 		if (room == null) {
 			throw new IllegalArgumentException();
 		}
+		if (rooms == null) {
+			rooms = new HashSet<Room>();
+		}
 		rooms.add(room);
 	}
 
 	public void deleteRoom(Room room) {
-		if (room == null) {
-			throw new IllegalArgumentException();
+		if (rooms != null) {
+			rooms.remove(room);
 		}
-		rooms.remove(room);
 	}
 
-	public List<Faculty> getFaculties() {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Set<Faculty> getFaculties() {
 		return faculties;
 	}
 
-	public void setFaculties(List<Faculty> faculties) {
+	public void setFaculties(Set<Faculty> faculties) {
 		this.faculties = faculties;
 	}
 
-	public List<Room> getRooms() {
+	public Set<Room> getRooms() {
 		return rooms;
 	}
 
-	public void setRooms(List<Room> rooms) {
+	public void setRooms(Set<Room> rooms) {
 		this.rooms = rooms;
 	}
 

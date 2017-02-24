@@ -17,6 +17,22 @@ public class Timetable {
 		lessons = new ArrayList<Lesson>();
 	}
 
+	public void addLesson(Lesson lesson) {
+		if (lesson == null) {
+			throw new IllegalArgumentException();
+		}
+		if (lessons == null) {
+			lessons = new ArrayList<Lesson>();
+		}
+		lessons.add(lesson);
+	}
+
+	public void deleteLesson(Lesson lesson) {
+		if (lessons != null) {
+			lessons.remove(lesson);
+		}
+	}
+
 	public Timetable getTeachersTimetableForDay(Teacher teacher, Date date) {
 		if (teacher == null || date == null) {
 			throw new IllegalArgumentException();
@@ -93,20 +109,6 @@ public class Timetable {
 		}
 		return requiredTimetable;
 
-	}
-
-	public void addLesson(Lesson lesson) {
-		if (lesson == null) {
-			throw new IllegalArgumentException();
-		}
-		lessons.add(lesson);
-	}
-
-	public void deleteLesson(Lesson lesson) {
-		if (lesson == null) {
-			throw new IllegalArgumentException();
-		}
-		lessons.remove(lesson);
 	}
 
 	public List<Lesson> getLessons() {

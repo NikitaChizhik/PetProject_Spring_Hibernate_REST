@@ -1,25 +1,31 @@
 package com.nikitachizhik91.university.domain;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Group {
 	private int id;
 	private String name;
-	private List<Student> students;
+	private Set<Student> students;
+
+	public Group() {
+		students = new HashSet<Student>();
+	}
 
 	public void addStudent(Student student) {
 		if (student == null) {
 			throw new IllegalArgumentException();
 		}
-
+		if (students == null) {
+			students = new HashSet<Student>();
+		}
 		students.add(student);
 	}
 
 	public void deleteStudent(Student student) {
-		if (student == null) {
-			throw new IllegalArgumentException();
+		if (students != null) {
+			students.remove(student);
 		}
-		students.remove(student);
 	}
 
 	public int getId() {
@@ -38,11 +44,11 @@ public class Group {
 		this.name = name;
 	}
 
-	public List<Student> getStudents() {
+	public Set<Student> getStudents() {
 		return students;
 	}
 
-	public void setStudents(List<Student> students) {
+	public void setStudents(Set<Student> students) {
 		this.students = students;
 	}
 
