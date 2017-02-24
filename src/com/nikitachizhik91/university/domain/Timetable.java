@@ -72,24 +72,6 @@ public class Timetable {
 
 	}
 
-	public Timetable getStudentsTimetableForMonth(Student student, Date date) {
-		if (student == null || date == null) {
-			throw new IllegalArgumentException();
-		}
-		Timetable requiredTimetable = new Timetable();
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
-		for (Lesson lesson : lessons) {
-
-			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-					&& lesson.getGroup().equals(student.getGroup())) {
-				requiredTimetable.addLesson(lesson);
-			}
-		}
-		return requiredTimetable;
-
-	}
-
 	public Timetable getStudentsTimetableForDay(Student student, Date date) {
 		if (student == null || date == null) {
 			throw new IllegalArgumentException();
@@ -105,6 +87,24 @@ public class Timetable {
 
 				requiredTimetable.addLesson(lesson);
 
+			}
+		}
+		return requiredTimetable;
+
+	}
+
+	public Timetable getStudentsTimetableForMonth(Student student, Date date) {
+		if (student == null || date == null) {
+			throw new IllegalArgumentException();
+		}
+		Timetable requiredTimetable = new Timetable();
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
+		for (Lesson lesson : lessons) {
+
+			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
+					&& lesson.getGroup().equals(student.getGroup())) {
+				requiredTimetable.addLesson(lesson);
 			}
 		}
 		return requiredTimetable;

@@ -58,7 +58,8 @@ public class Group {
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((students == null) ? 0 : students.hashCode());
+		// result = prime * result + ((students == null) ? 0 :
+		// students.hashCode());
 		return result;
 	}
 
