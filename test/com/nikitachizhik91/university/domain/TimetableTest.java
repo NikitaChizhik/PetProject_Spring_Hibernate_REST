@@ -115,6 +115,21 @@ public class TimetableTest {
 	}
 
 	@Test
+	public void getTeachersTimetableForMonth_General() throws ParseException {
+
+		dateFormat = new SimpleDateFormat("M-yyyy");
+		dateString = "02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		expectedLessons = new ArrayList<Lesson>();
+		expectedLessons.add(lesson1);
+
+		List<Lesson> recivedLessons = timetable.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons();
+
+		assertEquals("two timetables are not equal.", expectedLessons, recivedLessons);
+	}
+
+	@Test
 	public void getTeachersTimetableForDay_General() throws ParseException {
 
 		dateFormat = new SimpleDateFormat("dd-M-yyyy");
@@ -124,8 +139,9 @@ public class TimetableTest {
 		expectedLessons = new ArrayList<Lesson>();
 		expectedLessons.add(lesson2);
 
-		assertEquals("two timetables are not equal.", expectedLessons,
-				timetable.getTeachersTimetableForMonth(teacher2, dateToCheck).getLessons());
+		List<Lesson> recivedLessons = timetable.getTeachersTimetableForMonth(teacher2, dateToCheck).getLessons();
+
+		assertEquals("two timetables are not equal.", expectedLessons, recivedLessons);
 	}
 
 	@Test
@@ -137,8 +153,9 @@ public class TimetableTest {
 		expectedLessons = new ArrayList<Lesson>();
 		expectedLessons.add(lesson1);
 
-		assertEquals("two timetables are not equal.", expectedLessons,
-				timetable.getStudentsTimetableForMonth(student3, dateToCheck).getLessons());
+		List<Lesson> recivedLessons = timetable.getStudentsTimetableForMonth(student3, dateToCheck).getLessons();
+
+		assertEquals("two timetables are not equal.", expectedLessons, recivedLessons);
 	}
 
 	@Test
@@ -151,22 +168,9 @@ public class TimetableTest {
 		expectedLessons = new ArrayList<Lesson>();
 		expectedLessons.add(lesson1);
 
-		assertEquals("two timetables are not equal.", expectedLessons,
-				timetable.getStudentsTimetableForDay(student3, dateToCheck).getLessons());
-	}
+		List<Lesson> recivedLessons = timetable.getStudentsTimetableForDay(student3, dateToCheck).getLessons();
 
-	@Test
-	public void getTeachersTimetableForMonth_General() throws ParseException {
-
-		dateFormat = new SimpleDateFormat("M-yyyy");
-		dateString = "02-2017";
-		dateToCheck = dateFormat.parse(dateString);
-
-		expectedLessons = new ArrayList<Lesson>();
-		expectedLessons.add(lesson1);
-
-		assertEquals("two timetables are not equal.", expectedLessons,
-				timetable.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
+		assertEquals("two timetables are not equal.", expectedLessons, recivedLessons);
 	}
 
 	@Test
@@ -178,14 +182,14 @@ public class TimetableTest {
 
 		Date recivedDate = timetable.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons().get(0).getDate();
 
-		Calendar inputDate = Calendar.getInstance();
-		inputDate.setTime(dateToCheck);
+		Calendar expected = Calendar.getInstance();
+		expected.setTime(dateToCheck);
 
-		Calendar expectedDate = Calendar.getInstance();
-		inputDate.setTime(recivedDate);
+		Calendar recived = Calendar.getInstance();
+		recived.setTime(recivedDate);
 
-		assertEquals("Month is wrong.", expectedDate.get(Calendar.MONTH), inputDate.get(Calendar.MONTH));
-		assertEquals("Year is wrong.", expectedDate.get(Calendar.YEAR), inputDate.get(Calendar.YEAR));
+		assertEquals("Month is wrong.", expected.get(Calendar.MONTH), recived.get(Calendar.MONTH));
+		assertEquals("Year is wrong.", expected.get(Calendar.YEAR), recived.get(Calendar.YEAR));
 	}
 
 	@Test
@@ -219,4 +223,154 @@ public class TimetableTest {
 		timetable.getTeachersTimetableForMonth(teacher1, null);
 	}
 
+	@Test
+	public void getTeachersTimetableForDay_CheckDate() throws ParseException {
+
+		dateFormat = new SimpleDateFormat("dd-M-yyyy");
+		dateString = "16-02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		Date recivedDate = timetable.getTeachersTimetableForDay(teacher1, dateToCheck).getLessons().get(0).getDate();
+
+		Calendar expected = Calendar.getInstance();
+		expected.setTime(dateToCheck);
+
+		Calendar recived = Calendar.getInstance();
+		recived.setTime(recivedDate);
+
+		assertEquals("Year is wrong.", expected.get(Calendar.YEAR), recived.get(Calendar.YEAR));
+		assertEquals("Month is wrong.", expected.get(Calendar.MONTH), recived.get(Calendar.MONTH));
+		assertEquals("Day is wrong.", expected.get(Calendar.DAY_OF_MONTH), recived.get(Calendar.DAY_OF_MONTH));
+	}
+
+	@Test
+	public void getTeachersTimetableForDay_CheckTeacher() throws ParseException {
+		dateFormat = new SimpleDateFormat("dd-M-yyyy");
+		dateString = "17-03-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		Teacher recivedTeacher = timetable.getTeachersTimetableForDay(teacher2, dateToCheck).getLessons().get(0)
+				.getTeacher();
+
+		assertEquals("Teacher is wrong.", teacher2, recivedTeacher);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getTeachersTimetableForDay_BothArgumentsNull_ShouldThrowException() {
+
+		timetable.getStudentsTimetableForDay(null, null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getTeachersTimetableForDay_ArgumentsNullandDate_ShouldThrowException() throws ParseException {
+		dateFormat = new SimpleDateFormat("M-yyyy");
+		dateString = "02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+		timetable.getTeachersTimetableForDay(null, dateToCheck);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getTeachersTimetableForDay_ArgumentsTeacherandNull_ShouldThrowException() {
+		timetable.getTeachersTimetableForDay(teacher1, null);
+	}
+
+	@Test
+	public void getStudentsTimetableForDay_CheckDate() throws ParseException {
+
+		dateFormat = new SimpleDateFormat("dd-M-yyyy");
+		dateString = "16-02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		Date recivedDate = timetable.getStudentsTimetableForDay(student3, dateToCheck).getLessons().get(0).getDate();
+
+		Calendar expected = Calendar.getInstance();
+		expected.setTime(dateToCheck);
+
+		Calendar recived = Calendar.getInstance();
+		recived.setTime(recivedDate);
+
+		assertEquals("Year is wrong.", expected.get(Calendar.YEAR), recived.get(Calendar.YEAR));
+		assertEquals("Month is wrong.", expected.get(Calendar.MONTH), recived.get(Calendar.MONTH));
+		assertEquals("Day is wrong.", expected.get(Calendar.DAY_OF_MONTH), recived.get(Calendar.DAY_OF_MONTH));
+	}
+
+	@Test
+	public void getStudentsTimetableForDay_CheckGroup() throws ParseException {
+		dateFormat = new SimpleDateFormat("dd-M-yyyy");
+		dateString = "16-02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		Group recivedGroup = timetable.getStudentsTimetableForDay(student3, dateToCheck).getLessons().get(0).getGroup();
+		Group expectedGroup = student3.getGroup();
+		assertEquals("Group is wrong.", expectedGroup, recivedGroup);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getStudentsTimetableForDay_BothArgumentsNull_ShouldThrowException() {
+
+		timetable.getStudentsTimetableForDay(null, null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getStudentsTimetableForDay_ArgumentsNullAndDate_ShouldThrowException() throws ParseException {
+		dateFormat = new SimpleDateFormat("dd-M-yyyy");
+		dateString = "17-03-2017";
+		dateToCheck = dateFormat.parse(dateString);
+		timetable.getStudentsTimetableForDay(null, dateToCheck);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getStudentsTimetableForDay_ArgumentsStudentAndNull_ShouldThrowException() {
+		timetable.getStudentsTimetableForDay(student1, null);
+	}
+
+	@Test
+	public void getStudentsTimetableForMonth_CheckDate() throws ParseException {
+
+		dateFormat = new SimpleDateFormat("M-yyyy");
+		dateString = "02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		Date recivedDate = timetable.getStudentsTimetableForMonth(student3, dateToCheck).getLessons().get(0).getDate();
+
+		Calendar expected = Calendar.getInstance();
+		expected.setTime(dateToCheck);
+
+		Calendar recived = Calendar.getInstance();
+		recived.setTime(recivedDate);
+
+		assertEquals("Year is wrong.", expected.get(Calendar.YEAR), recived.get(Calendar.YEAR));
+		assertEquals("Month is wrong.", expected.get(Calendar.MONTH), recived.get(Calendar.MONTH));
+	}
+
+	@Test
+	public void getStudentsTimetableForMonth_CheckGroup() throws ParseException {
+		dateFormat = new SimpleDateFormat("M-yyyy");
+		dateString = "02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		Group recivedGroup = timetable.getStudentsTimetableForMonth(student3, dateToCheck).getLessons().get(0)
+				.getGroup();
+		Group expectedGroup = student3.getGroup();
+		assertEquals("Group is wrong.", expectedGroup, recivedGroup);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getStudentsTimetableForMonth_BothArgumentsNull_ShouldThrowException() {
+
+		timetable.getStudentsTimetableForMonth(null, null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getStudentsTimetableForMonth_ArgumentsNullAndDate_ShouldThrowException() throws ParseException {
+		dateFormat = new SimpleDateFormat("M-yyyy");
+		dateString = "03-2017";
+		dateToCheck = dateFormat.parse(dateString);
+		timetable.getStudentsTimetableForMonth(null, dateToCheck);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void getStudentsTimetableForMonth_ArgumentsStudentAndNull_ShouldThrowException() {
+		timetable.getStudentsTimetableForMonth(student1, null);
+	}
 }
