@@ -17,15 +17,6 @@ import org.junit.Test;
 public class TimetableTest {
 	Timetable timetable;
 
-	University university;
-	Set<Faculty> faculties;
-	Faculty faculty1;
-	Set<Department> departments;
-	Department department1;
-	Set<Subject> subjects;
-	Set<Teacher> teachers;
-	Set<Group> groups;
-	Set<Room> rooms;
 	Room room1;
 	Group group1;
 	Subject subject1;
@@ -45,42 +36,20 @@ public class TimetableTest {
 	public void init() throws ParseException {
 		timetable = new Timetable();
 
-		university = new University();
-		faculties = new HashSet<Faculty>();
-		faculty1 = new Faculty();
-		departments = new HashSet<Department>();
-		department1 = new Department();
-		subjects = new HashSet<Subject>();
-		teachers = new HashSet<Teacher>();
-		groups = new HashSet<Group>();
-		rooms = new HashSet<Room>();
-
-		department1.setId(1);
-		department1.setName("Phonetics");
-
 		subject1 = new Subject();
 		subject1.setId(1);
 		subject1.setName("english speaking practice");
-		subjects.add(subject1);
 		Subject subject2 = new Subject();
 		subject2.setId(2);
 		subject2.setName("LISTENING");
-		subjects.add(subject2);
-		department1.setSubjects(subjects);
 
 		teacher1 = new Teacher();
 		teacher1.setId(1);
 		teacher1.setName("Nikita Chizhik");
 		teacher1.setSubject(subject1);
-		teachers.add(teacher1);
 		teacher2 = new Teacher();
 		teacher2.setId(2);
 		teacher2.setName("Mikola brutski");
-		teachers.add(teacher2);
-		department1.setTeachers(teachers);
-
-		departments.add(department1);
-		faculty1.setDepartments(departments);
 
 		Group group2 = new Group();
 		group2.setId(2);
@@ -93,7 +62,6 @@ public class TimetableTest {
 		Student student2 = new Student();
 		students.add(student2);
 		group2.setStudents(students);
-		groups.add(group2);
 
 		group1 = new Group();
 		group1.setId(1);
@@ -107,30 +75,11 @@ public class TimetableTest {
 		Student student4 = new Student();
 		students2.add(student4);
 		group1.setStudents(students2);
-		groups.add(group1);
 
-		faculty1.setId(4455);
-		faculty1.setGroups(groups);
-		faculty1.setName("Faculty of English Language");
-
-		faculties.add(faculty1);
-
-		university.setFaculties(faculties);
-
-		room1 = new Room();
-		room1.setNumber("11");
 		Room room2 = new Room();
 		room2.setNumber("12");
-		Room room3 = new Room();
-		room3.setNumber("13");
 		Room room4 = new Room();
 		room4.setNumber("13b");
-		rooms.add(room1);
-		rooms.add(room2);
-		rooms.add(room3);
-		rooms.add(room4);
-
-		university.setRooms(rooms);
 
 		lesson1 = new Lesson();
 
@@ -163,27 +112,10 @@ public class TimetableTest {
 
 		timetable.addLesson(lesson2);
 
-		university.setTimetable(timetable);
 	}
 
 	@Test
-	public void getTeachersTimetableForMonth_general() throws ParseException {
-
-		dateFormat = new SimpleDateFormat("M-yyyy");
-		dateString = "02-2017";
-		dateToCheck = dateFormat.parse(dateString);
-		expectedLessons = new ArrayList<Lesson>();
-		expectedLessons.add(lesson1);
-		expectedTimetable = new Timetable();
-		expectedTimetable.setLessons(expectedLessons);
-
-		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
-				.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
-
-	}
-
-	@Test
-	public void getTeachersTimetableForDay_general() throws ParseException {
+	public void getTeachersTimetableForDay_General() throws ParseException {
 
 		dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		dateString = "17-03-2017";
@@ -191,32 +123,26 @@ public class TimetableTest {
 
 		expectedLessons = new ArrayList<Lesson>();
 		expectedLessons.add(lesson2);
-		expectedTimetable = new Timetable();
-		expectedTimetable.setLessons(expectedLessons);
 
-		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
-				.getTeachersTimetableForMonth(teacher2, dateToCheck).getLessons());
-
+		assertEquals("two timetables are not equal.", expectedLessons,
+				timetable.getTeachersTimetableForMonth(teacher2, dateToCheck).getLessons());
 	}
 
 	@Test
-	public void getStudentsTimetableForMonth_general() throws ParseException {
+	public void getStudentsTimetableForMonth_General() throws ParseException {
 		dateFormat = new SimpleDateFormat("M-yyyy");
 		dateString = "02-2017";
 		dateToCheck = dateFormat.parse(dateString);
 
 		expectedLessons = new ArrayList<Lesson>();
 		expectedLessons.add(lesson1);
-		expectedTimetable = new Timetable();
-		expectedTimetable.setLessons(expectedLessons);
 
-		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
-				.getStudentsTimetableForMonth(student3, dateToCheck).getLessons());
-
+		assertEquals("two timetables are not equal.", expectedLessons,
+				timetable.getStudentsTimetableForMonth(student3, dateToCheck).getLessons());
 	}
 
 	@Test
-	public void getStudentsTimetableForDay_general() throws ParseException {
+	public void getStudentsTimetableForDay_General() throws ParseException {
 
 		dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		dateString = "16-02-2017";
@@ -224,23 +150,33 @@ public class TimetableTest {
 
 		expectedLessons = new ArrayList<Lesson>();
 		expectedLessons.add(lesson1);
-		expectedTimetable = new Timetable();
-		expectedTimetable.setLessons(expectedLessons);
 
-		assertEquals("two timetables are not equal.", expectedTimetable.getLessons(), university.getTimetable()
-				.getStudentsTimetableForDay(student3, dateToCheck).getLessons());
-
+		assertEquals("two timetables are not equal.", expectedLessons,
+				timetable.getStudentsTimetableForDay(student3, dateToCheck).getLessons());
 	}
 
 	@Test
-	public void getTeachersTimetableForMonth_checkDate() throws ParseException {
+	public void getTeachersTimetableForMonth_General() throws ParseException {
 
 		dateFormat = new SimpleDateFormat("M-yyyy");
 		dateString = "02-2017";
 		dateToCheck = dateFormat.parse(dateString);
 
-		Date recivedDate = university.getTimetable().getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons()
-				.get(0).getDate();
+		expectedLessons = new ArrayList<Lesson>();
+		expectedLessons.add(lesson1);
+
+		assertEquals("two timetables are not equal.", expectedLessons,
+				timetable.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons());
+	}
+
+	@Test
+	public void getTeachersTimetableForMonth_CheckDate() throws ParseException {
+
+		dateFormat = new SimpleDateFormat("M-yyyy");
+		dateString = "02-2017";
+		dateToCheck = dateFormat.parse(dateString);
+
+		Date recivedDate = timetable.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons().get(0).getDate();
 
 		Calendar inputDate = Calendar.getInstance();
 		inputDate.setTime(dateToCheck);
@@ -250,27 +186,24 @@ public class TimetableTest {
 
 		assertEquals("Month is wrong.", expectedDate.get(Calendar.MONTH), inputDate.get(Calendar.MONTH));
 		assertEquals("Year is wrong.", expectedDate.get(Calendar.YEAR), inputDate.get(Calendar.YEAR));
-
 	}
 
 	@Test
-	public void getTeachersTimetableForMonth_checkTeacher() throws ParseException {
+	public void getTeachersTimetableForMonth_CheckTeacher() throws ParseException {
 		dateFormat = new SimpleDateFormat("M-yyyy");
 		dateString = "02-2017";
 		dateToCheck = dateFormat.parse(dateString);
 
-		Teacher recivedTeacher = university.getTimetable().getTeachersTimetableForMonth(teacher1, dateToCheck)
-				.getLessons().get(0).getTeacher();
+		Teacher recivedTeacher = timetable.getTeachersTimetableForMonth(teacher1, dateToCheck).getLessons().get(0)
+				.getTeacher();
 
-		assertEquals("teacher is wrong.", teacher1, recivedTeacher);
-
+		assertEquals("Teacher is wrong.", teacher1, recivedTeacher);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void getTeachersTimetableForMonth_BothArgumentsNull_ShouldThrowException() {
 
 		timetable.getStudentsTimetableForDay(null, null);
-
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -278,14 +211,12 @@ public class TimetableTest {
 		dateFormat = new SimpleDateFormat("M-yyyy");
 		dateString = "02-2017";
 		dateToCheck = dateFormat.parse(dateString);
-		university.getTimetable().getTeachersTimetableForMonth(null, dateToCheck);
-
+		timetable.getTeachersTimetableForMonth(null, dateToCheck);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void getTeachersTimetableForMonth_ArgumentsTeacherandNull_ShouldThrowException() {
-		university.getTimetable().getTeachersTimetableForMonth(teacher1, null);
-
+		timetable.getTeachersTimetableForMonth(teacher1, null);
 	}
 
 }

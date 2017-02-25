@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TimetableTestAddDelete {
+public class TimetableFieldsTest {
 
 	Timetable timetable;
 

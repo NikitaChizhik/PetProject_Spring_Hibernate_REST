@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class University {
-	private int id;
+	private String name;
 	private Set<Faculty> faculties;
 	private Set<Room> rooms;
 	private Timetable timetable;
@@ -46,12 +46,12 @@ public class University {
 		}
 	}
 
-	public int getId() {
-		return id;
+	public String getName() {
+		return name;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Set<Faculty> getFaculties() {
@@ -83,7 +83,7 @@ public class University {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((faculties == null) ? 0 : faculties.hashCode());
-		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((rooms == null) ? 0 : rooms.hashCode());
 		result = prime * result + ((timetable == null) ? 0 : timetable.hashCode());
 		return result;
@@ -103,7 +103,10 @@ public class University {
 				return false;
 		} else if (!faculties.equals(other.faculties))
 			return false;
-		if (id != other.id)
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
 			return false;
 		if (rooms == null) {
 			if (other.rooms != null)
@@ -120,7 +123,7 @@ public class University {
 
 	@Override
 	public String toString() {
-		return "University [id=" + id + " timetable=" + timetable + "]";
+		return "University [name=" + name + "]";
 	}
 
 }
