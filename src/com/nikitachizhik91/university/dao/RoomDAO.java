@@ -14,21 +14,23 @@ public class RoomDAO implements Crud<Room> {
 	public Room create(Room room) {
 		Room newRoom = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement("insert into rooms (number) values(?)");) {
-			ResultSet resultSet = null;
+				PreparedStatement statement = connection.prepareStatement("insert into rooms (number) values(?)");
+				PreparedStatement statement2 = connection.prepareStatement("select * from rooms where number=?");
+
+		) {
+
 			statement.setString(1, room.getNumber());
 
 			statement.executeUpdate();
 
-			PreparedStatement statement2 = connection.prepareStatement("select * from rooms where number=?");
 			statement2.setString(1, room.getNumber());
-			resultSet = statement2.executeQuery();
-			while (resultSet.next()) {
-				newRoom = new Room();
-				newRoom.setId(resultSet.getInt("room_id"));
-				newRoom.setNumber(resultSet.getString("number"));
+			try (ResultSet resultSet = statement2.executeQuery();) {
+				while (resultSet.next()) {
+					newRoom = new Room();
+					newRoom.setId(resultSet.getInt("room_id"));
+					newRoom.setNumber(resultSet.getString("number"));
+				}
 			}
-
 		} catch (SQLException e) {
 			e.getMessage();
 
@@ -85,14 +87,16 @@ public class RoomDAO implements Crud<Room> {
 
 			statement.setString(1, room.getNumber());
 			statement.setInt(2, id);
-
-			try (ResultSet resultSet = statement.executeQuery();) {
-				while (resultSet.next()) {
-					newRoom = new Room();
-					newRoom.setId(resultSet.getInt("room_id"));
-					newRoom.setNumber(resultSet.getString("number"));
-				}
-			}
+			 statement.executeUpdate();
+			 
+			 
+//			try (ResultSet resultSet =;) {
+//				while (resultSet.next()) {
+//					newRoom = new Room();
+//					newRoom.setId(resultSet.getInt("room_id"));
+//					newRoom.setNumber(resultSet.getString("number"));
+//				}
+//			}
 
 		} catch (SQLException e) {
 			e.getMessage();
