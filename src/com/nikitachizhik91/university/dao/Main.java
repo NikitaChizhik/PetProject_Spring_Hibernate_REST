@@ -1,7 +1,5 @@
 package com.nikitachizhik91.university.dao;
 
-import java.util.List;
-
 import com.nikitachizhik91.university.domain.Room;
 import com.nikitachizhik91.university.domain.Subject;
 
@@ -9,9 +7,9 @@ public class Main {
 	public static void main(String[] args) {
 
 		RoomDAO roomDAO = new RoomDAO();
-		 Room room = new Room();
-		 room.setNumber("3");
-		 roomDAO.create(room);
+		Room room = new Room();
+		room.setNumber("6");
+		System.out.println(roomDAO.create(room));
 
 		// List<Room> all = roomDAO.getAll();
 		// for (Room room : all) {
@@ -21,10 +19,10 @@ public class Main {
 		// System.out.println(roomDAO.getById(2));
 
 		// Room room = new Room();
-		// room.setNumber("107");
-		// roomDAO.update(1, room);
+		room.setNumber("125");
+		System.out.println(roomDAO.update(3, room));
 
-		//roomDAO.delete(1);
+		// roomDAO.delete(1);
 		// ArrayList<Room> allRooms = roomDAO.getAllRooms();
 		//
 		// for (Room room : allRooms) {
