@@ -12,16 +12,23 @@ import com.nikitachizhik91.university.domain.Room;
 public class RoomDAO implements Crud<Room> {
 
 	public Room create(Room room) {
+		Room newRoom = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement("insert into rooms (number) values(?)");) {
 
 			statement.setString(1, room.getNumber());
-			statement.executeUpdate();
 
+			try (ResultSet resultSet = statement.executeQuery();) {
+				while (resultSet.next()) {
+					newRoom = new Room();
+					newRoom.setId(resultSet.getInt("room_id"));
+					newRoom.setNumber(resultSet.getString("number"));
+				}
+			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return room;
+		return newRoom;
 	}
 
 	public Room getById(int id) {
