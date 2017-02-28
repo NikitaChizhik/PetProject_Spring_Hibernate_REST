@@ -82,21 +82,21 @@ public class RoomDAO implements Crud<Room> {
 	public Room update(int id, Room room) {
 		Room newRoom = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection
-						.prepareStatement("update rooms set number=? where room_id =?");) {
+				PreparedStatement statement = connection.prepareStatement("update rooms set number=? where room_id =?");
+				PreparedStatement statement2 = connection.prepareStatement("select * from rooms where room_id=?");) {
 
 			statement.setString(1, room.getNumber());
 			statement.setInt(2, id);
-			 statement.executeUpdate();
-			 
-			 
-//			try (ResultSet resultSet =;) {
-//				while (resultSet.next()) {
-//					newRoom = new Room();
-//					newRoom.setId(resultSet.getInt("room_id"));
-//					newRoom.setNumber(resultSet.getString("number"));
-//				}
-//			}
+			statement.executeUpdate();
+
+			statement2.setInt(1, id);
+			try (ResultSet resultSet = statement2.executeQuery();) {
+				while (resultSet.next()) {
+					newRoom = new Room();
+					newRoom.setId(resultSet.getInt("room_id"));
+					newRoom.setNumber(resultSet.getString("number"));
+				}
+			}
 
 		} catch (SQLException e) {
 			e.getMessage();
