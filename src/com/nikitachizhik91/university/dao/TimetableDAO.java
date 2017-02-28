@@ -1,80 +1,40 @@
 package com.nikitachizhik91.university.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import com.nikitachizhik91.university.domain.Teacher;
+import com.nikitachizhik91.university.domain.Timetable;
 
 public class TimetableDAO {
 
+	public Timetable getTeachersTimetableForDay(Teacher teacher, Date date) {
+		Timetable timetable = new Timetable();
 
-	// teachers?list  subjects?
-	public void getTeachersTimetableForDay( Teacher teacher, GregorianCalendar date) {
+		try (Connection connection = Connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(
+						"select * from lessons join teachers on lessons.lesson_id=teachers.lesson_id_fk"
+								+ "where teacher_id=? and date='2017-01-01';");) {
 
-		Connection connection = null;
+			statement.setInt(1, teacher.getId());
 
-		try {
-			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/University2", "postgres",
-					"HolyBible");
+			Timestamp timestamp = new Timestamp(date.getTime());
+			statement.setTimestamp(2, timestamp);
 
-			PreparedStatement statement = null;
-			ResultSet resultSet = null;
-			try {
-				statement = connection.prepareStatement(
-						"select * from lessons where teacher_id=? and date=?",
-						Statement.RETURN_GENERATED_KEYS);
-				statement.setInt(1, teacher.getId());
-				
-				Timestamp timestamp = new Timestamp(date.getTimeInMillis());
-				statement.setTimestamp(2, timestamp);
-				ResultSet rs = statement.executeQuery();
+			try (ResultSet resultSet = statement.executeQuery();) {
 
-//				resultSet = statement.getGeneratedKeys();
-//				if (resultSet.next()) {
-//					System.out.println(resultSet.getInt(1));
-//					System.out.println(resultSet.getString(2));
-//					System.out.println(resultSet.getInt(3));
-//				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (resultSet != null) {
-						resultSet.close();
-					}
+				if (resultSet.next()) {
 
-				} catch (SQLException e) {
-					e.printStackTrace();
 				}
-				try {
-					if (statement != null) {
-						statement.close();
-					}
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (connection != null) {
-					connection.close();
-				}
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			e.getMessage();
 		}
+		return timetable;
 	}
 
 	// public Room getRoom(String name) {
@@ -90,7 +50,8 @@ public class TimetableDAO {
 	// PreparedStatement statement = null;
 	// ResultSet resultSet = null;
 	// try {
-	// statement = connection.prepareStatement("select * from room where number
+	// statement = connection.prepareStatement("select * from room where
+	// number
 	// like ? order by number");
 	// name += "%";
 	// statement.setString(1, name);
@@ -214,7 +175,8 @@ public class TimetableDAO {
 	//
 	// PreparedStatement statement = null;
 	// try {
-	// statement = connection.prepareStatement("update room set number=? where
+	// statement = connection.prepareStatement("update room set number=?
+	// where
 	// number =?");
 	// // name += "%";
 	// // newName += "%";
@@ -263,7 +225,8 @@ public class TimetableDAO {
 	//
 	// PreparedStatement statement = null;
 	// try {
-	// statement = connection.prepareStatement("delete from room where number
+	// statement = connection.prepareStatement("delete from room where
+	// number
 	// =?");
 	// // name += "%";
 	// // newName += "%";
@@ -300,6 +263,4 @@ public class TimetableDAO {
 	// }
 	//
 	// }
-
-
 }

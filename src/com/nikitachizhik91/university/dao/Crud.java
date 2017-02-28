@@ -2,15 +2,14 @@ package com.nikitachizhik91.university.dao;
 
 import java.util.List;
 
+public interface Crud<T> {
+	T create(T objectToCreate);
 
-public interface Crud {
-	Object create(Object object);
+	T getById(int id);
 
-	Object getById(int id);
+	List<T> getAll();
 
-	List<Object> getAll();
-
-	Object update(int id, Object objectToInsert);
+	T update(int id, T objectToInsert);
 
 	void delete(int id);
 

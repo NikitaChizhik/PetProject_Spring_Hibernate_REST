@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.nikitachizhik91.university.domain.Room;
 
-public class RoomDAO {
+public class RoomDAO implements Crud<Room> {
 
 	public Room create(Room room) {
 		try (Connection connection = Connector.getConnection();
@@ -19,7 +19,7 @@ public class RoomDAO {
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.getMessage();
 		}
 		return room;
 	}
@@ -41,7 +41,7 @@ public class RoomDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.getMessage();
 		}
 		return roomRecieved;
 	}
@@ -60,7 +60,7 @@ public class RoomDAO {
 				roomsRecieved.add(room);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.getMessage();
 		}
 		return roomsRecieved;
 	}
@@ -76,7 +76,7 @@ public class RoomDAO {
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.getMessage();
 		}
 		return room;
 	}
@@ -90,7 +90,7 @@ public class RoomDAO {
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			e.getMessage();
 		}
 	}
 
