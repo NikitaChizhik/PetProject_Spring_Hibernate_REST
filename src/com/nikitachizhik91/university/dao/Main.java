@@ -1,6 +1,5 @@
 package com.nikitachizhik91.university.dao;
 
-import com.nikitachizhik91.university.domain.Room;
 import com.nikitachizhik91.university.domain.Teacher;
 
 public class Main {
@@ -8,8 +7,8 @@ public class Main {
 
 		TeacherDAO teacherDAO = new TeacherDAO();
 		Teacher teacher = new Teacher();
-		teacher.setName("Masha Chizhik");
-		System.out.println(teacherDAO.create(teacher));
+//		teacher.setName("Masha Chizhik");
+//		System.out.println(teacherDAO.create(teacher));
 		
 //		 RoomDAO roomDAO = new RoomDAO();
 //		 Room room = new Room();
