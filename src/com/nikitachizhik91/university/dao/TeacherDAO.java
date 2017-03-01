@@ -1,298 +1,123 @@
 package com.nikitachizhik91.university.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import com.nikitachizhik91.university.domain.Subject;
+import com.nikitachizhik91.university.domain.Teacher;
 
 public class TeacherDAO {
 
-	public void addTeacher(int id, String name, Subject subject) {
+	public Teacher create(Teacher teacher) {
+		Teacher newTeacher = null;
+		try (Connection connection = Connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement("insert into teachers (name) values(?)");
+				PreparedStatement statement2 = connection.prepareStatement("select * from teachers where name=?");
 
-		Connection connection = null;
+		) {
 
-		try {
-			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/University2", "postgres",
-					"HolyBible");
+			statement.setString(1, teacher.getName());
 
-			PreparedStatement statement = null;
-			ResultSet resultSet = null;
-			try {
-				statement = connection.prepareStatement(
-						"insert into teachers" + "(teacher_id,name,fk_subject_id)" + "values(?,?,?)",
-						Statement.RETURN_GENERATED_KEYS);
-				statement.setInt(1, id);
-				statement.setString(2, name);
-				statement.setInt(3, subject.getId());
-				statement.executeUpdate();
+			statement.executeUpdate();
 
-				resultSet = statement.getGeneratedKeys();
-				if (resultSet.next()) {
-					System.out.println(resultSet.getInt(1));
-					System.out.println(resultSet.getString(2));
-					System.out.println(resultSet.getInt(3));
+			statement2.setString(1, teacher.getName());
+			try (ResultSet resultSet = statement2.executeQuery()) {
+				while (resultSet.next()) {
+					newTeacher = new Teacher();
+					newTeacher.setId(resultSet.getInt("teacher_id"));
+					newTeacher.setName(resultSet.getString("name"));
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (resultSet != null) {
-						resultSet.close();
-					}
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				try {
-					if (statement != null) {
-						statement.close();
-					}
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (connection != null) {
-					connection.close();
-				}
+			e.getMessage();
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
+		return newTeacher;
 	}
 
-	// public Room getRoom(String name) {
+	// public Room getById(int id) {
 	// Room roomRecieved = new Room();
-	// Connection connection = null;
 	//
-	// try {
-	// connection =
-	// DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/University2",
-	// "postgres",
-	// "HolyBible");
+	// try (Connection connection = Connector.getConnection();
 	//
-	// PreparedStatement statement = null;
-	// ResultSet resultSet = null;
-	// try {
-	// statement = connection.prepareStatement("select * from room where number
-	// like ? order by number");
-	// name += "%";
-	// statement.setString(1, name);
+	// PreparedStatement statement = connection.prepareStatement("select * from
+	// rooms where room_id=?")) {
 	//
-	// resultSet = statement.executeQuery();
+	// statement.setInt(1, id);
+	//
+	// try (ResultSet resultSet = statement.executeQuery()) {
 	// if (resultSet.next()) {
-	// roomRecieved.setId(resultSet.getInt(1));
-	// roomRecieved.setNumber(resultSet.getString(2));
-	// System.out.println(resultSet.getInt(1));
-	// System.out.println(resultSet.getString(2));
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	// try {
-	// if (resultSet != null) {
-	// resultSet.close();
-	// }
 	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
+	// roomRecieved.setId(resultSet.getInt("room_id"));
+	// roomRecieved.setNumber(resultSet.getString("number"));
 	// }
-	// try {
-	// if (statement != null) {
-	// statement.close();
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	//
 	// }
 	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	// try {
-	// if (connection != null) {
-	// connection.close();
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
+	// e.getMessage();
 	// }
 	// return roomRecieved;
 	// }
 	//
-	// public ArrayList<Room> getAllRooms() {
-	// ArrayList<Room> roomsRecieved = new ArrayList<Room>();
-	// Connection connection = null;
+	// public List<Room> getAll() {
+	// List<Room> roomsRecieved = new ArrayList<Room>();
 	//
-	// try {
-	// connection =
-	// DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/University2",
-	// "postgres",
-	// "HolyBible");
-	//
-	// PreparedStatement statement = null;
-	// ResultSet resultSet = null;
-	// try {
-	// statement = connection.prepareStatement("select * from room order by
-	// number");
-	// // name += "%";
-	// // statement.setString(1, name);
-	//
-	// resultSet = statement.executeQuery();
+	// try (Connection connection = Connector.getConnection();
+	// PreparedStatement statement = connection.prepareStatement("select * from
+	// rooms order by number");
+	// ResultSet resultSet = statement.executeQuery();) {
 	//
 	// while (resultSet.next()) {
 	// Room room = new Room();
-	// room.setId(resultSet.getInt(1));
-	// room.setNumber(resultSet.getString(2));
+	// room.setId(resultSet.getInt("room_id"));
+	// room.setNumber(resultSet.getString("number"));
 	// roomsRecieved.add(room);
-	//
-	// System.out.println(resultSet.getInt(1));
-	// System.out.println(resultSet.getString(2));
 	// }
 	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	// try {
-	// if (resultSet != null) {
-	// resultSet.close();
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// try {
-	// if (statement != null) {
-	// statement.close();
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	// try {
-	// if (connection != null) {
-	// connection.close();
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
+	// e.getMessage();
 	// }
 	// return roomsRecieved;
 	// }
 	//
-	// public void updateRoom(String name, String newName) {
-	// Connection connection = null;
-	// // bez RS?
-	// try {
-	// connection =
-	// DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/University2",
-	// "postgres",
-	// "HolyBible");
+	// public Room update(int id, Room room) {
+	// Room newRoom = null;
+	// try (Connection connection = Connector.getConnection();
+	// PreparedStatement statement = connection.prepareStatement("update rooms
+	// set number=? where room_id =?");
+	// PreparedStatement statement2 = connection.prepareStatement("select * from
+	// rooms where room_id=?");) {
 	//
-	// PreparedStatement statement = null;
-	// try {
-	// statement = connection.prepareStatement("update room set number=? where
-	// number =?");
-	// // name += "%";
-	// // newName += "%";
-	// statement.setString(1, newName);
-	// statement.setString(2, name);
+	// statement.setString(1, room.getNumber());
+	// statement.setInt(2, id);
+	// statement.executeUpdate();
+	//
+	// statement2.setInt(1, id);
+	// try (ResultSet resultSet = statement2.executeQuery();) {
+	// while (resultSet.next()) {
+	// newRoom = new Room();
+	// newRoom.setId(resultSet.getInt("room_id"));
+	// newRoom.setNumber(resultSet.getString("number"));
+	// }
+	// }
+	//
+	// } catch (SQLException e) {
+	// e.getMessage();
+	// }
+	// return newRoom;
+	// }
+	//
+	// public void delete(int id) {
+	// try (Connection connection = Connector.getConnection();
+	// PreparedStatement statement = connection.prepareStatement("delete from
+	// rooms where id =?");) {
+	//
+	// statement.setInt(1, id);
 	//
 	// statement.executeUpdate();
 	//
 	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	//
-	// try {
-	// if (statement != null) {
-	// statement.close();
+	// e.getMessage();
 	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	// try {
-	// if (connection != null) {
-	// connection.close();
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	//
-	// }
-	//
-	// public void deleteRoom(String name) {
-	// Connection connection = null;
-	//
-	// try {
-	// connection =
-	// DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/University2",
-	// "postgres",
-	// "HolyBible");
-	//
-	// PreparedStatement statement = null;
-	// try {
-	// statement = connection.prepareStatement("delete from room where number
-	// =?");
-	// // name += "%";
-	// // newName += "%";
-	//
-	// statement.setString(1, name);
-	//
-	// statement.executeUpdate();
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	//
-	// try {
-	// if (statement != null) {
-	// statement.close();
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	// try {
-	// if (connection != null) {
-	// connection.close();
-	// }
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	//
 	// }
 
 }

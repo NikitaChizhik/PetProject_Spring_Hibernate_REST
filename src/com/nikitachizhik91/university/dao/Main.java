@@ -1,15 +1,20 @@
 package com.nikitachizhik91.university.dao;
 
 import com.nikitachizhik91.university.domain.Room;
-import com.nikitachizhik91.university.domain.Subject;
+import com.nikitachizhik91.university.domain.Teacher;
 
 public class Main {
 	public static void main(String[] args) {
 
-		RoomDAO roomDAO = new RoomDAO();
-		Room room = new Room();
-		room.setNumber("3000");
-		System.out.println(roomDAO.create(room));
+		TeacherDAO teacherDAO = new TeacherDAO();
+		Teacher teacher = new Teacher();
+		teacher.setName("Masha Chizhik");
+		System.out.println(teacherDAO.create(teacher));
+		
+//		 RoomDAO roomDAO = new RoomDAO();
+//		 Room room = new Room();
+//		 room.setNumber("2000");
+//		 System.out.println(roomDAO.create(room));
 
 		// List<Room> all = roomDAO.getAll();
 		// for (Room room : all) {
@@ -29,9 +34,9 @@ public class Main {
 		// System.out.println(room);
 		// }
 
-		TeacherDAO teacherDAO = new TeacherDAO();
-		Subject subject = new Subject();
-		subject.setId(1);
+		// TeacherDAO teacherDAO = new TeacherDAO();
+		// Subject subject = new Subject();
+		// subject.setId(1);
 		// teacherDAO.addTeacher(1, "Nikita Chizik Valerievich", subject);
 	}
 }
