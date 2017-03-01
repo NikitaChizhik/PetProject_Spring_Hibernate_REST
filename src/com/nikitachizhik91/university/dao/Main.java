@@ -1,19 +1,17 @@
 package com.nikitachizhik91.university.dao;
 
-import com.nikitachizhik91.university.domain.Teacher;
-
 public class Main {
 	public static void main(String[] args) {
 
-		TeacherDAO teacherDAO = new TeacherDAO();
-		Teacher teacher = new Teacher();
-//		teacher.setName("Masha Chizhik");
-//		System.out.println(teacherDAO.create(teacher));
-		
-//		 RoomDAO roomDAO = new RoomDAO();
-//		 Room room = new Room();
-//		 room.setNumber("2000");
-//		 System.out.println(roomDAO.create(room));
+		// TeacherDAO teacherDAO = new TeacherDAO();
+		// Teacher teacher = new Teacher();
+		// teacher.setName("Masha Chizhik");
+		// System.out.println(teacherDAO.create(teacher));
+
+		// RoomDAOImpl roomDAOImpl = new RoomDAOImpl();
+		// Room room = new Room();
+		// room.setNumber("88");
+		// System.out.println(roomDAOImpl.create(room));
 
 		// List<Room> all = roomDAO.getAll();
 		// for (Room room : all) {
@@ -24,7 +22,7 @@ public class Main {
 
 		// Room room = new Room();
 		// room.setNumber("127");
-		// System.out.println(roomDAO.update(8, room));
+		// System.out.println(roomDAOImpl.update(30, room));
 
 		// roomDAO.delete(1);
 		// ArrayList<Room> allRooms = roomDAO.getAllRooms();
