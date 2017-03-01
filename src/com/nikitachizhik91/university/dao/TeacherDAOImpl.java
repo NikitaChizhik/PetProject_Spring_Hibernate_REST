@@ -8,39 +8,39 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.Room;
+import com.nikitachizhik91.university.domain.Teacher;
 
-public class RoomDAOImpl implements RoomDAO {
-	private static final String create = "insert into rooms (number) values(?)";
-	private static final String findById = "select * from rooms where room_id=?";
-	private static final String findAll = "select * from rooms order by number";
-	private static final String update = "update rooms set number=? where room_id =?";
-	private static final String delete = "delete from rooms where room_id =?";
+public class TeacherDAOImpl implements TeacherDAO {
+	private static final String create = "insert into teachers (name) values(?)";
+	private static final String findById = "select * from teachers where teacher_id=?";
+	private static final String findAll = "select * from teachers order by name";
+	private static final String update = "update teachers set name=? where teacher_id =?";
+	private static final String delete = "delete from teachers where teacher_id =?";
 
-	public Room create(Room room) {
-		Room newRoom = null;
+	public Teacher create(Teacher teacher) {
+		Teacher newTeacher = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(create, Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setString(1, room.getNumber());
+			statement.setString(1, teacher.getName());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newRoom = new Room();
-					newRoom.setId(resultSet.getInt("room_id"));
-					newRoom.setNumber(resultSet.getString("number"));
+					newTeacher = new Teacher();
+					newTeacher.setId(resultSet.getInt("teacher_id"));
+					newTeacher.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return newRoom;
+		return newTeacher;
 	}
 
-	public Room findById(int id) {
-		Room roomRecieved = new Room();
+	public Teacher findById(int id) {
+		Teacher teacherRecieved = new Teacher();
 
 		try (Connection connection = Connector.getConnection();
 
@@ -51,28 +51,28 @@ public class RoomDAOImpl implements RoomDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					roomRecieved.setId(resultSet.getInt("room_id"));
-					roomRecieved.setNumber(resultSet.getString("number"));
+					teacherRecieved.setId(resultSet.getInt("teacher_id"));
+					teacherRecieved.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return roomRecieved;
+		return teacherRecieved;
 	}
 
-	public List<Room> findAll() {
-		List<Room> roomsRecieved = new ArrayList<Room>();
+	public List<Teacher> findAll() {
+		List<Teacher> roomsRecieved = new ArrayList<Teacher>();
 
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(findAll);
 				ResultSet resultSet = statement.executeQuery();) {
 
 			while (resultSet.next()) {
-				Room room = new Room();
-				room.setId(resultSet.getInt("room_id"));
-				room.setNumber(resultSet.getString("number"));
-				roomsRecieved.add(room);
+				Teacher teacher = new Teacher();
+				teacher.setId(resultSet.getInt("teacher_id"));
+				teacher.setName(resultSet.getString("name"));
+				roomsRecieved.add(teacher);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
@@ -80,27 +80,27 @@ public class RoomDAOImpl implements RoomDAO {
 		return roomsRecieved;
 	}
 
-	public Room update(Room room) {
-		Room newRoom = null;
+	public Teacher update(Teacher teacher) {
+		Teacher newTeacher = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setString(1, room.getNumber());
-			statement.setInt(2, room.getId());
+			statement.setString(1, teacher.getName());
+			statement.setInt(2, teacher.getId());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newRoom = new Room();
-					newRoom.setId(resultSet.getInt("room_id"));
-					newRoom.setNumber(resultSet.getString("number"));
+					newTeacher = new Teacher();
+					newTeacher.setId(resultSet.getInt("teacher_id"));
+					newTeacher.setName(resultSet.getString("name"));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return newRoom;
+		return newTeacher;
 	}
 
 	public void delete(int id) {
@@ -115,7 +115,5 @@ public class RoomDAOImpl implements RoomDAO {
 			e.getMessage();
 		}
 	}
-
-	
 
 }

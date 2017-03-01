@@ -1,12 +1,19 @@
 package com.nikitachizhik91.university.dao;
 
+import com.nikitachizhik91.university.domain.Teacher;
+
 public class Main {
 	public static void main(String[] args) {
 
-		// TeacherDAO teacherDAO = new TeacherDAO();
-		// Teacher teacher = new Teacher();
-		// teacher.setName("Masha Chizhik");
-		// System.out.println(teacherDAO.create(teacher));
+		TeacherDAO teacherDAO = new TeacherDAOImpl();
+		Teacher teacher = new Teacher();
+		teacher.setId(2);
+		teacher.setName("Masha Chizhik");
+		System.out.println(teacherDAO.create(teacher));
+		System.out.println(teacherDAO.findById(1));
+		System.out.println(teacherDAO.findAll());
+		System.out.println(teacherDAO.update(teacher));
+		// teacherDAO.delete(4);
 
 		// RoomDAOImpl roomDAOImpl = new RoomDAOImpl();
 		// Room room = new Room();
