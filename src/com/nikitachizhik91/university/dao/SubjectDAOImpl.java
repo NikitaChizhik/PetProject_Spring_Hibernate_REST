@@ -12,16 +12,17 @@ import com.nikitachizhik91.university.domain.Subject;
 
 public class SubjectDAOImpl implements SubjectDAO {
 
-	private static final String create = "insert into subjects (name) values(?)";
-	private static final String findById = "select * from subjects where subject_id=?";
-	private static final String findAll = "select * from subjects order by name";
-	private static final String update = "update subjects set name=? where subject_id =?";
-	private static final String delete = "delete from subjects where subject_id =?";
+	private static final String INSERT_SUBJECT = "insert into subjects (name) values(?)";
+	private static final String FIND_SUBJECT_BY_ID = "select * from subjects where subject_id=?";
+	private static final String FIND_ALL_SUBJECTS = "select * from subjects";
+	private static final String UPDATE_SUBJECT = "update subjects set name=? where subject_id =?";
+	private static final String DELETE_SUBJECT = "delete from subjects where subject_id =?";
 
 	public Subject create(Subject subject) {
 		Subject newSubject = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(create, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT,
+						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, subject.getName());
 			statement.executeUpdate();
@@ -45,7 +46,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 		try (Connection connection = Connector.getConnection();
 
-		PreparedStatement statement = connection.prepareStatement(findById)) {
+		PreparedStatement statement = connection.prepareStatement(FIND_SUBJECT_BY_ID)) {
 
 			statement.setInt(1, id);
 
@@ -66,7 +67,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 		List<Subject> subjectsRecieved = new ArrayList<Subject>();
 
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(findAll);
+				PreparedStatement statement = connection.prepareStatement(FIND_ALL_SUBJECTS);
 				ResultSet resultSet = statement.executeQuery();) {
 
 			while (resultSet.next()) {
@@ -84,7 +85,8 @@ public class SubjectDAOImpl implements SubjectDAO {
 	public Subject update(Subject subject) {
 		Subject newSubject = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(UPDATE_SUBJECT,
+						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, subject.getName());
 			statement.setInt(2, subject.getId());
@@ -106,7 +108,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 	public void delete(int id) {
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(delete);) {
+				PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT);) {
 
 			statement.setInt(1, id);
 

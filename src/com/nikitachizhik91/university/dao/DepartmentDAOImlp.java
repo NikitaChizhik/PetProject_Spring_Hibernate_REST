@@ -1,7 +1,6 @@
 package com.nikitachizhik91.university.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,74 +9,72 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nikitachizhik91.university.domain.Department;
-import com.nikitachizhik91.university.domain.Student;
 
 public class DepartmentDAOImlp {
 
+	private static final String INSERT_DEPARTMENT = "insert into departments (name) values(?)";
+	private static final String FIND_DEPARTMENT_BY_ID = "select * from departments where department_id=?";
+	private static final String FIND_ALL_DEPARTMENTS = "select * from departments";
+	private static final String UPDATE_DEPARTMENT = "update departments set name=? where department_id =?";
+	private static final String DELETE_DEPARTMENT = "delete from departments where department_id =?";
 
-
-	private static final String create = "insert into students (name) values(?)";
-	private static final String findById = "select * from students where student_id=?";
-	private static final String findAll = "select * from students order by name";
-	private static final String update = "update students set name=? where student_id =?";
-	private static final String delete = "delete from students where student_id =?";
-
-	public Student create(Student student) {
-		Student newStudent = null;
+	public Department create(Department department) {
+		Department newDepartment = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(create, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(INSERT_DEPARTMENT,
+						Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setString(1, student.getName());
+			statement.setString(1, department.getName());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newStudent = new Student();
-					newStudent.setId(resultSet.getInt("student_id"));
-					newStudent.setName(resultSet.getString("name"));
+					newDepartment = new Department();
+					newDepartment.setId(resultSet.getInt("department_id"));
+					newDepartment.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return newStudent;
+		return newDepartment;
 	}
 
-	public Student findById(int id) {
-		Student studentRecieved = new Student();
+	public Department findById(int id) {
+		Department departmentRecieved = new Department();
 
 		try (Connection connection = Connector.getConnection();
 
-		PreparedStatement statement = connection.prepareStatement(findById)) {
+		PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENT_BY_ID)) {
 
 			statement.setInt(1, id);
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					studentRecieved.setId(resultSet.getInt("student_id"));
-					studentRecieved.setName(resultSet.getString("name"));
+					departmentRecieved.setId(resultSet.getInt("department_id"));
+					departmentRecieved.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return studentRecieved;
+		return departmentRecieved;
 	}
 
-	public List<Student> findAll() {
-		List<Student> studentRecieved = new ArrayList<Student>();
+	public List<Department> findAll() {
+		List<Department> studentRecieved = new ArrayList<Department>();
 
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(findAll);
+				PreparedStatement statement = connection.prepareStatement(FIND_ALL_DEPARTMENTS);
 				ResultSet resultSet = statement.executeQuery();) {
 
 			while (resultSet.next()) {
-				Student student = new Student();
-				student.setId(resultSet.getInt("student_id"));
-				student.setName(resultSet.getString("name"));
-				studentRecieved.add(student);
+				Department department = new Department();
+				department.setId(resultSet.getInt("department_id"));
+				department.setName(resultSet.getString("name"));
+				studentRecieved.add(department);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
@@ -85,32 +82,33 @@ public class DepartmentDAOImlp {
 		return studentRecieved;
 	}
 
-	public Student update(Student student) {
-		Student newStudent = null;
+	public Department update(Department department) {
+		Department newDepartment = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(UPDATE_DEPARTMENT,
+						Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setString(1, student.getName());
-			statement.setInt(2, student.getId());
+			statement.setString(1, department.getName());
+			statement.setInt(2, department.getId());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newStudent = new Student();
-					newStudent.setId(resultSet.getInt("student_id"));
-					newStudent.setName(resultSet.getString("name"));
+					newDepartment = new Department();
+					newDepartment.setId(resultSet.getInt("department_id"));
+					newDepartment.setName(resultSet.getString("name"));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return newStudent;
+		return newDepartment;
 	}
 
 	public void delete(int id) {
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(delete);) {
+				PreparedStatement statement = connection.prepareStatement(DELETE_DEPARTMENT);) {
 
 			statement.setInt(1, id);
 
@@ -120,7 +118,5 @@ public class DepartmentDAOImlp {
 			e.getMessage();
 		}
 	}
-
-
 
 }

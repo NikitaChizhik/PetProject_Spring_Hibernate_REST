@@ -10,7 +10,7 @@ import java.util.Date;
 import com.nikitachizhik91.university.domain.Teacher;
 import com.nikitachizhik91.university.domain.Timetable;
 
-public class TimetableDAO {
+public class TimetableDAOImpl {
 
 	public Timetable getTeachersTimetableForDay(Teacher teacher, Date date) {
 		Timetable timetable = new Timetable();

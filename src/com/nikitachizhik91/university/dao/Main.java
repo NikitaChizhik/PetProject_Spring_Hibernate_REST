@@ -1,18 +1,31 @@
 package com.nikitachizhik91.university.dao;
 
-import com.nikitachizhik91.university.domain.Teacher;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import com.nikitachizhik91.university.domain.Lesson;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
-		TeacherDAO teacherDAO = new TeacherDAOImpl();
-		Teacher teacher = new Teacher();
-		teacher.setId(2);
-		teacher.setName("Masha Chizhik");
-		System.out.println(teacherDAO.create(teacher));
-		System.out.println(teacherDAO.findById(1));
-		System.out.println(teacherDAO.findAll());
-		System.out.println(teacherDAO.update(teacher));
+		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
+		Lesson lesson = new Lesson();
+		lesson.setNumber(5);
+		Date DATE_TO_CHECK = (Date) new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");
+		Date date = new Date(16 - 02 - 2017);
+
+		lesson.setDate(DATE_TO_CHECK);
+		System.out.println(lessonDAOImpl.create(lesson));
+
+		// TeacherDAO teacherDAO = new TeacherDAOImpl();
+		// Teacher teacher = new Teacher();
+		// teacher.setId(2);
+		// teacher.setName("Masha Chizhik");
+		// System.out.println(teacherDAO.create(teacher));
+		// System.out.println(teacherDAO.findById(1));
+		// System.out.println(teacherDAO.findAll());
+		// System.out.println(teacherDAO.update(teacher));
 		// teacherDAO.delete(4);
 
 		// RoomDAOImpl roomDAOImpl = new RoomDAOImpl();

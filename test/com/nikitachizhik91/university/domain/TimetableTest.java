@@ -5,10 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,8 +18,8 @@ import org.junit.Test;
 
 public class TimetableTest {
 	Timetable timetable;
-	final Date DATE_TO_CHECK = new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");
-	final Date DATE_TO_CHECK2 = new SimpleDateFormat("dd-M-yyyy").parse("17-03-2017");
+	final Date DATE_TO_CHECK = (Date) new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");
+	final Date DATE_TO_CHECK2 = (Date) new SimpleDateFormat("dd-M-yyyy").parse("17-03-2017");
 	Group group1;
 	Teacher teacher1;
 	Teacher teacher2;

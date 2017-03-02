@@ -11,16 +11,17 @@ import java.util.List;
 import com.nikitachizhik91.university.domain.Teacher;
 
 public class TeacherDAOImpl implements TeacherDAO {
-	private static final String create = "insert into teachers (name) values(?)";
-	private static final String findById = "select * from teachers where teacher_id=?";
-	private static final String findAll = "select * from teachers order by name";
-	private static final String update = "update teachers set name=? where teacher_id =?";
-	private static final String delete = "delete from teachers where teacher_id =?";
+	private static final String INSERT_TEACHER = "insert into teachers (name) values(?)";
+	private static final String FIND_TEACHER_BY_ID = "select * from teachers where teacher_id=?";
+	private static final String FIND_ALL_TEACHERS = "select * from teachers";
+	private static final String UPDATE_TEACHER = "update teachers set name=? where teacher_id =?";
+	private static final String DELETE_TEACHER = "delete from teachers where teacher_id =?";
 
 	public Teacher create(Teacher teacher) {
 		Teacher newTeacher = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(create, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER,
+						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, teacher.getName());
 			statement.executeUpdate();
@@ -44,7 +45,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 		try (Connection connection = Connector.getConnection();
 
-		PreparedStatement statement = connection.prepareStatement(findById)) {
+		PreparedStatement statement = connection.prepareStatement(FIND_TEACHER_BY_ID)) {
 
 			statement.setInt(1, id);
 
@@ -65,7 +66,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 		List<Teacher> roomsRecieved = new ArrayList<Teacher>();
 
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(findAll);
+				PreparedStatement statement = connection.prepareStatement(FIND_ALL_TEACHERS);
 				ResultSet resultSet = statement.executeQuery();) {
 
 			while (resultSet.next()) {
@@ -83,7 +84,8 @@ public class TeacherDAOImpl implements TeacherDAO {
 	public Teacher update(Teacher teacher) {
 		Teacher newTeacher = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(UPDATE_TEACHER,
+						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, teacher.getName());
 			statement.setInt(2, teacher.getId());
@@ -105,7 +107,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 	public void delete(int id) {
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(delete);) {
+				PreparedStatement statement = connection.prepareStatement(DELETE_TEACHER);) {
 
 			statement.setInt(1, id);
 

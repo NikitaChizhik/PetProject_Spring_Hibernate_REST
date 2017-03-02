@@ -12,16 +12,16 @@ import com.nikitachizhik91.university.domain.Group;
 
 public class GroupDAOImpl {
 
-	private static final String create = "insert into groups (name) values(?)";
-	private static final String findById = "select * from groups where group_id=?";
-	private static final String findAll = "select * from groups order by name";
-	private static final String update = "update groups set name=? where group_id =?";
-	private static final String delete = "delete from groups where group_id =?";
+	private static final String INSERT_GROUP = "insert into groups (name) values(?)";
+	private static final String FIND_GROUP_BY_ID = "select * from groups where group_id=?";
+	private static final String FIND_ALL_GROUPS = "select * from groups";
+	private static final String UPDATE_GROUP = "update groups set name=? where group_id =?";
+	private static final String DELETE_GROUP = "delete from groups where group_id =?";
 
 	public Group create(Group group) {
 		Group newGroup = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(create, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, group.getName());
 			statement.executeUpdate();
@@ -45,7 +45,7 @@ public class GroupDAOImpl {
 
 		try (Connection connection = Connector.getConnection();
 
-		PreparedStatement statement = connection.prepareStatement(findById)) {
+		PreparedStatement statement = connection.prepareStatement(FIND_GROUP_BY_ID)) {
 
 			statement.setInt(1, id);
 
@@ -66,7 +66,7 @@ public class GroupDAOImpl {
 		List<Group> groupRecieved = new ArrayList<Group>();
 
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(findAll);
+				PreparedStatement statement = connection.prepareStatement(FIND_ALL_GROUPS);
 				ResultSet resultSet = statement.executeQuery();) {
 
 			while (resultSet.next()) {
@@ -84,7 +84,7 @@ public class GroupDAOImpl {
 	public Group update(Group group) {
 		Group newStudent = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, group.getName());
 			statement.setInt(2, group.getId());
@@ -106,7 +106,7 @@ public class GroupDAOImpl {
 
 	public void delete(int id) {
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(delete);) {
+				PreparedStatement statement = connection.prepareStatement(DELETE_GROUP);) {
 
 			statement.setInt(1, id);
 

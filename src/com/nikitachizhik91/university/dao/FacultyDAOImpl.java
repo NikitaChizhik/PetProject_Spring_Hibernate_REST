@@ -12,16 +12,17 @@ import com.nikitachizhik91.university.domain.Faculty;
 
 public class FacultyDAOImpl {
 
-	private static final String create = "insert into faculties (name) values(?)";
-	private static final String findById = "select * from faculties where faculty_id=?";
-	private static final String findAll = "select * from faculties order by name";
-	private static final String update = "update faculties set name=? where faculty_id =?";
-	private static final String delete = "delete from faculties where faculty_id =?";
+	private static final String INSERT_FACULTY = "insert into faculties (name) values(?)";
+	private static final String FIND_FACULTY_BY_ID = "select * from faculties where faculty_id=?";
+	private static final String FIND_ALL_FACULTIES = "select * from faculties";
+	private static final String UPDATE_FACULTY = "update faculties set name=? where faculty_id =?";
+	private static final String DELETE_FACULTY = "delete from faculties where faculty_id =?";
 
 	public Faculty create(Faculty faculty) {
 		Faculty newFaculty = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(create, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(INSERT_FACULTY,
+						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, faculty.getName());
 			statement.executeUpdate();
@@ -40,73 +41,74 @@ public class FacultyDAOImpl {
 		return newFaculty;
 	}
 
-	public Student findById(int id) {
-		Student studentRecieved = new Student();
+	public Faculty findById(int id) {
+		Faculty facultyRecieved = new Faculty();
 
 		try (Connection connection = Connector.getConnection();
 
-		PreparedStatement statement = connection.prepareStatement(findById)) {
+		PreparedStatement statement = connection.prepareStatement(FIND_FACULTY_BY_ID)) {
 
 			statement.setInt(1, id);
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					studentRecieved.setId(resultSet.getInt("student_id"));
-					studentRecieved.setName(resultSet.getString("name"));
+					facultyRecieved.setId(resultSet.getInt("faculty_id"));
+					facultyRecieved.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return studentRecieved;
+		return facultyRecieved;
 	}
 
-	public List<Student> findAll() {
-		List<Student> studentRecieved = new ArrayList<Student>();
+	public List<Faculty> findAll() {
+		List<Faculty> facultyRecieved = new ArrayList<Faculty>();
 
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(findAll);
+				PreparedStatement statement = connection.prepareStatement(FIND_ALL_FACULTIES);
 				ResultSet resultSet = statement.executeQuery();) {
 
 			while (resultSet.next()) {
-				Student student = new Student();
-				student.setId(resultSet.getInt("student_id"));
-				student.setName(resultSet.getString("name"));
-				studentRecieved.add(student);
+				Faculty faculty = new Faculty();
+				faculty.setId(resultSet.getInt("faculty_id"));
+				faculty.setName(resultSet.getString("name"));
+				facultyRecieved.add(faculty);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return studentRecieved;
+		return facultyRecieved;
 	}
 
-	public Student update(Student student) {
-		Student newStudent = null;
+	public Faculty update(Faculty faculty) {
+		Faculty newFaculty = null;
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(UPDATE_FACULTY,
+						Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setString(1, student.getName());
-			statement.setInt(2, student.getId());
+			statement.setString(1, faculty.getName());
+			statement.setInt(2, faculty.getId());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newStudent = new Student();
-					newStudent.setId(resultSet.getInt("student_id"));
-					newStudent.setName(resultSet.getString("name"));
+					newFaculty = new Faculty();
+					newFaculty.setId(resultSet.getInt("faculty_id"));
+					newFaculty.setName(resultSet.getString("name"));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return newStudent;
+		return newFaculty;
 	}
 
 	public void delete(int id) {
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(delete);) {
+				PreparedStatement statement = connection.prepareStatement(DELETE_FACULTY);) {
 
 			statement.setInt(1, id);
 
