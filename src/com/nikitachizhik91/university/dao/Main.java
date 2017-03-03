@@ -1,8 +1,8 @@
 package com.nikitachizhik91.university.dao;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.nikitachizhik91.university.domain.Lesson;
 
@@ -12,10 +12,9 @@ public class Main {
 		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
 		Lesson lesson = new Lesson();
 		lesson.setNumber(5);
-		Date DATE_TO_CHECK = (Date) new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");
-		Date date = new Date(16 - 02 - 2017);
+		Date date = new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");
 
-		lesson.setDate(DATE_TO_CHECK);
+		lesson.setDate(date);
 		System.out.println(lessonDAOImpl.create(lesson));
 
 		// TeacherDAO teacherDAO = new TeacherDAOImpl();

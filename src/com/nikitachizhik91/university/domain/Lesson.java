@@ -1,7 +1,6 @@
 package com.nikitachizhik91.university.domain;
 
-import java.sql.Date;
-
+import java.util.Date;
 
 public class Lesson {
 	private int id;

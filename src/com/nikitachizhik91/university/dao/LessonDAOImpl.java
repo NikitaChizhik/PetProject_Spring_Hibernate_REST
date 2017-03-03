@@ -28,7 +28,8 @@ public class LessonDAOImpl {
 						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setInt(1, lesson.getNumber());
-			Date date = lesson.getDate();
+
+			Date date = new Date(lesson.getDate().getTime());
 			statement.setDate(2, date);
 			statement.executeUpdate();
 

@@ -4,7 +4,6 @@ public class Student {
 
 	private int id;
 	private String name;
-	private Group group;
 
 	public int getId() {
 		return id;
@@ -20,14 +19,6 @@ public class Student {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
 	}
 
 	@Override
@@ -48,11 +39,6 @@ public class Student {
 		if (getClass() != obj.getClass())
 			return false;
 		Student other = (Student) obj;
-		if (group == null) {
-			if (other.group != null)
-				return false;
-		} else if (!group.equals(other.group))
-			return false;
 		if (id != other.id)
 			return false;
 		if (name == null) {
