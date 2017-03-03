@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 import com.nikitachizhik91.university.domain.Lesson;
 
@@ -29,14 +30,14 @@ public class LessonDAOImpl {
 
 			statement.setInt(1, lesson.getNumber());
 
-			Date date = new Date(lesson.getDate().getTime());
-			statement.setDate(2, date);
+			Timestamp date = new Timestamp(lesson.getDate().getTime());
+			statement.setTimestamp(2, date);
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newLesson = new Lesson();
-					newLesson.setId(resultSet.getInt("lesson_id"));
+					newLesson.setId(resultSet.getInt("id"));
 					newLesson.setNumber(resultSet.getInt("number"));
 					newLesson.setDate(resultSet.getDate("date"));
 				}

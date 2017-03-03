@@ -82,12 +82,13 @@ public class Timetable {
 
 		for (Lesson lesson : lessons) {
 
-			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-					&& lesson.getGroup().equals(student.getGroup())) {
-
-				requiredTimetable.addLesson(lesson);
-
-			}
+			// if
+			// (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
+			// && lesson.getGroup().equals(student.getGroup())) {
+			//
+			// requiredTimetable.addLesson(lesson);
+			//
+			// }
 		}
 		return requiredTimetable;
 
@@ -102,10 +103,11 @@ public class Timetable {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
 		for (Lesson lesson : lessons) {
 
-			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-					&& lesson.getGroup().equals(student.getGroup())) {
-				requiredTimetable.addLesson(lesson);
-			}
+			// if
+			// (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
+			// && lesson.getGroup().equals(student.getGroup())) {
+			// requiredTimetable.addLesson(lesson);
+			// }
 		}
 		return requiredTimetable;
 

@@ -12,8 +12,7 @@ public class Main {
 		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
 		Lesson lesson = new Lesson();
 		lesson.setNumber(5);
-		Date date = new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");
-
+		Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("03-03-2017 9:20");
 		lesson.setDate(date);
 		System.out.println(lessonDAOImpl.create(lesson));
 
