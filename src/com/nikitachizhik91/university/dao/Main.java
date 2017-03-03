@@ -4,7 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.nikitachizhik91.university.domain.Group;
 import com.nikitachizhik91.university.domain.Lesson;
+import com.nikitachizhik91.university.domain.Room;
+import com.nikitachizhik91.university.domain.Subject;
+import com.nikitachizhik91.university.domain.Teacher;
 
 public class Main {
 	public static void main(String[] args) throws ParseException {
@@ -14,6 +18,18 @@ public class Main {
 		lesson.setNumber(5);
 		Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("03-03-2017 9:20");
 		lesson.setDate(date);
+		Group group = new Group();
+		group.setId(1);
+		lesson.setGroup(group);
+		Room room = new Room();
+		room.setId(1);
+		lesson.setRoom(room);
+		Teacher teacher = new Teacher();
+		teacher.setId(9);
+		lesson.setTeacher(teacher);
+		Subject subject = new Subject();
+		subject.setId(4);
+		lesson.setSubject(subject);
 		System.out.println(lessonDAOImpl.create(lesson));
 
 		// TeacherDAO teacherDAO = new TeacherDAOImpl();

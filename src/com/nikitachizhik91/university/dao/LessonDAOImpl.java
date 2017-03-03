@@ -1,7 +1,6 @@
 package com.nikitachizhik91.university.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,7 @@ import com.nikitachizhik91.university.domain.Lesson;
 
 public class LessonDAOImpl {
 
-	private static final String INSERT_LESSON = "insert into lessons (number,date) values(?,?)";
+	private static final String INSERT_LESSON = "insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(?,?,?,?,?,?)";
 
 	// private static final String FIND_TEACHER_BY_ID =
 	// "select * from teachers where teacher_id=?";
@@ -32,6 +31,10 @@ public class LessonDAOImpl {
 
 			Timestamp date = new Timestamp(lesson.getDate().getTime());
 			statement.setTimestamp(2, date);
+			statement.setInt(3, lesson.getSubject().getId());
+			statement.setInt(4, lesson.getTeacher().getId());
+			statement.setInt(5, lesson.getGroup().getId());
+			statement.setInt(6, lesson.getRoom().getId());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
