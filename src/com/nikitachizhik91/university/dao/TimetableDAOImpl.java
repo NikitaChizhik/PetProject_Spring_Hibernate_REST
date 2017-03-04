@@ -18,8 +18,8 @@ public class TimetableDAOImpl {
 
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("select * from lessons join teachers on lessons.id=teachers.lesson_id"
-								+ "where id=? and date=?");) {
+						.prepareStatement("select * from lessons join teachers on lessons.teacher_id=teachers.id "
+								+ "where teacher_id=? and date=?");) {
 
 			statement.setInt(1, teacher.getId());
 
@@ -40,7 +40,7 @@ public class TimetableDAOImpl {
 				}
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}
 		return timetable;
 	}

@@ -64,7 +64,7 @@ public class LessonDAOImpl {
 
 		try (Connection connection = Connector.getConnection();
 
-		PreparedStatement statement = connection.prepareStatement(FIND_TEACHER_BY_ID)) {
+				PreparedStatement statement = connection.prepareStatement(FIND_TEACHER_BY_ID)) {
 
 			statement.setInt(1, id);
 
