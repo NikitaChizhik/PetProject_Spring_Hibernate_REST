@@ -19,7 +19,7 @@ public class StudentDAOImpl implements StudentDAO {
 	private static final String DELETE_STUDENT = "delete from students where id =?";
 
 	public Student create(Student student) {
-		Student newStudent = null;
+		Student studentReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -29,20 +29,20 @@ public class StudentDAOImpl implements StudentDAO {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newStudent = new Student();
-					newStudent.setId(resultSet.getInt("id"));
-					newStudent.setName(resultSet.getString("name"));
+					studentReceived = new Student();
+					studentReceived.setId(resultSet.getInt("id"));
+					studentReceived.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return newStudent;
+		return studentReceived;
 	}
 
 	public Student findById(int id) {
-		Student studentRecieved = new Student();
+		Student studentReceived = new Student();
 
 		try (Connection connection = Connector.getConnection();
 
@@ -53,18 +53,18 @@ public class StudentDAOImpl implements StudentDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					studentRecieved.setId(resultSet.getInt("id"));
-					studentRecieved.setName(resultSet.getString("name"));
+					studentReceived.setId(resultSet.getInt("id"));
+					studentReceived.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return studentRecieved;
+		return studentReceived;
 	}
 
 	public List<Student> findAll() {
-		List<Student> studentRecieved = new ArrayList<Student>();
+		List<Student> studentReceived = new ArrayList<Student>();
 
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_STUDENTS);
@@ -74,16 +74,16 @@ public class StudentDAOImpl implements StudentDAO {
 				Student student = new Student();
 				student.setId(resultSet.getInt("id"));
 				student.setName(resultSet.getString("name"));
-				studentRecieved.add(student);
+				studentReceived.add(student);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return studentRecieved;
+		return studentReceived;
 	}
 
 	public Student update(Student student) {
-		Student newStudent = null;
+		Student studentReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_STUDENT,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -94,16 +94,16 @@ public class StudentDAOImpl implements StudentDAO {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newStudent = new Student();
-					newStudent.setId(resultSet.getInt("id"));
-					newStudent.setName(resultSet.getString("name"));
+					studentReceived = new Student();
+					studentReceived.setId(resultSet.getInt("id"));
+					studentReceived.setName(resultSet.getString("name"));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return newStudent;
+		return studentReceived;
 	}
 
 	public void delete(int id) {

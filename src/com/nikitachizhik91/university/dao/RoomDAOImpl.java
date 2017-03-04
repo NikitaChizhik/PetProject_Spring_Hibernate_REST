@@ -18,7 +18,7 @@ public class RoomDAOImpl implements RoomDAO {
 	private static final String DELETE_ROOM = "delete from rooms where id =?";
 
 	public Room create(Room room) {
-		Room newRoom = null;
+		Room roomReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_ROOM, Statement.RETURN_GENERATED_KEYS);) {
 
@@ -27,20 +27,20 @@ public class RoomDAOImpl implements RoomDAO {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newRoom = new Room();
-					newRoom.setId(resultSet.getInt("id"));
-					newRoom.setNumber(resultSet.getString("number"));
+					roomReceived = new Room();
+					roomReceived.setId(resultSet.getInt("id"));
+					roomReceived.setNumber(resultSet.getString("number"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return newRoom;
+		return roomReceived;
 	}
 
 	public Room findById(int id) {
-		Room roomRecieved = new Room();
+		Room roomReceived = new Room();
 
 		try (Connection connection = Connector.getConnection();
 
@@ -51,18 +51,18 @@ public class RoomDAOImpl implements RoomDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					roomRecieved.setId(resultSet.getInt("id"));
-					roomRecieved.setNumber(resultSet.getString("number"));
+					roomReceived.setId(resultSet.getInt("id"));
+					roomReceived.setNumber(resultSet.getString("number"));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return roomRecieved;
+		return roomReceived;
 	}
 
 	public List<Room> findAll() {
-		List<Room> roomsRecieved = new ArrayList<Room>();
+		List<Room> roomsReceived = new ArrayList<Room>();
 
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_ROOMS);
@@ -72,16 +72,16 @@ public class RoomDAOImpl implements RoomDAO {
 				Room room = new Room();
 				room.setId(resultSet.getInt("id"));
 				room.setNumber(resultSet.getString("number"));
-				roomsRecieved.add(room);
+				roomsReceived.add(room);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return roomsRecieved;
+		return roomsReceived;
 	}
 
 	public Room update(Room room) {
-		Room newRoom = null;
+		Room roomReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_ROOM, Statement.RETURN_GENERATED_KEYS);) {
 
@@ -91,16 +91,16 @@ public class RoomDAOImpl implements RoomDAO {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newRoom = new Room();
-					newRoom.setId(resultSet.getInt("id"));
-					newRoom.setNumber(resultSet.getString("number"));
+					roomReceived = new Room();
+					roomReceived.setId(resultSet.getInt("id"));
+					roomReceived.setNumber(resultSet.getString("number"));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return newRoom;
+		return roomReceived;
 	}
 
 	public void delete(int id) {

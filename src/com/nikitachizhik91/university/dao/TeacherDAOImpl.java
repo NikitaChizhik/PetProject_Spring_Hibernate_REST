@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nikitachizhik91.university.domain.Subject;
 import com.nikitachizhik91.university.domain.Teacher;
 
 public class TeacherDAOImpl implements TeacherDAO {
@@ -18,7 +19,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 	private static final String DELETE_TEACHER = "delete from teachers where id =?";
 
 	public Teacher create(Teacher teacher) {
-		Teacher newTeacher = null;
+		Teacher teacherReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -29,20 +30,23 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newTeacher = new Teacher();
-					newTeacher.setId(resultSet.getInt("id"));
-					newTeacher.setName(resultSet.getString("name"));
+					teacherReceived = new Teacher();
+					teacherReceived.setId(resultSet.getInt("id"));
+					teacherReceived.setName(resultSet.getString("name"));
+					Subject subject = new Subject();
+					subject.setId(resultSet.getInt("subject_id"));
+					teacherReceived.setSubject(subject);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return newTeacher;
+		return teacherReceived;
 	}
 
 	public Teacher findById(int id) {
-		Teacher teacherRecieved = new Teacher();
+		Teacher teacherReceived = new Teacher();
 
 		try (Connection connection = Connector.getConnection();
 
@@ -53,37 +57,44 @@ public class TeacherDAOImpl implements TeacherDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					teacherRecieved.setId(resultSet.getInt("id"));
-					teacherRecieved.setName(resultSet.getString("name"));
+					teacherReceived.setId(resultSet.getInt("id"));
+					teacherReceived.setName(resultSet.getString("name"));
+					Subject subject = new Subject();
+					subject.setId(resultSet.getInt("subject_id"));
+					teacherReceived.setSubject(subject);
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return teacherRecieved;
+		return teacherReceived;
 	}
 
 	public List<Teacher> findAll() {
-		List<Teacher> roomsRecieved = new ArrayList<Teacher>();
+		List<Teacher> teachersReceived = new ArrayList<Teacher>();
 
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_TEACHERS);
 				ResultSet resultSet = statement.executeQuery();) {
 
 			while (resultSet.next()) {
-				Teacher teacher = new Teacher();
-				teacher.setId(resultSet.getInt("id"));
-				teacher.setName(resultSet.getString("name"));
-				roomsRecieved.add(teacher);
+				Teacher teacherReceived = new Teacher();
+				teacherReceived.setId(resultSet.getInt("id"));
+				teacherReceived.setName(resultSet.getString("name"));
+				Subject subject = new Subject();
+				subject.setId(resultSet.getInt("subject_id"));
+				teacherReceived.setSubject(subject);
+
+				teachersReceived.add(teacherReceived);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return roomsRecieved;
+		return teachersReceived;
 	}
 
 	public Teacher update(Teacher teacher) {
-		Teacher newTeacher = null;
+		Teacher teacherReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_TEACHER,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -95,16 +106,19 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newTeacher = new Teacher();
-					newTeacher.setId(resultSet.getInt("id"));
-					newTeacher.setName(resultSet.getString("name"));
+					teacherReceived = new Teacher();
+					teacherReceived.setId(resultSet.getInt("id"));
+					teacherReceived.setName(resultSet.getString("name"));
+					Subject subject = new Subject();
+					subject.setId(resultSet.getInt("subject_id"));
+					teacherReceived.setSubject(subject);
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return newTeacher;
+		return teacherReceived;
 	}
 
 	public void delete(int id) {

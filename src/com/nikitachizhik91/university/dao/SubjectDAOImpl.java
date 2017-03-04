@@ -19,7 +19,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 	private static final String DELETE_SUBJECT = "delete from subjects where id =?";
 
 	public Subject create(Subject subject) {
-		Subject newSubject = null;
+		Subject subjectReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -29,20 +29,20 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newSubject = new Subject();
-					newSubject.setId(resultSet.getInt("id"));
-					newSubject.setName(resultSet.getString("name"));
+					subjectReceived = new Subject();
+					subjectReceived.setId(resultSet.getInt("id"));
+					subjectReceived.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return newSubject;
+		return subjectReceived;
 	}
 
 	public Subject findById(int id) {
-		Subject subjectRecieved = new Subject();
+		Subject subjectReceived = new Subject();
 
 		try (Connection connection = Connector.getConnection();
 
@@ -53,18 +53,18 @@ public class SubjectDAOImpl implements SubjectDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					subjectRecieved.setId(resultSet.getInt("id"));
-					subjectRecieved.setName(resultSet.getString("name"));
+					subjectReceived.setId(resultSet.getInt("id"));
+					subjectReceived.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return subjectRecieved;
+		return subjectReceived;
 	}
 
 	public List<Subject> findAll() {
-		List<Subject> subjectsRecieved = new ArrayList<Subject>();
+		List<Subject> subjectsReceived = new ArrayList<Subject>();
 
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_SUBJECTS);
@@ -74,16 +74,16 @@ public class SubjectDAOImpl implements SubjectDAO {
 				Subject subject = new Subject();
 				subject.setId(resultSet.getInt("id"));
 				subject.setName(resultSet.getString("name"));
-				subjectsRecieved.add(subject);
+				subjectsReceived.add(subject);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return subjectsRecieved;
+		return subjectsReceived;
 	}
 
 	public Subject update(Subject subject) {
-		Subject newSubject = null;
+		Subject subjectReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_SUBJECT,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -94,16 +94,16 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newSubject = new Subject();
-					newSubject.setId(resultSet.getInt("id"));
-					newSubject.setName(resultSet.getString("name"));
+					subjectReceived = new Subject();
+					subjectReceived.setId(resultSet.getInt("id"));
+					subjectReceived.setName(resultSet.getString("name"));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return newSubject;
+		return subjectReceived;
 	}
 
 	public void delete(int id) {

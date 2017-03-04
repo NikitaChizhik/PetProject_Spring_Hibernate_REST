@@ -19,7 +19,7 @@ public class FacultyDAOImpl {
 	private static final String DELETE_FACULTY = "delete from faculties where id =?";
 
 	public Faculty create(Faculty faculty) {
-		Faculty newFaculty = null;
+		Faculty facultyReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_FACULTY,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -29,20 +29,20 @@ public class FacultyDAOImpl {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newFaculty = new Faculty();
-					newFaculty.setId(resultSet.getInt("id"));
-					newFaculty.setName(resultSet.getString("name"));
+					facultyReceived = new Faculty();
+					facultyReceived.setId(resultSet.getInt("id"));
+					facultyReceived.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return newFaculty;
+		return facultyReceived;
 	}
 
 	public Faculty findById(int id) {
-		Faculty facultyRecieved = new Faculty();
+		Faculty facultyReceived = new Faculty();
 
 		try (Connection connection = Connector.getConnection();
 
@@ -53,18 +53,18 @@ public class FacultyDAOImpl {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					facultyRecieved.setId(resultSet.getInt("id"));
-					facultyRecieved.setName(resultSet.getString("name"));
+					facultyReceived.setId(resultSet.getInt("id"));
+					facultyReceived.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return facultyRecieved;
+		return facultyReceived;
 	}
 
 	public List<Faculty> findAll() {
-		List<Faculty> facultyRecieved = new ArrayList<Faculty>();
+		List<Faculty> facultiesReceived = new ArrayList<Faculty>();
 
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_FACULTIES);
@@ -74,16 +74,16 @@ public class FacultyDAOImpl {
 				Faculty faculty = new Faculty();
 				faculty.setId(resultSet.getInt("id"));
 				faculty.setName(resultSet.getString("name"));
-				facultyRecieved.add(faculty);
+				facultiesReceived.add(faculty);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return facultyRecieved;
+		return facultiesReceived;
 	}
 
 	public Faculty update(Faculty faculty) {
-		Faculty newFaculty = null;
+		Faculty facultyReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_FACULTY,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -94,16 +94,16 @@ public class FacultyDAOImpl {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newFaculty = new Faculty();
-					newFaculty.setId(resultSet.getInt("id"));
-					newFaculty.setName(resultSet.getString("name"));
+					facultyReceived = new Faculty();
+					facultyReceived.setId(resultSet.getInt("id"));
+					facultyReceived.setName(resultSet.getString("name"));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return newFaculty;
+		return facultyReceived;
 	}
 
 	public void delete(int id) {

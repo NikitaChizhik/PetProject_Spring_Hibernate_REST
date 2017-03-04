@@ -19,7 +19,7 @@ public class GroupDAOImpl {
 	private static final String DELETE_GROUP = "delete from groups where id =?";
 
 	public Group create(Group group) {
-		Group newGroup = null;
+		Group groupReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
@@ -28,20 +28,20 @@ public class GroupDAOImpl {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newGroup = new Group();
-					newGroup.setId(resultSet.getInt("id"));
-					newGroup.setName(resultSet.getString("name"));
+					groupReceived = new Group();
+					groupReceived.setId(resultSet.getInt("id"));
+					groupReceived.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return newGroup;
+		return groupReceived;
 	}
 
 	public Group findById(int id) {
-		Group groupRecieved = new Group();
+		Group groupReceived = new Group();
 
 		try (Connection connection = Connector.getConnection();
 
@@ -52,18 +52,18 @@ public class GroupDAOImpl {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					groupRecieved.setId(resultSet.getInt("id"));
-					groupRecieved.setName(resultSet.getString("name"));
+					groupReceived.setId(resultSet.getInt("id"));
+					groupReceived.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return groupRecieved;
+		return groupReceived;
 	}
 
 	public List<Group> findAll() {
-		List<Group> groupRecieved = new ArrayList<Group>();
+		List<Group> groupsReceived = new ArrayList<Group>();
 
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_GROUPS);
@@ -73,16 +73,16 @@ public class GroupDAOImpl {
 				Group group = new Group();
 				group.setId(resultSet.getInt("id"));
 				group.setName(resultSet.getString("name"));
-				groupRecieved.add(group);
+				groupsReceived.add(group);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return groupRecieved;
+		return groupsReceived;
 	}
 
 	public Group update(Group group) {
-		Group newStudent = null;
+		Group groupReceived = null;
 		try (Connection connection = Connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
@@ -92,16 +92,16 @@ public class GroupDAOImpl {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					newStudent = new Group();
-					newStudent.setId(resultSet.getInt("id"));
-					newStudent.setName(resultSet.getString("name"));
+					groupReceived = new Group();
+					groupReceived.setId(resultSet.getInt("id"));
+					groupReceived.setName(resultSet.getString("name"));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return newStudent;
+		return groupReceived;
 	}
 
 	public void delete(int id) {
