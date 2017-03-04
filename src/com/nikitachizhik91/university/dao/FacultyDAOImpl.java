@@ -13,10 +13,10 @@ import com.nikitachizhik91.university.domain.Faculty;
 public class FacultyDAOImpl {
 
 	private static final String INSERT_FACULTY = "insert into faculties (name) values(?)";
-	private static final String FIND_FACULTY_BY_ID = "select * from faculties where faculty_id=?";
+	private static final String FIND_FACULTY_BY_ID = "select * from faculties where id=?";
 	private static final String FIND_ALL_FACULTIES = "select * from faculties";
-	private static final String UPDATE_FACULTY = "update faculties set name=? where faculty_id =?";
-	private static final String DELETE_FACULTY = "delete from faculties where faculty_id =?";
+	private static final String UPDATE_FACULTY = "update faculties set name=? where id =?";
+	private static final String DELETE_FACULTY = "delete from faculties where id =?";
 
 	public Faculty create(Faculty faculty) {
 		Faculty newFaculty = null;
@@ -30,7 +30,7 @@ public class FacultyDAOImpl {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newFaculty = new Faculty();
-					newFaculty.setId(resultSet.getInt("faculty_id"));
+					newFaculty.setId(resultSet.getInt("id"));
 					newFaculty.setName(resultSet.getString("name"));
 				}
 			}
@@ -53,7 +53,7 @@ public class FacultyDAOImpl {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					facultyRecieved.setId(resultSet.getInt("faculty_id"));
+					facultyRecieved.setId(resultSet.getInt("id"));
 					facultyRecieved.setName(resultSet.getString("name"));
 				}
 			}
@@ -72,7 +72,7 @@ public class FacultyDAOImpl {
 
 			while (resultSet.next()) {
 				Faculty faculty = new Faculty();
-				faculty.setId(resultSet.getInt("faculty_id"));
+				faculty.setId(resultSet.getInt("id"));
 				faculty.setName(resultSet.getString("name"));
 				facultyRecieved.add(faculty);
 			}
@@ -95,7 +95,7 @@ public class FacultyDAOImpl {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newFaculty = new Faculty();
-					newFaculty.setId(resultSet.getInt("faculty_id"));
+					newFaculty.setId(resultSet.getInt("id"));
 					newFaculty.setName(resultSet.getString("name"));
 				}
 			}

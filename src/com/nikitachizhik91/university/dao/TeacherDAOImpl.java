@@ -11,11 +11,11 @@ import java.util.List;
 import com.nikitachizhik91.university.domain.Teacher;
 
 public class TeacherDAOImpl implements TeacherDAO {
-	private static final String INSERT_TEACHER = "insert into teachers (name) values(?)";
-	private static final String FIND_TEACHER_BY_ID = "select * from teachers where teacher_id=?";
+	private static final String INSERT_TEACHER = "insert into teachers (name,subject_id) values(?,?)";
+	private static final String FIND_TEACHER_BY_ID = "select * from teachers where id=?";
 	private static final String FIND_ALL_TEACHERS = "select * from teachers";
-	private static final String UPDATE_TEACHER = "update teachers set name=? where teacher_id =?";
-	private static final String DELETE_TEACHER = "delete from teachers where teacher_id =?";
+	private static final String UPDATE_TEACHER = "update teachers set name=?,subject_id=? where id =?";
+	private static final String DELETE_TEACHER = "delete from teachers where id =?";
 
 	public Teacher create(Teacher teacher) {
 		Teacher newTeacher = null;
@@ -24,12 +24,13 @@ public class TeacherDAOImpl implements TeacherDAO {
 						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, teacher.getName());
+			statement.setInt(2, teacher.getSubject().getId());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newTeacher = new Teacher();
-					newTeacher.setId(resultSet.getInt("teacher_id"));
+					newTeacher.setId(resultSet.getInt("id"));
 					newTeacher.setName(resultSet.getString("name"));
 				}
 			}
@@ -52,7 +53,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					teacherRecieved.setId(resultSet.getInt("teacher_id"));
+					teacherRecieved.setId(resultSet.getInt("id"));
 					teacherRecieved.setName(resultSet.getString("name"));
 				}
 			}
@@ -71,7 +72,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 			while (resultSet.next()) {
 				Teacher teacher = new Teacher();
-				teacher.setId(resultSet.getInt("teacher_id"));
+				teacher.setId(resultSet.getInt("id"));
 				teacher.setName(resultSet.getString("name"));
 				roomsRecieved.add(teacher);
 			}
@@ -88,13 +89,14 @@ public class TeacherDAOImpl implements TeacherDAO {
 						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, teacher.getName());
-			statement.setInt(2, teacher.getId());
+			statement.setInt(2, teacher.getSubject().getId());
+			statement.setInt(3, teacher.getId());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newTeacher = new Teacher();
-					newTeacher.setId(resultSet.getInt("teacher_id"));
+					newTeacher.setId(resultSet.getInt("id"));
 					newTeacher.setName(resultSet.getString("name"));
 				}
 			}

@@ -12,7 +12,9 @@ import com.nikitachizhik91.university.domain.Teacher;
 
 public class Main {
 	public static void main(String[] args) throws ParseException {
-
+		// proverku na null sdelat vezde.
+		//create update vse polya vede dodelat
+		//timetableImpl sdealt.
 		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
 		Lesson lesson = new Lesson();
 		lesson.setNumber(5);

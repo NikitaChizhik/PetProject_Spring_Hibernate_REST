@@ -12,10 +12,10 @@ import com.nikitachizhik91.university.domain.Room;
 
 public class RoomDAOImpl implements RoomDAO {
 	private static final String INSERT_ROOM = "insert into rooms (number) values(?)";
-	private static final String FIND_ROOM_BY_ID = "select * from rooms where room_id=?";
+	private static final String FIND_ROOM_BY_ID = "select * from rooms where id=?";
 	private static final String FIND_ALL_ROOMS = "select * from rooms";
-	private static final String UPDATE_ROOM = "update rooms set number=? where room_id =?";
-	private static final String DELETE_ROOM = "delete from rooms where room_id =?";
+	private static final String UPDATE_ROOM = "update rooms set number=? where id =?";
+	private static final String DELETE_ROOM = "delete from rooms where id =?";
 
 	public Room create(Room room) {
 		Room newRoom = null;
@@ -28,7 +28,7 @@ public class RoomDAOImpl implements RoomDAO {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newRoom = new Room();
-					newRoom.setId(resultSet.getInt("room_id"));
+					newRoom.setId(resultSet.getInt("id"));
 					newRoom.setNumber(resultSet.getString("number"));
 				}
 			}
@@ -51,7 +51,7 @@ public class RoomDAOImpl implements RoomDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					roomRecieved.setId(resultSet.getInt("room_id"));
+					roomRecieved.setId(resultSet.getInt("id"));
 					roomRecieved.setNumber(resultSet.getString("number"));
 				}
 			}
@@ -70,7 +70,7 @@ public class RoomDAOImpl implements RoomDAO {
 
 			while (resultSet.next()) {
 				Room room = new Room();
-				room.setId(resultSet.getInt("room_id"));
+				room.setId(resultSet.getInt("id"));
 				room.setNumber(resultSet.getString("number"));
 				roomsRecieved.add(room);
 			}
@@ -92,7 +92,7 @@ public class RoomDAOImpl implements RoomDAO {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newRoom = new Room();
-					newRoom.setId(resultSet.getInt("room_id"));
+					newRoom.setId(resultSet.getInt("id"));
 					newRoom.setNumber(resultSet.getString("number"));
 				}
 			}

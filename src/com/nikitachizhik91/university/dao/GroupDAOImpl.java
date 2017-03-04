@@ -13,10 +13,10 @@ import com.nikitachizhik91.university.domain.Group;
 public class GroupDAOImpl {
 
 	private static final String INSERT_GROUP = "insert into groups (name) values(?)";
-	private static final String FIND_GROUP_BY_ID = "select * from groups where group_id=?";
+	private static final String FIND_GROUP_BY_ID = "select * from groups where id=?";
 	private static final String FIND_ALL_GROUPS = "select * from groups";
-	private static final String UPDATE_GROUP = "update groups set name=? where group_id =?";
-	private static final String DELETE_GROUP = "delete from groups where group_id =?";
+	private static final String UPDATE_GROUP = "update groups set name=? where id =?";
+	private static final String DELETE_GROUP = "delete from groups where id =?";
 
 	public Group create(Group group) {
 		Group newGroup = null;
@@ -29,7 +29,7 @@ public class GroupDAOImpl {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newGroup = new Group();
-					newGroup.setId(resultSet.getInt("group_id"));
+					newGroup.setId(resultSet.getInt("id"));
 					newGroup.setName(resultSet.getString("name"));
 				}
 			}
@@ -52,7 +52,7 @@ public class GroupDAOImpl {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					groupRecieved.setId(resultSet.getInt("group_id"));
+					groupRecieved.setId(resultSet.getInt("id"));
 					groupRecieved.setName(resultSet.getString("name"));
 				}
 			}
@@ -71,7 +71,7 @@ public class GroupDAOImpl {
 
 			while (resultSet.next()) {
 				Group group = new Group();
-				group.setId(resultSet.getInt("group_id"));
+				group.setId(resultSet.getInt("id"));
 				group.setName(resultSet.getString("name"));
 				groupRecieved.add(group);
 			}
@@ -93,7 +93,7 @@ public class GroupDAOImpl {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newStudent = new Group();
-					newStudent.setId(resultSet.getInt("group_id"));
+					newStudent.setId(resultSet.getInt("id"));
 					newStudent.setName(resultSet.getString("name"));
 				}
 			}

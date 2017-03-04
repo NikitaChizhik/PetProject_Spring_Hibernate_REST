@@ -13,10 +13,10 @@ import com.nikitachizhik91.university.domain.Department;
 public class DepartmentDAOImlp {
 
 	private static final String INSERT_DEPARTMENT = "insert into departments (name) values(?)";
-	private static final String FIND_DEPARTMENT_BY_ID = "select * from departments where department_id=?";
+	private static final String FIND_DEPARTMENT_BY_ID = "select * from departments where id=?";
 	private static final String FIND_ALL_DEPARTMENTS = "select * from departments";
-	private static final String UPDATE_DEPARTMENT = "update departments set name=? where department_id =?";
-	private static final String DELETE_DEPARTMENT = "delete from departments where department_id =?";
+	private static final String UPDATE_DEPARTMENT = "update departments set name=? where id =?";
+	private static final String DELETE_DEPARTMENT = "delete from departments where id =?";
 
 	public Department create(Department department) {
 		Department newDepartment = null;
@@ -30,7 +30,7 @@ public class DepartmentDAOImlp {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newDepartment = new Department();
-					newDepartment.setId(resultSet.getInt("department_id"));
+					newDepartment.setId(resultSet.getInt("id"));
 					newDepartment.setName(resultSet.getString("name"));
 				}
 			}
@@ -53,7 +53,7 @@ public class DepartmentDAOImlp {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					departmentRecieved.setId(resultSet.getInt("department_id"));
+					departmentRecieved.setId(resultSet.getInt("id"));
 					departmentRecieved.setName(resultSet.getString("name"));
 				}
 			}
@@ -72,7 +72,7 @@ public class DepartmentDAOImlp {
 
 			while (resultSet.next()) {
 				Department department = new Department();
-				department.setId(resultSet.getInt("department_id"));
+				department.setId(resultSet.getInt("id"));
 				department.setName(resultSet.getString("name"));
 				studentRecieved.add(department);
 			}
@@ -95,7 +95,7 @@ public class DepartmentDAOImlp {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newDepartment = new Department();
-					newDepartment.setId(resultSet.getInt("department_id"));
+					newDepartment.setId(resultSet.getInt("id"));
 					newDepartment.setName(resultSet.getString("name"));
 				}
 			}

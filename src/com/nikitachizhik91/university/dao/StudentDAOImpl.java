@@ -13,10 +13,10 @@ import com.nikitachizhik91.university.domain.Student;
 public class StudentDAOImpl implements StudentDAO {
 
 	private static final String INSERT_STUDENT = "insert into students (name) values(?)";
-	private static final String FIND_STUDENT_BY_ID = "select * from students where student_id=?";
+	private static final String FIND_STUDENT_BY_ID = "select * from students where id=?";
 	private static final String FIND_ALL_STUDENTS = "select * from students";
-	private static final String UPDATE_STUDENT = "update students set name=? where student_id =?";
-	private static final String DELETE_STUDENT = "delete from students where student_id =?";
+	private static final String UPDATE_STUDENT = "update students set name=? where id =?";
+	private static final String DELETE_STUDENT = "delete from students where id =?";
 
 	public Student create(Student student) {
 		Student newStudent = null;
@@ -30,7 +30,7 @@ public class StudentDAOImpl implements StudentDAO {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newStudent = new Student();
-					newStudent.setId(resultSet.getInt("student_id"));
+					newStudent.setId(resultSet.getInt("id"));
 					newStudent.setName(resultSet.getString("name"));
 				}
 			}
@@ -53,7 +53,7 @@ public class StudentDAOImpl implements StudentDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					studentRecieved.setId(resultSet.getInt("student_id"));
+					studentRecieved.setId(resultSet.getInt("id"));
 					studentRecieved.setName(resultSet.getString("name"));
 				}
 			}
@@ -72,7 +72,7 @@ public class StudentDAOImpl implements StudentDAO {
 
 			while (resultSet.next()) {
 				Student student = new Student();
-				student.setId(resultSet.getInt("student_id"));
+				student.setId(resultSet.getInt("id"));
 				student.setName(resultSet.getString("name"));
 				studentRecieved.add(student);
 			}
@@ -95,7 +95,7 @@ public class StudentDAOImpl implements StudentDAO {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newStudent = new Student();
-					newStudent.setId(resultSet.getInt("student_id"));
+					newStudent.setId(resultSet.getInt("id"));
 					newStudent.setName(resultSet.getString("name"));
 				}
 			}

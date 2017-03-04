@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import com.nikitachizhik91.university.domain.Lesson;
 import com.nikitachizhik91.university.domain.Teacher;
 import com.nikitachizhik91.university.domain.Timetable;
 
@@ -16,9 +17,9 @@ public class TimetableDAOImpl {
 		Timetable timetable = new Timetable();
 
 		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(
-						"select * from lessons join teachers on lessons.lesson_id=teachers.lesson_id_fk"
-								+ "where teacher_id=? and date='2017-01-01';");) {
+				PreparedStatement statement = connection
+						.prepareStatement("select * from lessons join teachers on lessons.id=teachers.lesson_id"
+								+ "where id=? and date=?");) {
 
 			statement.setInt(1, teacher.getId());
 
@@ -28,7 +29,14 @@ public class TimetableDAOImpl {
 			try (ResultSet resultSet = statement.executeQuery();) {
 
 				if (resultSet.next()) {
+					Lesson lesson = new Lesson();
+					lesson.setId(resultSet.getInt("id"));
 
+					Timestamp timestamp2 = resultSet.getTimestamp("date");
+					lesson.setDate(new Date(timestamp2.getTime()));
+
+					lesson.setNumber(resultSet.getInt("number"));
+					timetable.addLesson(lesson);
 				}
 			}
 		} catch (SQLException e) {

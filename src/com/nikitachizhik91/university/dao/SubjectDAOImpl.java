@@ -13,10 +13,10 @@ import com.nikitachizhik91.university.domain.Subject;
 public class SubjectDAOImpl implements SubjectDAO {
 
 	private static final String INSERT_SUBJECT = "insert into subjects (name) values(?)";
-	private static final String FIND_SUBJECT_BY_ID = "select * from subjects where subject_id=?";
+	private static final String FIND_SUBJECT_BY_ID = "select * from subjects where id=?";
 	private static final String FIND_ALL_SUBJECTS = "select * from subjects";
-	private static final String UPDATE_SUBJECT = "update subjects set name=? where subject_id =?";
-	private static final String DELETE_SUBJECT = "delete from subjects where subject_id =?";
+	private static final String UPDATE_SUBJECT = "update subjects set name=? where id =?";
+	private static final String DELETE_SUBJECT = "delete from subjects where id =?";
 
 	public Subject create(Subject subject) {
 		Subject newSubject = null;
@@ -30,7 +30,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newSubject = new Subject();
-					newSubject.setId(resultSet.getInt("subject_id"));
+					newSubject.setId(resultSet.getInt("id"));
 					newSubject.setName(resultSet.getString("name"));
 				}
 			}
@@ -53,7 +53,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 
-					subjectRecieved.setId(resultSet.getInt("subject_id"));
+					subjectRecieved.setId(resultSet.getInt("id"));
 					subjectRecieved.setName(resultSet.getString("name"));
 				}
 			}
@@ -72,7 +72,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 			while (resultSet.next()) {
 				Subject subject = new Subject();
-				subject.setId(resultSet.getInt("subject_id"));
+				subject.setId(resultSet.getInt("id"));
 				subject.setName(resultSet.getString("name"));
 				subjectsRecieved.add(subject);
 			}
@@ -95,7 +95,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
 					newSubject = new Subject();
-					newSubject.setId(resultSet.getInt("subject_id"));
+					newSubject.setId(resultSet.getInt("id"));
 					newSubject.setName(resultSet.getString("name"));
 				}
 			}
