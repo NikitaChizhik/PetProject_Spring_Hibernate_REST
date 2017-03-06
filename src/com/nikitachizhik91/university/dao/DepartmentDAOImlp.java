@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nikitachizhik91.university.model.Department;
+import com.nikitachizhik91.university.model.Subject;
+import com.nikitachizhik91.university.model.Teacher;
 
 public class DepartmentDAOImlp {
 
@@ -17,6 +19,8 @@ public class DepartmentDAOImlp {
 	private static final String FIND_ALL_DEPARTMENTS = "select * from departments";
 	private static final String UPDATE_DEPARTMENT = "update departments set name=? where id =?";
 	private static final String DELETE_DEPARTMENT = "delete from departments where id =?";
+	private static final String INSERT_SUBJECT = "insert into departments_subjects (department_id,subject_id) values (?,?)";
+	private static final String INSERT_TEACHER = "insert into departments_teachers (department_id,teacher_id) values (?,?)";
 
 	public Department create(Department department) {
 
@@ -130,6 +134,40 @@ public class DepartmentDAOImlp {
 		} catch (SQLException e) {
 			e.getMessage();
 		}
+	}
+
+	public void addSubject(Subject subject, Department department) {
+
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT,
+						Statement.RETURN_GENERATED_KEYS);) {
+
+			statement.setInt(1, department.getId());
+			statement.setInt(2, subject.getId());
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void addTeacher(Teacher teacher, Department department) {
+
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER,
+						Statement.RETURN_GENERATED_KEYS);) {
+
+			statement.setInt(1, department.getId());
+			statement.setInt(2, teacher.getId());
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

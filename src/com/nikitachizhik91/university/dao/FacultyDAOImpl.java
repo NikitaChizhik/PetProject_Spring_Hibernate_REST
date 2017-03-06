@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Faculty;
+import com.nikitachizhik91.university.model.Group;
 
 public class FacultyDAOImpl {
 
@@ -17,6 +19,8 @@ public class FacultyDAOImpl {
 	private static final String FIND_ALL_FACULTIES = "select * from faculties";
 	private static final String UPDATE_FACULTY = "update faculties set name=? where id =?";
 	private static final String DELETE_FACULTY = "delete from faculties where id =?";
+	private static final String INSERT_DEPARTMENT = "insert into faculties_departments (faculty_id,department_id) values (?,?)";
+	private static final String INSERT_GROUP = "insert into faculties_departments (faculty_id,group_id) values (?,?)";
 
 	public Faculty create(Faculty faculty) {
 		Faculty facultyReceived = null;
@@ -120,6 +124,38 @@ public class FacultyDAOImpl {
 		} catch (SQLException e) {
 			e.getMessage();
 		}
+	}
+
+	public void addDepartment(Faculty faculty, Department department) {
+
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(INSERT_DEPARTMENT)) {
+
+			statement.setInt(1, faculty.getId());
+			statement.setInt(2, department.getId());
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void addGroup(Faculty faculty, Group group) {
+
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(INSERT_GROUP)) {
+
+			statement.setInt(1, faculty.getId());
+			statement.setInt(2, group.getId());
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
