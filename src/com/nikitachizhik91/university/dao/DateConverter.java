@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.daoImpl;
+package com.nikitachizhik91.university.dao;
 
 import java.sql.Timestamp;
 import java.util.Date;

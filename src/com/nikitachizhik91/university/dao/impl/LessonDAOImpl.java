@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.daoImpl;
+package com.nikitachizhik91.university.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.nikitachizhik91.university.dao.Connector;
+import com.nikitachizhik91.university.dao.DateConverter;
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Room;
