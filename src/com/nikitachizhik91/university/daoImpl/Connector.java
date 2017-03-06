@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.dao;
+package com.nikitachizhik91.university.daoImpl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

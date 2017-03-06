@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.dao;
+package com.nikitachizhik91.university.daoImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nikitachizhik91.university.dao.TeacherDAO;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 

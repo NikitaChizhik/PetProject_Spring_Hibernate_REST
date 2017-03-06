@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.nikitachizhik91.university.dao.LessonDAOImpl;
+import com.nikitachizhik91.university.daoImpl.LessonDAOImpl;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
@@ -30,15 +30,17 @@ public class Timetable {
 			lessons = new ArrayList<Lesson>();
 		}
 		lessons.add(lesson);
+		new LessonDAOImpl().create(lesson);
 	}
 
 	public void deleteLesson(Lesson lesson) {
 		if (lessons != null) {
 			lessons.remove(lesson);
 		}
+		new LessonDAOImpl().delete(lesson.getId());
 	}
 
-	public Timetable getTeachersTimetableForDay(Teacher teacher, Date date) {
+	public List<Lesson> getTeachersTimetableForDay(Teacher teacher, Date date) {
 		if (teacher == null || date == null) {
 			throw new IllegalArgumentException();
 		}
@@ -46,79 +48,82 @@ public class Timetable {
 		lessons = new LessonDAOImpl().findAll();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
-		Timetable requiredTimetable = new Timetable();
+		List<Lesson> timetable = new ArrayList<Lesson>();
 		for (Lesson lesson : lessons) {
 			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
 					&& lesson.getTeacher().equals(teacher)) {
 
-				requiredTimetable.addLesson(lesson);
+				timetable.add(lesson);
 			}
 		}
 
-		return requiredTimetable;
+		return timetable;
 
 	}
 
-	// public Timetable getTeachersTimetableForMonth(Teacher teacher, Date date)
-	// {
-	// if (teacher == null || date == null) {
-	// throw new IllegalArgumentException();
-	// }
-	// SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
-	// Timetable requiredTimetable = new Timetable();
-	//
-	// for (Lesson lesson : lessons) {
-	//
-	// if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-	// && lesson.getTeacher().equals(teacher)) {
-	// requiredTimetable.addLesson(lesson);
-	// }
-	// }
-	// return requiredTimetable;
-	//
-	// }
-	//
-	// public Timetable getStudentsTimetableForDay(Student student, Date date) {
-	// if (student == null || date == null) {
-	// throw new IllegalArgumentException();
-	// }
-	// Timetable requiredTimetable = new Timetable();
-	//
-	// SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
-	//
-	// for (Lesson lesson : lessons) {
-	//
-	// // if
-	// // (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-	// // && lesson.getGroup().equals(student.getGroup())) {
-	// //
-	// // requiredTimetable.addLesson(lesson);
-	// //
-	// // }
-	// }
-	// return requiredTimetable;
-	//
-	// }
-	//
-	// public Timetable getStudentsTimetableForMonth(Student student, Date date)
-	// {
-	// if (student == null || date == null) {
-	// throw new IllegalArgumentException();
-	// }
-	// Timetable requiredTimetable = new Timetable();
-	//
-	// SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
-	// for (Lesson lesson : lessons) {
-	//
-	// // if
-	// // (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-	// // && lesson.getGroup().equals(student.getGroup())) {
-	// // requiredTimetable.addLesson(lesson);
-	// // }
-	// }
-	// return requiredTimetable;
-	//
-	// }
+	public List<Lesson> getTeachersTimetableForMonth(Teacher teacher, Date date) {
+		if (teacher == null || date == null) {
+			throw new IllegalArgumentException();
+		}
+
+		lessons = new LessonDAOImpl().findAll();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
+		List<Lesson> timetable = new ArrayList<Lesson>();
+
+		for (Lesson lesson : lessons) {
+
+			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
+					&& lesson.getTeacher().equals(teacher)) {
+				timetable.add(lesson);
+			}
+		}
+		return timetable;
+
+	}
+
+	public List<Lesson> getStudentsTimetableForDay(Student student, Date date) {
+		if (student == null || date == null) {
+			throw new IllegalArgumentException();
+		}
+
+		lessons = new LessonDAOImpl().findAll();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
+		List<Lesson> timetable = new ArrayList<Lesson>();
+
+		for (Lesson lesson : lessons) {
+
+			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
+					&& lesson.getGroup().getStudents().contains(student)) {
+
+				timetable.add(lesson);
+
+			}
+		}
+		return timetable;
+
+	}
+
+	public List<Lesson> getStudentsTimetableFoMonth(Student student, Date date) {
+		if (student == null || date == null) {
+			throw new IllegalArgumentException();
+		}
+
+		lessons = new LessonDAOImpl().findAll();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
+		List<Lesson> timetable = new ArrayList<Lesson>();
+
+		for (Lesson lesson : lessons) {
+
+			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
+					&& lesson.getGroup().getStudents().contains(student)) {
+
+				timetable.add(lesson);
+
+			}
+		}
+		return timetable;
+
+	}
 
 	public List<Lesson> getLessons() {
 		return lessons;
