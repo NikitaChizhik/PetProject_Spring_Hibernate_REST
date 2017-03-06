@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.nikitachizhik91.university.dao.LessonDAOImpl;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
@@ -42,14 +43,17 @@ public class Timetable {
 			throw new IllegalArgumentException();
 		}
 
+		lessons = new LessonDAOImpl().findAll();
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		Timetable requiredTimetable = new Timetable();
-
+		System.out.println(date + "   - from Java");
 		for (Lesson lesson : lessons) {
-
+			System.out.println(lesson.getDate() + "  - out from BD");
 			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
 					&& lesson.getTeacher().equals(teacher)) {
 
+				System.out.println(lesson);
 				requiredTimetable.addLesson(lesson);
 			}
 		}
@@ -58,64 +62,66 @@ public class Timetable {
 
 	}
 
-	public Timetable getTeachersTimetableForMonth(Teacher teacher, Date date) {
-		if (teacher == null || date == null) {
-			throw new IllegalArgumentException();
-		}
-		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
-		Timetable requiredTimetable = new Timetable();
-
-		for (Lesson lesson : lessons) {
-
-			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-					&& lesson.getTeacher().equals(teacher)) {
-				requiredTimetable.addLesson(lesson);
-			}
-		}
-		return requiredTimetable;
-
-	}
-
-	public Timetable getStudentsTimetableForDay(Student student, Date date) {
-		if (student == null || date == null) {
-			throw new IllegalArgumentException();
-		}
-		Timetable requiredTimetable = new Timetable();
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
-
-		for (Lesson lesson : lessons) {
-
-			// if
-			// (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-			// && lesson.getGroup().equals(student.getGroup())) {
-			//
-			// requiredTimetable.addLesson(lesson);
-			//
-			// }
-		}
-		return requiredTimetable;
-
-	}
-
-	public Timetable getStudentsTimetableForMonth(Student student, Date date) {
-		if (student == null || date == null) {
-			throw new IllegalArgumentException();
-		}
-		Timetable requiredTimetable = new Timetable();
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
-		for (Lesson lesson : lessons) {
-
-			// if
-			// (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-			// && lesson.getGroup().equals(student.getGroup())) {
-			// requiredTimetable.addLesson(lesson);
-			// }
-		}
-		return requiredTimetable;
-
-	}
+	// public Timetable getTeachersTimetableForMonth(Teacher teacher, Date date)
+	// {
+	// if (teacher == null || date == null) {
+	// throw new IllegalArgumentException();
+	// }
+	// SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
+	// Timetable requiredTimetable = new Timetable();
+	//
+	// for (Lesson lesson : lessons) {
+	//
+	// if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
+	// && lesson.getTeacher().equals(teacher)) {
+	// requiredTimetable.addLesson(lesson);
+	// }
+	// }
+	// return requiredTimetable;
+	//
+	// }
+	//
+	// public Timetable getStudentsTimetableForDay(Student student, Date date) {
+	// if (student == null || date == null) {
+	// throw new IllegalArgumentException();
+	// }
+	// Timetable requiredTimetable = new Timetable();
+	//
+	// SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
+	//
+	// for (Lesson lesson : lessons) {
+	//
+	// // if
+	// // (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
+	// // && lesson.getGroup().equals(student.getGroup())) {
+	// //
+	// // requiredTimetable.addLesson(lesson);
+	// //
+	// // }
+	// }
+	// return requiredTimetable;
+	//
+	// }
+	//
+	// public Timetable getStudentsTimetableForMonth(Student student, Date date)
+	// {
+	// if (student == null || date == null) {
+	// throw new IllegalArgumentException();
+	// }
+	// Timetable requiredTimetable = new Timetable();
+	//
+	// SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
+	// for (Lesson lesson : lessons) {
+	//
+	// // if
+	// // (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
+	// // && lesson.getGroup().equals(student.getGroup())) {
+	// // requiredTimetable.addLesson(lesson);
+	// // }
+	// }
+	// return requiredTimetable;
+	//
+	// }
 
 	public List<Lesson> getLessons() {
 		return lessons;
