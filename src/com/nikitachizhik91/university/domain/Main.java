@@ -11,14 +11,11 @@ public class Main {
 	public static void main(String[] args) throws ParseException {
 
 		Teacher teacher = new Teacher();
-		teacher.setId(1);
-		Date date = new SimpleDateFormat("dd-MM-yyyy").parse("05-05-2017");
+		teacher.setId(9);
+		Date date = new SimpleDateFormat("dd-MM-yyyy").parse("01-01-2017");
 		Timetable timetable = new Timetable().getTeachersTimetableForDay(teacher, date);
 
-		for (Lesson lesson : timetable.getLessons()) {
-			System.out.println(lesson);
-
-		}
+		
 
 	}
 }

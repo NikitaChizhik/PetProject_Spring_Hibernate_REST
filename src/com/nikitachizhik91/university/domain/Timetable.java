@@ -47,13 +47,10 @@ public class Timetable {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		Timetable requiredTimetable = new Timetable();
-		System.out.println(date + "   - from Java");
 		for (Lesson lesson : lessons) {
-			System.out.println(lesson.getDate() + "  - out from BD");
 			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
 					&& lesson.getTeacher().equals(teacher)) {
 
-				System.out.println(lesson);
 				requiredTimetable.addLesson(lesson);
 			}
 		}
