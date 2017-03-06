@@ -16,6 +16,11 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.nikitachizhik91.university.model.Group;
+import com.nikitachizhik91.university.model.Lesson;
+import com.nikitachizhik91.university.model.Student;
+import com.nikitachizhik91.university.model.Teacher;
+
 public class TimetableTest {
 	private Timetable timetable;
 	private final Date DATE_TO_CHECK = new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");

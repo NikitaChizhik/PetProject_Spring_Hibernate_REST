@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.Faculty;
+import com.nikitachizhik91.university.model.Faculty;
 
 public class FacultyDAOImpl {
 
@@ -20,7 +20,8 @@ public class FacultyDAOImpl {
 
 	public Faculty create(Faculty faculty) {
 		Faculty facultyReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_FACULTY,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -43,8 +44,8 @@ public class FacultyDAOImpl {
 
 	public Faculty findById(int id) {
 		Faculty facultyReceived = new Faculty();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_FACULTY_BY_ID)) {
 
@@ -65,8 +66,8 @@ public class FacultyDAOImpl {
 
 	public List<Faculty> findAll() {
 		List<Faculty> facultiesReceived = new ArrayList<Faculty>();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_FACULTIES);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -84,7 +85,8 @@ public class FacultyDAOImpl {
 
 	public Faculty update(Faculty faculty) {
 		Faculty facultyReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_FACULTY,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -107,7 +109,8 @@ public class FacultyDAOImpl {
 	}
 
 	public void delete(int id) {
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_FACULTY);) {
 
 			statement.setInt(1, id);

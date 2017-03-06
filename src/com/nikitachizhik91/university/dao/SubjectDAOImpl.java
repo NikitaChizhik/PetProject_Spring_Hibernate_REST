@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.Subject;
+import com.nikitachizhik91.university.model.Subject;
 
 public class SubjectDAOImpl implements SubjectDAO {
 
@@ -20,7 +20,8 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 	public Subject create(Subject subject) {
 		Subject subjectReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -43,8 +44,8 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 	public Subject findById(int id) {
 		Subject subjectReceived = new Subject();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_SUBJECT_BY_ID)) {
 
@@ -65,8 +66,8 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 	public List<Subject> findAll() {
 		List<Subject> subjectsReceived = new ArrayList<Subject>();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_SUBJECTS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -84,7 +85,8 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 	public Subject update(Subject subject) {
 		Subject subjectReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_SUBJECT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -107,7 +109,8 @@ public class SubjectDAOImpl implements SubjectDAO {
 	}
 
 	public void delete(int id) {
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT);) {
 
 			statement.setInt(1, id);

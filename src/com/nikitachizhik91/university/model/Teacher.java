@@ -1,9 +1,9 @@
-package com.nikitachizhik91.university.domain;
+package com.nikitachizhik91.university.model;
 
-public class Student {
-
+public class Teacher {
 	private int id;
 	private String name;
+	private Subject subject;
 
 	public int getId() {
 		return id;
@@ -21,12 +21,21 @@ public class Student {
 		this.name = name;
 	}
 
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
 		return result;
 	}
 
@@ -38,7 +47,7 @@ public class Student {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Student other = (Student) obj;
+		Teacher other = (Teacher) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -46,12 +55,17 @@ public class Student {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (subject == null) {
+			if (other.subject != null)
+				return false;
+		} else if (!subject.equals(other.subject))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + "]";
+		return "Teacher [id=" + id + ", name=" + name + "]";
 	}
 
 }

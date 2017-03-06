@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.Room;
+import com.nikitachizhik91.university.model.Room;
 
 public class RoomDAOImpl implements RoomDAO {
 	private static final String INSERT_ROOM = "insert into rooms (number) values(?)";
@@ -19,7 +19,8 @@ public class RoomDAOImpl implements RoomDAO {
 
 	public Room create(Room room) {
 		Room roomReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_ROOM, Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, room.getNumber());
@@ -41,8 +42,8 @@ public class RoomDAOImpl implements RoomDAO {
 
 	public Room findById(int id) {
 		Room roomReceived = new Room();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_ROOM_BY_ID)) {
 
@@ -63,8 +64,8 @@ public class RoomDAOImpl implements RoomDAO {
 
 	public List<Room> findAll() {
 		List<Room> roomsReceived = new ArrayList<Room>();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_ROOMS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -82,7 +83,8 @@ public class RoomDAOImpl implements RoomDAO {
 
 	public Room update(Room room) {
 		Room roomReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_ROOM, Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, room.getNumber());
@@ -104,7 +106,8 @@ public class RoomDAOImpl implements RoomDAO {
 	}
 
 	public void delete(int id) {
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_ROOM);) {
 
 			statement.setInt(1, id);
@@ -115,7 +118,5 @@ public class RoomDAOImpl implements RoomDAO {
 			e.getMessage();
 		}
 	}
-
-	
 
 }

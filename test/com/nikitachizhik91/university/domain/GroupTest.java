@@ -7,6 +7,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.nikitachizhik91.university.model.Group;
+import com.nikitachizhik91.university.model.Student;
+
 public class GroupTest {
 	Group group;
 

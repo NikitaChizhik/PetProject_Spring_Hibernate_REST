@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.Student;
+import com.nikitachizhik91.university.model.Student;
 
 public class StudentDAOImpl implements StudentDAO {
 
@@ -20,7 +20,8 @@ public class StudentDAOImpl implements StudentDAO {
 
 	public Student create(Student student) {
 		Student studentReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -43,8 +44,8 @@ public class StudentDAOImpl implements StudentDAO {
 
 	public Student findById(int id) {
 		Student studentReceived = new Student();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_STUDENT_BY_ID)) {
 
@@ -65,8 +66,8 @@ public class StudentDAOImpl implements StudentDAO {
 
 	public List<Student> findAll() {
 		List<Student> studentReceived = new ArrayList<Student>();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_STUDENTS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -84,7 +85,8 @@ public class StudentDAOImpl implements StudentDAO {
 
 	public Student update(Student student) {
 		Student studentReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_STUDENT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -107,7 +109,8 @@ public class StudentDAOImpl implements StudentDAO {
 	}
 
 	public void delete(int id) {
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_STUDENT);) {
 
 			statement.setInt(1, id);

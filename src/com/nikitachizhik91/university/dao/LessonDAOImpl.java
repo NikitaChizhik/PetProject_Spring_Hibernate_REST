@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.Group;
-import com.nikitachizhik91.university.domain.Lesson;
-import com.nikitachizhik91.university.domain.Room;
-import com.nikitachizhik91.university.domain.Subject;
-import com.nikitachizhik91.university.domain.Teacher;
+import com.nikitachizhik91.university.model.Group;
+import com.nikitachizhik91.university.model.Lesson;
+import com.nikitachizhik91.university.model.Room;
+import com.nikitachizhik91.university.model.Subject;
+import com.nikitachizhik91.university.model.Teacher;
 
 public class LessonDAOImpl {
 
@@ -26,12 +26,13 @@ public class LessonDAOImpl {
 
 	public Lesson create(Lesson lesson) {
 		Lesson lessonReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setInt(1, lesson.getNumber());
-			Timestamp timestamp = Converter.convertUtilDateToTimestamp(lesson.getDate());
+			Timestamp timestamp = DateConverter.toTimestamp(lesson.getDate());
 			statement.setTimestamp(2, timestamp);
 			statement.setInt(3, lesson.getSubject().getId());
 			statement.setInt(4, lesson.getTeacher().getId());
@@ -45,7 +46,7 @@ public class LessonDAOImpl {
 					lessonReceived.setId(resultSet.getInt("id"));
 					lessonReceived.setNumber(resultSet.getInt("number"));
 
-					Date date = Converter.convertTimestampToUtilDate(resultSet.getTimestamp("date"));
+					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 					lessonReceived.setDate(date);
 
 					Group group = new Group();
@@ -74,8 +75,8 @@ public class LessonDAOImpl {
 
 	public Lesson findById(int id) {
 		Lesson lessonReceived = new Lesson();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_LESSON_BY_ID)) {
 
@@ -87,7 +88,7 @@ public class LessonDAOImpl {
 					lessonReceived.setId(resultSet.getInt("id"));
 					lessonReceived.setNumber(resultSet.getInt("number"));
 
-					Date date = Converter.convertTimestampToUtilDate(resultSet.getTimestamp("date"));
+					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 					lessonReceived.setDate(date);
 
 					Group group = new Group();
@@ -115,8 +116,8 @@ public class LessonDAOImpl {
 
 	public List<Lesson> findAll() {
 		List<Lesson> lessonsReceived = new ArrayList<Lesson>();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_LESSONS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -125,7 +126,7 @@ public class LessonDAOImpl {
 				lessonReceived.setId(resultSet.getInt("id"));
 				lessonReceived.setNumber(resultSet.getInt("number"));
 
-				Date date = Converter.convertTimestampToUtilDate(resultSet.getTimestamp("date"));
+				Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 				lessonReceived.setDate(date);
 
 				Group group = new Group();
@@ -153,12 +154,13 @@ public class LessonDAOImpl {
 
 	public Lesson update(Lesson lesson) {
 		Lesson lessonReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setInt(1, lesson.getNumber());
-			Timestamp timestamp = Converter.convertUtilDateToTimestamp(lesson.getDate());
+			Timestamp timestamp = DateConverter.toTimestamp(lesson.getDate());
 			statement.setTimestamp(2, timestamp);
 			statement.setInt(3, lesson.getSubject().getId());
 			statement.setInt(4, lesson.getTeacher().getId());
@@ -174,7 +176,7 @@ public class LessonDAOImpl {
 					lessonReceived.setId(resultSet.getInt("id"));
 					lessonReceived.setNumber(resultSet.getInt("number"));
 
-					Date date = Converter.convertTimestampToUtilDate(resultSet.getTimestamp("date"));
+					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 					lessonReceived.setDate(date);
 
 					Group group = new Group();
@@ -202,7 +204,8 @@ public class LessonDAOImpl {
 	}
 
 	public void delete(int id) {
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_LESSON);) {
 
 			statement.setInt(1, id);

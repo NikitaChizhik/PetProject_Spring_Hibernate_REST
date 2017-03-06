@@ -7,6 +7,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.nikitachizhik91.university.model.Department;
+import com.nikitachizhik91.university.model.Faculty;
+import com.nikitachizhik91.university.model.Group;
+
 public class Facultytest {
 
 	Faculty faculty;

@@ -1,7 +1,9 @@
-package com.nikitachizhik91.university.domain;
+package com.nikitachizhik91.university.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import com.nikitachizhik91.university.domain.Timetable;
 
 public class University {
 	private String name;

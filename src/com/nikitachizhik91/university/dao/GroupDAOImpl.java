@@ -8,7 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.Group;
+import com.nikitachizhik91.university.model.Group;
+import com.nikitachizhik91.university.model.Student;
 
 public class GroupDAOImpl {
 
@@ -17,11 +18,14 @@ public class GroupDAOImpl {
 	private static final String FIND_ALL_GROUPS = "select * from groups";
 	private static final String UPDATE_GROUP = "update groups set name=? where id =?";
 	private static final String DELETE_GROUP = "delete from groups where id =?";
+	private static final String INSERT_STUDENT = "insert into groups_students (group_id,student_id) values (?,?)";
 
 	public Group create(Group group) {
 		Group groupReceived = null;
-		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);) {
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement(INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, group.getName());
 			statement.executeUpdate();
@@ -42,8 +46,8 @@ public class GroupDAOImpl {
 
 	public Group findById(int id) {
 		Group groupReceived = new Group();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_GROUP_BY_ID)) {
 
@@ -64,8 +68,8 @@ public class GroupDAOImpl {
 
 	public List<Group> findAll() {
 		List<Group> groupsReceived = new ArrayList<Group>();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_GROUPS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -83,8 +87,10 @@ public class GroupDAOImpl {
 
 	public Group update(Group group) {
 		Group groupReceived = null;
-		try (Connection connection = Connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP, Statement.RETURN_GENERATED_KEYS);) {
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement(UPDATE_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, group.getName());
 			statement.setInt(2, group.getId());
@@ -105,7 +111,8 @@ public class GroupDAOImpl {
 	}
 
 	public void delete(int id) {
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_GROUP);) {
 
 			statement.setInt(1, id);
@@ -117,4 +124,20 @@ public class GroupDAOImpl {
 		}
 	}
 
+	public void addStudent(Student student, Group group) {
+
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT,
+						Statement.RETURN_GENERATED_KEYS);) {
+
+			statement.setInt(1, group.getId());
+			statement.setInt(2, student.getId());
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 }

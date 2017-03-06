@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.Subject;
-import com.nikitachizhik91.university.domain.Teacher;
+import com.nikitachizhik91.university.model.Subject;
+import com.nikitachizhik91.university.model.Teacher;
 
 public class TeacherDAOImpl implements TeacherDAO {
 	private static final String INSERT_TEACHER = "insert into teachers (name,subject_id) values(?,?)";
@@ -20,7 +20,8 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 	public Teacher create(Teacher teacher) {
 		Teacher teacherReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -47,8 +48,8 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 	public Teacher findById(int id) {
 		Teacher teacherReceived = new Teacher();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_TEACHER_BY_ID)) {
 
@@ -72,8 +73,8 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 	public List<Teacher> findAll() {
 		List<Teacher> teachersReceived = new ArrayList<Teacher>();
-
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_TEACHERS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -95,7 +96,8 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 	public Teacher update(Teacher teacher) {
 		Teacher teacherReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_TEACHER,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -122,7 +124,8 @@ public class TeacherDAOImpl implements TeacherDAO {
 	}
 
 	public void delete(int id) {
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_TEACHER);) {
 
 			statement.setInt(1, id);

@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.Department;
+import com.nikitachizhik91.university.model.Department;
 
 public class DepartmentDAOImlp {
 
@@ -19,8 +19,11 @@ public class DepartmentDAOImlp {
 	private static final String DELETE_DEPARTMENT = "delete from departments where id =?";
 
 	public Department create(Department department) {
+
 		Department departmentReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_DEPARTMENT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -42,9 +45,11 @@ public class DepartmentDAOImlp {
 	}
 
 	public Department findById(int id) {
-		Department departmentReceived = new Department();
 
-		try (Connection connection = Connector.getConnection();
+		Department departmentReceived = new Department();
+		Connector connector = new Connector();
+
+		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENT_BY_ID)) {
 
@@ -64,9 +69,11 @@ public class DepartmentDAOImlp {
 	}
 
 	public List<Department> findAll() {
-		List<Department> departmentsReceived = new ArrayList<Department>();
 
-		try (Connection connection = Connector.getConnection();
+		List<Department> departmentsReceived = new ArrayList<Department>();
+		Connector connector = new Connector();
+
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_DEPARTMENTS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -83,8 +90,11 @@ public class DepartmentDAOImlp {
 	}
 
 	public Department update(Department department) {
+
 		Department departmentReceived = null;
-		try (Connection connection = Connector.getConnection();
+		Connector connector = new Connector();
+
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_DEPARTMENT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -107,7 +117,10 @@ public class DepartmentDAOImlp {
 	}
 
 	public void delete(int id) {
-		try (Connection connection = Connector.getConnection();
+
+		Connector connector = new Connector();
+
+		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_DEPARTMENT);) {
 
 			statement.setInt(1, id);
