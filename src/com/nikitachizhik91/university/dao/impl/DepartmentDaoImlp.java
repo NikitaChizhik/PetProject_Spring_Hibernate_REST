@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nikitachizhik91.university.dao.Connector;
+import com.nikitachizhik91.university.dao.DepartmentDao;
 import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
-public class DepartmentDAOImlp {
+public class DepartmentDaoImlp implements DepartmentDao {
 
 	private static final String INSERT_DEPARTMENT = "insert into departments (name) values(?)";
 	private static final String FIND_DEPARTMENT_BY_ID = "select * from departments where id=?";

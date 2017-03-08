@@ -6,13 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.nikitachizhik91.university.dao.Connector;
+import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Student;
 
-public class GroupDAOImpl {
+public class GroupDaoImpl implements GroupDao {
 
 	private static final String INSERT_GROUP = "insert into groups (name) values(?)";
 	private static final String FIND_GROUP_BY_ID = "select * from groups where id=?";
@@ -46,19 +49,21 @@ public class GroupDAOImpl {
 	}
 
 	public Group findById(int id) {
+
 		Group groupReceived = new Group();
 		Connector connector = new Connector();
 		try (Connection connection = connector.getConnection();
-
-		PreparedStatement statement = connection.prepareStatement(FIND_GROUP_BY_ID)) {
+				PreparedStatement statement = connection.prepareStatement(FIND_GROUP_BY_ID)) {
 
 			statement.setInt(1, id);
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
-
-					groupReceived.setId(resultSet.getInt("id"));
+					int groupId = resultSet.getInt("id");
+					groupReceived.setId(groupId);
 					groupReceived.setName(resultSet.getString("name"));
+					Groups_Students gsTable = new Groups_Students();
+					groupReceived.setStudents(gsTable.findStudentsByGroupId(groupId));
 				}
 			}
 		} catch (SQLException e) {
@@ -68,16 +73,21 @@ public class GroupDAOImpl {
 	}
 
 	public List<Group> findAll() {
+
 		List<Group> groupsReceived = new ArrayList<Group>();
+		Group group = null;
 		Connector connector = new Connector();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_GROUPS);
 				ResultSet resultSet = statement.executeQuery();) {
 
 			while (resultSet.next()) {
-				Group group = new Group();
-				group.setId(resultSet.getInt("id"));
+				group = new Group();
+				int groupId = resultSet.getInt("id");
+				group.setId(groupId);
 				group.setName(resultSet.getString("name"));
+				Groups_Students gsTable = new Groups_Students();
+				group.setStudents(gsTable.findStudentsByGroupId(groupId));
 				groupsReceived.add(group);
 			}
 		} catch (SQLException e) {
@@ -87,11 +97,23 @@ public class GroupDAOImpl {
 	}
 
 	public Group update(Group group) {
-		Group groupReceived = null;
+
+		Group groupReceived = new Group();
 		Connector connector = new Connector();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement(UPDATE_GROUP, Statement.RETURN_GENERATED_KEYS);) {
+
+			Groups_Students groups_students = new Groups_Students();
+			groups_students.deleteGroup(group.getId());
+
+			Set<Student> students = group.getStudents();
+			Iterator<Student> iterator = students.iterator();
+			int groupId = group.getId();
+			while (iterator.hasNext()) {
+				Student student = iterator.next();
+				addStudent(student.getId(), groupId);
+			}
 
 			statement.setString(1, group.getName());
 			statement.setInt(2, group.getId());
@@ -99,9 +121,11 @@ public class GroupDAOImpl {
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					groupReceived = new Group();
-					groupReceived.setId(resultSet.getInt("id"));
+					int groupIdReceived = resultSet.getInt("id");
+					groupReceived.setId(groupIdReceived);
 					groupReceived.setName(resultSet.getString("name"));
+					Groups_Students gsTable = new Groups_Students();
+					groupReceived.setStudents(gsTable.findStudentsByGroupId(groupIdReceived));
 				}
 			}
 
@@ -125,15 +149,14 @@ public class GroupDAOImpl {
 		}
 	}
 
-	public void addStudent(Student student, Group group) {
+	public void addStudent(int studentId, int groupId) {
 
 		Connector connector = new Connector();
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT,
-						Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT);) {
 
-			statement.setInt(1, group.getId());
-			statement.setInt(2, student.getId());
+			statement.setInt(1, groupId);
+			statement.setInt(2, studentId);
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -141,4 +164,5 @@ public class GroupDAOImpl {
 		}
 
 	}
+
 }

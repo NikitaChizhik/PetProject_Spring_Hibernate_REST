@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nikitachizhik91.university.dao.Connector;
-import com.nikitachizhik91.university.dao.RoomDAO;
+import com.nikitachizhik91.university.dao.RoomDao;
 import com.nikitachizhik91.university.model.Room;
 
-public class RoomDAOImpl implements RoomDAO {
+public class RoomDaoImpl implements RoomDao {
 	private static final String INSERT_ROOM = "insert into rooms (number) values(?)";
 	private static final String FIND_ROOM_BY_ID = "select * from rooms where id=?";
 	private static final String FIND_ALL_ROOMS = "select * from rooms";

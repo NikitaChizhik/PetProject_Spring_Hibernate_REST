@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nikitachizhik91.university.dao.Connector;
-import com.nikitachizhik91.university.dao.SubjectDAO;
+import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.model.Subject;
 
-public class SubjectDAOImpl implements SubjectDAO {
+public class SubjectDaoImpl implements SubjectDao {
 
 	private static final String INSERT_SUBJECT = "insert into subjects (name) values(?)";
 	private static final String FIND_SUBJECT_BY_ID = "select * from subjects where id=?";

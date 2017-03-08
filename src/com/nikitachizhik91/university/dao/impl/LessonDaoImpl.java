@@ -12,13 +12,14 @@ import java.util.List;
 
 import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DateConverter;
-import com.nikitachizhik91.university.model.Group;
+import com.nikitachizhik91.university.dao.GroupDao;
+import com.nikitachizhik91.university.dao.LessonDao;
+import com.nikitachizhik91.university.dao.RoomDao;
+import com.nikitachizhik91.university.dao.SubjectDao;
+import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.model.Lesson;
-import com.nikitachizhik91.university.model.Room;
-import com.nikitachizhik91.university.model.Subject;
-import com.nikitachizhik91.university.model.Teacher;
 
-public class LessonDAOImpl {
+public class LessonDaoImpl implements LessonDao {
 
 	private static final String INSERT_LESSON = "insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(?,?,?,?,?,?)";
 	private static final String FIND_LESSON_BY_ID = "select * from lessons where id=?";
@@ -51,21 +52,17 @@ public class LessonDAOImpl {
 					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 					lessonReceived.setDate(date);
 
-					Group group = new Group();
-					group.setId(resultSet.getInt("group_id"));
-					lessonReceived.setGroup(group);
+					GroupDao groupDao = new GroupDaoImpl();
+					lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-					Room room = new Room();
-					room.setId(resultSet.getInt("room_id"));
-					lessonReceived.setRoom(room);
+					RoomDao roomDao = new RoomDaoImpl();
+					lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-					Subject subject = new Subject();
-					subject.setId(resultSet.getInt("subject_id"));
-					lessonReceived.setSubject(subject);
+					SubjectDao subjectDao = new SubjectDaoImpl();
+					lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-					Teacher teacher = new Teacher();
-					teacher.setId(resultSet.getInt("teacher_id"));
-					lessonReceived.setTeacher(teacher);
+					TeacherDao teacherDao = new TeacherDaoImpl();
+					lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 				}
 			}
 		} catch (SQLException e) {
@@ -93,21 +90,17 @@ public class LessonDAOImpl {
 					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 					lessonReceived.setDate(date);
 
-					Group group = new Group();
-					group.setId(resultSet.getInt("group_id"));
-					lessonReceived.setGroup(group);
+					GroupDao groupDao = new GroupDaoImpl();
+					lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-					Room room = new Room();
-					room.setId(resultSet.getInt("room_id"));
-					lessonReceived.setRoom(room);
+					RoomDao roomDao = new RoomDaoImpl();
+					lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-					Subject subject = new Subject();
-					subject.setId(resultSet.getInt("subject_id"));
-					lessonReceived.setSubject(subject);
+					SubjectDao subjectDao = new SubjectDaoImpl();
+					lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-					Teacher teacher = new Teacher();
-					teacher.setId(resultSet.getInt("teacher_id"));
-					lessonReceived.setTeacher(teacher);
+					TeacherDao teacherDao = new TeacherDaoImpl();
+					lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 				}
 			}
 		} catch (SQLException e) {
@@ -131,21 +124,18 @@ public class LessonDAOImpl {
 				Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 				lessonReceived.setDate(date);
 
-				Group group = new Group();
-				group.setId(resultSet.getInt("group_id"));
-				lessonReceived.setGroup(group);
+				GroupDao groupDao = new GroupDaoImpl();
+				lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-				Room room = new Room();
-				room.setId(resultSet.getInt("room_id"));
-				lessonReceived.setRoom(room);
+				RoomDao roomDao = new RoomDaoImpl();
+				lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-				Subject subject = new Subject();
-				subject.setId(resultSet.getInt("subject_id"));
-				lessonReceived.setSubject(subject);
+				SubjectDao subjectDao = new SubjectDaoImpl();
+				lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-				Teacher teacher = new Teacher();
-				teacher.setId(resultSet.getInt("teacher_id"));
-				lessonReceived.setTeacher(teacher);
+				TeacherDao teacherDao = new TeacherDaoImpl();
+				lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+
 				lessonsReceived.add(lessonReceived);
 			}
 		} catch (SQLException e) {
@@ -181,21 +171,17 @@ public class LessonDAOImpl {
 					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 					lessonReceived.setDate(date);
 
-					Group group = new Group();
-					group.setId(resultSet.getInt("group_id"));
-					lessonReceived.setGroup(group);
+					GroupDao groupDao = new GroupDaoImpl();
+					lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-					Room room = new Room();
-					room.setId(resultSet.getInt("room_id"));
-					lessonReceived.setRoom(room);
+					RoomDao roomDao = new RoomDaoImpl();
+					lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-					Subject subject = new Subject();
-					subject.setId(resultSet.getInt("subject_id"));
-					lessonReceived.setSubject(subject);
+					SubjectDao subjectDao = new SubjectDaoImpl();
+					lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-					Teacher teacher = new Teacher();
-					teacher.setId(resultSet.getInt("teacher_id"));
-					lessonReceived.setTeacher(teacher);
+					TeacherDao teacherDao = new TeacherDaoImpl();
+					lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 				}
 			}
 

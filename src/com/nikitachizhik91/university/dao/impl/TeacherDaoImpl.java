@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nikitachizhik91.university.dao.Connector;
-import com.nikitachizhik91.university.dao.TeacherDAO;
+import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
-public class TeacherDAOImpl implements TeacherDAO {
+public class TeacherDaoImpl implements TeacherDao {
 	private static final String INSERT_TEACHER = "insert into teachers (name,subject_id) values(?,?)";
 	private static final String FIND_TEACHER_BY_ID = "select * from teachers where id=?";
 	private static final String FIND_ALL_TEACHERS = "select * from teachers";

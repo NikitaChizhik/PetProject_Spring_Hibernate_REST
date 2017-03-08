@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.nikitachizhik91.university.dao.impl.LessonDAOImpl;
+import com.nikitachizhik91.university.dao.impl.LessonDaoImpl;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
@@ -18,12 +18,12 @@ public class Timetable {
 
 	public void addLesson(Lesson lesson) {
 
-		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
+		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		lessonDAOImpl.create(lesson);
 	}
 
 	public void deleteLesson(Lesson lesson) {
-		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
+		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		lessonDAOImpl.delete(lesson.getId());
 	}
 
@@ -31,7 +31,7 @@ public class Timetable {
 		if (teacher == null || date == null) {
 			throw new IllegalArgumentException();
 		}
-		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
+		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		List<Lesson> lessons = lessonDAOImpl.findAll();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
@@ -53,7 +53,7 @@ public class Timetable {
 			throw new IllegalArgumentException();
 		}
 
-		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
+		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		List<Lesson> lessons = lessonDAOImpl.findAll();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
@@ -74,7 +74,7 @@ public class Timetable {
 			throw new IllegalArgumentException();
 		}
 
-		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
+		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		List<Lesson> lessons = lessonDAOImpl.findAll();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
@@ -97,7 +97,7 @@ public class Timetable {
 			throw new IllegalArgumentException();
 		}
 
-		LessonDAOImpl lessonDAOImpl = new LessonDAOImpl();
+		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		List<Lesson> lessons = lessonDAOImpl.findAll();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");

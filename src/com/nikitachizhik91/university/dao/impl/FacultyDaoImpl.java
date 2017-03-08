@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nikitachizhik91.university.dao.Connector;
+import com.nikitachizhik91.university.dao.FacultyDao;
 import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Faculty;
 import com.nikitachizhik91.university.model.Group;
 
-public class FacultyDAOImpl {
+public class FacultyDaoImpl implements FacultyDao{
 
 	private static final String INSERT_FACULTY = "insert into faculties (name) values(?)";
 	private static final String FIND_FACULTY_BY_ID = "select * from faculties where id=?";

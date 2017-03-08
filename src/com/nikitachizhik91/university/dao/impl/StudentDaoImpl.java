@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nikitachizhik91.university.dao.Connector;
-import com.nikitachizhik91.university.dao.StudentDAO;
+import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.model.Student;
 
-public class StudentDAOImpl implements StudentDAO {
+public class StudentDaoImpl implements StudentDao {
 
 	private static final String INSERT_STUDENT = "insert into students (name) values(?)";
 	private static final String FIND_STUDENT_BY_ID = "select * from students where id=?";
