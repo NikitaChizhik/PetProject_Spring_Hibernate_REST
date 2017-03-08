@@ -169,7 +169,7 @@ public class GroupDaoImpl implements GroupDao {
 			try (ResultSet resultSet = statement.executeQuery();) {
 				while (resultSet.next()) {
 
-					studentDao.findById(resultSet.getInt("student_id"));
+					students.add(studentDao.findById(resultSet.getInt("student_id")));
 				}
 			}
 

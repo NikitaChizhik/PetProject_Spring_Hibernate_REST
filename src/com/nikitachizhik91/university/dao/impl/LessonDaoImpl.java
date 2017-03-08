@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DateConverter;
 import com.nikitachizhik91.university.dao.GroupDao;
@@ -20,29 +23,27 @@ import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.model.Lesson;
 
 public class LessonDaoImpl implements LessonDao {
+	private final static Logger LOGGER = LogManager.getLogger(LessonDaoImpl.class.getName());
 	private Connector connector;
 	private static final String INSERT_LESSON = "insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(?,?,?,?,?,?)";
 	private static final String FIND_LESSON_BY_ID = "select * from lessons where id=?";
 	private static final String FIND_ALL_LESSONS = "select * from lessons";
 	private static final String UPDATE_LESSON = "update lessons set number=?,date=?,subject_id=?,teacher_id=?,group_id=?,room_id=? where id =?";
 	private static final String DELETE_LESSON = "delete from lessons where id =?";
-	private GroupDao groupDao;
-	private RoomDao roomDao;
-	private SubjectDao subjectDao;
-	private TeacherDao teacherDao;
-	private Lesson lessonReceived;
 
-	LessonDaoImpl() {
+	public LessonDaoImpl() {
 		connector = new Connector();
 	}
 
 	public Lesson create(Lesson lesson) {
+		LOGGER.trace("executeUpadte done");
+		Lesson lessonReceived = null;
 
-		lessonReceived = null;
-
+		LOGGER.trace("Conncetion+ statement");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
+			LOGGER.info(" done Conncetion+ statement");
 
 			statement.setInt(1, lesson.getNumber());
 			Timestamp timestamp = DateConverter.toTimestamp(lesson.getDate());
@@ -53,49 +54,56 @@ public class LessonDaoImpl implements LessonDao {
 			statement.setInt(6, lesson.getRoom().getId());
 			statement.executeUpdate();
 
-			groupDao = new GroupDaoImpl();
-			roomDao = new RoomDaoImpl();
-			subjectDao = new SubjectDaoImpl();
-			teacherDao = new TeacherDaoImpl();
+			LOGGER.info("executeUpadte done");
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
-				while (resultSet.next()) {
-					lessonReceived = new Lesson();
-					lessonReceived.setId(resultSet.getInt("id"));
-					lessonReceived.setNumber(resultSet.getInt("number"));
+				LOGGER.info("executeUpadte done");
 
-					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
-					lessonReceived.setDate(date);
+				GroupDao groupDao = new GroupDaoImpl();
+				RoomDao roomDao = new RoomDaoImpl();
+				SubjectDao subjectDao = new SubjectDaoImpl();
+				TeacherDao teacherDao = new TeacherDaoImpl();
 
-					lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
+				resultSet.next();
+				lessonReceived = new Lesson();
+				lessonReceived.setId(resultSet.getInt("id"));
+				lessonReceived.setNumber(resultSet.getInt("number"));
 
-					lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+				Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
+				lessonReceived.setDate(date);
 
-					lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+				lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-					lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
-				}
+				lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+
+				lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+
+				lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+
+				LOGGER.trace("Conncetion+ statement");
 			}
 		} catch (SQLException e) {
+			LOGGER.error("Conncetion+ statement");
 			e.printStackTrace();
 
 		}
+		LOGGER.trace("exit iz metoda");
 		return lessonReceived;
 	}
 
 	public Lesson findById(int id) {
 
-		lessonReceived = null;
+		Lesson lessonReceived = null;
 		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_LESSON_BY_ID)) {
 
 			statement.setInt(1, id);
 
-			groupDao = new GroupDaoImpl();
-			roomDao = new RoomDaoImpl();
-			subjectDao = new SubjectDaoImpl();
-			teacherDao = new TeacherDaoImpl();
+			GroupDao groupDao = new GroupDaoImpl();
+			RoomDao roomDao = new RoomDaoImpl();
+			SubjectDao subjectDao = new SubjectDaoImpl();
+			TeacherDao teacherDao = new TeacherDaoImpl();
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
@@ -129,14 +137,14 @@ public class LessonDaoImpl implements LessonDao {
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_LESSONS);
 				ResultSet resultSet = statement.executeQuery();) {
 
-			groupDao = new GroupDaoImpl();
-			roomDao = new RoomDaoImpl();
-			subjectDao = new SubjectDaoImpl();
-			teacherDao = new TeacherDaoImpl();
+			GroupDao groupDao = new GroupDaoImpl();
+			RoomDao roomDao = new RoomDaoImpl();
+			SubjectDao subjectDao = new SubjectDaoImpl();
+			TeacherDao teacherDao = new TeacherDaoImpl();
 
 			while (resultSet.next()) {
 
-				lessonReceived = new Lesson();
+				Lesson lessonReceived = new Lesson();
 				lessonReceived.setId(resultSet.getInt("id"));
 				lessonReceived.setNumber(resultSet.getInt("number"));
 
@@ -161,7 +169,7 @@ public class LessonDaoImpl implements LessonDao {
 
 	public Lesson update(Lesson lesson) {
 
-		lessonReceived = null;
+		Lesson lessonReceived = null;
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -177,10 +185,10 @@ public class LessonDaoImpl implements LessonDao {
 
 			statement.executeUpdate();
 
-			groupDao = new GroupDaoImpl();
-			roomDao = new RoomDaoImpl();
-			subjectDao = new SubjectDaoImpl();
-			teacherDao = new TeacherDaoImpl();
+			GroupDao groupDao = new GroupDaoImpl();
+			RoomDao roomDao = new RoomDaoImpl();
+			SubjectDao subjectDao = new SubjectDaoImpl();
+			TeacherDao teacherDao = new TeacherDaoImpl();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
