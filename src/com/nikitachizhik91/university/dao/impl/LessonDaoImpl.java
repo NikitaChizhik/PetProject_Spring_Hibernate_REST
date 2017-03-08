@@ -20,16 +20,30 @@ import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.model.Lesson;
 
 public class LessonDaoImpl implements LessonDao {
-
+	private Connector connector;
 	private static final String INSERT_LESSON = "insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(?,?,?,?,?,?)";
 	private static final String FIND_LESSON_BY_ID = "select * from lessons where id=?";
 	private static final String FIND_ALL_LESSONS = "select * from lessons";
 	private static final String UPDATE_LESSON = "update lessons set number=?,date=?,subject_id=?,teacher_id=?,group_id=?,room_id=? where id =?";
 	private static final String DELETE_LESSON = "delete from lessons where id =?";
+	private GroupDao groupDao;
+	private RoomDao roomDao;
+	private SubjectDao subjectDao;
+	private TeacherDao teacherDao;
+	private Lesson lessonReceived;
+
+	public LessonDaoImpl() {
+		connector = new Connector();
+		groupDao = new GroupDaoImpl();
+		roomDao = new RoomDaoImpl();
+		subjectDao = new SubjectDaoImpl();
+		teacherDao = new TeacherDaoImpl();
+		lessonReceived = new Lesson();
+	}
 
 	public Lesson create(Lesson lesson) {
-		Lesson lessonReceived = null;
-		Connector connector = new Connector();
+		lessonReceived = null;
+
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -52,16 +66,12 @@ public class LessonDaoImpl implements LessonDao {
 					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 					lessonReceived.setDate(date);
 
-					GroupDao groupDao = new GroupDaoImpl();
 					lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-					RoomDao roomDao = new RoomDaoImpl();
 					lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-					SubjectDao subjectDao = new SubjectDaoImpl();
 					lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-					TeacherDao teacherDao = new TeacherDaoImpl();
 					lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 				}
 			}
@@ -73,8 +83,8 @@ public class LessonDaoImpl implements LessonDao {
 	}
 
 	public Lesson findById(int id) {
-		Lesson lessonReceived = new Lesson();
-		Connector connector = new Connector();
+
+		lessonReceived = null;
 		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_LESSON_BY_ID)) {
@@ -90,16 +100,12 @@ public class LessonDaoImpl implements LessonDao {
 					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 					lessonReceived.setDate(date);
 
-					GroupDao groupDao = new GroupDaoImpl();
 					lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-					RoomDao roomDao = new RoomDaoImpl();
 					lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-					SubjectDao subjectDao = new SubjectDaoImpl();
 					lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-					TeacherDao teacherDao = new TeacherDaoImpl();
 					lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 				}
 			}
@@ -110,30 +116,28 @@ public class LessonDaoImpl implements LessonDao {
 	}
 
 	public List<Lesson> findAll() {
+
 		List<Lesson> lessonsReceived = new ArrayList<Lesson>();
-		Connector connector = new Connector();
+
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_LESSONS);
 				ResultSet resultSet = statement.executeQuery();) {
 
 			while (resultSet.next()) {
-				Lesson lessonReceived = new Lesson();
+
+				lessonReceived = new Lesson();
 				lessonReceived.setId(resultSet.getInt("id"));
 				lessonReceived.setNumber(resultSet.getInt("number"));
 
 				Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 				lessonReceived.setDate(date);
 
-				GroupDao groupDao = new GroupDaoImpl();
 				lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-				RoomDao roomDao = new RoomDaoImpl();
 				lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-				SubjectDao subjectDao = new SubjectDaoImpl();
 				lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-				TeacherDao teacherDao = new TeacherDaoImpl();
 				lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 
 				lessonsReceived.add(lessonReceived);
@@ -145,8 +149,8 @@ public class LessonDaoImpl implements LessonDao {
 	}
 
 	public Lesson update(Lesson lesson) {
-		Lesson lessonReceived = null;
-		Connector connector = new Connector();
+
+		lessonReceived = null;
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -171,16 +175,12 @@ public class LessonDaoImpl implements LessonDao {
 					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
 					lessonReceived.setDate(date);
 
-					GroupDao groupDao = new GroupDaoImpl();
 					lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-					RoomDao roomDao = new RoomDaoImpl();
 					lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-					SubjectDao subjectDao = new SubjectDaoImpl();
 					lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-					TeacherDao teacherDao = new TeacherDaoImpl();
 					lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 				}
 			}
@@ -192,7 +192,7 @@ public class LessonDaoImpl implements LessonDao {
 	}
 
 	public void delete(int id) {
-		Connector connector = new Connector();
+
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_LESSON);) {
 
