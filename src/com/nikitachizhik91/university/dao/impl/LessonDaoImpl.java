@@ -32,16 +32,12 @@ public class LessonDaoImpl implements LessonDao {
 	private TeacherDao teacherDao;
 	private Lesson lessonReceived;
 
-	public LessonDaoImpl() {
+	LessonDaoImpl() {
 		connector = new Connector();
-		groupDao = new GroupDaoImpl();
-		roomDao = new RoomDaoImpl();
-		subjectDao = new SubjectDaoImpl();
-		teacherDao = new TeacherDaoImpl();
-		lessonReceived = new Lesson();
 	}
 
 	public Lesson create(Lesson lesson) {
+
 		lessonReceived = null;
 
 		try (Connection connection = connector.getConnection();
@@ -56,6 +52,11 @@ public class LessonDaoImpl implements LessonDao {
 			statement.setInt(5, lesson.getGroup().getId());
 			statement.setInt(6, lesson.getRoom().getId());
 			statement.executeUpdate();
+
+			groupDao = new GroupDaoImpl();
+			roomDao = new RoomDaoImpl();
+			subjectDao = new SubjectDaoImpl();
+			teacherDao = new TeacherDaoImpl();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
@@ -91,6 +92,11 @@ public class LessonDaoImpl implements LessonDao {
 
 			statement.setInt(1, id);
 
+			groupDao = new GroupDaoImpl();
+			roomDao = new RoomDaoImpl();
+			subjectDao = new SubjectDaoImpl();
+			teacherDao = new TeacherDaoImpl();
+
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
 					lessonReceived = new Lesson();
@@ -122,6 +128,11 @@ public class LessonDaoImpl implements LessonDao {
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_LESSONS);
 				ResultSet resultSet = statement.executeQuery();) {
+
+			groupDao = new GroupDaoImpl();
+			roomDao = new RoomDaoImpl();
+			subjectDao = new SubjectDaoImpl();
+			teacherDao = new TeacherDaoImpl();
 
 			while (resultSet.next()) {
 
@@ -165,6 +176,11 @@ public class LessonDaoImpl implements LessonDao {
 			statement.setInt(7, lesson.getId());
 
 			statement.executeUpdate();
+
+			groupDao = new GroupDaoImpl();
+			roomDao = new RoomDaoImpl();
+			subjectDao = new SubjectDaoImpl();
+			teacherDao = new TeacherDaoImpl();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {

@@ -18,7 +18,7 @@ import com.nikitachizhik91.university.model.Student;
 
 public class GroupDaoImpl implements GroupDao {
 
-	private Connector connector = new Connector();
+	private Connector connector;
 	private static final String INSERT_GROUP = "insert into groups (name) values(?)";
 	private static final String FIND_GROUP_BY_ID = "select * from groups where id=?";
 	private static final String FIND_ALL_GROUPS = "select * from groups";
@@ -27,6 +27,10 @@ public class GroupDaoImpl implements GroupDao {
 	private static final String INSERT_STUDENT = "insert into groups_students (group_id,student_id) values (?,?)";
 	private static final String FIND_STUDENTS_BY_GROUP_ID = "select student_id from groups_students where group_id=?";
 	private static final String DELETE_ALL_STUDENTS_FROM_GROUP = "delete from groups_students where group_id=?";
+
+	public GroupDaoImpl() {
+		connector = new Connector();
+	}
 
 	public Group create(Group group) {
 		Group groupReceived = null;
