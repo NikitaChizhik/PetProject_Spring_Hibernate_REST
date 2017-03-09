@@ -27,6 +27,9 @@ public class GroupDaoImpl implements GroupDao {
 	private static final String INSERT_STUDENT = "insert into groups_students (group_id,student_id) values (?,?)";
 	private static final String FIND_STUDENTS_BY_GROUP_ID = "select student_id from groups_students where group_id=?";
 	private static final String DELETE_ALL_STUDENTS_FROM_GROUP = "delete from groups_students where group_id=?";
+	private static final String DELETE_STUDENT_FROM_GROUP = "delete from groups_students where student_id=?";
+	private static final String REPLACE_STUDENT = "update groups_students set student_id=? where student_id=?";
+	private static final String REPLACE_GROUP = "update groups_students set group_id=? where group_id=?";
 
 	public GroupDaoImpl() {
 		connector = new Connector();
@@ -157,13 +160,13 @@ public class GroupDaoImpl implements GroupDao {
 
 	}
 
-	public Set<Student> findStudentsByGroupId(int id) {
+	public Set<Student> findStudentsByGroupId(int groupId) {
 
 		Set<Student> students = new HashSet<Student>();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_STUDENTS_BY_GROUP_ID)) {
 
-			statement.setInt(1, id);
+			statement.setInt(1, groupId);
 			StudentDao studentDao = new StudentDaoImpl();
 
 			try (ResultSet resultSet = statement.executeQuery();) {
@@ -179,12 +182,13 @@ public class GroupDaoImpl implements GroupDao {
 		return students;
 	}
 
-	public void deleteAllStudentsFromGroup(int id) {
+	public void replaceGroup(int groupId, int newGrouptId) {
 
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_STUDENTS_FROM_GROUP);) {
+				PreparedStatement statement = connection.prepareStatement(REPLACE_GROUP);) {
 
-			statement.setInt(1, id);
+			statement.setInt(1, newGrouptId);
+			statement.setInt(2, groupId);
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -192,4 +196,43 @@ public class GroupDaoImpl implements GroupDao {
 		}
 	}
 
+	public void replaceStudentInGroup(int studentId, int newStudentId) {
+
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(REPLACE_STUDENT);) {
+
+			statement.setInt(1, newStudentId);
+			statement.setInt(2, studentId);
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteAllStudentsFromGroup(int groupId) {
+
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_STUDENTS_FROM_GROUP);) {
+
+			statement.setInt(1, groupId);
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteStudentFromGroup(int studentId) {
+
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(DELETE_STUDENT_FROM_GROUP);) {
+
+			statement.setInt(1, studentId);
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
