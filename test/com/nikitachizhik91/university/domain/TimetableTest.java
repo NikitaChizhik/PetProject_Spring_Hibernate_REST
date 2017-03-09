@@ -1,20 +1,12 @@
 package com.nikitachizhik91.university.domain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Lesson;
@@ -38,7 +30,7 @@ public class TimetableTest {
 	}
 
 	@Before
-	public void init() throws ParseException {
+	public void init() throws ParseException, DaoException {
 		timetable = new Timetable();
 
 		teacher1 = new Teacher();
