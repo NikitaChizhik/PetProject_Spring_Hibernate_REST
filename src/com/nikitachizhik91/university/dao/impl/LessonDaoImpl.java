@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +19,7 @@ import com.nikitachizhik91.university.dao.LessonDao;
 import com.nikitachizhik91.university.dao.RoomDao;
 import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.dao.TeacherDao;
+import com.nikitachizhik91.university.domain.DaoException;
 import com.nikitachizhik91.university.model.Lesson;
 
 public class LessonDaoImpl implements LessonDao {
@@ -30,189 +30,200 @@ public class LessonDaoImpl implements LessonDao {
 	private static final String FIND_ALL_LESSONS = "select * from lessons";
 	private static final String UPDATE_LESSON = "update lessons set number=?,date=?,subject_id=?,teacher_id=?,group_id=?,room_id=? where id =?";
 	private static final String DELETE_LESSON = "delete from lessons where id =?";
+	private GroupDao groupDao;
+	private RoomDao roomDao;
+	private SubjectDao subjectDao;
+	private TeacherDao teacherDao;
+	private Lesson lesson;
 
 	public LessonDaoImpl() {
 		connector = new Connector();
 	}
 
-	public Lesson create(Lesson lesson) {
-		LOGGER.trace("executeUpadte done");
-		Lesson lessonReceived = null;
+	public Lesson create(Lesson lessonArg) throws DaoException {
+		LOGGER.trace("Started create() method.");
+		lesson = null;
 
-		LOGGER.trace("Conncetion+ statement");
+		LOGGER.trace("Getting Conncetion.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
-			LOGGER.info(" done Conncetion+ statement");
-
-			statement.setInt(1, lesson.getNumber());
-			Timestamp timestamp = DateConverter.toTimestamp(lesson.getDate());
-			statement.setTimestamp(2, timestamp);
-			statement.setInt(3, lesson.getSubject().getId());
-			statement.setInt(4, lesson.getTeacher().getId());
-			statement.setInt(5, lesson.getGroup().getId());
-			statement.setInt(6, lesson.getRoom().getId());
+			LOGGER.info("Connection :" + connection + " is received.");
+			LOGGER.info("Statement :" + statement + " is received.");
+			LOGGER.trace("Fill up statements.");
+			statement.setInt(1, lessonArg.getNumber());
+			statement.setTimestamp(2, DateConverter.toTimestamp(lessonArg.getDate()));
+			statement.setInt(3, lessonArg.getSubject().getId());
+			statement.setInt(4, lessonArg.getTeacher().getId());
+			statement.setInt(5, lessonArg.getGroup().getId());
+			statement.setInt(6, lessonArg.getRoom().getId());
+			LOGGER.info("Filled up statements.");
 			statement.executeUpdate();
+			LOGGER.info("Executed query.");
 
-			LOGGER.info("executeUpadte done");
-
+			LOGGER.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
-				LOGGER.info("executeUpadte done");
+				if (resultSet == null) {
+					LOGGER.error("LessonDaoImpl create() - ResultSet is null");
+					throw new DaoException("LessonDaoImpl create() - ResultSet is null");
+				}
+				LOGGER.trace("Got the result set.");
 
-				GroupDao groupDao = new GroupDaoImpl();
-				RoomDao roomDao = new RoomDaoImpl();
-				SubjectDao subjectDao = new SubjectDaoImpl();
-				TeacherDao teacherDao = new TeacherDaoImpl();
+				groupDao = new GroupDaoImpl();
+				roomDao = new RoomDaoImpl();
+				subjectDao = new SubjectDaoImpl();
+				teacherDao = new TeacherDaoImpl();
 
 				resultSet.next();
-				lessonReceived = new Lesson();
-				lessonReceived.setId(resultSet.getInt("id"));
-				lessonReceived.setNumber(resultSet.getInt("number"));
+				LOGGER.trace("Setting data to the Lesson.");
+				lesson = new Lesson();
+				lesson.setId(resultSet.getInt("id"));
+				lesson.setNumber(resultSet.getInt("number"));
 
 				Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
-				lessonReceived.setDate(date);
+				lesson.setDate(date);
 
-				lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
+				lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-				lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+				lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-				lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+				lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-				lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+				lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+				LOGGER.trace("Finished setting data to the Lesson.");
 
-				LOGGER.trace("Conncetion+ statement");
 			}
+			LOGGER.trace("Resultset is closed.");
 		} catch (SQLException e) {
-			LOGGER.error("Conncetion+ statement");
-			e.printStackTrace();
-
+			LOGGER.error("Prepared statement is wrong :" + e);
+			throw new DaoException();
 		}
-		LOGGER.trace("exit iz metoda");
-		return lessonReceived;
+
+		LOGGER.trace("Connection and PreparedStatement are closed.");
+		LOGGER.trace("Return lesson from database :" + lesson);
+		LOGGER.info("Created a lesson :" + lesson);
+		LOGGER.trace("Finished create() method.");
+		return lesson;
 	}
 
 	public Lesson findById(int id) {
 
-		Lesson lessonReceived = null;
+		lesson = null;
 		try (Connection connection = connector.getConnection();
 
 		PreparedStatement statement = connection.prepareStatement(FIND_LESSON_BY_ID)) {
 
 			statement.setInt(1, id);
 
-			GroupDao groupDao = new GroupDaoImpl();
-			RoomDao roomDao = new RoomDaoImpl();
-			SubjectDao subjectDao = new SubjectDaoImpl();
-			TeacherDao teacherDao = new TeacherDaoImpl();
+			groupDao = new GroupDaoImpl();
+			roomDao = new RoomDaoImpl();
+			subjectDao = new SubjectDaoImpl();
+			teacherDao = new TeacherDaoImpl();
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
-					lessonReceived = new Lesson();
-					lessonReceived.setId(resultSet.getInt("id"));
-					lessonReceived.setNumber(resultSet.getInt("number"));
+					lesson = new Lesson();
+					lesson.setId(resultSet.getInt("id"));
+					lesson.setNumber(resultSet.getInt("number"));
 
-					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
-					lessonReceived.setDate(date);
+					lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
 
-					lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
+					lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-					lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+					lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-					lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+					lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-					lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+					lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return lessonReceived;
+		return lesson;
 	}
 
 	public List<Lesson> findAll() {
 
-		List<Lesson> lessonsReceived = new ArrayList<Lesson>();
+		List<Lesson> lessons = new ArrayList<Lesson>();
 
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_LESSONS);
 				ResultSet resultSet = statement.executeQuery();) {
 
-			GroupDao groupDao = new GroupDaoImpl();
-			RoomDao roomDao = new RoomDaoImpl();
-			SubjectDao subjectDao = new SubjectDaoImpl();
-			TeacherDao teacherDao = new TeacherDaoImpl();
+			groupDao = new GroupDaoImpl();
+			roomDao = new RoomDaoImpl();
+			subjectDao = new SubjectDaoImpl();
+			teacherDao = new TeacherDaoImpl();
 
 			while (resultSet.next()) {
 
-				Lesson lessonReceived = new Lesson();
-				lessonReceived.setId(resultSet.getInt("id"));
-				lessonReceived.setNumber(resultSet.getInt("number"));
+				lesson = new Lesson();
+				lesson.setId(resultSet.getInt("id"));
+				lesson.setNumber(resultSet.getInt("number"));
 
-				Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
-				lessonReceived.setDate(date);
+				lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
 
-				lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
+				lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-				lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+				lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-				lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+				lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-				lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+				lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 
-				lessonsReceived.add(lessonReceived);
+				lessons.add(lesson);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return lessonsReceived;
+		return lessons;
 	}
 
-	public Lesson update(Lesson lesson) {
+	public Lesson update(Lesson lessonArg) {
 
-		Lesson lessonReceived = null;
+		lesson = null;
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setInt(1, lesson.getNumber());
-			Timestamp timestamp = DateConverter.toTimestamp(lesson.getDate());
-			statement.setTimestamp(2, timestamp);
-			statement.setInt(3, lesson.getSubject().getId());
-			statement.setInt(4, lesson.getTeacher().getId());
-			statement.setInt(5, lesson.getGroup().getId());
-			statement.setInt(6, lesson.getRoom().getId());
-			statement.setInt(7, lesson.getId());
+			statement.setInt(1, lessonArg.getNumber());
+			statement.setTimestamp(2, DateConverter.toTimestamp(lessonArg.getDate()));
+			statement.setInt(3, lessonArg.getSubject().getId());
+			statement.setInt(4, lessonArg.getTeacher().getId());
+			statement.setInt(5, lessonArg.getGroup().getId());
+			statement.setInt(6, lessonArg.getRoom().getId());
+			statement.setInt(7, lessonArg.getId());
 
 			statement.executeUpdate();
 
-			GroupDao groupDao = new GroupDaoImpl();
-			RoomDao roomDao = new RoomDaoImpl();
-			SubjectDao subjectDao = new SubjectDaoImpl();
-			TeacherDao teacherDao = new TeacherDaoImpl();
+			groupDao = new GroupDaoImpl();
+			roomDao = new RoomDaoImpl();
+			subjectDao = new SubjectDaoImpl();
+			teacherDao = new TeacherDaoImpl();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					lessonReceived = new Lesson();
-					lessonReceived.setId(resultSet.getInt("id"));
-					lessonReceived.setNumber(resultSet.getInt("number"));
+					lesson = new Lesson();
+					lesson.setId(resultSet.getInt("id"));
+					lesson.setNumber(resultSet.getInt("number"));
 
-					Date date = DateConverter.toDate(resultSet.getTimestamp("date"));
-					lessonReceived.setDate(date);
+					lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
 
-					lessonReceived.setGroup(groupDao.findById(resultSet.getInt("group_id")));
+					lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-					lessonReceived.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+					lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
 
-					lessonReceived.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+					lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
-					lessonReceived.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+					lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return lessonReceived;
+		return lesson;
 	}
 
 	public void delete(int id) {

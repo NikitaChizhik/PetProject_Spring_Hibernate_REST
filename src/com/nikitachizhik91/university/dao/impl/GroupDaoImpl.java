@@ -32,33 +32,33 @@ public class GroupDaoImpl implements GroupDao {
 		connector = new Connector();
 	}
 
-	public Group create(Group group) {
-		Group groupReceived = null;
+	public Group create(Group groupArg) {
+		Group group = null;
 
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement(INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setString(1, group.getName());
+			statement.setString(1, groupArg.getName());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					groupReceived = new Group();
-					groupReceived.setId(resultSet.getInt("id"));
-					groupReceived.setName(resultSet.getString("name"));
+					group = new Group();
+					group.setId(resultSet.getInt("id"));
+					group.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return groupReceived;
+		return group;
 	}
 
 	public Group findById(int id) {
 
-		Group groupReceived = null;
+		Group group = null;
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_GROUP_BY_ID)) {
 
@@ -66,22 +66,22 @@ public class GroupDaoImpl implements GroupDao {
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
-					groupReceived = new Group();
+					group = new Group();
 					int groupId = resultSet.getInt("id");
-					groupReceived.setId(groupId);
-					groupReceived.setName(resultSet.getString("name"));
-					groupReceived.setStudents(findStudentsByGroupId(groupId));
+					group.setId(groupId);
+					group.setName(resultSet.getString("name"));
+					group.setStudents(findStudentsByGroupId(groupId));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return groupReceived;
+		return group;
 	}
 
 	public List<Group> findAll() {
 
-		List<Group> groupsReceived = new ArrayList<Group>();
+		List<Group> groups = new ArrayList<Group>();
 		Group group = null;
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_GROUPS);
@@ -93,39 +93,39 @@ public class GroupDaoImpl implements GroupDao {
 				group.setId(groupId);
 				group.setName(resultSet.getString("name"));
 				group.setStudents(findStudentsByGroupId(groupId));
-				groupsReceived.add(group);
+				groups.add(group);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return groupsReceived;
+		return groups;
 	}
 
-	public Group update(Group group) {
+	public Group update(Group groupArg) {
 
-		Group groupReceived = null;
+		Group group = null;
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement(UPDATE_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setString(1, group.getName());
-			statement.setInt(2, group.getId());
+			statement.setString(1, groupArg.getName());
+			statement.setInt(2, groupArg.getId());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					groupReceived = new Group();
+					group = new Group();
 					int groupIdReceived = resultSet.getInt("id");
-					groupReceived.setId(groupIdReceived);
-					groupReceived.setName(resultSet.getString("name"));
-					groupReceived.setStudents(findStudentsByGroupId(groupIdReceived));
+					group.setId(groupIdReceived);
+					group.setName(resultSet.getString("name"));
+					group.setStudents(findStudentsByGroupId(groupIdReceived));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return groupReceived;
+		return group;
 	}
 
 	public void delete(int id) {
