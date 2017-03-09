@@ -16,7 +16,7 @@ import com.nikitachizhik91.university.model.Teacher;
  */
 public class Timetable {
 
-	public void addLesson(Lesson lesson) throws DaoException {
+	public void addLesson(Lesson lesson)  {
 
 		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		lessonDAOImpl.create(lesson);

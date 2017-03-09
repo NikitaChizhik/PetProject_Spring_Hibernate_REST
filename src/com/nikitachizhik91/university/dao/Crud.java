@@ -2,10 +2,8 @@ package com.nikitachizhik91.university.dao;
 
 import java.util.List;
 
-import com.nikitachizhik91.university.domain.DaoException;
-
 public interface Crud<T> {
-	T create(T entity) throws DaoException;
+	T create(T entity) ;
 
 	T findById(int id);
 
