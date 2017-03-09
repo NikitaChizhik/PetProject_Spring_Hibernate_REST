@@ -28,8 +28,6 @@ public class GroupDaoImpl implements GroupDao {
 	private static final String FIND_STUDENTS_BY_GROUP_ID = "select student_id from groups_students where group_id=?";
 	private static final String DELETE_ALL_STUDENTS_FROM_GROUP = "delete from groups_students where group_id=?";
 	private static final String DELETE_STUDENT_FROM_GROUP = "delete from groups_students where student_id=?";
-	private static final String REPLACE_STUDENT = "update groups_students set student_id=? where student_id=?";
-	private static final String REPLACE_GROUP = "update groups_students set group_id=? where group_id=?";
 
 	public GroupDaoImpl() {
 		connector = new Connector();
@@ -180,34 +178,6 @@ public class GroupDaoImpl implements GroupDao {
 			e.printStackTrace();
 		}
 		return students;
-	}
-
-	public void replaceGroup(int groupId, int newGrouptId) {
-
-		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(REPLACE_GROUP);) {
-
-			statement.setInt(1, newGrouptId);
-			statement.setInt(2, groupId);
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void replaceStudentInGroup(int studentId, int newStudentId) {
-
-		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(REPLACE_STUDENT);) {
-
-			statement.setInt(1, newStudentId);
-			statement.setInt(2, studentId);
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void deleteAllStudentsFromGroup(int groupId) {

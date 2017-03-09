@@ -1,69 +1,56 @@
 package com.nikitachizhik91.university.domain;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.Before;
-
-import com.nikitachizhik91.university.model.Group;
-import com.nikitachizhik91.university.model.Lesson;
-import com.nikitachizhik91.university.model.Student;
-import com.nikitachizhik91.university.model.Teacher;
-
-public class TimetableTest {
-	private Timetable timetable;
-	private final Date DATE_TO_CHECK = new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");
-	private final Date DATE_TO_CHECK2 = new SimpleDateFormat("dd-M-yyyy").parse("17-03-2017");
-	private Group group1;
-	private Teacher teacher1;
-	private Teacher teacher2;
-	private Lesson lesson1;
-	private Lesson lesson2;
-	private Student student1;
-	private Student student3;
-
-	public TimetableTest() throws ParseException {
-
-	}
-
-	@Before
-	public void init() throws ParseException, DaoException {
-		timetable = new Timetable();
-
-		teacher1 = new Teacher();
-		teacher1.setName("Nikita Chizhik");
-
-		teacher2 = new Teacher();
-		teacher2.setName("Mikola brutski");
-
-		Set<Student> students1 = new HashSet<Student>();
-		student1 = new Student();
-		student1.setName("Sasha");
-		students1.add(student1);
-
-		group1 = new Group();
-
-		Set<Student> students2 = new HashSet<Student>();
-		student3 = new Student();
-		student3.setName("David");
-		// student3.setGroup(group1);
-		students2.add(student3);
-		group1.setStudents(students2);
-
-		lesson1 = new Lesson();
-		lesson1.setDate(DATE_TO_CHECK);
-		lesson1.setGroup(group1);
-		lesson1.setTeacher(teacher1);
-		timetable.addLesson(lesson1);
-
-		lesson2 = new Lesson();
-		lesson2.setDate(DATE_TO_CHECK2);
-		lesson2.setTeacher(teacher2);
-		timetable.addLesson(lesson2);
-	}
+//public class TimetableTest {
+//	private Timetable timetable;
+//	private final Date DATE_TO_CHECK = new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");
+//	private final Date DATE_TO_CHECK2 = new SimpleDateFormat("dd-M-yyyy").parse("17-03-2017");
+//	private Group group1;
+//	private Teacher teacher1;
+//	private Teacher teacher2;
+//	private Lesson lesson1;
+//	private Lesson lesson2;
+//	private Student student1;
+//	private Student student3;
+//
+//	public TimetableTest() throws ParseException {
+//
+//	}
+//
+//	@Before
+//	public void init() throws ParseException {
+//		
+//
+//		teacher1 = new Teacher();
+//		teacher1.setName("Nikita Chizhik");
+//
+//		teacher2 = new Teacher();
+//		teacher2.setName("Mikola brutski");
+//
+//		Set<Student> students1 = new HashSet<Student>();
+//		student1 = new Student();
+//		student1.setName("Sasha");
+//		students1.add(student1);
+//
+//		group1 = new Group();
+//
+//		Set<Student> students2 = new HashSet<Student>();
+//		student3 = new Student();
+//		student3.setName("David");
+//		// student3.setGroup(group1);
+//		students2.add(student3);
+//		group1.setStudents(students2);
+//
+//		lesson1 = new Lesson();
+//		lesson1.setDate(DATE_TO_CHECK);
+//		lesson1.setGroup(group1);
+//		lesson1.setTeacher(teacher1);
+//		timetable.addLesson(lesson1);
+//
+//		lesson2 = new Lesson();
+//		lesson2.setDate(DATE_TO_CHECK2);
+//		lesson2.setTeacher(teacher2);
+//		timetable.addLesson(lesson2);
+//	}
 
 //	@Test
 //	public void getTeachersTimetableForMonth_General() throws ParseException {
@@ -314,4 +301,4 @@ public class TimetableTest {
 //		timetable.deleteLesson(null);
 //	}
 
-}
+// }
