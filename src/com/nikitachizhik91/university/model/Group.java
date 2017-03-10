@@ -1,15 +1,15 @@
-package com.nikitachizhik91.university.domain;
+package com.nikitachizhik91.university.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Group {
 	private int id;
 	private String name;
-	private Set<Student> students;
+	private List<Student> students;
 
 	public Group() {
-		students = new HashSet<Student>();
+		students = new ArrayList<Student>();
 	}
 
 	public void addStudent(Student student) {
@@ -17,7 +17,7 @@ public class Group {
 			throw new IllegalArgumentException();
 		}
 		if (students == null) {
-			students = new HashSet<Student>();
+			students = new ArrayList<Student>();
 		}
 		students.add(student);
 	}
@@ -44,11 +44,11 @@ public class Group {
 		this.name = name;
 	}
 
-	public Set<Student> getStudents() {
+	public List<Student> getStudents() {
 		return students;
 	}
 
-	public void setStudents(Set<Student> students) {
+	public void setStudents(List<Student> students) {
 		this.students = students;
 	}
 

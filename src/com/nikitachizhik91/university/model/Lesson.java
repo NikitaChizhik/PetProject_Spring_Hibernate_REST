@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.domain;
+package com.nikitachizhik91.university.model;
 
 import java.util.Date;
 

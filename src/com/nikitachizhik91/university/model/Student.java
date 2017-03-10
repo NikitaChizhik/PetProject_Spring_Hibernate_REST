@@ -1,6 +1,7 @@
-package com.nikitachizhik91.university.domain;
+package com.nikitachizhik91.university.model;
 
-public class Subject {
+public class Student {
+
 	private int id;
 	private String name;
 
@@ -37,7 +38,7 @@ public class Subject {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Subject other = (Subject) obj;
+		Student other = (Student) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -50,7 +51,7 @@ public class Subject {
 
 	@Override
 	public String toString() {
-		return "Subject [id=" + id + ", name=" + name + "]";
+		return "Student [id=" + id + ", name=" + name + "]";
 	}
 
 }

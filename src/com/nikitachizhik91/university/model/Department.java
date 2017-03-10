@@ -1,17 +1,17 @@
-package com.nikitachizhik91.university.domain;
+package com.nikitachizhik91.university.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Department {
 	private int id;
 	private String name;
-	private Set<Teacher> teachers;
-	private Set<Subject> subjects;
+	private List<Teacher> teachers;
+	private List<Subject> subjects;
 
 	public Department() {
-		teachers = new HashSet<Teacher>();
-		subjects = new HashSet<Subject>();
+		teachers = new ArrayList<Teacher>();
+		subjects = new ArrayList<Subject>();
 	}
 
 	public void addTeacher(Teacher teacher) {
@@ -19,7 +19,7 @@ public class Department {
 			throw new IllegalArgumentException();
 		}
 		if (teachers == null) {
-			teachers = new HashSet<Teacher>();
+			teachers = new ArrayList<Teacher>();
 		}
 		teachers.add(teacher);
 	}
@@ -36,7 +36,7 @@ public class Department {
 			throw new IllegalArgumentException();
 		}
 		if (subjects == null) {
-			subjects = new HashSet<Subject>();
+			subjects = new ArrayList<Subject>();
 		}
 		subjects.add(subject);
 	}
@@ -64,19 +64,19 @@ public class Department {
 		this.name = name;
 	}
 
-	public Set<Teacher> getTeachers() {
+	public List<Teacher> getTeachers() {
 		return teachers;
 	}
 
-	public void setTeachers(Set<Teacher> teachers) {
+	public void setTeachers(List<Teacher> teachers) {
 		this.teachers = teachers;
 	}
 
-	public Set<Subject> getSubjects() {
+	public List<Subject> getSubjects() {
 		return subjects;
 	}
 
-	public void setSubjects(Set<Subject> subjects) {
+	public void setSubjects(List<Subject> subjects) {
 		this.subjects = subjects;
 	}
 
