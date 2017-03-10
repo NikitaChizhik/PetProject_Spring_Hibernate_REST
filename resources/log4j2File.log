@@ -1,0 +1,7 @@
+
+[INFO ] 2017-03-10 18:36:26.419 [main] Main - Info Message Logged !!!
+[WARN ] 2017-03-10 18:36:26.421 [main] Main - Warn
+[ERROR] 2017-03-10 18:36:26.422 [main] Main - Error 
+java.lang.NullPointerException: NullError
+	at com.nikitachizhik91.university.domain.Main.main(Main.java:16) [classes/:?]
+[FATAL] 2017-03-10 18:36:26.426 [main] Main - Fatal
