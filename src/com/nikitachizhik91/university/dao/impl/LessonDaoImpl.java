@@ -55,7 +55,7 @@ public class LessonDaoImpl implements LessonDao {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 
 				resultSet.next();
-				
+
 				lesson = new Lesson();
 				lesson.setId(resultSet.getInt("id"));
 				lesson.setNumber(resultSet.getInt("number"));
@@ -83,8 +83,7 @@ public class LessonDaoImpl implements LessonDao {
 
 		Lesson lesson = null;
 		try (Connection connection = connector.getConnection();
-
-		PreparedStatement statement = connection.prepareStatement(FIND_LESSON_BY_ID)) {
+				PreparedStatement statement = connection.prepareStatement(FIND_LESSON_BY_ID)) {
 
 			statement.setInt(1, id);
 

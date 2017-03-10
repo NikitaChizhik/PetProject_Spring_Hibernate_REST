@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DepartmentDao;
@@ -41,59 +39,59 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		connector = new Connector();
 	}
 
-	public Department create(Department department) {
+	public Department create(Department departmentArg) {
 
-		Department departmentReceived = null;
+		Department department = null;
 
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_DEPARTMENT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setString(1, department.getName());
+			statement.setString(1, departmentArg.getName());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					departmentReceived = new Department();
-					departmentReceived.setId(resultSet.getInt("id"));
-					departmentReceived.setName(resultSet.getString("name"));
+					department = new Department();
+					department.setId(resultSet.getInt("id"));
+					department.setName(resultSet.getString("name"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
-		return departmentReceived;
+		return department;
 	}
 
 	public Department findById(int id) {
 
-		Department departmentReceived = new Department();
-		Connector connector = new Connector();
+		Department department = null;
 
 		try (Connection connection = connector.getConnection();
-
-		PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENT_BY_ID)) {
+				PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENT_BY_ID)) {
 
 			statement.setInt(1, id);
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
-
-					departmentReceived.setId(resultSet.getInt("id"));
-					departmentReceived.setName(resultSet.getString("name"));
+					department = new Department();
+					int departmentId = resultSet.getInt("id");
+					department.setId(departmentId);
+					department.setName(resultSet.getString("name"));
+					department.setTeachers(findTeachersByDepartmentId(departmentId));
+					department.setSubjects(findSubjectsByDepartmentId(departmentId));
 				}
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return departmentReceived;
+		return department;
 	}
 
 	public List<Department> findAll() {
 
-		List<Department> departmentsReceived = new ArrayList<Department>();
-		Connector connector = new Connector();
+		List<Department> departments = new ArrayList<Department>();
 
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_DEPARTMENTS);
@@ -101,46 +99,50 @@ public class DepartmentDaoImlp implements DepartmentDao {
 
 			while (resultSet.next()) {
 				Department department = new Department();
-				department.setId(resultSet.getInt("id"));
+				int departmentId = resultSet.getInt("id");
+				department.setId(departmentId);
 				department.setName(resultSet.getString("name"));
-				departmentsReceived.add(department);
+				department.setTeachers(findTeachersByDepartmentId(departmentId));
+				department.setSubjects(findSubjectsByDepartmentId(departmentId));
+
+				departments.add(department);
 			}
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return departmentsReceived;
+		return departments;
 	}
 
-	public Department update(Department department) {
+	public Department update(Department departmentArg) {
 
-		Department departmentReceived = null;
-		Connector connector = new Connector();
+		Department department = null;
 
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_DEPARTMENT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
-			statement.setString(1, department.getName());
-			statement.setInt(2, department.getId());
+			statement.setString(1, departmentArg.getName());
+			statement.setInt(2, departmentArg.getId());
 			statement.executeUpdate();
 
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				while (resultSet.next()) {
-					departmentReceived = new Department();
-					departmentReceived.setId(resultSet.getInt("id"));
-					departmentReceived.setName(resultSet.getString("name"));
+					department = new Department();
+					int departmentId = resultSet.getInt("id");
+					department.setId(departmentId);
+					department.setName(resultSet.getString("name"));
+					department.setTeachers(findTeachersByDepartmentId(departmentId));
+					department.setSubjects(findSubjectsByDepartmentId(departmentId));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.getMessage();
 		}
-		return departmentReceived;
+		return department;
 	}
 
 	public void delete(int id) {
-
-		Connector connector = new Connector();
 
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_DEPARTMENT);) {
@@ -156,7 +158,6 @@ public class DepartmentDaoImlp implements DepartmentDao {
 
 	public void addSubject(Subject subject, Department department) {
 
-		Connector connector = new Connector();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -173,7 +174,6 @@ public class DepartmentDaoImlp implements DepartmentDao {
 
 	public void addTeacher(Teacher teacher, Department department) {
 
-		Connector connector = new Connector();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -188,9 +188,9 @@ public class DepartmentDaoImlp implements DepartmentDao {
 
 	}
 
-	public Set<Teacher> findTeachersByDepartmentId(int departmentId) {
+	public List<Teacher> findTeachersByDepartmentId(int departmentId) {
 
-		Set<Teacher> teachers = new HashSet<Teacher>();
+		List<Teacher> teachers = new ArrayList<Teacher>();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_TEACHERS_BY_DEPARTMENT_ID)) {
 
@@ -236,9 +236,9 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		}
 	}
 
-	public Set<Subject> findSubjectsByDepartmentId(int departmentId) {
+	public List<Subject> findSubjectsByDepartmentId(int departmentId) {
 
-		Set<Subject> subjects = new HashSet<Subject>();
+		List<Subject> subjects = new ArrayList<Subject>();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_SUBJECTS_BY_DEPARTMENT_ID)) {
 

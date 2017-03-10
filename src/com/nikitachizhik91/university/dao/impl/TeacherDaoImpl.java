@@ -54,7 +54,7 @@ public class TeacherDaoImpl implements TeacherDao {
 	}
 
 	public Teacher findById(int id) {
-		Teacher teacher = new Teacher();
+		Teacher teacher = null;
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_TEACHER_BY_ID)) {
 
@@ -62,7 +62,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
-
+					teacher = new Teacher();
 					teacher.setId(resultSet.getInt("id"));
 					teacher.setName(resultSet.getString("name"));
 					teacher.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));

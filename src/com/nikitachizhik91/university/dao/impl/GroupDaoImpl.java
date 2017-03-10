@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.GroupDao;
@@ -158,9 +156,9 @@ public class GroupDaoImpl implements GroupDao {
 
 	}
 
-	public Set<Student> findStudentsByGroupId(int groupId) {
+	public List<Student> findStudentsByGroupId(int groupId) {
 
-		Set<Student> students = new HashSet<Student>();
+		List<Student> students = new ArrayList<Student>();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_STUDENTS_BY_GROUP_ID)) {
 

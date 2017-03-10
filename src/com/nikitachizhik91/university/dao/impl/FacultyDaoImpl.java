@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DepartmentDao;
@@ -182,9 +180,9 @@ public class FacultyDaoImpl implements FacultyDao {
 
 	}
 
-	public Set<Department> findDepartmentsByFacultyId(int facultyId) {
+	public List<Department> findDepartmentsByFacultyId(int facultyId) {
 
-		Set<Department> departments = new HashSet<Department>();
+		List<Department> departments = new ArrayList<Department>();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENTS_BY_FACULTY_ID)) {
 
@@ -230,9 +228,9 @@ public class FacultyDaoImpl implements FacultyDao {
 		}
 	}
 
-	public Set<Group> findGroupsByFacultyId(int facultyId) {
+	public List<Group> findGroupsByFacultyId(int facultyId) {
 
-		Set<Group> groups = new HashSet<Group>();
+		List<Group> groups = new ArrayList<Group>();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_GROUPS_BY_FACULTY_ID)) {
 

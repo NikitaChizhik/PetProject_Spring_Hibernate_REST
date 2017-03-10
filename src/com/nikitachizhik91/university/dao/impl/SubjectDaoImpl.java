@@ -13,14 +13,13 @@ import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.model.Subject;
 
 public class SubjectDaoImpl implements SubjectDao {
-	private Connector connector ;
+	private Connector connector;
 	private static final String INSERT_SUBJECT = "insert into subjects (name) values(?)";
 	private static final String FIND_SUBJECT_BY_ID = "select * from subjects where id=?";
 	private static final String FIND_ALL_SUBJECTS = "select * from subjects";
 	private static final String UPDATE_SUBJECT = "update subjects set name=? where id =?";
 	private static final String DELETE_SUBJECT = "delete from subjects where id =?";
 
-	
 	public SubjectDaoImpl() {
 		connector = new Connector();
 	}
@@ -50,7 +49,7 @@ public class SubjectDaoImpl implements SubjectDao {
 	}
 
 	public Subject findById(int id) {
-		Subject subject = new Subject();
+		Subject subject = null;
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_SUBJECT_BY_ID)) {
 
@@ -58,7 +57,7 @@ public class SubjectDaoImpl implements SubjectDao {
 
 			try (ResultSet resultSet = statement.executeQuery()) {
 				if (resultSet.next()) {
-
+					subject = new Subject();
 					subject.setId(resultSet.getInt("id"));
 					subject.setName(resultSet.getString("name"));
 				}
