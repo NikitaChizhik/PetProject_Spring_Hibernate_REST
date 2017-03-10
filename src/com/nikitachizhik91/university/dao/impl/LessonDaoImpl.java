@@ -55,6 +55,7 @@ public class LessonDaoImpl implements LessonDao {
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 
 				resultSet.next();
+				
 				lesson = new Lesson();
 				lesson.setId(resultSet.getInt("id"));
 				lesson.setNumber(resultSet.getInt("number"));
