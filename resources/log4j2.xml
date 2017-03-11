@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration status="info">
 	<Properties>
-		<Property name="log-path">/home/nikita/foxminded/Task9DomainLayer20/resources/log4j2File.log</Property>
+		<Property name="log-path">D:\1nikita\installs\REPOSITORY\Task9DomainLayer\resources\log4j2File.log
+		</Property>
 	</Properties>
 	<Appenders>
 		<RollingFile name="log4j2File" fileName="${log-path}"
 			filePattern="${log-path}/myexample-%d{yyyy-MM-dd}-%i.log">
 			<PatternLayout>
-				 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
 			</PatternLayout>
 			<Policies>
-				<SizeBasedTriggeringPolicy size="1 KB" />
+				<SizeBasedTriggeringPolicy size="10 mb" />
 			</Policies>
-			<DefaultRolloverStrategy max="4" />
+			<DefaultRolloverStrategy max="10" />
 		</RollingFile>
 	</Appenders>
 	<Loggers>
-		<Logger name="nikitachizhik91" level="info" additivity="false">
-			<appender-ref ref="log4j2File" level="info" />
+		<Logger name="nikitachizhik91" level="debug" additivity="false">
+			<appender-ref ref="log4j2File" level="trace" />
 		</Logger>
-		<Root level="info" additivity="false">
+		<Root level="debug" additivity="false">
 			<AppenderRef ref="log4j2File" />
 		</Root>
 	</Loggers>

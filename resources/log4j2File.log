@@ -1,7 +1,10 @@
-
-[INFO ] 2017-03-10 18:36:26.419 [main] Main - Info Message Logged !!!
-[WARN ] 2017-03-10 18:36:26.421 [main] Main - Warn
-[ERROR] 2017-03-10 18:36:26.422 [main] Main - Error 
-java.lang.NullPointerException: NullError
-	at com.nikitachizhik91.university.domain.Main.main(Main.java:16) [classes/:?]
-[FATAL] 2017-03-10 18:36:26.426 [main] Main - Fatal
+[DEBUG] 2017-03-11 15:37:56.181 [main] LessonDaoImpl - Connection :org.postgresql.jdbc.PgConnection@71d15f18 is received.
+[DEBUG] 2017-03-11 15:37:56.184 [main] LessonDaoImpl - Statement :insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(?,?,?,?,?,?)
+RETURNING * is received.
+[DEBUG] 2017-03-11 15:37:56.208 [main] LessonDaoImpl - Executed query
+[DEBUG] 2017-03-11 15:37:56.726 [main] LessonDaoImpl - Returned lesson from database :Lesson [id=48, number=56]
+[INFO ] 2017-03-11 15:37:56.727 [main] LessonDaoImpl - Created a lesson :Lesson [id=48, number=56]
+[DEBUG] 2017-03-11 15:37:56.727 [main] Timetable - Created the lesson in database.
+[DEBUG] 2017-03-11 15:38:00.269 [main] Timetable - Found all existing lessons.
+[INFO ] 2017-03-11 15:38:00.275 [main] Timetable - Found required lessons for teacher:Teacher [id=1, name=null] and Date:Sat Mar 11 00:00:00 MSK 2017
+[DEBUG] 2017-03-11 15:38:00.275 [main] Timetable - Returns required lessons for teacher:Teacher [id=1, name=null] and Date:Sat Mar 11 00:00:00 MSK 2017

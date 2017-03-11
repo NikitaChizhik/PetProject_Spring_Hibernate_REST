@@ -51,22 +51,19 @@ public class LessonDaoImpl implements LessonDao {
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
-			log.trace("Connection :" + connection + " is received.");
-			log.trace("Statement :" + statement + " is received.");
-			log.info("Connection :" + connection + " is received.");
-			log.info("Statement :" + statement + " is received.");
-			log.trace("Fill up statements.");
+			log.debug("Connection :" + connection + " is received.");
+			log.debug("Statement :" + statement + " is received.");
+			log.trace("Started to fill up statements.");
 			statement.setInt(1, lessonArg.getNumber());
 			statement.setTimestamp(2, DateConverter.toTimestamp(lessonArg.getDate()));
 			statement.setInt(3, lessonArg.getSubject().getId());
 			statement.setInt(4, lessonArg.getTeacher().getId());
 			statement.setInt(5, lessonArg.getGroup().getId());
 			statement.setInt(6, lessonArg.getRoom().getId());
-			log.trace("Filled up statements.");
-			log.info("Filled up statements.");
+			log.trace("Finished filling up statements.");
 			statement.executeUpdate();
-			log.trace("Executed query.");
-			log.info("Executed query.");
+			log.debug("Executed query");
+			log.trace("query is :" + statement);
 
 			log.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
@@ -102,8 +99,9 @@ public class LessonDaoImpl implements LessonDao {
 			throw new DaoException("Prepared statement is wrong :" + e);
 		}
 
-		log.trace("Connection and PreparedStatement are closed.");
-		log.trace("Return lesson from database :" + lesson);
+		log.trace("Connection is closed.");
+		log.trace("PreparedStatement is closed.");
+		log.debug("Returned lesson from database :" + lesson);
 		log.info("Created a lesson :" + lesson);
 		log.trace("Finished create() method.");
 		return lesson;

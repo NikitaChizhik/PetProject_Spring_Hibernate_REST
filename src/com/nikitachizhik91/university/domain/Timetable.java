@@ -25,7 +25,7 @@ public class Timetable {
 		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		log.trace("Creating the lesson in database.");
 		lessonDAOImpl.create(lesson);
-		log.trace("Created the lesson in database.");
+		log.debug("Created the lesson in database.");
 		log.trace("Finished addLesson().");
 	}
 
@@ -43,22 +43,24 @@ public class Timetable {
 		log.trace("Finding all lessons.");
 		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		List<Lesson> lessons = lessonDAOImpl.findAll();
-		log.trace("Found all lessons.");
+		log.debug("Found all existing lessons.");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		List<Lesson> timetable = new ArrayList<Lesson>();
 		log.trace("Finding required lessons.");
 		for (Lesson lesson : lessons) {
-			log.trace("Checking lesson :" + lesson);
+			log.trace("Checking whether the lesson :" + lesson + "is matching.");
 			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
 					&& lesson.getTeacher().equals(teacher)) {
+				log.trace("Lesson" + lesson + " is matching." + "adding lesson :" + lesson);
 				log.trace("Adding lesson :" + lesson);
 				timetable.add(lesson);
 				log.trace("Added lesson :" + lesson);
 			}
 		}
-		log.trace("Found required lessons.");
-		log.info("Returns required lessons for teacher:" + teacher + " and Date:" + date);
-		log.trace("Returns required lessons for teacher:" + teacher + " and Date:" + date);
+
+		log.info("Found required lessons for teacher:" + teacher + " and Date:" + date);
+		log.debug("Returns required lessons for teacher:" + teacher + " and Date:" + date);
+		log.trace("Lessons are :" + lessons);
 		log.trace("Finished getTeachersTimetableForDay().");
 		return timetable;
 	}
