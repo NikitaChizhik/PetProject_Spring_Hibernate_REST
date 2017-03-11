@@ -18,15 +18,15 @@ import com.nikitachizhik91.university.model.Teacher;
  *
  */
 public class Timetable {
-	private final static Logger LOGGER = LogManager.getLogger(Timetable.class.getName());
+	private final static Logger log = LogManager.getLogger(Timetable.class.getName());
 
 	public void addLesson(Lesson lesson) throws DaoException {
-		LOGGER.trace("Started addLesson().");
+		log.trace("Started addLesson().");
 		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
-		LOGGER.trace("Creating the lesson in database.");
+		log.trace("Creating the lesson in database.");
 		lessonDAOImpl.create(lesson);
-		LOGGER.trace("Created the lesson in database.");
-		LOGGER.trace("Finished addLesson().");
+		log.trace("Created the lesson in database.");
+		log.trace("Finished addLesson().");
 	}
 
 	public void deleteLesson(Lesson lesson) {
@@ -35,31 +35,31 @@ public class Timetable {
 	}
 
 	public List<Lesson> getTeachersTimetableForDay(Teacher teacher, Date date) {
-		LOGGER.trace("Started getTeachersTimetableForDay().");
+		log.trace("Started getTeachersTimetableForDay().");
 		if (teacher == null || date == null) {
-			LOGGER.error("Teacher or date == null");
+			log.error("Teacher or date == null");
 			throw new IllegalArgumentException("LessonDaoImpl getTeachersTimetableForDay(),Teacher or Date == null");
 		}
-		LOGGER.trace("Finding all lessons.");
+		log.trace("Finding all lessons.");
 		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		List<Lesson> lessons = lessonDAOImpl.findAll();
-		LOGGER.trace("Found all lessons.");
+		log.trace("Found all lessons.");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		List<Lesson> timetable = new ArrayList<Lesson>();
-		LOGGER.trace("Finding required lessons.");
+		log.trace("Finding required lessons.");
 		for (Lesson lesson : lessons) {
-			LOGGER.trace("Checking lesson :" + lesson);
+			log.trace("Checking lesson :" + lesson);
 			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
 					&& lesson.getTeacher().equals(teacher)) {
-				LOGGER.trace("Adding lesson :" + lesson);
+				log.trace("Adding lesson :" + lesson);
 				timetable.add(lesson);
-				LOGGER.trace("Added lesson :" + lesson);
+				log.trace("Added lesson :" + lesson);
 			}
 		}
-		LOGGER.trace("Found required lessons.");
-		LOGGER.info("Returns required lessons for teacher:" + teacher + " and Date:" + date);
-		LOGGER.trace("Returns required lessons for teacher:" + teacher + " and Date:" + date);
-		LOGGER.trace("Finished getTeachersTimetableForDay().");
+		log.trace("Found required lessons.");
+		log.info("Returns required lessons for teacher:" + teacher + " and Date:" + date);
+		log.trace("Returns required lessons for teacher:" + teacher + " and Date:" + date);
+		log.trace("Finished getTeachersTimetableForDay().");
 		return timetable;
 	}
 
