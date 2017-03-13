@@ -23,8 +23,8 @@ import com.nikitachizhik91.university.domain.DaoException;
 import com.nikitachizhik91.university.model.Lesson;
 
 public class LessonDaoImpl implements LessonDao {
-	private Connector connector;
 	private final static Logger log = LogManager.getLogger(LessonDaoImpl.class.getName());
+	private Connector connector;
 	private static final String INSERT_LESSON = "insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(?,?,?,?,?,?)";
 	private static final String FIND_LESSON_BY_ID = "select * from lessons where id=?";
 	private static final String FIND_ALL_LESSONS = "select * from lessons";
@@ -45,12 +45,13 @@ public class LessonDaoImpl implements LessonDao {
 
 	public Lesson create(Lesson lessonArg) throws DaoException {
 		log.trace("Started create() method.");
+
 		Lesson lesson = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_LESSON,
-						Statement.RETURN_GENERATED_KEYS);) {
+						Statement.RETURN_GENERATED_KEYS)) {
 
 			statement.setInt(1, lessonArg.getNumber());
 			statement.setTimestamp(2, DateConverter.toTimestamp(lessonArg.getDate()));
@@ -58,21 +59,16 @@ public class LessonDaoImpl implements LessonDao {
 			statement.setInt(4, lessonArg.getTeacher().getId());
 			statement.setInt(5, lessonArg.getGroup().getId());
 			statement.setInt(6, lessonArg.getRoom().getId());
+			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
-			log.debug("Executed query");
-			log.trace("query is :" + statement);
+			log.debug("Executed query :" + statement);
 
 			log.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
-				if (resultSet == null) {
-					log.error("ResultSet is null");
-					throw new DaoException("ResultSet is null");
-				}
 				log.trace("Got the result set.");
 
 				resultSet.next();
 
-				log.trace("Setting data to the Lesson.");
 				lesson = new Lesson();
 				lesson.setId(resultSet.getInt("id"));
 				lesson.setNumber(resultSet.getInt("number"));
@@ -87,32 +83,35 @@ public class LessonDaoImpl implements LessonDao {
 				lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
 
 				lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
-				log.trace("Finished setting data to the Lesson.");
-
 			}
-			log.trace("Resultset is closed.");
+
 		} catch (SQLException e) {
-			log.error("Cannot create Lesson :" + lesson, e.toString());
+			log.error("Cannot create Lesson :" + lesson, e);
 			throw new DaoException("Cannot create Lesson :", e);
 		}
 
-		log.trace("Connection is closed.");
-		log.trace("PreparedStatement is closed.");
-		log.debug("Returned lesson from database :" + lesson);
 		log.info("Created a lesson :" + lesson);
 		log.trace("Finished create() method.");
 		return lesson;
 	}
 
-	public Lesson findById(int id) {
+	public Lesson findById(int id) throws DaoException {
+		log.trace("Started findById() method.");
 
 		Lesson lesson = null;
+
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_LESSON_BY_ID)) {
 
 			statement.setInt(1, id);
 
+			log.trace("Statement :" + statement + " is received.");
+			log.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.executeQuery()) {
+				log.debug("Executed query :" + statement);
+				log.trace("Got the result set.");
+
 				if (resultSet.next()) {
 					lesson = new Lesson();
 					lesson.setId(resultSet.getInt("id"));
@@ -130,18 +129,26 @@ public class LessonDaoImpl implements LessonDao {
 				}
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			log.error("Cannot find Lesson with id=" + id, e);
+			throw new DaoException("Cannot find Lesson with id=" + id, e);
 		}
+		log.info("Found the lesson :" + lesson);
+		log.trace("Finished findById() method.");
 		return lesson;
 	}
 
 	public List<Lesson> findAll() throws DaoException {
+		log.trace("Started findAll() method.");
 
 		List<Lesson> lessons = new ArrayList<Lesson>();
 
+		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_LESSONS);
 				ResultSet resultSet = statement.executeQuery();) {
+
+			log.debug("Executed query :" + statement);
+			log.trace("Got the result set.");
 
 			while (resultSet.next()) {
 
@@ -165,12 +172,17 @@ public class LessonDaoImpl implements LessonDao {
 			log.error("Cannot find all lessons.", e);
 			throw new DaoException("Cannot find all lessons.", e);
 		}
+		log.info("Found all lessons :");
+		log.trace("Finished findAll() method.");
 		return lessons;
 	}
 
-	public Lesson update(Lesson lessonArg) {
+	public Lesson update(Lesson lessonArg) throws DaoException {
+		log.trace("Started update() method.");
 
 		Lesson lesson = null;
+
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -183,9 +195,14 @@ public class LessonDaoImpl implements LessonDao {
 			statement.setInt(6, lessonArg.getRoom().getId());
 			statement.setInt(7, lessonArg.getId());
 
+			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
+			log.debug("Executed query :" + statement);
 
+			log.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
+				log.trace("Got the result set.");
+
 				while (resultSet.next()) {
 					lesson = new Lesson();
 					lesson.setId(resultSet.getInt("id"));
@@ -204,23 +221,32 @@ public class LessonDaoImpl implements LessonDao {
 			}
 
 		} catch (SQLException e) {
-			e.getMessage();
+			log.error("Cannot update Lesson :" + lessonArg, e);
+			throw new DaoException("Cannot update Lesson :" + lessonArg, e);
 		}
+		log.info("Updated Lesson :" + lessonArg);
+		log.trace("Finished update() method.");
 		return lesson;
 	}
 
-	public void delete(int id) {
-
+	public void delete(int id) throws DaoException {
+		log.trace("Started delete() method.");
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_LESSON);) {
 
 			statement.setInt(1, id);
 
+			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
+			log.debug("Executed query :" + statement);
 
 		} catch (SQLException e) {
-			e.getMessage();
+			log.error("Cannot delete Lesson with id=" + id, e);
+			throw new DaoException("Cannot delete Lesson with id=" + id, e);
 		}
+		log.info("Deleted Lesson with id=" + id);
+		log.trace("Finished delete() method.");
 	}
 
 }

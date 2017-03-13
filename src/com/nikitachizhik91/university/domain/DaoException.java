@@ -2,10 +2,7 @@ package com.nikitachizhik91.university.domain;
 
 public class DaoException extends Exception {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8586551952275281103L;
+	private static final long serialVersionUID = -6584281854895616335L;
 
 	public DaoException() {
 	}

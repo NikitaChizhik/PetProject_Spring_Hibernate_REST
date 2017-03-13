@@ -12,7 +12,7 @@ import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
 public class Main {
-	public static void main(String[] args) throws DaoException, ParseException {
+	public static void main(String[] args) throws DaoException, ParseException, DomainException {
 
 		LessonDaoImpl lessonDaoImpl = new LessonDaoImpl();
 		Lesson lesson = new Lesson();
@@ -36,7 +36,7 @@ public class Main {
 
 		Timetable timetable = new Timetable();
 		timetable.addLesson(lesson);
-		timetable.getTeachersTimetableForDay(teacher, date);
+		timetable.getTeacherTimetableForDay(teacher, date);
 
 		// lessonDaoImpl.delete(create.getId());
 
