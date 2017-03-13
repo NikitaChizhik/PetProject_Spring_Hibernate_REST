@@ -14,4 +14,8 @@ public class DomainException extends Exception {
 		super(message);
 	}
 
+	public DomainException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }
