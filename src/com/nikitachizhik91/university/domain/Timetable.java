@@ -38,11 +38,16 @@ public class Timetable {
 		log.trace("Started getTeachersTimetableForDay().");
 		if (teacher == null || date == null) {
 			log.error("Teacher or date == null");
-			throw new IllegalArgumentException("LessonDaoImpl getTeachersTimetableForDay(),Teacher or Date == null");
+			throw new IllegalArgumentException("Teacher or Date == null");
 		}
 		log.trace("Finding all lessons.");
 		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
-		List<Lesson> lessons = lessonDAOImpl.findAll();
+		List<Lesson> lessons = null;
+		try {
+			lessons = lessonDAOImpl.findAll();
+		} catch (DaoException e) {
+			log.error("Cannot find all lessons.");
+		}
 		log.debug("Found all existing lessons.");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		List<Lesson> timetable = new ArrayList<Lesson>();
@@ -71,7 +76,13 @@ public class Timetable {
 		}
 
 		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
-		List<Lesson> lessons = lessonDAOImpl.findAll();
+		List<Lesson> lessons = null;
+		try {
+			lessons = lessonDAOImpl.findAll();
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
 		List<Lesson> timetable = new ArrayList<Lesson>();
@@ -92,7 +103,13 @@ public class Timetable {
 		}
 
 		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
-		List<Lesson> lessons = lessonDAOImpl.findAll();
+		List<Lesson> lessons = null;
+		try {
+			lessons = lessonDAOImpl.findAll();
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
 		List<Lesson> timetable = new ArrayList<Lesson>();
@@ -115,7 +132,13 @@ public class Timetable {
 		}
 
 		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
-		List<Lesson> lessons = lessonDAOImpl.findAll();
+		List<Lesson> lessons = null;
+		try {
+			lessons = lessonDAOImpl.findAll();
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
 		List<Lesson> timetable = new ArrayList<Lesson>();

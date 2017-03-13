@@ -9,7 +9,7 @@ public interface Crud<T> {
 
 	T findById(int id);
 
-	List<T> findAll();
+	List<T> findAll() throws DaoException;
 
 	T update(T entity);
 

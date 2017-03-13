@@ -47,20 +47,17 @@ public class LessonDaoImpl implements LessonDao {
 		log.trace("Started create() method.");
 		Lesson lesson = null;
 
-		log.trace("Getting Conncetion.");
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
-			log.debug("Connection :" + connection + " is received.");
-			log.debug("Statement :" + statement + " is received.");
-			log.trace("Started to fill up statements.");
+
 			statement.setInt(1, lessonArg.getNumber());
 			statement.setTimestamp(2, DateConverter.toTimestamp(lessonArg.getDate()));
 			statement.setInt(3, lessonArg.getSubject().getId());
 			statement.setInt(4, lessonArg.getTeacher().getId());
 			statement.setInt(5, lessonArg.getGroup().getId());
 			statement.setInt(6, lessonArg.getRoom().getId());
-			log.trace("Finished filling up statements.");
 			statement.executeUpdate();
 			log.debug("Executed query");
 			log.trace("query is :" + statement);
@@ -68,8 +65,8 @@ public class LessonDaoImpl implements LessonDao {
 			log.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
 				if (resultSet == null) {
-					log.error("LessonDaoImpl create() - ResultSet is null");
-					throw new DaoException("LessonDaoImpl create() - ResultSet is null");
+					log.error("ResultSet is null");
+					throw new DaoException("ResultSet is null");
 				}
 				log.trace("Got the result set.");
 
@@ -95,8 +92,8 @@ public class LessonDaoImpl implements LessonDao {
 			}
 			log.trace("Resultset is closed.");
 		} catch (SQLException e) {
-			log.error("Prepared statement is wrong :" + e.toString());
-			throw new DaoException("Prepared statement is wrong :" + e);
+			log.error("Cannot create Lesson :" + lesson, e.toString());
+			throw new DaoException("Cannot create Lesson :", e);
 		}
 
 		log.trace("Connection is closed.");
@@ -138,7 +135,7 @@ public class LessonDaoImpl implements LessonDao {
 		return lesson;
 	}
 
-	public List<Lesson> findAll() {
+	public List<Lesson> findAll() throws DaoException {
 
 		List<Lesson> lessons = new ArrayList<Lesson>();
 
@@ -165,7 +162,8 @@ public class LessonDaoImpl implements LessonDao {
 				lessons.add(lesson);
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			log.error("Cannot find all lessons.", e);
+			throw new DaoException("Cannot find all lessons.", e);
 		}
 		return lessons;
 	}
