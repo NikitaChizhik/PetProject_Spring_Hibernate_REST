@@ -1,955 +1,221 @@
-[TRACE] 2017-03-14 14:52:15 Timetable - Started addLesson().
-[TRACE] 2017-03-14 14:52:15 Timetable - Saving the lesson.
-[TRACE] 2017-03-14 14:52:15 LessonDaoImpl - Started create() method.
-[TRACE] 2017-03-14 14:52:15 LessonDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:15 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:15 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:15 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:15 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:15 LessonDaoImpl - Statement :insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(56,'2017-03-11 00:00:00+03',1,1,2,1)
+[TRACE] 2017-03-14 18:40:45 Timetable - Started getStudentTimetableForDay().
+[TRACE] 2017-03-14 18:40:45 Timetable - Finding all lessons.
+[TRACE] 2017-03-14 18:40:45 Timetable - Finding required lessons.
+[TRACE] 2017-03-14 18:40:45 TimetableDao - Started getStudentTimetableForDay().
+[TRACE] 2017-03-14 18:40:45 TimetableDao - Getting Conncetion and creating prepared statement and getting the result set.
+[TRACE] 2017-03-14 18:40:45 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:40:45 Connector - Found DRIVER=org.postgresql.Driver
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[TRACE] 2017-03-14 18:40:45 Connector - Finished getConnection().
+[DEBUG] 2017-03-14 18:40:45 TimetableDao - Executed query :select * from lessons where group_id=(select group_id from groups_students where student_id=2) and date between '2017-01-03 00:00:00+03' and '2017-01-03 23:59:59+03'
+[TRACE] 2017-03-14 18:40:45 TimetableDao - Got the result set.
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:40:45 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:40:45 Connector - Found DRIVER=org.postgresql.Driver
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[TRACE] 2017-03-14 18:40:45 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Statement :select * from groups where id=2 is received.
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:40:45 GroupDaoImpl - Executed query :select * from groups where id=2
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Got the result set.
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Started findStudentsByGroupId() method.
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:40:45 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:40:45 Connector - Found DRIVER=org.postgresql.Driver
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[TRACE] 2017-03-14 18:40:45 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:40:45 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Got the result set.
+[TRACE] 2017-03-14 18:40:45 StudentDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:40:45 StudentDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:40:45 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:40:45 Connector - Found DRIVER=org.postgresql.Driver
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[TRACE] 2017-03-14 18:40:45 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:40:45 StudentDaoImpl - Statement :select * from students where id=2 is received.
+[TRACE] 2017-03-14 18:40:45 StudentDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:40:45 StudentDaoImpl - Executed query :select * from students where id=2
+[TRACE] 2017-03-14 18:40:45 StudentDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:40:45 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
+[TRACE] 2017-03-14 18:40:45 StudentDaoImpl - Finished findById() method.
+[INFO ] 2017-03-14 18:40:45 GroupDaoImpl - Found 1 Students by Group id=2
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Finished findStudentsByGroupId() method.
+[INFO ] 2017-03-14 18:40:45 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
+[TRACE] 2017-03-14 18:40:45 GroupDaoImpl - Finished findById() method.
+[TRACE] 2017-03-14 18:40:45 RoomDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:40:45 RoomDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:40:45 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:40:45 Connector - Found DRIVER=org.postgresql.Driver
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[TRACE] 2017-03-14 18:40:45 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:40:45 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
+[TRACE] 2017-03-14 18:40:45 RoomDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:40:45 RoomDaoImpl - Executed query :select * from rooms where id=1
+[TRACE] 2017-03-14 18:40:45 RoomDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:40:45 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
+[TRACE] 2017-03-14 18:40:45 RoomDaoImpl - Finished findById() method.
+[TRACE] 2017-03-14 18:40:45 SubjectDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:40:45 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:40:45 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:40:45 Connector - Found DRIVER=org.postgresql.Driver
+[DEBUG] 2017-03-14 18:40:46 Connector - Got connection.
+[TRACE] 2017-03-14 18:40:46 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:40:46 SubjectDaoImpl - Executed query :select * from subjects where id=1
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:40:46 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Finished findById() method.
+[TRACE] 2017-03-14 18:40:46 TeacherDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:40:46 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:40:46 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:40:46 Connector - Found DRIVER=org.postgresql.Driver
+[DEBUG] 2017-03-14 18:40:46 Connector - Got connection.
+[TRACE] 2017-03-14 18:40:46 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:40:46 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
+[TRACE] 2017-03-14 18:40:46 TeacherDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:40:46 TeacherDaoImpl - Executed query :select * from teachers where id=1
+[TRACE] 2017-03-14 18:40:46 TeacherDaoImpl - Got the result set.
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:40:46 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:40:46 Connector - Found DRIVER=org.postgresql.Driver
+[DEBUG] 2017-03-14 18:40:46 Connector - Got connection.
+[TRACE] 2017-03-14 18:40:46 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:40:46 SubjectDaoImpl - Executed query :select * from subjects where id=0
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:40:46 SubjectDaoImpl - Found the Subject :null
+[TRACE] 2017-03-14 18:40:46 SubjectDaoImpl - Finished findById() method.
+[INFO ] 2017-03-14 18:40:46 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
+[TRACE] 2017-03-14 18:40:46 TeacherDaoImpl - Finished findById() method.
+[INFO ] 2017-03-14 18:40:46 TimetableDao - Got 1 lessons for Student timetable for Day
+[TRACE] 2017-03-14 18:40:46 TimetableDao - Finished getStudentTimetableForDay() method.
+[INFO ] 2017-03-14 18:40:46 Timetable - Found 1 lessons for teacher:Student [id=2, name=null] and Date:Tue Jan 03 00:00:00 MSK 2017
+[TRACE] 2017-03-14 18:40:46 Timetable - Finished getStudentTimetableForDay().
+[TRACE] 2017-03-14 18:47:49 LessonDaoImpl - Started create() method.
+[TRACE] 2017-03-14 18:47:49 LessonDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:47:49 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:47:49 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:47:49 Connector - Got connection.
+[TRACE] 2017-03-14 18:47:49 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:47:49 LessonDaoImpl - Statement :insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(56,'2018-08-05 00:00:00+03',1,2,3,1)
 RETURNING * is received.
-[DEBUG] 2017-03-14 14:52:15 LessonDaoImpl - Executed query :insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(56,'2017-03-11 00:00:00+03',1,1,2,1)
+[DEBUG] 2017-03-14 18:47:50 LessonDaoImpl - Executed query :insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(56,'2018-08-05 00:00:00+03',1,2,3,1)
 RETURNING *
-[TRACE] 2017-03-14 14:52:15 LessonDaoImpl - Getting the result set.
-[TRACE] 2017-03-14 14:52:15 LessonDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:15 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:15 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:15 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:15 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Statement :select * from groups where id=2 is received.
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:15 GroupDaoImpl - Executed query :select * from groups where id=2
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:15 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:15 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:15 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:15 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:15 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:15 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:15 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:15 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:15 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:15 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:15 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:15 StudentDaoImpl - Statement :select * from students where id=2 is received.
-[TRACE] 2017-03-14 14:52:15 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:15 StudentDaoImpl - Executed query :select * from students where id=2
-[TRACE] 2017-03-14 14:52:15 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:15 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[TRACE] 2017-03-14 14:52:15 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:15 GroupDaoImpl - Found 1 Students by Group id=2
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:15 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[TRACE] 2017-03-14 14:52:15 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:15 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:15 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:15 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:15 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:16 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:16 LessonDaoImpl - Created a lesson :Lesson [id=94, number=56]
-[TRACE] 2017-03-14 14:52:16 LessonDaoImpl - Finished create() method.
-[TRACE] 2017-03-14 14:52:16 Timetable - Finished addLesson().
-[TRACE] 2017-03-14 14:52:16 Timetable - Started getTeachersTimetableForDay().
-[TRACE] 2017-03-14 14:52:16 Timetable - Finding required lessons.
-[TRACE] 2017-03-14 14:52:16 LessonDaoImpl - Started getTeacherTimetableForDay().
-[TRACE] 2017-03-14 14:52:16 LessonDaoImpl - Getting Conncetion and creating prepared statement and getting the result set.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[DEBUG] 2017-03-14 14:52:16 LessonDaoImpl - Executed query :select * from lessons limit 10
-[TRACE] 2017-03-14 14:52:16 LessonDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Statement :select * from groups where id=1 is received.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 GroupDaoImpl - Executed query :select * from groups where id=1
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Statement :select student_id from groups_students where group_id=1 is received.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=1
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Statement :select * from students where id=3 is received.
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 StudentDaoImpl - Executed query :select * from students where id=3
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 StudentDaoImpl - Found the Student :Student [id=3, name=Dasha                                                                           ]
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Statement :select * from students where id=4 is received.
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 StudentDaoImpl - Executed query :select * from students where id=4
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 StudentDaoImpl - Found the Student :Student [id=4, name=Masha                                                                           ]
-[TRACE] 2017-03-14 14:52:16 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:16 GroupDaoImpl - Found 2 Students by Group id=1
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:16 GroupDaoImpl - Found the Group :Group [id=1, name=36b                                                                             ]
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Statement :select * from subjects where id=4 is received.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=4
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :Subject [id=4, name=english                                                                         ]
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Statement :select * from teachers where id=9 is received.
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 TeacherDaoImpl - Executed query :select * from teachers where id=9
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:16 TeacherDaoImpl - Found the Teacher :Teacher [id=9, name=olya                                                                            ]
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Statement :select * from groups where id=5 is received.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 GroupDaoImpl - Executed query :select * from groups where id=5
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Statement :select student_id from groups_students where group_id=5 is received.
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=5
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 GroupDaoImpl - Found 0 Students by Group id=5
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:16 GroupDaoImpl - Found the Group :Group [id=5, name=04                                                                              ]
-[TRACE] 2017-03-14 14:52:16 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Statement :select * from rooms where id=25 is received.
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 RoomDaoImpl - Executed query :select * from rooms where id=25
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 RoomDaoImpl - Found the Room :Room [id=25, number=2                                                 ]
-[TRACE] 2017-03-14 14:52:16 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Statement :select * from subjects where id=5 is received.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=5
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :Subject [id=5, name=english                                                                         ]
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:16 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Statement :select * from teachers where id=5 is received.
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:16 TeacherDaoImpl - Executed query :select * from teachers where id=5
-[TRACE] 2017-03-14 14:52:16 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:16 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:16 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:16 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:17 TeacherDaoImpl - Found the Teacher :Teacher [id=5, name=olya                                                                            ]
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Statement :select * from groups where id=2 is received.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select * from groups where id=2
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Statement :select * from students where id=2 is received.
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 StudentDaoImpl - Executed query :select * from students where id=2
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:17 GroupDaoImpl - Found 1 Students by Group id=2
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:17 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:17 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Statement :select * from groups where id=2 is received.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select * from groups where id=2
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Statement :select * from students where id=2 is received.
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 StudentDaoImpl - Executed query :select * from students where id=2
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:17 GroupDaoImpl - Found 1 Students by Group id=2
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:17 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:17 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:17 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:17 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[TRACE] 2017-03-14 14:52:17 TeacherDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Statement :select * from groups where id=2 is received.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select * from groups where id=2
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[TRACE] 2017-03-14 14:52:17 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:17 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:17 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:17 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Statement :select * from students where id=2 is received.
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:17 StudentDaoImpl - Executed query :select * from students where id=2
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:17 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[TRACE] 2017-03-14 14:52:17 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found 1 Students by Group id=2
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:18 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Statement :select * from groups where id=2 is received.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 GroupDaoImpl - Executed query :select * from groups where id=2
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Statement :select * from students where id=2 is received.
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 StudentDaoImpl - Executed query :select * from students where id=2
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found 1 Students by Group id=2
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:18 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Statement :select * from groups where id=2 is received.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 GroupDaoImpl - Executed query :select * from groups where id=2
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Statement :select * from students where id=2 is received.
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 StudentDaoImpl - Executed query :select * from students where id=2
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[TRACE] 2017-03-14 14:52:18 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found 1 Students by Group id=2
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:18 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:18 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:18 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:18 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[TRACE] 2017-03-14 14:52:18 TeacherDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:18 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:18 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:18 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Statement :select * from groups where id=2 is received.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select * from groups where id=2
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Statement :select * from students where id=2 is received.
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 StudentDaoImpl - Executed query :select * from students where id=2
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:19 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found 1 Students by Group id=2
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:19 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:19 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:19 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:19 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Statement :select * from groups where id=2 is received.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select * from groups where id=2
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Statement :select * from students where id=2 is received.
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 StudentDaoImpl - Executed query :select * from students where id=2
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:19 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found 1 Students by Group id=2
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:19 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:19 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:19 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:19 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:19 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[TRACE] 2017-03-14 14:52:19 TeacherDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Statement :select * from groups where id=2 is received.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select * from groups where id=2
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Started findStudentsByGroupId() method.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Statement :select student_id from groups_students where group_id=2 is received.
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:19 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Statement :select * from students where id=2 is received.
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:19 StudentDaoImpl - Executed query :select * from students where id=2
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:19 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[TRACE] 2017-03-14 14:52:19 StudentDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found 1 Students by Group id=2
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Finished findStudentsByGroupId() method.
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[TRACE] 2017-03-14 14:52:19 GroupDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:19 RoomDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:19 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:19 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:20 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:20 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:20 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
-[TRACE] 2017-03-14 14:52:20 RoomDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:20 RoomDaoImpl - Executed query :select * from rooms where id=1
-[TRACE] 2017-03-14 14:52:20 RoomDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:20 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[TRACE] 2017-03-14 14:52:20 RoomDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:20 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:20 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:20 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:20 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:20 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:20 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Finished findById() method.
-[TRACE] 2017-03-14 14:52:20 TeacherDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:20 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:20 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:20 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:20 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:20 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:20 TeacherDaoImpl - Statement :select * from teachers where id=1 is received.
-[TRACE] 2017-03-14 14:52:20 TeacherDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:20 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[TRACE] 2017-03-14 14:52:20 TeacherDaoImpl - Got the result set.
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Started findById() method.
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
-[TRACE] 2017-03-14 14:52:20 Connector - Started getConnection() method.
-[TRACE] 2017-03-14 14:52:20 Connector - Found DRIVER=org.postgresql.Driver
-[DEBUG] 2017-03-14 14:52:20 Connector - Got connection.
-[TRACE] 2017-03-14 14:52:20 Connector - Finished getConnection().
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Getting the result set.
-[DEBUG] 2017-03-14 14:52:20 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Got the result set.
-[INFO ] 2017-03-14 14:52:20 SubjectDaoImpl - Found the Subject :null
-[TRACE] 2017-03-14 14:52:20 SubjectDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:20 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[TRACE] 2017-03-14 14:52:20 TeacherDaoImpl - Finished findById() method.
-[INFO ] 2017-03-14 14:52:20 LessonDaoImpl - Got 10 lessons for teacher timetable for day
-[TRACE] 2017-03-14 14:52:20 LessonDaoImpl - Finished getTeacherTimetableForDay() method.
-[INFO ] 2017-03-14 14:52:20 Timetable - Found 10 lessons for teacher:Teacher [id=1, name=null] and Date:Sat Mar 11 00:00:00 MSK 2017
-[TRACE] 2017-03-14 14:52:20 Timetable - Finished getTeachersTimetableForDay().
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Getting the result set.
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Got the result set.
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:47:50 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:47:50 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:47:50 Connector - Got connection.
+[TRACE] 2017-03-14 18:47:50 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Statement :select * from groups where id=3 is received.
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:47:50 GroupDaoImpl - Executed query :select * from groups where id=3
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Got the result set.
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Started findStudentsByGroupId() method.
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:47:50 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:47:50 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:47:50 Connector - Got connection.
+[TRACE] 2017-03-14 18:47:50 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Statement :select student_id from groups_students where group_id=3 is received.
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:47:50 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=3
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:47:50 GroupDaoImpl - Found 0 Students by Group id=3
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Finished findStudentsByGroupId() method.
+[INFO ] 2017-03-14 18:47:50 GroupDaoImpl - Found the Group :Group [id=3, name=02                                                                              ]
+[TRACE] 2017-03-14 18:47:50 GroupDaoImpl - Finished findById() method.
+[TRACE] 2017-03-14 18:47:50 RoomDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:47:50 RoomDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:47:50 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:47:50 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:47:50 Connector - Got connection.
+[TRACE] 2017-03-14 18:47:50 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:47:50 RoomDaoImpl - Statement :select * from rooms where id=1 is received.
+[TRACE] 2017-03-14 18:47:50 RoomDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:47:50 RoomDaoImpl - Executed query :select * from rooms where id=1
+[TRACE] 2017-03-14 18:47:50 RoomDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:47:50 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
+[TRACE] 2017-03-14 18:47:50 RoomDaoImpl - Finished findById() method.
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:47:50 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:47:50 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:47:50 Connector - Got connection.
+[TRACE] 2017-03-14 18:47:50 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Statement :select * from subjects where id=1 is received.
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:47:50 SubjectDaoImpl - Executed query :select * from subjects where id=1
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:47:50 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Finished findById() method.
+[TRACE] 2017-03-14 18:47:50 TeacherDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:47:50 TeacherDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:47:50 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:47:50 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:47:50 Connector - Got connection.
+[TRACE] 2017-03-14 18:47:50 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:47:50 TeacherDaoImpl - Statement :select * from teachers where id=2 is received.
+[TRACE] 2017-03-14 18:47:50 TeacherDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:47:50 TeacherDaoImpl - Executed query :select * from teachers where id=2
+[TRACE] 2017-03-14 18:47:50 TeacherDaoImpl - Got the result set.
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:47:50 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:47:50 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:47:50 Connector - Got connection.
+[TRACE] 2017-03-14 18:47:50 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Statement :select * from subjects where id=0 is received.
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:47:50 SubjectDaoImpl - Executed query :select * from subjects where id=0
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:47:50 SubjectDaoImpl - Found the Subject :null
+[TRACE] 2017-03-14 18:47:50 SubjectDaoImpl - Finished findById() method.
+[INFO ] 2017-03-14 18:47:50 TeacherDaoImpl - Found the Teacher :Teacher [id=2, name=natasha Chizhik                                                                 ]
+[TRACE] 2017-03-14 18:47:50 TeacherDaoImpl - Finished findById() method.
+[INFO ] 2017-03-14 18:47:50 LessonDaoImpl - Created a lesson :Lesson [id=102, number=56]
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Finished create() method.
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Started findById() method.
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:47:50 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:47:50 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:47:50 Connector - Got connection.
+[TRACE] 2017-03-14 18:47:50 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Statement :select * from lessons where id=1 is received.
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Getting the result set.
+[DEBUG] 2017-03-14 18:47:50 LessonDaoImpl - Executed query :select * from lessons where id=1
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:47:50 LessonDaoImpl - Found the lesson :null
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Finished findById() method.
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Started update() method.
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:47:50 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:47:50 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:47:50 Connector - Got connection.
+[TRACE] 2017-03-14 18:47:50 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Statement :update lessons set number=56,date='2018-08-05 00:00:00+03',subject_id=1,teacher_id=2,group_id=3,room_id=1 where id =0
+RETURNING * is received.
+[DEBUG] 2017-03-14 18:47:50 LessonDaoImpl - Executed query :update lessons set number=56,date='2018-08-05 00:00:00+03',subject_id=1,teacher_id=2,group_id=3,room_id=1 where id =0
+RETURNING *
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Getting the result set.
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Got the result set.
+[INFO ] 2017-03-14 18:47:50 LessonDaoImpl - Updated Lesson :Lesson [id=0, number=56]
+[TRACE] 2017-03-14 18:47:50 LessonDaoImpl - Finished update() method.
+[TRACE] 2017-03-14 18:48:59 LessonDaoImpl - Started delete() method.
+[TRACE] 2017-03-14 18:48:59 LessonDaoImpl - Getting Conncetion and creating prepared statement.
+[TRACE] 2017-03-14 18:48:59 Connector - Started getConnection() method.
+[TRACE] 2017-03-14 18:48:59 Connector - Found DRIVER=org.postgresql.Driver
+[TRACE] 2017-03-14 18:48:59 Connector - Got connection.
+[TRACE] 2017-03-14 18:48:59 Connector - Finished getConnection().
+[TRACE] 2017-03-14 18:48:59 LessonDaoImpl - Statement :delete from lessons where id =102 is received.
+[DEBUG] 2017-03-14 18:48:59 LessonDaoImpl - Executed query :delete from lessons where id =102
+[INFO ] 2017-03-14 18:48:59 LessonDaoImpl - Deleted Lesson with id=102
+[TRACE] 2017-03-14 18:48:59 LessonDaoImpl - Finished delete() method.

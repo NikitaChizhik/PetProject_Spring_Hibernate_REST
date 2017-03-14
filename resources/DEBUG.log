@@ -1,239 +1,47 @@
-[DEBUG] 2017-03-14 14:52:15 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:15 LessonDaoImpl - Executed query :insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(56,'2017-03-11 00:00:00+03',1,1,2,1)
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[DEBUG] 2017-03-14 18:40:45 TimetableDao - Executed query :select * from lessons where group_id=(select group_id from groups_students where student_id=2) and date between '2017-01-03 00:00:00+03' and '2017-01-03 23:59:59+03'
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[DEBUG] 2017-03-14 18:40:45 GroupDaoImpl - Executed query :select * from groups where id=2
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[DEBUG] 2017-03-14 18:40:45 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[DEBUG] 2017-03-14 18:40:45 StudentDaoImpl - Executed query :select * from students where id=2
+[INFO ] 2017-03-14 18:40:45 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
+[INFO ] 2017-03-14 18:40:45 GroupDaoImpl - Found 1 Students by Group id=2
+[INFO ] 2017-03-14 18:40:45 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
+[DEBUG] 2017-03-14 18:40:45 Connector - Got connection.
+[DEBUG] 2017-03-14 18:40:45 RoomDaoImpl - Executed query :select * from rooms where id=1
+[INFO ] 2017-03-14 18:40:45 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
+[DEBUG] 2017-03-14 18:40:46 Connector - Got connection.
+[DEBUG] 2017-03-14 18:40:46 SubjectDaoImpl - Executed query :select * from subjects where id=1
+[INFO ] 2017-03-14 18:40:46 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
+[DEBUG] 2017-03-14 18:40:46 Connector - Got connection.
+[DEBUG] 2017-03-14 18:40:46 TeacherDaoImpl - Executed query :select * from teachers where id=1
+[DEBUG] 2017-03-14 18:40:46 Connector - Got connection.
+[DEBUG] 2017-03-14 18:40:46 SubjectDaoImpl - Executed query :select * from subjects where id=0
+[INFO ] 2017-03-14 18:40:46 SubjectDaoImpl - Found the Subject :null
+[INFO ] 2017-03-14 18:40:46 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
+[INFO ] 2017-03-14 18:40:46 TimetableDao - Got 1 lessons for Student timetable for Day
+[INFO ] 2017-03-14 18:40:46 Timetable - Found 1 lessons for teacher:Student [id=2, name=null] and Date:Tue Jan 03 00:00:00 MSK 2017
+[DEBUG] 2017-03-14 18:47:50 LessonDaoImpl - Executed query :insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(56,'2018-08-05 00:00:00+03',1,2,3,1)
 RETURNING *
-[DEBUG] 2017-03-14 14:52:15 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:15 GroupDaoImpl - Executed query :select * from groups where id=2
-[DEBUG] 2017-03-14 14:52:15 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:15 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[DEBUG] 2017-03-14 14:52:15 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:15 StudentDaoImpl - Executed query :select * from students where id=2
-[INFO ] 2017-03-14 14:52:15 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[INFO ] 2017-03-14 14:52:15 GroupDaoImpl - Found 1 Students by Group id=2
-[INFO ] 2017-03-14 14:52:15 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:16 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:16 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[INFO ] 2017-03-14 14:52:16 LessonDaoImpl - Created a lesson :Lesson [id=94, number=56]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 LessonDaoImpl - Executed query :select * from lessons limit 10
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 GroupDaoImpl - Executed query :select * from groups where id=1
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=1
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 StudentDaoImpl - Executed query :select * from students where id=3
-[INFO ] 2017-03-14 14:52:16 StudentDaoImpl - Found the Student :Student [id=3, name=Dasha                                                                           ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 StudentDaoImpl - Executed query :select * from students where id=4
-[INFO ] 2017-03-14 14:52:16 StudentDaoImpl - Found the Student :Student [id=4, name=Masha                                                                           ]
-[INFO ] 2017-03-14 14:52:16 GroupDaoImpl - Found 2 Students by Group id=1
-[INFO ] 2017-03-14 14:52:16 GroupDaoImpl - Found the Group :Group [id=1, name=36b                                                                             ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:16 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=4
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :Subject [id=4, name=english                                                                         ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 TeacherDaoImpl - Executed query :select * from teachers where id=9
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:16 TeacherDaoImpl - Found the Teacher :Teacher [id=9, name=olya                                                                            ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 GroupDaoImpl - Executed query :select * from groups where id=5
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=5
-[INFO ] 2017-03-14 14:52:16 GroupDaoImpl - Found 0 Students by Group id=5
-[INFO ] 2017-03-14 14:52:16 GroupDaoImpl - Found the Group :Group [id=5, name=04                                                                              ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 RoomDaoImpl - Executed query :select * from rooms where id=25
-[INFO ] 2017-03-14 14:52:16 RoomDaoImpl - Found the Room :Room [id=25, number=2                                                 ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 SubjectDaoImpl - Executed query :select * from subjects where id=5
-[INFO ] 2017-03-14 14:52:16 SubjectDaoImpl - Found the Subject :Subject [id=5, name=english                                                                         ]
-[DEBUG] 2017-03-14 14:52:16 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:16 TeacherDaoImpl - Executed query :select * from teachers where id=5
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:17 TeacherDaoImpl - Found the Teacher :Teacher [id=5, name=olya                                                                            ]
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select * from groups where id=2
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 StudentDaoImpl - Executed query :select * from students where id=2
-[INFO ] 2017-03-14 14:52:17 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[INFO ] 2017-03-14 14:52:17 GroupDaoImpl - Found 1 Students by Group id=2
-[INFO ] 2017-03-14 14:52:17 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:17 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:17 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select * from groups where id=2
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 StudentDaoImpl - Executed query :select * from students where id=2
-[INFO ] 2017-03-14 14:52:17 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[INFO ] 2017-03-14 14:52:17 GroupDaoImpl - Found 1 Students by Group id=2
-[INFO ] 2017-03-14 14:52:17 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:17 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:17 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:17 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select * from groups where id=2
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[DEBUG] 2017-03-14 14:52:17 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:17 StudentDaoImpl - Executed query :select * from students where id=2
-[INFO ] 2017-03-14 14:52:17 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found 1 Students by Group id=2
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:18 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:18 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 GroupDaoImpl - Executed query :select * from groups where id=2
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 StudentDaoImpl - Executed query :select * from students where id=2
-[INFO ] 2017-03-14 14:52:18 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found 1 Students by Group id=2
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:18 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:18 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 GroupDaoImpl - Executed query :select * from groups where id=2
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 StudentDaoImpl - Executed query :select * from students where id=2
-[INFO ] 2017-03-14 14:52:18 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found 1 Students by Group id=2
-[INFO ] 2017-03-14 14:52:18 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:18 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[DEBUG] 2017-03-14 14:52:18 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:18 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:18 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:18 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select * from groups where id=2
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 StudentDaoImpl - Executed query :select * from students where id=2
-[INFO ] 2017-03-14 14:52:19 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found 1 Students by Group id=2
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:19 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[INFO ] 2017-03-14 14:52:19 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:19 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:19 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select * from groups where id=2
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 StudentDaoImpl - Executed query :select * from students where id=2
-[INFO ] 2017-03-14 14:52:19 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found 1 Students by Group id=2
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:19 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[INFO ] 2017-03-14 14:52:19 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:19 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:19 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select * from groups where id=2
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=2
-[DEBUG] 2017-03-14 14:52:19 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:19 StudentDaoImpl - Executed query :select * from students where id=2
-[INFO ] 2017-03-14 14:52:19 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found 1 Students by Group id=2
-[INFO ] 2017-03-14 14:52:19 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
-[DEBUG] 2017-03-14 14:52:20 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:20 RoomDaoImpl - Executed query :select * from rooms where id=1
-[INFO ] 2017-03-14 14:52:20 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
-[DEBUG] 2017-03-14 14:52:20 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:20 SubjectDaoImpl - Executed query :select * from subjects where id=1
-[INFO ] 2017-03-14 14:52:20 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
-[DEBUG] 2017-03-14 14:52:20 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:20 TeacherDaoImpl - Executed query :select * from teachers where id=1
-[DEBUG] 2017-03-14 14:52:20 Connector - Got connection.
-[DEBUG] 2017-03-14 14:52:20 SubjectDaoImpl - Executed query :select * from subjects where id=0
-[INFO ] 2017-03-14 14:52:20 SubjectDaoImpl - Found the Subject :null
-[INFO ] 2017-03-14 14:52:20 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
-[INFO ] 2017-03-14 14:52:20 LessonDaoImpl - Got 10 lessons for teacher timetable for day
-[INFO ] 2017-03-14 14:52:20 Timetable - Found 10 lessons for teacher:Teacher [id=1, name=null] and Date:Sat Mar 11 00:00:00 MSK 2017
+[DEBUG] 2017-03-14 18:47:50 GroupDaoImpl - Executed query :select * from groups where id=3
+[DEBUG] 2017-03-14 18:47:50 GroupDaoImpl - Executed query :select student_id from groups_students where group_id=3
+[INFO ] 2017-03-14 18:47:50 GroupDaoImpl - Found 0 Students by Group id=3
+[INFO ] 2017-03-14 18:47:50 GroupDaoImpl - Found the Group :Group [id=3, name=02                                                                              ]
+[DEBUG] 2017-03-14 18:47:50 RoomDaoImpl - Executed query :select * from rooms where id=1
+[INFO ] 2017-03-14 18:47:50 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
+[DEBUG] 2017-03-14 18:47:50 SubjectDaoImpl - Executed query :select * from subjects where id=1
+[INFO ] 2017-03-14 18:47:50 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
+[DEBUG] 2017-03-14 18:47:50 TeacherDaoImpl - Executed query :select * from teachers where id=2
+[DEBUG] 2017-03-14 18:47:50 SubjectDaoImpl - Executed query :select * from subjects where id=0
+[INFO ] 2017-03-14 18:47:50 SubjectDaoImpl - Found the Subject :null
+[INFO ] 2017-03-14 18:47:50 TeacherDaoImpl - Found the Teacher :Teacher [id=2, name=natasha Chizhik                                                                 ]
+[INFO ] 2017-03-14 18:47:50 LessonDaoImpl - Created a lesson :Lesson [id=102, number=56]
+[DEBUG] 2017-03-14 18:47:50 LessonDaoImpl - Executed query :select * from lessons where id=1
+[INFO ] 2017-03-14 18:47:50 LessonDaoImpl - Found the lesson :null
+[DEBUG] 2017-03-14 18:47:50 LessonDaoImpl - Executed query :update lessons set number=56,date='2018-08-05 00:00:00+03',subject_id=1,teacher_id=2,group_id=3,room_id=1 where id =0
+RETURNING *
+[INFO ] 2017-03-14 18:47:50 LessonDaoImpl - Updated Lesson :Lesson [id=0, number=56]
+[DEBUG] 2017-03-14 18:48:59 LessonDaoImpl - Executed query :delete from lessons where id =102
+[INFO ] 2017-03-14 18:48:59 LessonDaoImpl - Deleted Lesson with id=102

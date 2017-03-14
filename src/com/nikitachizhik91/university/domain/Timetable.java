@@ -90,7 +90,7 @@ public class Timetable {
 
 		try {
 			log.trace("Finding required lessons.");
-			lessons = timetableDao.getTeacherTimetableForDay(teacher, date);
+			lessons = timetableDao.getTeacherTimetableForMonth(teacher, date);
 		} catch (DaoException e) {
 			log.error("Cannot getTeacherTimetableForMonth() ffor Teacher :" + teacher + " and Date :" + date, e);
 			throw new DomainException("Cannot getTeacherTimetableForMonth() for Teacher :" + teacher + " and Date :"

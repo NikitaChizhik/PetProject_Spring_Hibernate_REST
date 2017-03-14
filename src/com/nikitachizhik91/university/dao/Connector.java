@@ -32,13 +32,10 @@ public class Connector {
 		try {
 			connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 		} catch (SQLException e) {
-			log.error("Cannot get connection with DB_URL=" + DB_URL + " and USER=" + USER + " and PASSWORD=" + PASSWORD,
-					e);
-			throw new DaoException(
-					"Cannot get connection with DB_URL=" + DB_URL + " and USER=" + USER + " and PASSWORD=" + PASSWORD,
-					e);
+			log.error("Cannot get connection", e);
+			throw new DaoException("Cannot get connection", e);
 		}
-		log.debug("Got connection.");
+		log.trace("Got connection.");
 		log.trace("Finished getConnection().");
 
 		return connection;

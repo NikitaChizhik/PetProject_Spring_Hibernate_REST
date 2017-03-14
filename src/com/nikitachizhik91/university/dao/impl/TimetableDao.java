@@ -30,8 +30,8 @@ public class TimetableDao {
 	private Connector connector;
 	private static final String GET_TEACHER_TIMETABLE_FOR_DAY = "select * from lessons where teacher_id=? and date between ? and ?";
 	private static final String GET_TEACHER_TIMETABLE_FOR_MONTH = "select * from lessons where teacher_id=? and date between ? and ?";
-	private static final String GET_STUDENT_TIMETABLE_FOR_DAY = "select * from lessons where student_id=? and date between ? and ?";
-	private static final String GET_STUDENT_TIMETABLE_FOR_MONTH = "select * from lessons where student_id=? and date between ? and ?";
+	private static final String GET_STUDENT_TIMETABLE_FOR_DAY = "select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?";
+	private static final String GET_STUDENT_TIMETABLE_FOR_MONTH = "select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?";
 	private GroupDao groupDao;
 	private RoomDao roomDao;
 	private SubjectDao subjectDao;
@@ -117,7 +117,7 @@ public class TimetableDao {
 
 			GregorianCalendar gregorianCalendar = new GregorianCalendar();
 			gregorianCalendar.setTime(date);
-			gregorianCalendar.set(Calendar.DAY_OF_MONTH, 00);
+			gregorianCalendar.set(Calendar.DAY_OF_MONTH, 01);
 			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
 			gregorianCalendar.set(Calendar.MINUTE, 00);
 			gregorianCalendar.set(Calendar.SECOND, 00);
@@ -235,7 +235,7 @@ public class TimetableDao {
 
 			GregorianCalendar gregorianCalendar = new GregorianCalendar();
 			gregorianCalendar.setTime(date);
-			gregorianCalendar.set(Calendar.DAY_OF_MONTH, 00);
+			gregorianCalendar.set(Calendar.DAY_OF_MONTH, 01);
 			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
 			gregorianCalendar.set(Calendar.MINUTE, 00);
 			gregorianCalendar.set(Calendar.SECOND, 00);

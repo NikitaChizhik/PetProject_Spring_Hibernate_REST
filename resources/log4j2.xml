@@ -21,7 +21,7 @@
 				<SizeBasedTriggeringPolicy size="5 MB" />
 			</Policies>
 		</RollingFile>
-		
+
 		<RollingFile name="TRACE" fileName="${log-path}/TRACE.log"
 			filePattern="${log-path}/analytics-%d{yyyy-MM-dd}.log">
 			<PatternLayout>
@@ -32,7 +32,7 @@
 					modulate="true" />
 			</Policies>
 		</RollingFile>
-		
+
 		<RollingFile name="DEBUG" fileName="${log-path}/DEBUG.log"
 			filePattern="${log-path}/analytics-%d{yyyy-MM-dd}.log">
 			<PatternLayout>
