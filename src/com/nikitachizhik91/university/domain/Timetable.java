@@ -1,14 +1,15 @@
 package com.nikitachizhik91.university.domain;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.nikitachizhik91.university.dao.DaoException;
+import com.nikitachizhik91.university.dao.LessonDao;
 import com.nikitachizhik91.university.dao.impl.LessonDaoImpl;
+import com.nikitachizhik91.university.dao.impl.TimetableDao;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
@@ -17,142 +18,136 @@ import com.nikitachizhik91.university.model.Teacher;
  * @author nikita
  *
  */
+
 public class Timetable {
 	private final static Logger log = LogManager.getLogger(Timetable.class.getName());
+	private LessonDao lessonDao;
+	private TimetableDao timetableDao;
 
-	public void addLesson(Lesson lesson) throws DaoException {
+	public Timetable() {
+		lessonDao = new LessonDaoImpl();
+		timetableDao = new TimetableDao();
+	}
+
+	public void addLesson(Lesson lesson) throws DomainException {
 		log.trace("Started addLesson().");
-		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
-		log.trace("Creating the lesson in database.");
-		lessonDAOImpl.create(lesson);
-		log.debug("Created the lesson in database.");
+
+		try {
+			log.trace("Saving the lesson.");
+			lessonDao.create(lesson);
+		} catch (DaoException e) {
+			log.error("Cannot add lesson." + lesson, e);
+			throw new DomainException("Cannot add lesson.", e);
+		}
+
 		log.trace("Finished addLesson().");
 	}
 
-	public void deleteLesson(Lesson lesson) {
-		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
-		lessonDAOImpl.delete(lesson.getId());
+	public void deleteLesson(Lesson lesson) throws DomainException {
+		log.trace("Started deleteLesson().");
+		try {
+			log.trace("Deleting the lesson.");
+			lessonDao.delete(lesson.getId());
+		} catch (DaoException e) {
+			log.error("Cannot delete lesson." + lesson, e);
+			throw new DomainException("Cannot delete lesson.", e);
+		}
+
+		log.trace("Finished deleteLesson().");
 	}
 
-	public List<Lesson> getTeachersTimetableForDay(Teacher teacher, Date date) {
+	public List<Lesson> getTeacherTimetableForDay(Teacher teacher, Date date) throws DomainException {
 		log.trace("Started getTeachersTimetableForDay().");
 		if (teacher == null || date == null) {
 			log.error("Teacher or date == null");
 			throw new IllegalArgumentException("Teacher or Date == null");
 		}
-		log.trace("Finding all lessons.");
-		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
+
 		List<Lesson> lessons = null;
+
 		try {
-			lessons = lessonDAOImpl.findAll();
+			log.trace("Finding required lessons.");
+			lessons = timetableDao.getTeacherTimetableForDay(teacher, date);
 		} catch (DaoException e) {
-			log.error("Cannot find all lessons.");
-		}
-		log.debug("Found all existing lessons.");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
-		List<Lesson> timetable = new ArrayList<Lesson>();
-		log.trace("Finding required lessons.");
-		for (Lesson lesson : lessons) {
-			log.trace("Checking whether the lesson :" + lesson + "is matching.");
-			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-					&& lesson.getTeacher().equals(teacher)) {
-				log.trace("Lesson" + lesson + " is matching." + "adding lesson :" + lesson);
-				log.trace("Adding lesson :" + lesson);
-				timetable.add(lesson);
-				log.trace("Added lesson :" + lesson);
-			}
+			log.error("Cannot getTeacherTimetableForDay() ffor Teacher :" + teacher + " and Date :" + date, e);
+			throw new DomainException("Cannot getTeacherTimetableForDay() for Teacher :" + teacher + " and Date :"
+					+ date, e);
 		}
 
-		log.info("Found required lessons for teacher:" + teacher + " and Date:" + date);
-		log.debug("Returns required lessons for teacher:" + teacher + " and Date:" + date);
-		log.trace("Lessons are :" + lessons);
+		log.info("Found " + lessons.size() + " lessons for teacher:" + teacher + " and Date:" + date);
 		log.trace("Finished getTeachersTimetableForDay().");
-		return timetable;
+		return lessons;
 	}
 
-	public List<Lesson> getTeachersTimetableForMonth(Teacher teacher, Date date) {
+	public List<Lesson> getTeacherTimetableForMonth(Teacher teacher, Date date) throws DomainException {
+		log.trace("Started getTeacherTimetableForMonth().");
 		if (teacher == null || date == null) {
-			throw new IllegalArgumentException();
+			log.error("Teacher or date == null");
+			throw new IllegalArgumentException("Teacher or Date == null");
 		}
 
-		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		List<Lesson> lessons = null;
+
 		try {
-			lessons = lessonDAOImpl.findAll();
+			log.trace("Finding required lessons.");
+			lessons = timetableDao.getTeacherTimetableForDay(teacher, date);
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Cannot getTeacherTimetableForMonth() ffor Teacher :" + teacher + " and Date :" + date, e);
+			throw new DomainException("Cannot getTeacherTimetableForMonth() for Teacher :" + teacher + " and Date :"
+					+ date, e);
 		}
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
-		List<Lesson> timetable = new ArrayList<Lesson>();
+		log.info("Found " + lessons.size() + " lessons for teacher:" + teacher + " and Date:" + date);
+		log.trace("Finished getTeacherTimetableForMonth().");
 
-		for (Lesson lesson : lessons) {
-
-			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-					&& lesson.getTeacher().equals(teacher)) {
-				timetable.add(lesson);
-			}
-		}
-		return timetable;
+		return lessons;
 	}
 
-	public List<Lesson> getStudentsTimetableForDay(Student student, Date date) {
+	public List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DomainException {
+		log.trace("Started getStudentTimetableForDay().");
 		if (student == null || date == null) {
-			throw new IllegalArgumentException();
+			log.error("Teacher or date == null");
+			throw new IllegalArgumentException("Teacher or Date == null");
 		}
+		log.trace("Finding all lessons.");
 
-		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		List<Lesson> lessons = null;
+
 		try {
-			lessons = lessonDAOImpl.findAll();
+			log.trace("Finding required lessons.");
+			lessons = timetableDao.getStudentTimetableForDay(student, date);
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Cannot getStudentTimetableForDay() ffor Teacher :" + student + " and Date :" + date, e);
+			throw new DomainException("Cannot getStudentTimetableForDay() for Teacher :" + student + " and Date :"
+					+ date, e);
 		}
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy");
-		List<Lesson> timetable = new ArrayList<Lesson>();
-
-		for (Lesson lesson : lessons) {
-
-			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-					&& lesson.getGroup().getStudents().contains(student)) {
-
-				timetable.add(lesson);
-
-			}
-		}
-		return timetable;
+		log.info("Found " + lessons.size() + " lessons for teacher:" + student + " and Date:" + date);
+		log.trace("Finished getStudentTimetableForDay().");
+		return lessons;
 	}
 
-	public List<Lesson> getStudentsTimetableFoMonth(Student student, Date date) {
+	public List<Lesson> getStudentTimetableFoMonth(Student student, Date date) throws DomainException {
+		log.trace("Started getStudentTimetableFoMonth().");
 		if (student == null || date == null) {
-			throw new IllegalArgumentException();
+			log.error("Teacher or date == null");
+			throw new IllegalArgumentException("Teacher or Date == null");
 		}
+		log.trace("Finding all lessons.");
 
-		LessonDaoImpl lessonDAOImpl = new LessonDaoImpl();
 		List<Lesson> lessons = null;
+
 		try {
-			lessons = lessonDAOImpl.findAll();
+			log.trace("Finding required lessons.");
+			lessons = timetableDao.getStudentTimetableFoMonth(student, date);
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Cannot getStudentTimetableFoMonth() ffor Teacher :" + student + " and Date :" + date, e);
+			throw new DomainException("Cannot getStudentTimetableFoMonth() for Teacher :" + student + " and Date :"
+					+ date, e);
 		}
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("M-yyyy");
-		List<Lesson> timetable = new ArrayList<Lesson>();
-
-		for (Lesson lesson : lessons) {
-
-			if (dateFormat.format(date).equals(dateFormat.format(lesson.getDate()))
-					&& lesson.getGroup().getStudents().contains(student)) {
-
-				timetable.add(lesson);
-
-			}
-		}
-		return timetable;
+		log.info("Found " + lessons.size() + " lessons for teacher:" + student + " and Date:" + date);
+		log.trace("Finished getStudentTimetableFoMonth().");
+		return lessons;
 	}
-
 }
