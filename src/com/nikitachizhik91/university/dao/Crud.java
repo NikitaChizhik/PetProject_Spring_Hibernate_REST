@@ -3,14 +3,14 @@ package com.nikitachizhik91.university.dao;
 import java.util.List;
 
 public interface Crud<T> {
-	T create(T entity) ;
+	T create(T entity) throws DaoException;
 
-	T findById(int id);
+	T findById(int id) throws DaoException;
 
-	List<T> findAll();
+	List<T> findAll() throws DaoException;
 
-	T update(T entity);
+	T update(T entity) throws DaoException;
 
-	void delete(int id);
+	void delete(int id) throws DaoException;
 
 }

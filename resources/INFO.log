@@ -1,0 +1,19 @@
+[INFO ] 2017-03-14 18:40:45 StudentDaoImpl - Found the Student :Student [id=2, name=Nikita                                                                          ]
+[INFO ] 2017-03-14 18:40:45 GroupDaoImpl - Found 1 Students by Group id=2
+[INFO ] 2017-03-14 18:40:45 GroupDaoImpl - Found the Group :Group [id=2, name=01                                                                              ]
+[INFO ] 2017-03-14 18:40:45 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
+[INFO ] 2017-03-14 18:40:46 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
+[INFO ] 2017-03-14 18:40:46 SubjectDaoImpl - Found the Subject :null
+[INFO ] 2017-03-14 18:40:46 TeacherDaoImpl - Found the Teacher :Teacher [id=1, name=Nikita Chizik Valerievich                                                       ]
+[INFO ] 2017-03-14 18:40:46 TimetableDao - Got 1 lessons for Student timetable for Day
+[INFO ] 2017-03-14 18:40:46 Timetable - Found 1 lessons for teacher:Student [id=2, name=null] and Date:Tue Jan 03 00:00:00 MSK 2017
+[INFO ] 2017-03-14 18:47:50 GroupDaoImpl - Found 0 Students by Group id=3
+[INFO ] 2017-03-14 18:47:50 GroupDaoImpl - Found the Group :Group [id=3, name=02                                                                              ]
+[INFO ] 2017-03-14 18:47:50 RoomDaoImpl - Found the Room :Room [id=1, number=1                                                 ]
+[INFO ] 2017-03-14 18:47:50 SubjectDaoImpl - Found the Subject :Subject [id=1, name=Speaking                                                                        ]
+[INFO ] 2017-03-14 18:47:50 SubjectDaoImpl - Found the Subject :null
+[INFO ] 2017-03-14 18:47:50 TeacherDaoImpl - Found the Teacher :Teacher [id=2, name=natasha Chizhik                                                                 ]
+[INFO ] 2017-03-14 18:47:50 LessonDaoImpl - Created a lesson :Lesson [id=102, number=56]
+[INFO ] 2017-03-14 18:47:50 LessonDaoImpl - Found the lesson :null
+[INFO ] 2017-03-14 18:47:50 LessonDaoImpl - Updated Lesson :Lesson [id=0, number=56]
+[INFO ] 2017-03-14 18:48:59 LessonDaoImpl - Deleted Lesson with id=102

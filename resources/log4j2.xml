@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+	<Properties>
+		<Property name="log-path">D:\1nikita\installs\REPOSITORY\Task9DomainLayer\resources
+		</Property>
+	</Properties>
+	<Appenders>
+
+
+		<!-- file appender -->
+		<RollingFile name="INFO" fileName="${log-path}/INFO.log"
+			filePattern="${log-path}/commons-%d{yyyy-MM-dd}.log">
+			<!-- log pattern -->
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+			</PatternLayout>
+
+			<!-- set file size policy -->
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5 MB" />
+			</Policies>
+		</RollingFile>
+
+		<RollingFile name="TRACE" fileName="${log-path}/TRACE.log"
+			filePattern="${log-path}/analytics-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+
+		<RollingFile name="DEBUG" fileName="${log-path}/DEBUG.log"
+			filePattern="${log-path}/analytics-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+
+
+	<Loggers>
+		<Logger name="com.nikitachizhik91" level="trace" additivity="false">
+			<appender-ref ref="INFO" level="info" />
+			<appender-ref ref="TRACE" level="trace" />
+			<appender-ref ref="DEBUG" level="debug" />
+		</Logger>
+
+		<Root level="trace" additivity="false">
+			<AppenderRef ref="INFO" />
+		</Root>
+	</Loggers>
+</Configuration>                

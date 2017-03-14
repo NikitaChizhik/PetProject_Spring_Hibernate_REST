@@ -8,20 +8,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.nikitachizhik91.university.dao.Connector;
+import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Student;
 
 public class GroupDaoImpl implements GroupDao {
-
+	private final static Logger log = LogManager.getLogger(GroupDaoImpl.class.getName());
 	private Connector connector;
 	private static final String INSERT_GROUP = "insert into groups (name) values(?)";
 	private static final String FIND_GROUP_BY_ID = "select * from groups where id=?";
 	private static final String FIND_ALL_GROUPS = "select * from groups";
 	private static final String UPDATE_GROUP = "update groups set name=? where id =?";
 	private static final String DELETE_GROUP = "delete from groups where id =?";
+
 	private static final String INSERT_STUDENT = "insert into groups_students (group_id,student_id) values (?,?)";
 	private static final String FIND_STUDENTS_BY_GROUP_ID = "select student_id from groups_students where group_id=?";
 	private static final String DELETE_ALL_STUDENTS_FROM_GROUP = "delete from groups_students where group_id=?";
@@ -31,17 +36,23 @@ public class GroupDaoImpl implements GroupDao {
 		connector = new Connector();
 	}
 
-	public Group create(Group groupArg) {
+	public Group create(Group groupArg) throws DaoException {
+		log.trace("Started create() method.");
 		Group group = null;
 
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement(INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, groupArg.getName());
+			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
+			log.debug("Executed query :" + statement);
 
+			log.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
+				log.trace("Got the result set.");
 				while (resultSet.next()) {
 					group = new Group();
 					group.setId(resultSet.getInt("id"));
@@ -49,21 +60,32 @@ public class GroupDaoImpl implements GroupDao {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("Cannot create Group :" + groupArg, e);
+			throw new DaoException("Cannot create Group :", e);
 
 		}
+		log.info("Created a Group :" + groupArg);
+		log.trace("Finished create() method.");
 		return group;
 	}
 
-	public Group findById(int id) {
+	public Group findById(int id) throws DaoException {
+		log.trace("Started findById() method.");
 
 		Group group = null;
+
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_GROUP_BY_ID)) {
 
 			statement.setInt(1, id);
 
+			log.trace("Statement :" + statement + " is received.");
+			log.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.executeQuery()) {
+				log.debug("Executed query :" + statement);
+				log.trace("Got the result set.");
+
 				if (resultSet.next()) {
 					group = new Group();
 					int groupId = resultSet.getInt("id");
@@ -73,21 +95,29 @@ public class GroupDaoImpl implements GroupDao {
 				}
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			log.error("Cannot find Group with id=" + id, e);
+			throw new DaoException("Cannot find Group with id=" + id, e);
 		}
+		log.info("Found the Group :" + group);
+		log.trace("Finished findById() method.");
 		return group;
 	}
 
-	public List<Group> findAll() {
+	public List<Group> findAll() throws DaoException {
+		log.trace("Started findAll() method.");
 
 		List<Group> groups = new ArrayList<Group>();
-		Group group = null;
+
+		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_GROUPS);
 				ResultSet resultSet = statement.executeQuery();) {
 
+			log.debug("Executed query :" + statement);
+			log.trace("Got the result set.");
+
 			while (resultSet.next()) {
-				group = new Group();
+				Group group = new Group();
 				int groupId = resultSet.getInt("id");
 				group.setId(groupId);
 				group.setName(resultSet.getString("name"));
@@ -95,23 +125,35 @@ public class GroupDaoImpl implements GroupDao {
 				groups.add(group);
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			log.error("Cannot find all groups.", e);
+			throw new DaoException("Cannot find all groups.", e);
 		}
+		log.info("Found all groups :");
+		log.trace("Finished findAll() method.");
 		return groups;
 	}
 
-	public Group update(Group groupArg) {
+	public Group update(Group groupArg) throws DaoException {
+		log.trace("Started update() method.");
 
 		Group group = null;
+
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement(UPDATE_GROUP, Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, groupArg.getName());
 			statement.setInt(2, groupArg.getId());
-			statement.executeUpdate();
 
+			log.trace("Statement :" + statement + " is received.");
+			statement.executeUpdate();
+			log.debug("Executed query :" + statement);
+
+			log.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
+				log.trace("Got the result set.");
+
 				while (resultSet.next()) {
 					group = new Group();
 					int groupIdReceived = resultSet.getInt("id");
@@ -122,42 +164,57 @@ public class GroupDaoImpl implements GroupDao {
 			}
 
 		} catch (SQLException e) {
-			e.getMessage();
+			log.error("Cannot update Group :" + groupArg, e);
+			throw new DaoException("Cannot update Group :" + groupArg, e);
 		}
+		log.info("Updated Group :" + groupArg);
+		log.trace("Finished update() method.");
 		return group;
 	}
 
-	public void delete(int id) {
-
+	public void delete(int id) throws DaoException {
+		log.trace("Started delete() method.");
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_GROUP);) {
 
 			statement.setInt(1, id);
 
+			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
+			log.debug("Executed query :" + statement);
 
 		} catch (SQLException e) {
-			e.getMessage();
+			log.error("Cannot delete Group with id=" + id, e);
+			throw new DaoException("Cannot delete Group with id=" + id, e);
 		}
+		log.info("Deleted Group with id=" + id);
+		log.trace("Finished delete() method.");
 	}
 
-	public void addStudent(int studentId, int groupId) {
-
+	public void addStudent(int studentId, int groupId) throws DaoException {
+		log.trace("Started addStudent() method.");
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT);) {
 
 			statement.setInt(1, groupId);
 			statement.setInt(2, studentId);
+			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
+			log.debug("Executed query :" + statement);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("Cannot add Student with id=" + studentId, e);
+			throw new DaoException("Cannot add Student with id=" + studentId, e);
 		}
-
+		log.info("Added Student with id=" + studentId + " to the group with id=" + groupId);
+		log.trace("Finished addStudent() method.");
 	}
 
-	public List<Student> findStudentsByGroupId(int groupId) {
-
+	public List<Student> findStudentsByGroupId(int groupId) throws DaoException {
+		log.trace("Started findStudentsByGroupId() method.");
+		log.trace("Getting Conncetion and creating prepared statement.");
 		List<Student> students = new ArrayList<Student>();
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_STUDENTS_BY_GROUP_ID)) {
@@ -165,7 +222,12 @@ public class GroupDaoImpl implements GroupDao {
 			statement.setInt(1, groupId);
 			StudentDao studentDao = new StudentDaoImpl();
 
+			log.trace("Statement :" + statement + " is received.");
+			log.trace("Getting the result set.");
 			try (ResultSet resultSet = statement.executeQuery();) {
+				log.debug("Executed query :" + statement);
+				log.trace("Got the result set.");
+
 				while (resultSet.next()) {
 
 					students.add(studentDao.findById(resultSet.getInt("student_id")));
@@ -173,34 +235,53 @@ public class GroupDaoImpl implements GroupDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("Cannot find Students by Group id=" + groupId, e);
+			throw new DaoException("Cannot find Students by Group id=" + groupId, e);
 		}
+		log.info("Found " + students.size() + " Students by Group id=" + groupId);
+		log.trace("Finished findStudentsByGroupId() method.");
+
 		return students;
 	}
 
-	public void deleteAllStudentsFromGroup(int groupId) {
-
+	public void deleteAllStudentsFromGroup(int groupId) throws DaoException {
+		log.trace("Started deleteAllStudentsFromGroup() method.");
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_STUDENTS_FROM_GROUP);) {
 
 			statement.setInt(1, groupId);
+
+			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
+			log.debug("Executed query :" + statement);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("Cannot delete all students from Group with id=" + groupId, e);
+			throw new DaoException("Cannot delete all students from Group with id=" + groupId, e);
 		}
+		log.info("Deleted all students from Group with id=" + groupId);
+		log.trace("Finished deleteAllStudentsFromGroup() method.");
 	}
 
-	public void deleteStudentFromGroup(int studentId) {
-
+	public void deleteStudentFromGroup(int studentId) throws DaoException {
+		log.trace("Started deleteStudentFromGroup() method.");
+		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_STUDENT_FROM_GROUP);) {
+				PreparedStatement statement = connection.prepareStatement(DELETE_GROUP);) {
 
 			statement.setInt(1, studentId);
+
+			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
+			log.debug("Executed query :" + statement);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("Cannot delete Student with id=" + studentId, e);
+			throw new DaoException("Cannot delete Student with id=" + studentId, e);
 		}
+		log.info("Deleted Student with id=" + studentId);
+		log.trace("Finished deleteStudentFromGroup() method.");
+
 	}
 }
