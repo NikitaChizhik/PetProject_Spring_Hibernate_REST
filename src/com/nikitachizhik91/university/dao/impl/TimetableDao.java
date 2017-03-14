@@ -25,7 +25,7 @@ import com.nikitachizhik91.university.model.Teacher;
 public class TimetableDao {
 	private Connector connector;
 	private final static Logger log = LogManager.getLogger(LessonDaoImpl.class.getName());
-	private static final String GET_TEACHER_TIMETABLE_FOR_DAY = "write SQL query!!";
+	private static final String GET_TEACHER_TIMETABLE_FOR_DAY = "select * from lessons limit 10;";
 	private static final String GET_TEACHER_TIMETABLE_FOR_MONTH = null;
 	private static final String GET_STUDENT_TIMETABLE_FOR_DAY = null;
 	private static final String GET_STUDENT_TIMETABLE_FOR_MONTH = null;
