@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,19 +26,17 @@ import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
 
 public class TimetableDao {
+	private final static Logger log = LogManager.getLogger(TimetableDao.class.getName());
 	private Connector connector;
-	private final static Logger log = LogManager.getLogger(LessonDaoImpl.class.getName());
-	private static final String GET_TEACHER_TIMETABLE_FOR_DAY = "select * from lessons limit 10;";
-	private static final String GET_TEACHER_TIMETABLE_FOR_MONTH = null;
-	private static final String GET_STUDENT_TIMETABLE_FOR_DAY = null;
-	private static final String GET_STUDENT_TIMETABLE_FOR_MONTH = null;
+	private static final String GET_TEACHER_TIMETABLE_FOR_DAY = "select * from lessons where teacher_id=? and date between ? and ?";
+	private static final String GET_TEACHER_TIMETABLE_FOR_MONTH = "select * from lessons where teacher_id=? and date between ? and ?";
+	private static final String GET_STUDENT_TIMETABLE_FOR_DAY = "select * from lessons where student_id=? and date between ? and ?";
+	private static final String GET_STUDENT_TIMETABLE_FOR_MONTH = "select * from lessons where student_id=? and date between ? and ?";
 	private GroupDao groupDao;
 	private RoomDao roomDao;
 	private SubjectDao subjectDao;
 	private TeacherDao teacherDao;
 
-	// TODO "write SQL query for getTeacherTimetableForDay" + u menya est
-	// zagotovka;
 	public TimetableDao() {
 		connector = new Connector();
 
@@ -53,29 +54,46 @@ public class TimetableDao {
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(GET_TEACHER_TIMETABLE_FOR_DAY);
-				ResultSet resultSet = statement.executeQuery();) {
+				PreparedStatement statement = connection.prepareStatement(GET_TEACHER_TIMETABLE_FOR_DAY);) {
 
-			log.debug("Executed query :" + statement);
-			log.trace("Got the result set.");
+			statement.setInt(1, teacher.getId());
 
-			while (resultSet.next()) {
+			GregorianCalendar gregorianCalendar = new GregorianCalendar();
+			gregorianCalendar.setTime(date);
+			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
+			gregorianCalendar.set(Calendar.MINUTE, 00);
+			gregorianCalendar.set(Calendar.SECOND, 00);
+			Timestamp startDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			statement.setTimestamp(2, startDate);
 
-				Lesson lesson = new Lesson();
-				lesson.setId(resultSet.getInt("id"));
-				lesson.setNumber(resultSet.getInt("number"));
+			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 23);
+			gregorianCalendar.set(Calendar.MINUTE, 59);
+			gregorianCalendar.set(Calendar.SECOND, 59);
+			Timestamp endDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			statement.setTimestamp(3, endDate);
 
-				lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
+			try (ResultSet resultSet = statement.executeQuery();) {
+				log.debug("Executed query :" + statement);
+				log.trace("Got the result set.");
 
-				lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
+				while (resultSet.next()) {
 
-				lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+					Lesson lesson = new Lesson();
+					lesson.setId(resultSet.getInt("id"));
+					lesson.setNumber(resultSet.getInt("number"));
 
-				lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+					lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
 
-				lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+					lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-				lessons.add(lesson);
+					lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+
+					lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+
+					lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+
+					lessons.add(lesson);
+				}
 			}
 		} catch (SQLException e) {
 			log.error("Cannot get lessons for teacher timetable for day.", e);
@@ -93,29 +111,49 @@ public class TimetableDao {
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(GET_TEACHER_TIMETABLE_FOR_MONTH);
-				ResultSet resultSet = statement.executeQuery();) {
+				PreparedStatement statement = connection.prepareStatement(GET_TEACHER_TIMETABLE_FOR_MONTH);) {
 
-			log.debug("Executed query :" + statement);
-			log.trace("Got the result set.");
+			statement.setInt(1, teacher.getId());
 
-			while (resultSet.next()) {
+			GregorianCalendar gregorianCalendar = new GregorianCalendar();
+			gregorianCalendar.setTime(date);
+			gregorianCalendar.set(Calendar.DAY_OF_MONTH, 00);
+			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
+			gregorianCalendar.set(Calendar.MINUTE, 00);
+			gregorianCalendar.set(Calendar.SECOND, 00);
+			Timestamp startDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			statement.setTimestamp(2, startDate);
 
-				Lesson lesson = new Lesson();
-				lesson.setId(resultSet.getInt("id"));
-				lesson.setNumber(resultSet.getInt("number"));
+			gregorianCalendar.set(Calendar.DAY_OF_MONTH,
+					gregorianCalendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 23);
+			gregorianCalendar.set(Calendar.MINUTE, 59);
+			gregorianCalendar.set(Calendar.SECOND, 59);
+			Timestamp endDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			statement.setTimestamp(3, endDate);
 
-				lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
+			try (ResultSet resultSet = statement.executeQuery()) {
+				log.debug("Executed query :" + statement);
+				log.trace("Got the result set.");
 
-				lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
+				while (resultSet.next()) {
 
-				lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+					Lesson lesson = new Lesson();
+					lesson.setId(resultSet.getInt("id"));
+					lesson.setNumber(resultSet.getInt("number"));
 
-				lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+					lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
 
-				lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+					lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-				lessons.add(lesson);
+					lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+
+					lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+
+					lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+
+					lessons.add(lesson);
+				}
 			}
 		} catch (SQLException e) {
 			log.error("Cannot get lessons for teacher timetable for Month.", e);
@@ -134,29 +172,46 @@ public class TimetableDao {
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(GET_STUDENT_TIMETABLE_FOR_DAY);
-				ResultSet resultSet = statement.executeQuery();) {
+				PreparedStatement statement = connection.prepareStatement(GET_STUDENT_TIMETABLE_FOR_DAY);) {
 
-			log.debug("Executed query :" + statement);
-			log.trace("Got the result set.");
+			statement.setInt(1, student.getId());
 
-			while (resultSet.next()) {
+			GregorianCalendar gregorianCalendar = new GregorianCalendar();
+			gregorianCalendar.setTime(date);
+			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
+			gregorianCalendar.set(Calendar.MINUTE, 00);
+			gregorianCalendar.set(Calendar.SECOND, 00);
+			Timestamp startDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			statement.setTimestamp(2, startDate);
 
-				Lesson lesson = new Lesson();
-				lesson.setId(resultSet.getInt("id"));
-				lesson.setNumber(resultSet.getInt("number"));
+			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 23);
+			gregorianCalendar.set(Calendar.MINUTE, 59);
+			gregorianCalendar.set(Calendar.SECOND, 59);
+			Timestamp endDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			statement.setTimestamp(3, endDate);
 
-				lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
+			try (ResultSet resultSet = statement.executeQuery()) {
+				log.debug("Executed query :" + statement);
+				log.trace("Got the result set.");
 
-				lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
+				while (resultSet.next()) {
 
-				lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+					Lesson lesson = new Lesson();
+					lesson.setId(resultSet.getInt("id"));
+					lesson.setNumber(resultSet.getInt("number"));
 
-				lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+					lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
 
-				lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+					lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-				lessons.add(lesson);
+					lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+
+					lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+
+					lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+
+					lessons.add(lesson);
+				}
 			}
 		} catch (SQLException e) {
 			log.error("Cannot get lessons for Student timetable for Day.", e);
@@ -174,29 +229,49 @@ public class TimetableDao {
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(GET_STUDENT_TIMETABLE_FOR_MONTH);
-				ResultSet resultSet = statement.executeQuery();) {
+				PreparedStatement statement = connection.prepareStatement(GET_STUDENT_TIMETABLE_FOR_MONTH);) {
 
-			log.debug("Executed query :" + statement);
-			log.trace("Got the result set.");
+			statement.setInt(1, student.getId());
 
-			while (resultSet.next()) {
+			GregorianCalendar gregorianCalendar = new GregorianCalendar();
+			gregorianCalendar.setTime(date);
+			gregorianCalendar.set(Calendar.DAY_OF_MONTH, 00);
+			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
+			gregorianCalendar.set(Calendar.MINUTE, 00);
+			gregorianCalendar.set(Calendar.SECOND, 00);
+			Timestamp startDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			statement.setTimestamp(2, startDate);
 
-				Lesson lesson = new Lesson();
-				lesson.setId(resultSet.getInt("id"));
-				lesson.setNumber(resultSet.getInt("number"));
+			gregorianCalendar.set(Calendar.DAY_OF_MONTH,
+					gregorianCalendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 23);
+			gregorianCalendar.set(Calendar.MINUTE, 59);
+			gregorianCalendar.set(Calendar.SECOND, 59);
+			Timestamp endDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			statement.setTimestamp(3, endDate);
 
-				lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
+			try (ResultSet resultSet = statement.executeQuery()) {
+				log.debug("Executed query :" + statement);
+				log.trace("Got the result set.");
 
-				lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
+				while (resultSet.next()) {
 
-				lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+					Lesson lesson = new Lesson();
+					lesson.setId(resultSet.getInt("id"));
+					lesson.setNumber(resultSet.getInt("number"));
 
-				lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+					lesson.setDate(DateConverter.toDate(resultSet.getTimestamp("date")));
 
-				lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+					lesson.setGroup(groupDao.findById(resultSet.getInt("group_id")));
 
-				lessons.add(lesson);
+					lesson.setRoom(roomDao.findById(resultSet.getInt("room_id")));
+
+					lesson.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
+
+					lesson.setTeacher(teacherDao.findById(resultSet.getInt("teacher_id")));
+
+					lessons.add(lesson);
+				}
 			}
 		} catch (SQLException e) {
 			log.error("Cannot get lessons for Student timetable for Month.", e);
