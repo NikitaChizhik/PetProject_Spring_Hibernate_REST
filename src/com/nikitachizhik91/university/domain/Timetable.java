@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.LessonDao;
 import com.nikitachizhik91.university.dao.impl.LessonDaoImpl;
 import com.nikitachizhik91.university.dao.impl.TimetableDao;

@@ -13,13 +13,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.dao.Connector;
+import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.DateConverter;
 import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.dao.LessonDao;
 import com.nikitachizhik91.university.dao.RoomDao;
 import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.dao.TeacherDao;
-import com.nikitachizhik91.university.domain.DaoException;
 import com.nikitachizhik91.university.model.Lesson;
 
 public class LessonDaoImpl implements LessonDao {

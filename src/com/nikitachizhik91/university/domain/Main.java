@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.impl.LessonDaoImpl;
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Lesson;

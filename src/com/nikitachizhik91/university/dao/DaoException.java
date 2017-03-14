@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.domain;
+package com.nikitachizhik91.university.dao;
 
 public class DaoException extends Exception {
 

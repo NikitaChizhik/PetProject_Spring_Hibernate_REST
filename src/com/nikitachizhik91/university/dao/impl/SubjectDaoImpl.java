@@ -12,8 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.dao.Connector;
+import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.SubjectDao;
-import com.nikitachizhik91.university.domain.DaoException;
 import com.nikitachizhik91.university.model.Subject;
 
 public class SubjectDaoImpl implements SubjectDao {
