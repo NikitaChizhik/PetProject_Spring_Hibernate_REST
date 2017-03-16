@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
-<%@page import="java.util.Date"%>
 <%@page import="com.nikitachizhik91.university.dao.impl.StudentDaoImpl"%>
+<%@page import="com.nikitachizhik91.university.model.Student"%>
+
 <html>
 <head>
 <title>name of the site above</title>
@@ -9,18 +10,27 @@
 <body>
 	hello on the page.
 	<br>
-	<br> Today's date is:<%=new Date()%>
-	<!-- <%=new Date()%> -->
 	<br>
 	<%
-		out.print("print out");
-	%>
-	<br>
-	<%
+		int i = 1;
 		StudentDaoImpl studentDao = new StudentDaoImpl();
 	%>
 	<br> All students:
-	<%=studentDao.findAll()%>
+
+	<table border="2">
+		<%
+			for (Student student : studentDao.findAll()) {
+		%>
+		<tr>
+			<td>Student <%=i++%></td>
+			<td>name=<%=student.getName()%></td>
+			<td>id=<%=student.getId()%></td>
+		</tr>
+		<%
+			}
+		%>
+
+	</table>
 
 </body>
 </html>
