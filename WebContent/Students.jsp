@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<%@page import="com.nikitachizhik91.university.domain.StudentDomain"%>
 <%@page import="com.nikitachizhik91.university.dao.impl.StudentDaoImpl"%>
 <%@page import="com.nikitachizhik91.university.model.Student"%>
 
@@ -13,16 +14,16 @@
 	<br>
 	<%
 		int i = 1;
-		StudentDaoImpl studentDao = new StudentDaoImpl();
+		StudentDomain studentDomain = new StudentDomain();
 	%>
 	<br> All students:
 
 	<table border="2">
 		<%
-			for (Student student : studentDao.findAll()) {
+			for (Student student : studentDomain.findAll()) {
 		%>
 		<tr>
-			<td>Student <%=i++%></td>
+			<td>Student<%=i++%></td>
 			<td>name=<%=student.getName()%></td>
 			<td>id=<%=student.getId()%></td>
 		</tr>
