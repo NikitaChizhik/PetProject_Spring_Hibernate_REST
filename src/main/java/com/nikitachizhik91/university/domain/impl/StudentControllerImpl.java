@@ -9,14 +9,14 @@ import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.dao.impl.StudentDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.StudentBusiness;
+import com.nikitachizhik91.university.domain.StudentController;
 import com.nikitachizhik91.university.model.Student;
 
-public class StudentBusinessImpl implements StudentBusiness {
-	private final static Logger log = LogManager.getLogger(StudentBusinessImpl.class.getName());
+public class StudentControllerImpl implements StudentController {
+	private final static Logger log = LogManager.getLogger(StudentControllerImpl.class.getName());
 	private StudentDao studentDao;
 
-	public StudentBusinessImpl() {
+	public StudentControllerImpl() {
 		studentDao = new StudentDaoImpl();
 	}
 
@@ -37,14 +37,15 @@ public class StudentBusinessImpl implements StudentBusiness {
 		List<Student> students = null;
 		try {
 			log.trace("Finding all students");
-			
+
 			students = studentDao.findAll();
-			
+
 		} catch (DaoException e) {
 			log.error("Cannot find all students.", e);
 			throw new DomainException("Cannot find all students.", e);
 		}
 		log.trace("Finished findAll() method.");
+
 		return students;
 	}
 
