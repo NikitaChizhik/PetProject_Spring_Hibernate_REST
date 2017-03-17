@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nikitachizhik91.university.model.Student;
 
-public interface StudentController {
+public interface StudentManager {
 
 	public abstract Student create(Student entity) throws DomainException;
 

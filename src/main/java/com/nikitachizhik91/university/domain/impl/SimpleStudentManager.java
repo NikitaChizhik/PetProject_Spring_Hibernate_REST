@@ -9,14 +9,14 @@ import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.dao.impl.StudentDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.StudentController;
+import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.model.Student;
 
-public class StudentControllerImpl implements StudentController {
-	private final static Logger log = LogManager.getLogger(StudentControllerImpl.class.getName());
+public class SimpleStudentManager implements StudentManager {
+	private final static Logger log = LogManager.getLogger(SimpleStudentManager.class.getName());
 	private StudentDao studentDao;
 
-	public StudentControllerImpl() {
+	public SimpleStudentManager() {
 		studentDao = new StudentDaoImpl();
 	}
 

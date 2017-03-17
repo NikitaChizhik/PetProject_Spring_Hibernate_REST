@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 
-<%@page import="com.nikitachizhik91.university.domain.StudentController"%>
+<%@page import="com.nikitachizhik91.university.domain.StudentManager"%>
 <%@page
-	import="com.nikitachizhik91.university.domain.impl.StudentControllerImpl"%>
+	import="com.nikitachizhik91.university.domain.impl.SimpleStudentManager"%>
 <%@page import="com.nikitachizhik91.university.model.Student"%>
 
 <html>
@@ -15,14 +15,14 @@
 	<br>
 	<br>
 	<%
-		StudentController studentController = new StudentControllerImpl();
+		StudentManager studentManager = new SimpleStudentManager();
 	%>
 	<br> All students:
 
 	<table border="2">
 		<%
 			int i = 1;
-			for (Student student : studentController.findAll()) {
+			for (Student student : studentManager.findAll()) {
 		%>
 		<tr>
 			<td>Student<%=i++%></td>
