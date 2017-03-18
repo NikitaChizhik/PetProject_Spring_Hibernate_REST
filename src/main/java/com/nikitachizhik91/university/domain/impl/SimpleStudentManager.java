@@ -56,7 +56,6 @@ public class SimpleStudentManager implements StudentManager {
 
 	@Override
 	public void delete(int id) throws DomainException {
-
 	}
 
 }

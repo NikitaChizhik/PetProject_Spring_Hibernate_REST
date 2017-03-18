@@ -16,6 +16,8 @@ import com.nikitachizhik91.university.model.Teacher;
 public class Main {
 	public static void main(String[] args) throws DaoException, ParseException, DomainException {
 
+		
+		 
 		// LessonDaoImpl lessonDaoImpl = new LessonDaoImpl();
 		// Lesson lesson = new Lesson();
 		// Date date = new SimpleDateFormat("dd-MM-yyyy").parse("20-08-2017");
