@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 
-<%@page import="com.nikitachizhik91.university.domain.StudentManager"%>
 <%@page
 	import="com.nikitachizhik91.university.domain.impl.SimpleStudentManager"%>
 <%@page import="com.nikitachizhik91.university.model.Student"%>
@@ -11,11 +10,11 @@
 </head>
 
 <body>
-	hello on the page.
+
 	<br>
 	<br>
 	<%
-		StudentManager studentManager = new SimpleStudentManager();
+		SimpleStudentManager studentManager = new SimpleStudentManager();
 	%>
 	<br> All students:
 
@@ -25,9 +24,8 @@
 			for (Student student : studentManager.findAll()) {
 		%>
 		<tr>
-			<td>Student<%=i++%></td>
-			<td>name=<%=student.getName()%></td>
-			<td>id=<%=student.getId()%></td>
+			<td><%=i++%></td>
+			<td><%=student.getName()%></td>
 		</tr>
 		<%
 			}

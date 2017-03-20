@@ -10,7 +10,6 @@ import com.nikitachizhik91.university.dao.impl.DepartmentDaoImlp;
 import com.nikitachizhik91.university.domain.DepartmentManager;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.model.Department;
-import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
