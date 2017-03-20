@@ -19,6 +19,11 @@
 	<br> All students:
 
 	<table border="2">
+		<tr>
+			<td>Order</td>
+			<td>Name</td>
+
+		</tr>
 		<%
 			int i = 1;
 			for (Student student : studentManager.findAll()) {

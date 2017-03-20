@@ -1,3 +1,4 @@
+<%@page import="com.nikitachizhik91.university.model.Student"%>
 <%@page import="com.nikitachizhik91.university.model.Group"%>
 <%@page
 	import="com.nikitachizhik91.university.domain.impl.SimpleGroupManager"%>
@@ -9,10 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<h2>All Groups</h2>
 <body>
-	<br>
-
 	<%
 		SimpleGroupManager groupManager = new SimpleGroupManager();
 	%>
@@ -21,22 +19,24 @@
 		<tr>
 			<td>Order</td>
 			<td>Name</td>
-			<td>Ammount of students</td>
+
 		</tr>
 		<%
 			int i = 1;
-			for (Group group : groupManager.findAll()) {
+			Group group = groupManager.findAll().get(0);
+
+			for (Student student : group.getStudents()) {
 		%>
 		<tr>
 			<td><%=i++%></td>
-			<td><a href=http://localhost:8080 /<%=group.getName()%>.jsp><%=group.getName()%></a></td>
-
-			<td><%=group.getStudents().size()%></td>
+			<td><a href=http://localhost:8080/university
+				/<%=student.getName()%>.jsp><%=student.getName()%></a></td>
 		</tr>
+
 		<%
 			}
 		%>
-
 	</table>
+
 </body>
 </html>
