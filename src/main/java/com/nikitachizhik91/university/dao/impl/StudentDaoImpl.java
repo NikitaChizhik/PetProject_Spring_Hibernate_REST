@@ -70,7 +70,7 @@ public class StudentDaoImpl implements StudentDao {
 		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
 
-		PreparedStatement statement = connection.prepareStatement(FIND_STUDENT_BY_ID)) {
+				PreparedStatement statement = connection.prepareStatement(FIND_STUDENT_BY_ID)) {
 
 			statement.setInt(1, id);
 

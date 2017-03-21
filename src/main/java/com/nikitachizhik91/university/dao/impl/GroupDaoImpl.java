@@ -268,7 +268,7 @@ public class GroupDaoImpl implements GroupDao {
 		log.trace("Started deleteStudentFromGroup() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_GROUP);) {
+				PreparedStatement statement = connection.prepareStatement(DELETE_STUDENT_FROM_GROUP);) {
 
 			statement.setInt(1, studentId);
 

@@ -47,7 +47,7 @@
 
 
 	<Loggers>
-		<Logger name="com.nikitachizhik91" level="trace" additivity="false">
+		<Logger name="com.nikitachizhik91" level="fatal" additivity="false">
 			<appender-ref ref="INFO" level="info" />
 			<appender-ref ref="TRACE" level="trace" />
 			<appender-ref ref="DEBUG" level="debug" />
