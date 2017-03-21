@@ -1,4 +1,4 @@
-
+<%@page import="com.nikitachizhik91.university.model.Student"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,9 +18,11 @@
 		</tr>
 
 		<tr>
-			<td><%=request.getAttribute("Nikita")%></td>
+			<td><%=session.getAttribute("Nikita")%></td>
 			<td><%=request.getParameter("Dasha")%></td>
+			<td><%=pageContext.getAttribute("Nikita", PageContext.SESSION_SCOPE)%></td>
 		</tr>
+		<%=request.getContextPath()%>
 	</table>
 
 </body>

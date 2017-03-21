@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="http://localhost:8080/university/students.jsp">Students</a>
+	<a href="http://localhost:8080/university/students.jsp">students</a>
 	<br>
 	<br>
-	<a href="http://localhost:8080/university/groups.jsp">Groups</a>
+	<a href="http://localhost:8080/university/groups.jsp">groups</a>
 </body>
 </html> 

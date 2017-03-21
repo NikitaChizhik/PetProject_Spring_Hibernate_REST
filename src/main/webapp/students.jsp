@@ -32,8 +32,10 @@
 			<td><%=i++%></td>
 			<td><a href=<%=request.getContextPath() + "/student.jsp"%>><%=student.getName()%></a></td>
 			<%
-				request.setAttribute("" + student.getId(), student);
+				session.setAttribute("" + student.getName(), student);
+					pageContext.setAttribute("" + student.getName(), student, PageContext.SESSION_SCOPE);
 			%>
+
 		</tr>
 		<%
 			}
