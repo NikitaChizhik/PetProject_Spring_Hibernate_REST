@@ -13,11 +13,11 @@ import com.nikitachizhik91.university.domain.GroupManager;
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Student;
 
-public class SimpleGroupManager implements GroupManager {
-	private final static Logger log = LogManager.getLogger(SimpleGroupManager.class.getName());
+public class GroupManagerImpl implements GroupManager {
+	private final static Logger log = LogManager.getLogger(GroupManagerImpl.class.getName());
 	private GroupDao groupDao;
 
-	public SimpleGroupManager() {
+	public GroupManagerImpl() {
 		groupDao = new GroupDaoImpl();
 	}
 
@@ -28,7 +28,21 @@ public class SimpleGroupManager implements GroupManager {
 
 	@Override
 	public Group findById(int id) throws DomainException {
-		return null;
+		log.trace("Started findById() method.");
+
+		Group group = null;
+		try {
+			log.trace("Finding group by id.");
+
+			group = groupDao.findById(id);
+
+		} catch (DaoException e) {
+			log.error("Cannot group by id.", e);
+			throw new DomainException("Cannot group by id.", e);
+		}
+		log.trace("Finished findById() method.");
+
+		return group;
 	}
 
 	@Override

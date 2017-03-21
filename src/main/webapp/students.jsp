@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 
 <%@page
-	import="com.nikitachizhik91.university.domain.impl.SimpleStudentManager"%>
+	import="com.nikitachizhik91.university.domain.impl.StudentManagerImpl"%>
 <%@page import="com.nikitachizhik91.university.model.Student"%>
 
 <html>
@@ -14,7 +14,7 @@
 	<br>
 	<br>
 	<%
-		SimpleStudentManager studentManager = new SimpleStudentManager();
+		StudentManagerImpl studentManager = new StudentManagerImpl();
 	%>
 	<br> All students:
 
@@ -30,11 +30,7 @@
 		%>
 		<tr>
 			<td><%=i++%></td>
-			<td><a href=<%=request.getContextPath() + "/student.jsp"%>><%=student.getName()%></a></td>
-			<%
-				session.setAttribute("" + student.getName(), student);
-					pageContext.setAttribute("" + student.getName(), student, PageContext.SESSION_SCOPE);
-			%>
+			<td><a href="student.jsp?id=<%=student.getId()%>"><%=student.getName()%></a></td>
 
 		</tr>
 		<%

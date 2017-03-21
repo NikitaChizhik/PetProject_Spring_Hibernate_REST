@@ -12,11 +12,11 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.model.Student;
 
-public class SimpleStudentManager implements StudentManager {
-	private final static Logger log = LogManager.getLogger(SimpleStudentManager.class.getName());
+public class StudentManagerImpl implements StudentManager {
+	private final static Logger log = LogManager.getLogger(StudentManagerImpl.class.getName());
 	private StudentDao studentDao;
 
-	public SimpleStudentManager() {
+	public StudentManagerImpl() {
 		studentDao = new StudentDaoImpl();
 	}
 
@@ -27,7 +27,21 @@ public class SimpleStudentManager implements StudentManager {
 
 	@Override
 	public Student findById(int id) throws DomainException {
-		return null;
+		log.trace("Started findById() method.");
+
+		Student student = null;
+		try {
+			log.trace("Finding student by id.");
+
+			student = studentDao.findById(id);
+
+		} catch (DaoException e) {
+			log.error("Cannot find student by id.", e);
+			throw new DomainException("Cannot find student by id.", e);
+		}
+		log.trace("Finished findById() method.");
+
+		return student;
 	}
 
 	@Override

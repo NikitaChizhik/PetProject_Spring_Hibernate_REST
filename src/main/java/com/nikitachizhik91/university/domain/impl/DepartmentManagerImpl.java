@@ -13,11 +13,11 @@ import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
-public class SimpleDepartmentManager implements DepartmentManager {
-	private final static Logger log = LogManager.getLogger(SimpleDepartmentManager.class.getName());
+public class DepartmentManagerImpl implements DepartmentManager {
+	private final static Logger log = LogManager.getLogger(DepartmentManagerImpl.class.getName());
 	private DepartmentDaoImlp departmentDaoImpl;
 
-	public SimpleDepartmentManager() {
+	public DepartmentManagerImpl() {
 		departmentDaoImpl = new DepartmentDaoImlp();
 	}
 
