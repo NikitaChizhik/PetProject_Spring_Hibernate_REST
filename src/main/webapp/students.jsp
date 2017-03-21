@@ -30,11 +30,16 @@
 		%>
 		<tr>
 			<td><%=i++%></td>
-			<td><%=student.getName()%></td>
+			<td><a href=<%=request.getContextPath() + "/student.jsp"%>><%=student.getName()%></a></td>
+			<%
+				request.setAttribute("" + student.getId(), student);
+			%>
 		</tr>
 		<%
 			}
 		%>
+		<br>
+
 
 	</table>
 
