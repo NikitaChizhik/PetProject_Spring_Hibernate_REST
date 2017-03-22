@@ -21,8 +21,22 @@ public class StudentManagerImpl implements StudentManager {
 	}
 
 	@Override
-	public Student create(Student entity) throws DomainException {
-		return null;
+	public Student create(Student student) throws DomainException {
+		log.trace("Started create() method.");
+
+		Student studentTemp = null;
+		try {
+			log.trace("Creating student.");
+
+			studentTemp = studentDao.create(student);
+
+		} catch (DaoException e) {
+			log.error("Cannot create student.", e);
+			throw new DomainException("Cannot create student.", e);
+		}
+		log.trace("Finished create() method.");
+
+		return studentTemp;
 	}
 
 	@Override
@@ -64,7 +78,7 @@ public class StudentManagerImpl implements StudentManager {
 	}
 
 	@Override
-	public Student update(Student entity) throws DomainException {
+	public Student update(Student student) throws DomainException {
 		return null;
 	}
 

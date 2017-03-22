@@ -1,17 +1,8 @@
 package com.nikitachizhik91.university.domain;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.impl.LessonDaoImpl;
-import com.nikitachizhik91.university.model.Group;
-import com.nikitachizhik91.university.model.Lesson;
-import com.nikitachizhik91.university.model.Room;
-import com.nikitachizhik91.university.model.Student;
-import com.nikitachizhik91.university.model.Subject;
-import com.nikitachizhik91.university.model.Teacher;
 
 public class Main {
 	public static void main(String[] args) throws DaoException, ParseException, DomainException {
