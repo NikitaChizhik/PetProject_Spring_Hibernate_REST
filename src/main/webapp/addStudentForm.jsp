@@ -23,9 +23,7 @@
 	<div id="container">
 		<h3>Add Student</h3>
 
-		<form action="StudentServlet" method="get">
-
-			<input type="hidden" name="command" value="add" />
+		<form action="StudentAddServlet" method="get">
 
 			<table>
 				<tbody>

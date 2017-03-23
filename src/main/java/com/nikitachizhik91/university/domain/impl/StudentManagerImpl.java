@@ -13,6 +13,7 @@ import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.model.Student;
 
 public class StudentManagerImpl implements StudentManager {
+
 	private final static Logger log = LogManager.getLogger(StudentManagerImpl.class.getName());
 	private StudentDao studentDao;
 
@@ -79,11 +80,37 @@ public class StudentManagerImpl implements StudentManager {
 
 	@Override
 	public Student update(Student student) throws DomainException {
-		return null;
+		log.trace("Started update() method.");
+
+		Student studentTemp = null;
+		try {
+			log.trace("Updating student.");
+
+			studentTemp = studentDao.update(student);
+
+		} catch (DaoException e) {
+			log.error("Cannot update student.", e);
+			throw new DomainException("Cannot update student.", e);
+		}
+		log.trace("Finished update() method.");
+
+		return studentTemp;
 	}
 
 	@Override
 	public void delete(int id) throws DomainException {
+		log.trace("Started delete() method.");
+
+		try {
+			log.trace("Deleting student by id.");
+
+			studentDao.delete(id);
+
+		} catch (DaoException e) {
+			log.error("Cannot delete student by id.", e);
+			throw new DomainException("Cannot delete student by id.", e);
+		}
+		log.trace("Finished delete() method.");
 	}
 
 }

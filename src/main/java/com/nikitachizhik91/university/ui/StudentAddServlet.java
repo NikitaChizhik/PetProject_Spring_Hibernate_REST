@@ -1,7 +1,6 @@
 package com.nikitachizhik91.university.ui;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,10 +20,10 @@ import com.nikitachizhik91.university.model.Student;
 /**
  * Servlet implementation class StudentServlet
  */
-@WebServlet("/StudentServlet")
-public class StudentServlet extends HttpServlet {
+@WebServlet("/StudentAddServlet")
+public class StudentAddServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(StudentServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(StudentAddServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -34,31 +33,36 @@ public class StudentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		findAll(request, response);
-		
-		log.info("Found all students.");
+		addStudent(request, response);
+
+		log.info("Added student.");
 	}
 
-	private void findAll(HttpServletRequest request, HttpServletResponse response)
+	private void addStudent(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		log.trace("Started findAll() method.");
+		log.trace("Started addStudent() method.");
 
-		List<Student> students = null;
+		String name = request.getParameter("name");
+
+		Student student = new Student();
+		student.setName(name);
+
 		StudentManager studentManager = new StudentManagerImpl();
 
 		try {
-			students = studentManager.findAll();
+			studentManager.create(student);
+
 		} catch (DomainException e) {
-			log.error("Cannot find all students.", e);
-			throw new ServletException("Cannot find all students.", e);
+
+			log.error("Cannot addStudent student.", e);
+			throw new ServletException("Cannot addStudent student.", e);
 		}
 
-		request.setAttribute("allStudents", students);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/allStudents.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/StudentServlet");
 		dispatcher.forward(request, response);
 
 		log.trace("Dispathcer forwarded requeset and response to /Studentservlet.");
-		log.trace("Started findAll() method.");
+		log.trace("Finished addStudent() method.");
 	}
 
 }

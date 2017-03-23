@@ -23,16 +23,15 @@
 	<div id="container">
 		<h3>Update Student</h3>
 
-		<form action="StudentServlet" method="get">
+		<form action="StudentUpdateServlet" method="get">
 
-			<input type="hidden" name="command" value="update" /> <input
-				type="hidden" name="studentId" value="${loadStudent.id}" />
+			<input type="hidden" name="studentId" value="${loadStudent.id}" />
 
 			<table>
 				<tbody>
 					<tr>
 						<td><label>Name:</label></td>
-						<td><input type="text" name="Name"
+						<td><input type="text" name="name"
 							value="${loadStudent.name}" /></td>
 					</tr>
 

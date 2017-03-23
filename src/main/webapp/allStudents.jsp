@@ -45,8 +45,11 @@
 				%>
 				<c:forEach var="student" items="${allStudents}">
 
-					<c:url var="updateLink" value="StudentServlet">
-						<c:param name="command" value="load" />
+					<c:url var="updateLink" value="StudentLoadServlet">
+						<c:param name="studentId" value="${student.id}" />
+					</c:url>
+
+					<c:url var="deleteLink" value="StudentDeleteServlet">
 						<c:param name="studentId" value="${student.id}" />
 					</c:url>
 
@@ -54,7 +57,10 @@
 					<tr>
 						<td><%=++i%></td>
 						<td>${student.name}</td>
-						<td><a href="${updateLink}">Update</a></td>
+						<td><a href="${updateLink}">Update|<a
+								href="${deleteLink}"
+								onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false">
+									Delete</a></td>
 					</tr>
 
 				</c:forEach>
