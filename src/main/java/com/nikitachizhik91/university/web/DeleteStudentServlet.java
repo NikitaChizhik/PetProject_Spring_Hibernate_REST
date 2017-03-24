@@ -1,8 +1,7 @@
-package com.nikitachizhik91.university.ui;
+package com.nikitachizhik91.university.web;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,10 +18,10 @@ import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
 /**
  * Servlet implementation class StudentServlet
  */
-@WebServlet("/StudentDeleteServlet")
-public class StudentDeleteServlet extends HttpServlet {
+@WebServlet("/studentDelete")
+public class DeleteStudentServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(StudentDeleteServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(DeleteStudentServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -31,13 +30,7 @@ public class StudentDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		deleteStudent(request, response);
-
-	}
-
-	private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
+		log.trace("Started delete() method.");
 
 		StudentManager studentManager = new StudentManagerImpl();
 
@@ -45,14 +38,15 @@ public class StudentDeleteServlet extends HttpServlet {
 			studentManager.delete(Integer.parseInt(request.getParameter("studentId")));
 
 		} catch (NumberFormatException | DomainException e) {
+
 			log.error("Cannot delete student.", e);
 			throw new ServletException("Cannot delete student.", e);
 		}
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/StudentServlet");
-		dispatcher.forward(request, response);
-		
-		log.trace("Dispathcer forwarded requeset and response to /Studentservlet.");
+		response.sendRedirect("students");
+
+		log.trace("Finished delete() method.");
+		log.info("Deleted the student.");
 	}
 
 }

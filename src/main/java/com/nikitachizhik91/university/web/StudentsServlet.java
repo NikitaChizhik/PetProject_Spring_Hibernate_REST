@@ -1,9 +1,8 @@
-package com.nikitachizhik91.university.ui;
+package com.nikitachizhik91.university.web;
 
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,26 +20,19 @@ import com.nikitachizhik91.university.model.Student;
 /**
  * Servlet implementation class StudentServlet
  */
-@WebServlet("/StudentServlet")
-public class StudentServlet extends HttpServlet {
+@WebServlet("/students")
+public class StudentsServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(StudentServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(StudentsServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		findAll(request, response);
-		
-		log.info("Found all students.");
-	}
-
-	private void findAll(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
 		log.trace("Started findAll() method.");
 
 		List<Student> students = null;
@@ -48,17 +40,51 @@ public class StudentServlet extends HttpServlet {
 
 		try {
 			students = studentManager.findAll();
+
 		} catch (DomainException e) {
+
 			log.error("Cannot find all students.", e);
 			throw new ServletException("Cannot find all students.", e);
 		}
 
-		request.setAttribute("allStudents", students);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/allStudents.jsp");
-		dispatcher.forward(request, response);
+		request.setAttribute("students", students);
+		request.getRequestDispatcher("/students.jsp").forward(request, response);
 
-		log.trace("Dispathcer forwarded requeset and response to /Studentservlet.");
-		log.trace("Started findAll() method.");
+		log.trace("Finished findAll() method.");
+		log.info("Found all students.");
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		log.trace("Started addStudent() method.");
+
+		String name = request.getParameter("name");
+
+		Student student = new Student();
+		student.setName(name);
+
+		StudentManager studentManager = new StudentManagerImpl();
+
+		try {
+			studentManager.create(student);
+
+		} catch (DomainException e) {
+
+			log.error("Cannot add Student student.", e);
+			throw new ServletException("Cannot add Student student.", e);
+		}
+
+		response.sendRedirect("students");
+
+		log.trace("Finished addStudent() method.");
+		log.info("Added student.");
+
 	}
 
 }

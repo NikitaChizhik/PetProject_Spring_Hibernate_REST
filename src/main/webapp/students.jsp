@@ -1,5 +1,3 @@
-<%@page import="com.nikitachizhik91.university.model.Student"%>
-<%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
@@ -12,9 +10,7 @@
 
 <title>allStudents</title>
 <link type="text/css" rel="stylesheet" href="css/style.css">
-
 </head>
-
 
 
 <body>
@@ -29,38 +25,34 @@
 
 		<div id="content">
 
-			<input type="button" value="AddStudent"
-				onclick="window.location.href='addStudentForm.jsp';return false;"
-				calss="add-student-button" />
+			<form action="students" method="post">
+
+				<input type="submit" value="Add Student" class="add-student-button" />
+				<input type="text" name="name" />
+			</form>
 
 			<table>
 
 				<tr>
-					<th>Order</th>
-					<th>First Name</th>
-					<th>Update|Delete</th>
+					<th>Name</th>
+					<th>Delete</th>
 				</tr>
-				<%
-					int i = 0;
-				%>
-				<c:forEach var="student" items="${allStudents}">
 
-					<c:url var="updateLink" value="StudentLoadServlet">
+				<c:forEach var="student" items="${students}">
+
+					<c:url var="studentLink" value="student">
 						<c:param name="studentId" value="${student.id}" />
 					</c:url>
 
-					<c:url var="deleteLink" value="StudentDeleteServlet">
+					<c:url var="deleteLink" value="studentDelete">
 						<c:param name="studentId" value="${student.id}" />
 					</c:url>
-
 
 					<tr>
-						<td><%=++i%></td>
-						<td>${student.name}</td>
-						<td><a href="${updateLink}">Update|<a
-								href="${deleteLink}"
-								onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false">
-									Delete</a></td>
+						<td><a href="${studentLink}">${student.name}</a></td>
+						<td><a href="${deleteLink}"
+							onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false">
+								Delete</a></td>
 					</tr>
 
 				</c:forEach>
