@@ -31,18 +31,18 @@ public class DeleteStudentServlet extends HttpServlet {
 			studentManager.delete(Integer.parseInt(request.getParameter("studentId")));
 
 		} catch (NumberFormatException e) {
-			log.error("The id is wrong.", e);
-			throw new WebException("The id is wrong.", e);
+			log.error("The id=" + request.getParameter("studentId") + " is wrong.", e);
+			throw new WebException("The id=" + request.getParameter("studentId") + " is wrong.", e);
 
 		} catch (DomainException e) {
-			log.error("The id is wrong.", e);
-			throw new WebException("The id is wrong.", e);
+			log.error("Cannot delete student with id=" + request.getParameter("studentId"), e);
+			throw new WebException("Cannot delete student with id=" + request.getParameter("studentId"), e);
 		}
 
 		response.sendRedirect("students");
 
 		log.trace("Finished delete() method.");
-		log.info("Deleted the student.");
+
 	}
 
 }

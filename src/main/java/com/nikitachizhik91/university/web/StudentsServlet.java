@@ -17,14 +17,12 @@ import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
 import com.nikitachizhik91.university.model.Student;
 
-
 @WebServlet("/students")
 public class StudentsServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(StudentsServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -50,7 +48,6 @@ public class StudentsServlet extends HttpServlet {
 
 	}
 
-	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -68,8 +65,8 @@ public class StudentsServlet extends HttpServlet {
 
 		} catch (DomainException e) {
 
-			log.error("Cannot add Student student.", e);
-			throw new WebException("Cannot add Student student.", e);
+			log.error("Cannot add student=" + student, e);
+			throw new WebException("Cannot add student=" + student, e);
 		}
 
 		response.sendRedirect("students");
