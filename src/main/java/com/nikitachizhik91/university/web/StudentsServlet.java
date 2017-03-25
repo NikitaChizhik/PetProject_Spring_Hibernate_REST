@@ -17,19 +17,14 @@ import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
 import com.nikitachizhik91.university.model.Student;
 
-/**
- * Servlet implementation class StudentServlet
- */
+
 @WebServlet("/students")
 public class StudentsServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(StudentsServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -44,7 +39,7 @@ public class StudentsServlet extends HttpServlet {
 		} catch (DomainException e) {
 
 			log.error("Cannot find all students.", e);
-			throw new ServletException("Cannot find all students.", e);
+			throw new WebException("Cannot find all students.", e);
 		}
 
 		request.setAttribute("students", students);
@@ -55,10 +50,7 @@ public class StudentsServlet extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -77,7 +69,7 @@ public class StudentsServlet extends HttpServlet {
 		} catch (DomainException e) {
 
 			log.error("Cannot add Student student.", e);
-			throw new ServletException("Cannot add Student student.", e);
+			throw new WebException("Cannot add Student student.", e);
 		}
 
 		response.sendRedirect("students");

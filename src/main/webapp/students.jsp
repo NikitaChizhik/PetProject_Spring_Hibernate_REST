@@ -27,8 +27,8 @@
 
 			<form action="students" method="post">
 
-				<input type="submit" value="Add Student" class="add-student-button" />
-				<input type="text" name="name" />
+				<input type="text" name="name" /> <input type="submit"
+					value="Add Student" class="add-student-button" />
 			</form>
 
 			<table>

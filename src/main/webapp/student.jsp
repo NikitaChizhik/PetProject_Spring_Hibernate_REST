@@ -33,18 +33,23 @@
 					<th>id</th>
 					<th>Name</th>
 					<th>Update</th>
+					<th>Save</th>
+
 				</tr>
 
 				<tr>
 					<td>${student.id}</td>
 					<td>${student.name}</td>
 					<td><input type="text" name="name" value="${student.name}" /></td>
+					<td><input type="submit" value="Save"
+						class="add-student-button" />
+					<td>
 				</tr>
 
 
 
 			</table>
-			<input type="submit" value="Save" class="add-student-button" />
+
 		</form>
 	</div>
 

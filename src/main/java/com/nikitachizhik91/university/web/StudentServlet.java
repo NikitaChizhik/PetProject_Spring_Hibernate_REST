@@ -16,19 +16,14 @@ import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
 import com.nikitachizhik91.university.model.Student;
 
-/**
- * Servlet implementation class StudentServlet
- */
+
 @WebServlet("/student")
 public class StudentServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(StudentServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		log.trace("Started findById() method.");
@@ -42,11 +37,11 @@ public class StudentServlet extends HttpServlet {
 
 		} catch (NumberFormatException e) {
 			log.error("The id is wrong.", e);
-			throw new ServletException("The id is wrong.", e);
+			throw new WebException("The id is wrong.", e);
 
 		} catch (DomainException e) {
 			log.error("Cannot find by id the student.", e);
-			throw new ServletException("Cannot find by id the student.", e);
+			throw new WebException("Cannot find by id the student.", e);
 		}
 
 		request.setAttribute("student", student);
@@ -72,11 +67,11 @@ public class StudentServlet extends HttpServlet {
 
 		} catch (DomainException e) {
 			log.error("Cannot update student.", e);
-			throw new ServletException("Cannot update student.", e);
+			throw new WebException("Cannot update student.", e);
 
 		} catch (NumberFormatException e) {
 			log.error("The id is wrong.", e);
-			throw new ServletException("The id is wrong.", e);
+			throw new WebException("The id is wrong.", e);
 		}
 
 		request.setAttribute("student", student);

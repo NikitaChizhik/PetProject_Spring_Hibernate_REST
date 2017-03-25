@@ -15,19 +15,12 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
 
-/**
- * Servlet implementation class StudentServlet
- */
 @WebServlet("/studentDelete")
 public class DeleteStudentServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(DeleteStudentServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		log.trace("Started delete() method.");
@@ -37,10 +30,13 @@ public class DeleteStudentServlet extends HttpServlet {
 		try {
 			studentManager.delete(Integer.parseInt(request.getParameter("studentId")));
 
-		} catch (NumberFormatException | DomainException e) {
+		} catch (NumberFormatException e) {
+			log.error("The id is wrong.", e);
+			throw new WebException("The id is wrong.", e);
 
-			log.error("Cannot delete student.", e);
-			throw new ServletException("Cannot delete student.", e);
+		} catch (DomainException e) {
+			log.error("The id is wrong.", e);
+			throw new WebException("The id is wrong.", e);
 		}
 
 		response.sendRedirect("students");
