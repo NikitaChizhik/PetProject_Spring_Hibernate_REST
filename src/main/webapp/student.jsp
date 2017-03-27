@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -58,7 +58,10 @@
 
 
 	<p>
-		<a href="students">Back to List</a>
+		<a href="students">Back to list of all students</a>
+	</p>
+	<p>
+		<a href="groups">Back to list of all groups</a>
 	</p>
 </body>
 

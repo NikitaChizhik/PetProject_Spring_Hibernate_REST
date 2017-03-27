@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.web;
+package com.nikitachizhik91.university.web.students;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,6 +16,7 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
 import com.nikitachizhik91.university.model.Student;
+import com.nikitachizhik91.university.web.WebException;
 
 @WebServlet("/students")
 public class StudentsServlet extends HttpServlet {

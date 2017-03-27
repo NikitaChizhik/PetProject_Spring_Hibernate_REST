@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.web;
+package com.nikitachizhik91.university.web.students;
 
 import java.io.IOException;
 
@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
+import com.nikitachizhik91.university.web.WebException;
 
 @WebServlet("/studentDelete")
 public class DeleteStudentServlet extends HttpServlet {

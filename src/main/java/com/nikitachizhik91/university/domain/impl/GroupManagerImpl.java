@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.dao.impl.GroupDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.GroupManager;
@@ -15,7 +14,7 @@ import com.nikitachizhik91.university.model.Student;
 
 public class GroupManagerImpl implements GroupManager {
 	private final static Logger log = LogManager.getLogger(GroupManagerImpl.class.getName());
-	private GroupDao groupDao;
+	private GroupDaoImpl groupDao;
 
 	public GroupManagerImpl() {
 		groupDao = new GroupDaoImpl();
@@ -23,7 +22,21 @@ public class GroupManagerImpl implements GroupManager {
 
 	@Override
 	public Group create(Group group) throws DomainException {
-		return null;
+		log.trace("Started create() method.");
+
+		Group groupTemp = null;
+		try {
+			log.trace("Creating group.");
+
+			groupTemp = groupDao.create(group);
+
+		} catch (DaoException e) {
+			log.error("Cannot create group.", e);
+			throw new DomainException("Cannot create group.", e);
+		}
+		log.trace("Finished create() method.");
+
+		return groupTemp;
 	}
 
 	@Override
@@ -66,15 +79,54 @@ public class GroupManagerImpl implements GroupManager {
 
 	@Override
 	public Group update(Group group) throws DomainException {
-		return null;
+		log.trace("Started update() method.");
+
+		Group groupTemp = null;
+		try {
+			log.trace("Updating group.");
+
+			groupTemp = groupDao.update(group);
+
+		} catch (DaoException e) {
+			log.error("Cannot update group.", e);
+			throw new DomainException("Cannot update group.", e);
+		}
+		log.trace("Finished update() method.");
+
+		return groupTemp;
 	}
 
 	@Override
 	public void delete(int id) throws DomainException {
+		log.trace("Started delete() method.");
+
+		try {
+			log.trace("Deleting group by id.");
+
+			groupDao.delete(id);
+
+		} catch (DaoException e) {
+			log.error("Cannot delete group by id.", e);
+			throw new DomainException("Cannot delete group by id.", e);
+		}
+		log.trace("Finished delete() method.");
 	}
 
 	@Override
 	public void addStudent(int studentId, int groupId) throws DomainException {
+
+		log.trace("Started addStudent() method.");
+
+		try {
+			log.trace("Adding student.");
+
+			groupDao.addStudent(studentId, groupId);
+
+		} catch (DaoException e) {
+			log.error("Cannot add student with id=" + studentId + " to group with id=" + groupId, e);
+			throw new DomainException("Cannot add student with id=" + studentId + " to group with id=" + groupId, e);
+		}
+		log.trace("Finished addStudent() method.");
 	}
 
 	@Override
@@ -88,6 +140,19 @@ public class GroupManagerImpl implements GroupManager {
 
 	@Override
 	public void deleteStudentFromGroup(int studentId) throws DomainException {
+
+		log.trace("Started deleteStudentFromGroup() method.");
+
+		try {
+			log.trace("Deleting student from group.");
+
+			groupDao.deleteStudentFromGroup(studentId);
+
+		} catch (DaoException e) {
+			log.error("Cannot delete student with id=" + studentId + " from group", e);
+			throw new DomainException("Cannot delete student with id=" + studentId + " from group", e);
+		}
+		log.trace("Finished deleteStudentFromGroup() method.");
 	}
 
 }

@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Student;
-import com.nikitachizhik91.university.model.Subject;
-import com.nikitachizhik91.university.model.Teacher;
 
 public interface GroupManager {
 
