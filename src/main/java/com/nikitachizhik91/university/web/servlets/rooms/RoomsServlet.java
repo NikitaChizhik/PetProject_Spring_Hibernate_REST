@@ -45,7 +45,6 @@ public class RoomsServlet extends HttpServlet {
 		request.getRequestDispatcher("/rooms.jsp").forward(request, response);
 
 		log.trace("Finished findAll() method.");
-		log.info("Found all rooms.");
 	}
 
 	@Override
@@ -72,7 +71,6 @@ public class RoomsServlet extends HttpServlet {
 		response.sendRedirect("rooms");
 
 		log.trace("Finished addRoom() method.");
-		log.info("Added room.");
 	}
 
 }

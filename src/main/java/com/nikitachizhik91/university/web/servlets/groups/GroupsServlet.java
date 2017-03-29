@@ -45,8 +45,6 @@ public class GroupsServlet extends HttpServlet {
 		request.getRequestDispatcher("/groups.jsp").forward(request, response);
 
 		log.trace("Finished findAll() method.");
-		log.info("Found all groups.");
-
 	}
 
 	@Override
@@ -73,8 +71,6 @@ public class GroupsServlet extends HttpServlet {
 		response.sendRedirect("groups");
 
 		log.trace("Finished addGroup() method.");
-		log.info("Added group.");
-
 	}
 
 }

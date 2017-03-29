@@ -57,7 +57,6 @@ public class GroupServlet extends HttpServlet {
 		request.getRequestDispatcher("/group.jsp").forward(request, response);
 
 		log.trace("Finished findById() method.");
-		log.info("Found the group.");
 	}
 
 	@Override
@@ -88,7 +87,6 @@ public class GroupServlet extends HttpServlet {
 		response.sendRedirect("group?groupId=" + groupId);
 
 		log.trace("Finished update() method.");
-		log.info("Updated the student.");
 	}
 
 }

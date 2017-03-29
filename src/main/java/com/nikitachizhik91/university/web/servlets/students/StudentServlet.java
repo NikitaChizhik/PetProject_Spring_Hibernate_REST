@@ -47,7 +47,6 @@ public class StudentServlet extends HttpServlet {
 		request.getRequestDispatcher("/student.jsp").forward(request, response);
 
 		log.trace("Finished findById() method.");
-		log.info("Found the student.");
 	}
 
 	@Override
@@ -78,7 +77,6 @@ public class StudentServlet extends HttpServlet {
 		response.sendRedirect("student?studentId=" + studentId);
 
 		log.trace("Finished update() method.");
-		log.info("Updated the student.");
 	}
 
 }

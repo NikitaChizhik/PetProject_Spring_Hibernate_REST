@@ -48,7 +48,6 @@ public class RoomServlet extends HttpServlet {
 		request.getRequestDispatcher("/room.jsp").forward(request, response);
 
 		log.trace("Finished findById() method.");
-		log.info("Found the room.");
 	}
 
 	@Override
@@ -79,7 +78,6 @@ public class RoomServlet extends HttpServlet {
 		response.sendRedirect("room?roomId=" + roomId);
 
 		log.trace("Finished update() method.");
-		log.info("Updated the room.");
 	}
 
 }

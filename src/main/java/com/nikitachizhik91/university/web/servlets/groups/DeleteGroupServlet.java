@@ -43,7 +43,6 @@ public class DeleteGroupServlet extends HttpServlet {
 		response.sendRedirect("groups");
 
 		log.trace("Finished delete() method.");
-
 	}
 
 }

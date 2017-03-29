@@ -48,7 +48,6 @@ public class GroupStudentServlet extends HttpServlet {
 		response.sendRedirect("group?groupId=" + request.getParameter("groupId"));
 
 		log.trace("Finished deleteStudentFromGroup() method.");
-
 	}
 
 	@Override

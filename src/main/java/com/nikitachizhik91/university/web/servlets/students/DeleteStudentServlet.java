@@ -43,7 +43,6 @@ public class DeleteStudentServlet extends HttpServlet {
 		response.sendRedirect("students");
 
 		log.trace("Finished delete() method.");
-
 	}
 
 }

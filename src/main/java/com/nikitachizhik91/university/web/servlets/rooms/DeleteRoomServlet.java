@@ -27,17 +27,18 @@ public class DeleteRoomServlet extends HttpServlet {
 		log.trace("Started delete() method.");
 
 		RoomManager roomManager = new RoomManagerImpl();
+		String roomId = request.getParameter("roomId");
 
 		try {
-			roomManager.delete(Integer.parseInt(request.getParameter("roomId")));
+			roomManager.delete(Integer.parseInt(roomId));
 
 		} catch (NumberFormatException e) {
-			log.error("The id=" + request.getParameter("roomId") + " is wrong.", e);
-			throw new WebException("The id=" + request.getParameter("roomId") + " is wrong.", e);
+			log.error("The id=" + roomId + " is wrong.", e);
+			throw new WebException("The id=" + roomId + " is wrong.", e);
 
 		} catch (DomainException e) {
-			log.error("Cannot delete room with id=" + request.getParameter("roomId"), e);
-			throw new WebException("Cannot delete room with id=" + request.getParameter("roomId"), e);
+			log.error("Cannot delete room with id=" + roomId, e);
+			throw new WebException("Cannot delete room with id=" + roomId, e);
 		}
 
 		response.sendRedirect("rooms");
