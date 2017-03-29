@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.SendResult;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,6 +64,7 @@ public class RoomServlet extends HttpServlet {
 		try {
 			room = studentManager.findById(Integer.parseInt(roomId));
 			room.setNumber(number);
+			
 			studentManager.update(room);
 
 		} catch (DomainException e) {
@@ -74,8 +76,7 @@ public class RoomServlet extends HttpServlet {
 			throw new WebException("The id=" + roomId + " is wrong.", e);
 		}
 
-		request.setAttribute("room", room);
-		request.getRequestDispatcher("/room.jsp").forward(request, response);
+		response.sendRedirect("room?roomId=" + roomId);
 
 		log.trace("Finished update() method.");
 		log.info("Updated the room.");
