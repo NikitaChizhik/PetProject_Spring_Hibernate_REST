@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.web.groupServlets;
+package com.nikitachizhik91.university.web.servlets.groups;
 
 import java.io.IOException;
 

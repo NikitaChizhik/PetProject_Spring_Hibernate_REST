@@ -48,21 +48,31 @@
 
 		<h3>Students</h3>
 
-
 		<form action="groupStudent" method="post">
+			<select name="studentId" class="add-student-button">
 
-			<input type="text" name="studentId" /> <input type="hidden"
-				name="groupId" value="${group.id }" /> <input type="submit"
-				value="Add Student" class="add-student-button" />
+				<c:forEach var="student" items="${students}">
+					<option value="${student.id }">${student.name}</option>
+				</c:forEach>
+
+			</select> <input type="hidden" name="groupId" value="${group.id }" /> <input
+				type="submit" value="Add Student" class="add-student-button" />
+
 		</form>
+
+
+
+
 		<table>
+
 
 			<c:forEach var="student" items="${group.students}">
 
 				<c:url var="studentLink" value="student">
 					<c:param name="studentId" value="${student.id}" />
 				</c:url>
-				<c:url var="studentDelete" value="groupStudent">
+				
+				<c:url var="studentDelete" value="groupStudentDelete">
 					<c:param name="studentId" value="${student.id}" />
 					<c:param name="groupId" value="${group.id}" />
 				</c:url>

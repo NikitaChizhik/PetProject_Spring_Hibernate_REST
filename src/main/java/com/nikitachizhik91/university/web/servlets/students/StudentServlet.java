@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.web.students;
+package com.nikitachizhik91.university.web.servlets.students;
 
 import java.io.IOException;
 

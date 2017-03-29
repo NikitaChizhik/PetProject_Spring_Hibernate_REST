@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.dao.impl.StudentDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.StudentManager;
@@ -15,7 +14,7 @@ import com.nikitachizhik91.university.model.Student;
 public class StudentManagerImpl implements StudentManager {
 
 	private final static Logger log = LogManager.getLogger(StudentManagerImpl.class.getName());
-	private StudentDao studentDao;
+	private StudentDaoImpl studentDao;
 
 	public StudentManagerImpl() {
 		studentDao = new StudentDaoImpl();
@@ -111,6 +110,25 @@ public class StudentManagerImpl implements StudentManager {
 			throw new DomainException("Cannot delete student by id.", e);
 		}
 		log.trace("Finished delete() method.");
+	}
+
+	@Override
+	public List<Student> findStudentsWithoutGroup() throws DomainException {
+		log.trace("Started findStudentsWithoutGroup() method.");
+
+		List<Student> students = null;
+		try {
+			log.trace("Finding all students who are without group.");
+
+			students = studentDao.findStudentsWithoutGroup();
+
+		} catch (DaoException e) {
+			log.error("Cannot find all students who are without group.", e);
+			throw new DomainException("Cannot find all students who are without group.", e);
+		}
+		log.trace("Finished findStudentsWithoutGroup() method.");
+
+		return students;
 	}
 
 }

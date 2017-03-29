@@ -1,6 +1,7 @@
-package com.nikitachizhik91.university.web.groupServlets;
+package com.nikitachizhik91.university.web.servlets.groups;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.GroupManager;
+import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.domain.impl.GroupManagerImpl;
+import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
 import com.nikitachizhik91.university.model.Group;
+import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.web.WebException;
 
 @WebServlet("/group")
@@ -30,10 +34,14 @@ public class GroupServlet extends HttpServlet {
 		String groupId = request.getParameter("groupId");
 		Group group = null;
 		GroupManager groupManager = new GroupManagerImpl();
+		StudentManager studentManager = new StudentManagerImpl();
+		List<Student> students = null;
 
 		try {
 			group = groupManager.findById(Integer.parseInt(groupId));
 
+			students = studentManager.findStudentsWithoutGroup();
+			
 		} catch (NumberFormatException e) {
 			log.error("The id=" + groupId + " is wrong.", e);
 			throw new WebException("The id=" + groupId + " is wrong.", e);
@@ -44,6 +52,7 @@ public class GroupServlet extends HttpServlet {
 		}
 
 		request.setAttribute("group", group);
+		request.setAttribute("students", students);
 		request.getRequestDispatcher("/group.jsp").forward(request, response);
 
 		log.trace("Finished findById() method.");
@@ -60,11 +69,16 @@ public class GroupServlet extends HttpServlet {
 		GroupManager groupManager = new GroupManagerImpl();
 		String groupId = request.getParameter("groupId");
 
+		StudentManager studentManager = new StudentManagerImpl();
+		List<Student> students = null;
+
 		try {
 			group = groupManager.findById(Integer.parseInt(groupId));
 			group.setName(name);
 
 			groupManager.update(group);
+
+			students = studentManager.findStudentsWithoutGroup();
 
 		} catch (DomainException e) {
 			log.error("Cannot update group=" + group, e);
@@ -76,6 +90,8 @@ public class GroupServlet extends HttpServlet {
 		}
 
 		request.setAttribute("group", group);
+		request.setAttribute("students", students);
+
 		request.getRequestDispatcher("/group.jsp").forward(request, response);
 
 		log.trace("Finished update() method.");

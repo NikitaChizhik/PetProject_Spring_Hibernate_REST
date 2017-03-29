@@ -15,4 +15,6 @@ public interface StudentManager {
 	public abstract Student update(Student student) throws DomainException;
 
 	public abstract void delete(int id) throws DomainException;
+
+	public abstract List<Student> findStudentsWithoutGroup() throws DomainException;
 }
