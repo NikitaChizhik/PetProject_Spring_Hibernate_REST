@@ -31,8 +31,8 @@ public class StudentManagerImpl implements StudentManager {
 			studentTemp = studentDao.create(student);
 
 		} catch (DaoException e) {
-			log.error("Cannot create student.", e);
-			throw new DomainException("Cannot create student.", e);
+			log.error("Cannot create student=" + student, e);
+			throw new DomainException("Cannot create student=" + student, e);
 		}
 		log.trace("Finished create() method.");
 
@@ -50,8 +50,8 @@ public class StudentManagerImpl implements StudentManager {
 			student = studentDao.findById(id);
 
 		} catch (DaoException e) {
-			log.error("Cannot find student by id.", e);
-			throw new DomainException("Cannot find student by id.", e);
+			log.error("Cannot find student by id=" + id, e);
+			throw new DomainException("Cannot find student by id=" + id, e);
 		}
 		log.trace("Finished findById() method.");
 
@@ -88,8 +88,8 @@ public class StudentManagerImpl implements StudentManager {
 			studentTemp = studentDao.update(student);
 
 		} catch (DaoException e) {
-			log.error("Cannot update student.", e);
-			throw new DomainException("Cannot update student.", e);
+			log.error("Cannot update student=" + student, e);
+			throw new DomainException("Cannot update student=" + student, e);
 		}
 		log.trace("Finished update() method.");
 
@@ -101,13 +101,13 @@ public class StudentManagerImpl implements StudentManager {
 		log.trace("Started delete() method.");
 
 		try {
-			log.trace("Deleting student by id.");
+			log.trace("Deleting student by id=" + id);
 
 			studentDao.delete(id);
 
 		} catch (DaoException e) {
-			log.error("Cannot delete student by id.", e);
-			throw new DomainException("Cannot delete student by id.", e);
+			log.error("Cannot delete student id=" + id, e);
+			throw new DomainException("Cannot delete student id=" + id, e);
 		}
 		log.trace("Finished delete() method.");
 	}

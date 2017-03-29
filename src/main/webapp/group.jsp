@@ -39,8 +39,7 @@
 					<td>${group.id}</td>
 					<td>${group.name}</td>
 					<td><input type="text" name="name" value="${group.name}" /></td>
-					<td><input type="submit" value="Save"
-						class="add-student-button" />
+					<td><input type="submit" value="Save" class="button" />
 					<td>
 				</tr>
 			</table>
@@ -48,18 +47,20 @@
 
 		<h3>Students</h3>
 
-		<form action="groupStudent" method="post">
-			<select name="studentId" class="add-student-button">
+		<c:if test="${not empty students}">
 
-				<c:forEach var="student" items="${students}">
-					<option value="${student.id }">${student.name}</option>
-				</c:forEach>
+			<form action="groupStudent" method="post">
+				<select name="studentId" class="button">
 
-			</select> <input type="hidden" name="groupId" value="${group.id }" /> <input
-				type="submit" value="Add Student" class="add-student-button" />
+					<c:forEach var="student" items="${students}">
+						<option value="${student.id }">${student.name}</option>
+					</c:forEach>
 
-		</form>
+				</select> <input type="hidden" name="groupId" value="${group.id }" /> <input
+					type="submit" value="Add Student" class="button" />
 
+			</form>
+		</c:if>
 
 
 
@@ -71,7 +72,7 @@
 				<c:url var="studentLink" value="student">
 					<c:param name="studentId" value="${student.id}" />
 				</c:url>
-				
+
 				<c:url var="studentDelete" value="groupStudent">
 					<c:param name="studentId" value="${student.id}" />
 					<c:param name="groupId" value="${group.id}" />

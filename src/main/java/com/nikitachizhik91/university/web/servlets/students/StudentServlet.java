@@ -63,6 +63,7 @@ public class StudentServlet extends HttpServlet {
 		try {
 			student = studentManager.findById(Integer.parseInt(studentId));
 			student.setName(name);
+
 			studentManager.update(student);
 
 		} catch (DomainException e) {
@@ -74,8 +75,7 @@ public class StudentServlet extends HttpServlet {
 			throw new WebException("The id=" + studentId + " is wrong.", e);
 		}
 
-		request.setAttribute("student", student);
-		request.getRequestDispatcher("/student.jsp").forward(request, response);
+		response.sendRedirect("student?studentId=" + studentId);
 
 		log.trace("Finished update() method.");
 		log.info("Updated the student.");

@@ -31,8 +31,8 @@ public class GroupManagerImpl implements GroupManager {
 			groupTemp = groupDao.create(group);
 
 		} catch (DaoException e) {
-			log.error("Cannot create group.", e);
-			throw new DomainException("Cannot create group.", e);
+			log.error("Cannot create group=" + group, e);
+			throw new DomainException("Cannot create group=" + group, e);
 		}
 		log.trace("Finished create() method.");
 
@@ -50,8 +50,8 @@ public class GroupManagerImpl implements GroupManager {
 			group = groupDao.findById(id);
 
 		} catch (DaoException e) {
-			log.error("Cannot group by id.", e);
-			throw new DomainException("Cannot group by id.", e);
+			log.error("Cannot group by id=" + id, e);
+			throw new DomainException("Cannot group by id=" + id, e);
 		}
 		log.trace("Finished findById() method.");
 
@@ -88,8 +88,8 @@ public class GroupManagerImpl implements GroupManager {
 			groupTemp = groupDao.update(group);
 
 		} catch (DaoException e) {
-			log.error("Cannot update group.", e);
-			throw new DomainException("Cannot update group.", e);
+			log.error("Cannot update group=" + group, e);
+			throw new DomainException("Cannot update group=" + group, e);
 		}
 		log.trace("Finished update() method.");
 
@@ -101,13 +101,13 @@ public class GroupManagerImpl implements GroupManager {
 		log.trace("Started delete() method.");
 
 		try {
-			log.trace("Deleting group by id.");
+			log.trace("Deleting group by id=" + id);
 
 			groupDao.delete(id);
 
 		} catch (DaoException e) {
-			log.error("Cannot delete group by id.", e);
-			throw new DomainException("Cannot delete group by id.", e);
+			log.error("Cannot delete group by id=" + id, e);
+			throw new DomainException("Cannot delete group by id=" + id, e);
 		}
 		log.trace("Finished delete() method.");
 	}
@@ -149,8 +149,8 @@ public class GroupManagerImpl implements GroupManager {
 			groupDao.deleteStudentFromGroup(studentId);
 
 		} catch (DaoException e) {
-			log.error("Cannot delete student with id=" + studentId + " from group", e);
-			throw new DomainException("Cannot delete student with id=" + studentId + " from group", e);
+			log.error("Cannot delete student with id=" + studentId + " from groups_students table", e);
+			throw new DomainException("Cannot delete student with id=" + studentId + " from groups_students table", e);
 		}
 		log.trace("Finished deleteStudentFromGroup() method.");
 	}

@@ -53,6 +53,7 @@ public class GroupServlet extends HttpServlet {
 
 		request.setAttribute("group", group);
 		request.setAttribute("students", students);
+		System.out.println(students.isEmpty());
 		request.getRequestDispatcher("/group.jsp").forward(request, response);
 
 		log.trace("Finished findById() method.");
@@ -69,16 +70,11 @@ public class GroupServlet extends HttpServlet {
 		GroupManager groupManager = new GroupManagerImpl();
 		String groupId = request.getParameter("groupId");
 
-		StudentManager studentManager = new StudentManagerImpl();
-		List<Student> students = null;
-
 		try {
 			group = groupManager.findById(Integer.parseInt(groupId));
 			group.setName(name);
 
 			groupManager.update(group);
-
-			students = studentManager.findStudentsWithoutGroup();
 
 		} catch (DomainException e) {
 			log.error("Cannot update group=" + group, e);
@@ -89,10 +85,7 @@ public class GroupServlet extends HttpServlet {
 			throw new WebException("The id=" + groupId + " is wrong.", e);
 		}
 
-		request.setAttribute("group", group);
-		request.setAttribute("students", students);
-
-		request.getRequestDispatcher("/group.jsp").forward(request, response);
+		response.sendRedirect("group?groupId=" + groupId);
 
 		log.trace("Finished update() method.");
 		log.info("Updated the student.");

@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.domain.DomainException;
+import com.nikitachizhik91.university.domain.GroupManager;
 import com.nikitachizhik91.university.domain.impl.GroupManagerImpl;
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.web.WebException;
@@ -27,20 +28,21 @@ public class GroupStudentServlet extends HttpServlet {
 			throws ServletException, IOException {
 		log.trace("Started deleteStudentFromGroup() method.");
 
-		GroupManagerImpl groupManager = new GroupManagerImpl();
+		GroupManager groupManager = new GroupManagerImpl();
+		String studentId = request.getParameter("studentId");
 
 		try {
-			groupManager.deleteStudentFromGroup(Integer.parseInt(request.getParameter("studentId")));
+			groupManager.deleteStudentFromGroup(Integer.parseInt(studentId));
 
 		} catch (NumberFormatException e) {
-			log.error("The id=" + request.getParameter("studentId") + " is wrong.", e);
-			throw new WebException("The id=" + request.getParameter("studentId") + " is wrong.", e);
+			log.error("The id=" + studentId + " is wrong.", e);
+			throw new WebException("The id=" + studentId + " is wrong.", e);
 
 		} catch (DomainException e) {
-			log.error("Cannot delete student with id=" + request.getParameter("studentId") + " from group with id="
+			log.error("Cannot delete student with id=" + studentId + " from group with id="
 					+ request.getParameter("groupId"), e);
-			throw new WebException("Cannot delete student with id=" + request.getParameter("studentId")
-					+ " from group with id=" + request.getParameter("groupId"), e);
+			throw new WebException("Cannot delete student with id=" + studentId + " from group with id="
+					+ request.getParameter("groupId"), e);
 		}
 
 		response.sendRedirect("group?groupId=" + request.getParameter("groupId"));
@@ -56,7 +58,7 @@ public class GroupStudentServlet extends HttpServlet {
 
 		String studentId = request.getParameter("studentId");
 		String groupId = request.getParameter("groupId");
-		GroupManagerImpl groupManager = new GroupManagerImpl();
+		GroupManager groupManager = new GroupManagerImpl();
 		Group group = null;
 
 		try {

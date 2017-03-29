@@ -71,7 +71,7 @@ tr:nth-child(odd) {
 	background: #cccccc;
 }
 
-.add-student-button {
+.button {
 	border: 1px solid #666;
 	border-radius: 5px;
 	padding: 4px;
