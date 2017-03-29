@@ -12,11 +12,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.SubjectManager;
-import com.nikitachizhik91.university.domain.impl.SubjectManagerImpl;
+import com.nikitachizhik91.university.domain.TeacherManager;
+import com.nikitachizhik91.university.domain.impl.TeacherManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/subjectDelete")
+@WebServlet("/teacherDelete")
 public class DeleteTeacherServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(DeleteTeacherServlet.class.getName());
@@ -26,22 +26,22 @@ public class DeleteTeacherServlet extends HttpServlet {
 			throws ServletException, IOException {
 		log.trace("Started delete() method.");
 
-		SubjectManager subjectManager = new SubjectManagerImpl();
-		String subjectId = request.getParameter("subjectId");
+		TeacherManager teacherManager = new TeacherManagerImpl();
+		String teacherId = request.getParameter("teacherId");
 
 		try {
-			subjectManager.delete(Integer.parseInt(subjectId));
+			teacherManager.delete(Integer.parseInt(teacherId));
 
 		} catch (NumberFormatException e) {
-			log.error("The id=" + subjectId + " is wrong.", e);
-			throw new WebException("The id=" + subjectId + " is wrong.", e);
+			log.error("The id=" + teacherId + " is wrong.", e);
+			throw new WebException("The id=" + teacherId + " is wrong.", e);
 
 		} catch (DomainException e) {
-			log.error("Cannot delete room with id=" + subjectId, e);
-			throw new WebException("Cannot delete room with id=" + subjectId, e);
+			log.error("Cannot delete teacher with id=" + teacherId, e);
+			throw new WebException("Cannot delete teacher with id=" + teacherId, e);
 		}
 
-		response.sendRedirect("subjects");
+		response.sendRedirect("teachers");
 
 		log.trace("Finished delete() method.");
 	}

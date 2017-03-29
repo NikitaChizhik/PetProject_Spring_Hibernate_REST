@@ -43,6 +43,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
 			statement.setString(1, teacherArg.getName());
 			statement.setInt(2, teacherArg.getSubject().getId());
+
 			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
 			log.debug("Executed query :" + statement);

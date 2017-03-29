@@ -1,6 +1,7 @@
 package com.nikitachizhik91.university.web.servlets.teachers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,15 +14,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.RoomManager;
 import com.nikitachizhik91.university.domain.SubjectManager;
-import com.nikitachizhik91.university.domain.impl.RoomManagerImpl;
+import com.nikitachizhik91.university.domain.TeacherManager;
 import com.nikitachizhik91.university.domain.impl.SubjectManagerImpl;
-import com.nikitachizhik91.university.model.Room;
+import com.nikitachizhik91.university.domain.impl.TeacherManagerImpl;
 import com.nikitachizhik91.university.model.Subject;
+import com.nikitachizhik91.university.model.Teacher;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/subjects")
+@WebServlet("/teachers")
 public class TeachersServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(TeachersServlet.class.getName());
@@ -32,20 +33,25 @@ public class TeachersServlet extends HttpServlet {
 			throws ServletException, IOException {
 		log.trace("Started findAll() method.");
 
-		List<Subject> subjects = null;
+		List<Teacher> teachers = null;
+		TeacherManager teacherManager = new TeacherManagerImpl();
+		List<Subject> subjects = new ArrayList<Subject>();
 		SubjectManager subjectManager = new SubjectManagerImpl();
 
 		try {
+			teachers = teacherManager.findAll();
+
 			subjects = subjectManager.findAll();
 
 		} catch (DomainException e) {
 
-			log.error("Cannot find all subjects.", e);
-			throw new WebException("Cannot find all subjects.", e);
+			log.error("Cannot find all teachers.", e);
+			throw new WebException("Cannot find all teachers.", e);
 		}
 
+		request.setAttribute("teachers", teachers);
 		request.setAttribute("subjects", subjects);
-		request.getRequestDispatcher("/subjects.jsp").forward(request, response);
+		request.getRequestDispatcher("/teachers.jsp").forward(request, response);
 
 		log.trace("Finished findAll() method.");
 	}
@@ -55,25 +61,40 @@ public class TeachersServlet extends HttpServlet {
 			throws ServletException, IOException {
 		log.trace("Started addSubject() method.");
 
-		String number = request.getParameter("name");
+		String name = request.getParameter("name");
+		String subjectId = request.getParameter("subjectId");
 
-		Subject subject = new Subject();
-		subject.setName(number);
-
+		Teacher teacher = new Teacher();
+		teacher.setName(name);
 		SubjectManager subjectManager = new SubjectManagerImpl();
 
 		try {
-			subjectManager.create(subject);
+			Subject subject = subjectManager.findById(Integer.parseInt(subjectId));
+			teacher.setSubject(subject);
+
+		} catch (NumberFormatException e) {
+			log.error("The id=" + subjectId + " is wrong.", e);
+			throw new WebException("The id=" + subjectId + " is wrong.", e);
+
+		} catch (DomainException e) {
+			log.error("Can't find subject with id=" + subjectId, e);
+			throw new WebException("Can't find subject with id=" + subjectId, e);
+		}
+
+		TeacherManager teacherManager = new TeacherManagerImpl();
+
+		try {
+			teacherManager.create(teacher);
 
 		} catch (DomainException e) {
 
-			log.error("Cannot add subject=" + subject, e);
-			throw new WebException("Cannot add subject=" + subject, e);
+			log.error("Cannot add teacher=" + teacher, e);
+			throw new WebException("Cannot add teacher=" + teacher, e);
 		}
 
-		response.sendRedirect("subjects");
+		response.sendRedirect("teachers");
 
-		log.trace("Finished addSubject() method.");
+		log.trace("Finished addTeacher() method.");
 	}
 
 }
