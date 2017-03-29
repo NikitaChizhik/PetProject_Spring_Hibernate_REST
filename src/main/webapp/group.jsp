@@ -72,7 +72,7 @@
 					<c:param name="studentId" value="${student.id}" />
 				</c:url>
 				
-				<c:url var="studentDelete" value="groupStudentDelete">
+				<c:url var="studentDelete" value="groupStudent">
 					<c:param name="studentId" value="${student.id}" />
 					<c:param name="groupId" value="${group.id}" />
 				</c:url>

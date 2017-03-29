@@ -41,7 +41,7 @@ public class GroupServlet extends HttpServlet {
 			group = groupManager.findById(Integer.parseInt(groupId));
 
 			students = studentManager.findStudentsWithoutGroup();
-			
+
 		} catch (NumberFormatException e) {
 			log.error("The id=" + groupId + " is wrong.", e);
 			throw new WebException("The id=" + groupId + " is wrong.", e);
