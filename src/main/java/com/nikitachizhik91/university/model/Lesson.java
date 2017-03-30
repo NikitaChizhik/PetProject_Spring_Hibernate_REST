@@ -6,10 +6,10 @@ public class Lesson {
 	private int id;
 	private int number;
 	private Subject subject;
-	private Teacher teacher;
 	private Group group;
-	private Date date;
+	private Teacher teacher;
 	private Room room;
+	private Date date;
 
 	public int getNumber() {
 		return number;
@@ -44,6 +44,11 @@ public class Lesson {
 	}
 
 	public Date getDate() {
+		// mojno li tak?
+
+		// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		// String formatedDate = sdf.format(date);
 		return date;
 	}
 

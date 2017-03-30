@@ -32,8 +32,8 @@
 					<th>id</th>
 					<th>Name</th>
 					<th>Subject</th>
-					<th>New Name</th>
 					<th>New Subject</th>
+					<th>New Name</th>
 					<th>Save</th>
 
 				</tr>
