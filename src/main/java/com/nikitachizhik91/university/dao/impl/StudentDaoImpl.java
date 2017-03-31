@@ -25,7 +25,7 @@ public class StudentDaoImpl implements StudentDao {
 	private static final String UPDATE_STUDENT = "update students set name=? where id =?";
 	private static final String DELETE_STUDENT = "delete from students where id =?";
 
-	private static final String FIND_STUDENTS_WITHOUT_GROUP = "SELECT id FROM students s WHERE NOT EXISTS(SELECT NULL FROM groups_students gs WHERE gs.student_id = s.id);";
+	private static final String FIND_STUDENTS_WITHOUT_GROUP = "SELECT id FROM students s WHERE NOT EXISTS(SELECT NULL FROM groups_students gs WHERE gs.student_id = s.id)";
 
 	public StudentDaoImpl() {
 		connector = new Connector();

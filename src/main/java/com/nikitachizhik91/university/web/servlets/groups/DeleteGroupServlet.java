@@ -27,17 +27,18 @@ public class DeleteGroupServlet extends HttpServlet {
 		log.trace("Started delete() method.");
 
 		GroupManager groupManager = new GroupManagerImpl();
+		String groupId = request.getParameter("groupId");
 
 		try {
-			groupManager.delete(Integer.parseInt(request.getParameter("groupId")));
+			groupManager.delete(Integer.parseInt(groupId));
 
 		} catch (NumberFormatException e) {
-			log.error("The id=" + request.getParameter("groupId") + " is wrong.", e);
-			throw new WebException("The id=" + request.getParameter("groupId") + " is wrong.", e);
+			log.error("The id=" + groupId + " is wrong.", e);
+			throw new WebException("The id=" + groupId + " is wrong.", e);
 
 		} catch (DomainException e) {
-			log.error("Cannot delete group with id=" + request.getParameter("groupId"), e);
-			throw new WebException("Cannot delete group with id=" + request.getParameter("groupId"), e);
+			log.error("Cannot delete group with id=" + groupId, e);
+			throw new WebException("Cannot delete group with id=" + groupId, e);
 		}
 
 		response.sendRedirect("groups");

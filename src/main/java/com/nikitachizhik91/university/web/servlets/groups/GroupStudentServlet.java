@@ -58,21 +58,20 @@ public class GroupStudentServlet extends HttpServlet {
 		String studentId = request.getParameter("studentId");
 		String groupId = request.getParameter("groupId");
 		GroupManager groupManager = new GroupManagerImpl();
-		Group group = null;
 
 		try {
 			groupManager.addStudent(Integer.parseInt(studentId), Integer.parseInt(groupId));
 
-			group = groupManager.findById(Integer.parseInt(groupId));
-
-		} catch (DomainException e) {
-			log.error("Cannot add student with id=" + studentId + " to group with id=" + groupId, e);
-			throw new WebException("Cannot update group=" + group, e);
-
 		} catch (NumberFormatException e) {
 			log.error("The id=" + groupId + " is wrong.", e);
 			throw new WebException("The id=" + groupId + " is wrong.", e);
+
+		} catch (DomainException e) {
+			log.error("Cannot add student with id=" + studentId + " to group with id=" + groupId, e);
+			throw new WebException("Cannot add student with id=" + studentId + " to group with id=" + groupId, e);
+
 		}
+
 		response.sendRedirect("group?groupId=" + groupId);
 
 		log.trace("Finished addStudent() method.");

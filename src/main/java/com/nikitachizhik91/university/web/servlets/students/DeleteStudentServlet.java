@@ -27,17 +27,18 @@ public class DeleteStudentServlet extends HttpServlet {
 		log.trace("Started delete() method.");
 
 		StudentManager studentManager = new StudentManagerImpl();
+		String studentId = request.getParameter("studentId");
 
 		try {
-			studentManager.delete(Integer.parseInt(request.getParameter("studentId")));
+			studentManager.delete(Integer.parseInt(studentId));
 
 		} catch (NumberFormatException e) {
-			log.error("The id=" + request.getParameter("studentId") + " is wrong.", e);
-			throw new WebException("The id=" + request.getParameter("studentId") + " is wrong.", e);
+			log.error("The id=" + studentId + " is wrong.", e);
+			throw new WebException("The id=" + studentId + " is wrong.", e);
 
 		} catch (DomainException e) {
-			log.error("Cannot delete student with id=" + request.getParameter("studentId"), e);
-			throw new WebException("Cannot delete student with id=" + request.getParameter("studentId"), e);
+			log.error("Cannot delete student with id=" + studentId, e);
+			throw new WebException("Cannot delete student with id=" + studentId, e);
 		}
 
 		response.sendRedirect("students");

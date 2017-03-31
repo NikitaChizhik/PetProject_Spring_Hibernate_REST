@@ -208,12 +208,14 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	public void addSubject(int departmentId, int subjectId) throws DaoException {
 		log.trace("Started addSubject() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
+		
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT);) {
 
 			statement.setInt(1, departmentId);
 			statement.setInt(2, subjectId);
 			log.trace("Statement :" + statement + " is received.");
+			
 			statement.executeUpdate();
 			log.debug("Executed query :" + statement);
 
@@ -221,7 +223,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 			log.error("Cannot add Subject with id=" + subjectId, e);
 			throw new DaoException("Cannot add Subject with id=" + subjectId, e);
 		}
-		log.info("Added Subject with id=" + subjectId + " to the Department with id=" + departmentId);
+		log.info("Added Subject with id=" + subjectId + " to the department with id=" + departmentId);
 		log.trace("Finished addSubject() method.");
 	}
 

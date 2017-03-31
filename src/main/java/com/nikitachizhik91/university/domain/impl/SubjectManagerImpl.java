@@ -10,13 +10,13 @@ import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.dao.impl.SubjectDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.SubjectManager;
-import com.nikitachizhik91.university.model.Room;
+import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Subject;
 
 public class SubjectManagerImpl implements SubjectManager {
 
 	private final static Logger log = LogManager.getLogger(SubjectManagerImpl.class.getName());
-	private SubjectDao subjectDao;
+	private SubjectDaoImpl subjectDao;
 
 	public SubjectManagerImpl() {
 		subjectDao = new SubjectDaoImpl();
@@ -112,5 +112,24 @@ public class SubjectManagerImpl implements SubjectManager {
 			throw new DomainException("Cannot delete subject by id=" + id, e);
 		}
 		log.trace("Finished delete() method.");
+	}
+
+	@Override
+	public List<Subject> findSubjectsWithoutDepartment() throws DomainException {
+		log.trace("Started findSubjectsWithoutDepartment() method.");
+
+		List<Subject> subjects = null;
+		try {
+			log.trace("Finding all subjects which are without department.");
+
+			subjects = subjectDao.findSubjectsWithoutDepartment();
+
+		} catch (DaoException e) {
+			log.error("Cannot find all subjects which are without department.", e);
+			throw new DomainException("Cannot find all subjects which are without department.", e);
+		}
+		log.trace("Finished findSubjectsWithoutDepartment() method.");
+
+		return subjects;
 	}
 }

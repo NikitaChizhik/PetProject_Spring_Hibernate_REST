@@ -73,8 +73,6 @@ public class StudentsServlet extends HttpServlet {
 		response.sendRedirect("students");
 
 		log.trace("Finished addStudent() method.");
-		log.info("Added student.");
-
 	}
 
 }

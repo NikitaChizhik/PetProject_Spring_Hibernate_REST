@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<title>allGroups</title>
+<title>allDepartments</title>
 <link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
@@ -25,36 +25,37 @@
 
 		<div id="content">
 
-			<form action="groups" method="post">
+			<form action="departments" method="post">
 
 				<input type="text" name="name" /> <input type="submit"
-					value="Add Group" class="button" />
+					value="Add Department" class="button" />
 			</form>
 
 			<table>
 
 				<tr>
 					<th>Name</th>
-					<th>Students</th>
+					<th>Subjects</th>
+					<th>Teachers</th>
 					<th>Delete</th>
-
 				</tr>
 
-				<c:forEach var="group" items="${groups}">
+				<c:forEach var="department" items="${departments}">
 
-					<c:url var="groupLink" value="group">
-						<c:param name="groupId" value="${group.id}" />
+					<c:url var="departmentLink" value="department">
+						<c:param name="departmentId" value="${department.id}" />
 					</c:url>
 
-					<c:url var="deleteLink" value="groupDelete">
-						<c:param name="groupId" value="${group.id}" />
+					<c:url var="deleteLink" value="departmentDelete">
+						<c:param name="departmentId" value="${department.id}" />
 					</c:url>
 
 					<tr>
-						<td><a href="${groupLink}">${group.name}</a></td>
-						<td>${fn:length(group.students)}</td>
+						<td><a href="${departmentLink}">${department.name}</a></td>
+						<td>${fn:length(department.subjects)}</td>
+						<td>${fn:length(department.teachers)}</td>
 						<td><a href="${deleteLink}"
-							onclick="if (!(confirm('Are you sure you want to delete this group?'))) return false">
+							onclick="if (!(confirm('Are you sure you want to delete this department?'))) return false">
 								Delete</a></td>
 					</tr>
 
@@ -68,6 +69,7 @@
 	<p>
 		<a href="index.html">Back to University</a>
 	</p>
+
 </body>
 
 
