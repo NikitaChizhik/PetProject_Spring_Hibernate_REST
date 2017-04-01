@@ -45,8 +45,6 @@ public class DepartmentsServlet extends HttpServlet {
 		request.getRequestDispatcher("/departments.jsp").forward(request, response);
 
 		log.trace("Finished findAll() method.");
-		log.info("Found all departments.");
-
 	}
 
 	@Override

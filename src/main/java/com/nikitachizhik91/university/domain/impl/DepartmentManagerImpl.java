@@ -14,6 +14,7 @@ import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
 public class DepartmentManagerImpl implements DepartmentManager {
+	
 	private final static Logger log = LogManager.getLogger(DepartmentManagerImpl.class.getName());
 	private DepartmentDaoImlp departmentDaoImpl;
 
@@ -46,7 +47,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 
 		Department department = null;
 		try {
-			log.trace("Finding student by id.");
+			log.trace("Finding department by id.");
 
 			department = departmentDaoImpl.findById(id);
 
@@ -107,8 +108,8 @@ public class DepartmentManagerImpl implements DepartmentManager {
 			departmentDaoImpl.delete(id);
 
 		} catch (DaoException e) {
-			log.error("Cannot delete department id=" + id, e);
-			throw new DomainException("Cannot delete department id=" + id, e);
+			log.error("Cannot delete department with id=" + id, e);
+			throw new DomainException("Cannot delete department with id=" + id, e);
 		}
 		log.trace("Finished delete() method.");
 	}
@@ -226,10 +227,32 @@ public class DepartmentManagerImpl implements DepartmentManager {
 			departmentDaoImpl.deleteSubjectFromDepartment(subjectId);
 
 		} catch (DaoException e) {
-			log.error("Cannot delete subject with id=" + subjectId + " from departments_subject table", e);
-			throw new DomainException("Cannot delete subject with id=" + subjectId + " from departments_subject table",
+			log.error("Cannot delete subject with id=" + subjectId + " from departments_subjects table", e);
+			throw new DomainException("Cannot delete subject with id=" + subjectId + " from departments_subjects table",
 					e);
 		}
 		log.trace("Finished deleteSubjectFromDepartment() method.");
+	}
+
+	// TODO
+	@Override
+	public List<Department> findDepartmentsWithoutFaculty() throws DomainException {
+		// log.trace("Started findSubjectsWithoutDepartment() method.");
+		//
+		// List<Department> subjects = null;
+		// try {
+		// log.trace("Finding all subjects which are without department.");
+		//
+		// subjects = departmentDaoImpl.findSubjectsWithoutDepartment();
+		//
+		// } catch (DaoException e) {
+		// log.error("Cannot find all subjects which are without department.",
+		// e);
+		// throw new DomainException("Cannot find all subjects which are without
+		// department.", e);
+		// }
+		// log.trace("Finished findSubjectsWithoutDepartment() method.");
+		//
+		return null;
 	}
 }

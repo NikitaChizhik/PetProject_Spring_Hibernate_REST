@@ -45,8 +45,6 @@ public class StudentsServlet extends HttpServlet {
 		request.getRequestDispatcher("/students.jsp").forward(request, response);
 
 		log.trace("Finished findAll() method.");
-		log.info("Found all students.");
-
 	}
 
 	@Override

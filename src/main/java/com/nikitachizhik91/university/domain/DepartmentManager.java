@@ -33,4 +33,6 @@ public interface DepartmentManager {
 	public abstract void deleteTeacherFromDepartment(int teacherId) throws DomainException;
 
 	public abstract void deleteSubjectFromDepartment(int subjectId) throws DomainException;
+
+	public List<Department> findDepartmentsWithoutFaculty() throws DomainException;
 }
