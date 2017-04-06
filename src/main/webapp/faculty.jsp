@@ -56,13 +56,13 @@
 
 		<h3>Departments</h3>
 
-		<c:if test="${not empty departments}">
+		<c:if test="${not empty departmentsWithoutFaculty}">
 
 			<form action="facultyDepartment" method="post">
 
 
 				<select name="departmentId" class="button">
-					<c:forEach var="department" items="${departments}">
+					<c:forEach var="department" items="${departmentsWithoutFaculty}">
 						<option value="${department.id}">${department.name}</option>
 					</c:forEach>
 				</select> <input type="hidden" name="facultyId" value="${faculty.id }" /> <input
@@ -80,7 +80,7 @@
 			</tr>
 
 
-			<c:forEach var="department" items="${departmentsOfFaculty}">
+			<c:forEach var="department" items="${faculty.departments}">
 
 				<c:url var="departmentLink" value="department">
 					<c:param name="departmentId" value="${department.id}" />
@@ -109,19 +109,19 @@
 		<h3>Groups</h3>
 
 
+		<c:if test="${not empty groupsWithoutFaculty}">
+			<form action="facultyGroup" method="post">
 
-		<form action="facultyGroup" method="post">
 
+				<select name="groupId" class="button">
+					<c:forEach var="group" items="${groupsWithoutFaculty}">
+						<option value="${group.id}">${group.name}</option>
+					</c:forEach>
+				</select> <input type="hidden" name="facultyId" value="${faculty.id }" /> <input
+					type="submit" value="Add Group" class="button" />
 
-			<select name="groupId" class="button">
-				<c:forEach var="group" items="${groups}">
-					<option value="${group.id}">${group.name}</option>
-				</c:forEach>
-			</select> <input type="hidden" name="facultyId" value="${faculty.id }" /> <input
-				type="submit" value="Add Group" class="button" />
-
-		</form>
-
+			</form>
+		</c:if>
 
 		<table>
 
@@ -132,7 +132,7 @@
 			</tr>
 
 
-			<c:forEach var="group" items="${groupsOfFaculty}">
+			<c:forEach var="group" items="${faculty.groups}">
 
 				<c:url var="groupLink" value="group">
 					<c:param name="groupId" value="${group.id}" />

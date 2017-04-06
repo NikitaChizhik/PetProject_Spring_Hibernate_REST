@@ -6,17 +6,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.dao.impl.TeacherDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.TeacherManager;
-import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
 public class TeacherManagerImpl implements TeacherManager {
 
 	private final static Logger log = LogManager.getLogger(TeacherManagerImpl.class.getName());
-	private TeacherDao teacherDao;
+	private TeacherDaoImpl teacherDao;
 
 	public TeacherManagerImpl() {
 		teacherDao = new TeacherDaoImpl();
@@ -112,5 +110,24 @@ public class TeacherManagerImpl implements TeacherManager {
 			throw new DomainException("Cannot delete teacher by id=" + id, e);
 		}
 		log.trace("Finished delete() method.");
+	}
+
+	@Override
+	public List<Teacher> findTeachersWithoutDepartment() throws DomainException {
+		log.trace("Started findTeachersWithoutDepartment() method.");
+
+		List<Teacher> teachers = null;
+		try {
+			log.trace("Finding all teachers who are without department.");
+
+			teachers = teacherDao.findTeachersWithoutDepartment();
+
+		} catch (DaoException e) {
+			log.error("Cannot find all teachers who are without department.", e);
+			throw new DomainException("Cannot find all teachers who are without department.", e);
+		}
+		log.trace("Finished findTeachersWithoutDepartment() method.");
+
+		return teachers;
 	}
 }

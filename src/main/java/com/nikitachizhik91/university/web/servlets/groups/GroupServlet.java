@@ -53,7 +53,7 @@ public class GroupServlet extends HttpServlet {
 
 		request.setAttribute("group", group);
 		request.setAttribute("students", students);
-		System.out.println(students.isEmpty());
+		
 		request.getRequestDispatcher("/group.jsp").forward(request, response);
 
 		log.trace("Finished findById() method.");

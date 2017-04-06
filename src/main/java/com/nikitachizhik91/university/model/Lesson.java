@@ -44,11 +44,7 @@ public class Lesson {
 	}
 
 	public Date getDate() {
-		// mojno li tak?
 
-		// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-		// String formatedDate = sdf.format(date);
 		return date;
 	}
 

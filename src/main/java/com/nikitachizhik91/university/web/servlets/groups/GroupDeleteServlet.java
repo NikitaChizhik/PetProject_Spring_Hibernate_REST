@@ -17,9 +17,9 @@ import com.nikitachizhik91.university.domain.impl.GroupManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
 @WebServlet("/groupDelete")
-public class DeleteGroupServlet extends HttpServlet {
+public class GroupDeleteServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(DeleteGroupServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(GroupDeleteServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

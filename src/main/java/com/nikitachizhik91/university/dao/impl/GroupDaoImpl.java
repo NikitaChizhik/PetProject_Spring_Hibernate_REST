@@ -32,6 +32,8 @@ public class GroupDaoImpl implements GroupDao {
 	private static final String DELETE_ALL_STUDENTS_FROM_GROUP = "delete from groups_students where group_id=?";
 	private static final String DELETE_STUDENT_FROM_GROUP = "delete from groups_students where student_id=?";
 
+	private static final String FIND_GROUPS_WITHOUT_FACULTY = "SELECT id FROM groups g WHERE NOT EXISTS(SELECT NULL FROM faculties_groups fg WHERE fg.group_id = g.id)";
+
 	public GroupDaoImpl() {
 		connector = new Connector();
 	}
@@ -42,8 +44,8 @@ public class GroupDaoImpl implements GroupDao {
 
 		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection
-						.prepareStatement(INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(INSERT_GROUP,
+						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, groupArg.getName());
 			log.trace("Statement :" + statement + " is received.");
@@ -140,8 +142,8 @@ public class GroupDaoImpl implements GroupDao {
 
 		log.trace("Getting Conncetion and creating prepared statement.");
 		try (Connection connection = connector.getConnection();
-				PreparedStatement statement = connection
-						.prepareStatement(UPDATE_GROUP, Statement.RETURN_GENERATED_KEYS);) {
+				PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP,
+						Statement.RETURN_GENERATED_KEYS);) {
 
 			statement.setString(1, groupArg.getName());
 			statement.setInt(2, groupArg.getId());
@@ -283,5 +285,34 @@ public class GroupDaoImpl implements GroupDao {
 		log.info("Deleted Student with id=" + studentId);
 		log.trace("Finished deleteStudentFromGroup() method.");
 
+	}
+
+	public List<Group> findGroupsWithoutFaculty() throws DaoException {
+		log.trace("Started findGroupsWithoutFaculty() method.");
+
+		List<Group> groups = new ArrayList<Group>();
+
+		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(FIND_GROUPS_WITHOUT_FACULTY);
+				ResultSet resultSet = statement.executeQuery();) {
+
+			log.debug("Executed query :" + statement);
+			log.trace("Got the result set.");
+
+			while (resultSet.next()) {
+
+				Group group = findById(resultSet.getInt("id"));
+				groups.add(group);
+			}
+
+		} catch (SQLException e) {
+			log.error("Cannot find all groups which are without faculty.", e);
+			throw new DaoException("Cannot find all groups which are without faculty.", e);
+		}
+		log.info("Found all groups which are without faculty.");
+		log.trace("Finished findGroupsWithoutFaculty() method.");
+
+		return groups;
 	}
 }

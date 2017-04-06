@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -120,7 +121,9 @@
 					<th>New Date</th>
 				</tr>
 				<tr>
-					<td>${lesson.date }</td>
+					<td><fmt:formatDate pattern="dd/MM HH:mm"
+							value="${lesson.date }" /></td>
+					<!--  <td>${lesson.date }</td>-->
 					<td><input type="text" name="date" value="2017/03/30 12:30:00" /></td>
 				</tr>
 			</table>

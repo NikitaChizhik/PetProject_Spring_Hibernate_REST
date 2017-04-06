@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.GroupManager;
 import com.nikitachizhik91.university.domain.impl.GroupManagerImpl;
-import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.web.WebException;
 
 @WebServlet("/groupStudent")

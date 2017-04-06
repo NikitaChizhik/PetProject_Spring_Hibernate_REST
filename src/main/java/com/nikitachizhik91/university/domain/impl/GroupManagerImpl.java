@@ -9,6 +9,7 @@ import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.impl.GroupDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.GroupManager;
+import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Student;
 
@@ -155,4 +156,22 @@ public class GroupManagerImpl implements GroupManager {
 		log.trace("Finished deleteStudentFromGroup() method.");
 	}
 
+	@Override
+	public List<Group> findGroupsWithoutFaculty() throws DomainException {
+		log.trace("Started findGroupsWithoutFaculty() method.");
+
+		List<Group> groups = null;
+		try {
+			log.trace("Finding all groups which are without faculty.");
+
+			groups = groupDao.findGroupsWithoutFaculty();
+
+		} catch (DaoException e) {
+			log.error("Cannot find all groups which are without faculty.", e);
+			throw new DomainException("Cannot find all groups which are without faculty.", e);
+		}
+		log.trace("Finished findGroupsWithoutFaculty() method.");
+
+		return groups;
+	}
 }

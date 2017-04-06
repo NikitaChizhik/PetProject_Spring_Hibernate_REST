@@ -14,7 +14,7 @@ import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
 public class DepartmentManagerImpl implements DepartmentManager {
-	
+
 	private final static Logger log = LogManager.getLogger(DepartmentManagerImpl.class.getName());
 	private DepartmentDaoImlp departmentDaoImpl;
 
@@ -234,25 +234,22 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		log.trace("Finished deleteSubjectFromDepartment() method.");
 	}
 
-	// TODO
 	@Override
 	public List<Department> findDepartmentsWithoutFaculty() throws DomainException {
-		// log.trace("Started findSubjectsWithoutDepartment() method.");
-		//
-		// List<Department> subjects = null;
-		// try {
-		// log.trace("Finding all subjects which are without department.");
-		//
-		// subjects = departmentDaoImpl.findSubjectsWithoutDepartment();
-		//
-		// } catch (DaoException e) {
-		// log.error("Cannot find all subjects which are without department.",
-		// e);
-		// throw new DomainException("Cannot find all subjects which are without
-		// department.", e);
-		// }
-		// log.trace("Finished findSubjectsWithoutDepartment() method.");
-		//
-		return null;
+		log.trace("Started findDepartmentsWithoutFaculty() method.");
+
+		List<Department> departments = null;
+		try {
+			log.trace("Finding all departments which are without faculty.");
+
+			departments = departmentDaoImpl.findDepartmentsWithoutFaculty();
+
+		} catch (DaoException e) {
+			log.error("Cannot find all departments which are without faculty.", e);
+			throw new DomainException("Cannot find all departments which are without faculty.", e);
+		}
+		log.trace("Finished findDepartmentsWithoutFaculty() method.");
+
+		return departments;
 	}
 }

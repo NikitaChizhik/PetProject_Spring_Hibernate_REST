@@ -80,7 +80,7 @@
 			</tr>
 
 
-			<c:forEach var="subject" items="${subjectsOfDepartment}">
+			<c:forEach var="subject" items="${department.subjects}">
 
 				<c:url var="subjectLink" value="subject">
 					<c:param name="subjectId" value="${subject.id}" />
@@ -109,19 +109,19 @@
 		<h3>Teachers</h3>
 
 
+		<c:if test="${not empty teachersWithoutDepartment}">
+			<form action="departmentTeacher" method="post">
 
-		<form action="departmentTeacher" method="post">
 
+				<select name="teacherId" class="button">
+					<c:forEach var="teacher" items="${teachersWithoutDepartment}">
+						<option value="${teacher.id}">${teacher.name}</option>
+					</c:forEach>
+				</select> <input type="hidden" name="departmentId" value="${department.id }" />
+				<input type="submit" value="Add Teacher" class="button" />
 
-			<select name="teacherId" class="button">
-				<c:forEach var="teacher" items="${teachers}">
-					<option value="${teacher.id}">${teacher.name}</option>
-				</c:forEach>
-			</select> <input type="hidden" name="departmentId" value="${department.id }" />
-			<input type="submit" value="Add Teacher" class="button" />
-
-		</form>
-
+			</form>
+		</c:if>
 
 		<table>
 
@@ -132,7 +132,7 @@
 			</tr>
 
 
-			<c:forEach var="teacher" items="${teachersOfDepartment}">
+			<c:forEach var="teacher" items="${department.teachers}">
 
 				<c:url var="teacherLink" value="teacher">
 					<c:param name="subjectId" value="${subject.id}" />

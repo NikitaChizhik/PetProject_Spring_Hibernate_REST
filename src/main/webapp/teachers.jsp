@@ -51,6 +51,7 @@
 
 				<tr>
 					<th>Name</th>
+					<th>Subject</th>
 					<th>Delete</th>
 				</tr>
 
@@ -66,6 +67,7 @@
 
 					<tr>
 						<td><a href="${teacherLink}">${teacher.name}</a></td>
+						<td>${teacher.subject.name}</td>
 						<td><a href="${deleteLink}"
 							onclick="if (!(confirm('Are you sure you want to delete this teacher?'))) return false">
 								Delete</a></td>

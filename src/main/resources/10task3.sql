@@ -121,8 +121,8 @@ CREATE TABLE public.teachers
     CONSTRAINT teachers_pkey PRIMARY KEY (id),
     CONSTRAINT subject_id FOREIGN KEY (subject_id)
         REFERENCES public.subjects (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 )
 WITH (
     OIDS = FALSE
@@ -157,20 +157,20 @@ CREATE TABLE public.lessons
     CONSTRAINT lessons_pkey PRIMARY KEY (id),
     CONSTRAINT group_id FOREIGN KEY (group_id)
         REFERENCES public.groups (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
     CONSTRAINT room_id FOREIGN KEY (room_id)
         REFERENCES public.rooms (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
     CONSTRAINT subject_id FOREIGN KEY (subject_id)
         REFERENCES public.subjects (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
     CONSTRAINT teacher_id FOREIGN KEY (teacher_id)
         REFERENCES public.teachers (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 )
 WITH (
     OIDS = FALSE

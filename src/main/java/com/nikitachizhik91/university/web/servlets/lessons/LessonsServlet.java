@@ -132,7 +132,7 @@ public class LessonsServlet extends HttpServlet {
 			throw new WebException("Can't find subject with id=" + subjectId, e);
 		}
 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = null;
 		try {
 			date = formatter.parse(dateString);

@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -23,6 +24,8 @@
 	<div id="container">
 
 		<div id="content">
+
+
 			<form action="lessons" method="post">
 				<table>
 
@@ -98,10 +101,11 @@
 			<table>
 
 				<tr>
-
+					<th>Group</th>
 					<th>Subject</th>
 					<th>Date</th>
 					<th>Number</th>
+					<th>Teacher</th>
 					<th>Delete</th>
 
 				</tr>
@@ -117,14 +121,20 @@
 					</c:url>
 
 					<tr>
-
+						<td>${lesson.group.name }</td>
 						<td><a href="${lessonLink}">${lesson.subject.name}</a></td>
-						<td>${lesson.date }</td>
-						<td>${lesson.number }</td>
 
+
+
+						<td><fmt:formatDate pattern="dd/MM HH:mm"
+								value="${lesson.date }" /></td>
+						<!--  	<td>${lesson.date }"</td>-->
+						<td>${lesson.number }</td>
+						<td>${lesson.teacher.name }</td>
 						<td><a href="${deleteLink}"
 							onclick="if (!(confirm('Are you sure you want to delete this lesson?'))) return false">
 								Delete</a></td>
+
 					</tr>
 
 				</c:forEach>

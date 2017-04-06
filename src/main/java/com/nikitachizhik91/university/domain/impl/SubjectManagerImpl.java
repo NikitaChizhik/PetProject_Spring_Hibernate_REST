@@ -6,11 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.dao.impl.SubjectDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.SubjectManager;
-import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Subject;
 
 public class SubjectManagerImpl implements SubjectManager {

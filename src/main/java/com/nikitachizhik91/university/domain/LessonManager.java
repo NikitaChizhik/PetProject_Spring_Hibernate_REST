@@ -20,11 +20,11 @@ public interface LessonManager {
 
 	public abstract void delete(int id) throws DomainException;
 
-	public abstract List<Lesson> getTeacherTimetableForDay(Teacher teacher, Date date) throws DaoException;
+	public abstract List<Lesson> getTeacherTimetableForDay(Teacher teacher, Date date) throws DomainException;
 
-	public abstract List<Lesson> getTeacherTimetableForMonth(Teacher teacher, Date date) throws DaoException;
+	public abstract List<Lesson> getTeacherTimetableForMonth(Teacher teacher, Date date) throws DomainException;
 
-	public abstract List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DaoException;
+	public abstract List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DomainException;
 
-	public abstract List<Lesson> getStudentTimetableFoMonth(Student student, Date date) throws DaoException;
+	public abstract List<Lesson> getStudentTimetableFoMonth(Student student, Date date) throws DomainException;
 }

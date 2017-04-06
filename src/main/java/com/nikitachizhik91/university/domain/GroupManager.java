@@ -25,4 +25,6 @@ public interface GroupManager {
 
 	public void deleteStudentFromGroup(int studentId) throws DomainException;
 
+	public List<Group> findGroupsWithoutFaculty() throws DomainException;
+
 }

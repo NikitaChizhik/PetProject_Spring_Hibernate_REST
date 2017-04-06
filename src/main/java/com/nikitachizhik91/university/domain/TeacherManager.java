@@ -15,4 +15,6 @@ public interface TeacherManager {
 	public abstract Teacher update(Teacher teacher) throws DomainException;
 
 	public abstract void delete(int id) throws DomainException;
+
+	public abstract List<Teacher> findTeachersWithoutDepartment() throws DomainException;
 }

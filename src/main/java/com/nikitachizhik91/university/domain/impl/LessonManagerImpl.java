@@ -17,10 +17,10 @@ import com.nikitachizhik91.university.model.Teacher;
 public class LessonManagerImpl implements LessonManager {
 
 	private final static Logger log = LogManager.getLogger(LessonManagerImpl.class.getName());
-	private LessonDaoImpl lessonDao;
+	private LessonDaoImpl lessonDaoImpl;
 
 	public LessonManagerImpl() {
-		lessonDao = new LessonDaoImpl();
+		lessonDaoImpl = new LessonDaoImpl();
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Creating lesson.");
 
-			lessonTemp = lessonDao.create(lesson);
+			lessonTemp = lessonDaoImpl.create(lesson);
 
 		} catch (DaoException e) {
 			log.error("Cannot create lesson=" + lesson, e);
@@ -50,7 +50,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Finding lesson by id.");
 
-			teacher = lessonDao.findById(id);
+			teacher = lessonDaoImpl.findById(id);
 
 		} catch (DaoException e) {
 			log.error("Cannot find lesson by id=" + id, e);
@@ -70,7 +70,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Finding all lessons");
 
-			lessons = lessonDao.findAll();
+			lessons = lessonDaoImpl.findAll();
 
 		} catch (DaoException e) {
 			log.error("Cannot find all lessons.", e);
@@ -89,7 +89,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Updating lesson.");
 
-			lessonTemp = lessonDao.update(lesson);
+			lessonTemp = lessonDaoImpl.update(lesson);
 
 		} catch (DaoException e) {
 			log.error("Cannot update lesson=" + lesson, e);
@@ -107,7 +107,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Deleting lesson by id.");
 
-			lessonDao.delete(id);
+			lessonDaoImpl.delete(id);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete lesson by id=" + id, e);
@@ -117,22 +117,44 @@ public class LessonManagerImpl implements LessonManager {
 	}
 
 	@Override
-	public List<Lesson> getTeacherTimetableForDay(Teacher teacher, Date date) throws DaoException {
+	public List<Lesson> getTeacherTimetableForDay(Teacher teacher, Date date) throws DomainException {
 		return null;
 	}
 
 	@Override
-	public List<Lesson> getTeacherTimetableForMonth(Teacher teacher, Date date) throws DaoException {
+	public List<Lesson> getTeacherTimetableForMonth(Teacher teacher, Date date) throws DomainException {
 		return null;
 	}
 
 	@Override
-	public List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DaoException {
-		return null;
+	public List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DomainException {
+		log.trace("Started getStudentTimetableForDay().");
+		if (student == null || date == null) {
+			log.error("Student or date == null");
+			throw new IllegalArgumentException("Student or Date == null");
+		}
+		log.trace("Finding all lessons.");
+
+		List<Lesson> lessons = null;
+
+		try {
+			log.trace("Finding required lessons.");
+
+			lessons = lessonDaoImpl.getStudentTimetableForDay(student, date);
+
+		} catch (DaoException e) {
+			log.error("Cannot getStudentTimetableForDay() for Student :" + student + " and Date :" + date, e);
+			throw new DomainException(
+					"Cannot getStudentTimetableForDay() for Student :" + student + " and Date :" + date, e);
+		}
+
+		log.info("Found " + lessons.size() + " lessons for Student:" + student + " and Date:" + date);
+		log.trace("Finished getStudentTimetableForDay().");
+		return lessons;
 	}
 
 	@Override
-	public List<Lesson> getStudentTimetableFoMonth(Student student, Date date) throws DaoException {
+	public List<Lesson> getStudentTimetableFoMonth(Student student, Date date) throws DomainException {
 		return null;
 	}
 }

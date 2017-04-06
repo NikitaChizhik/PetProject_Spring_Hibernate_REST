@@ -38,24 +38,24 @@ public class FacultyServlet extends HttpServlet {
 		Faculty faculty = null;
 		FacultyManager facultyManager = new FacultyManagerImpl();
 
-		List<Department> departmentsOfFaculty = null;
+		List<Department> departmentsWithoutFaculty = null;
 		DepartmentManager departmentManager = new DepartmentManagerImpl();
 		List<Department> departments = null;
 
-		List<Group> groupsOfFaculty = null;
-		GroupManager groupManagerImpl = new GroupManagerImpl();
+		List<Group> groupsWithoutFaculty = null;
+		GroupManager groupManager = new GroupManagerImpl();
 		List<Group> groups = null;
 
 		try {
 			faculty = facultyManager.findById(Integer.parseInt(facultyId));
 
-			departmentsOfFaculty = facultyManager.findDepartmentsByFacultyId(Integer.parseInt(facultyId));
+			departmentsWithoutFaculty = departmentManager.findDepartmentsWithoutFaculty();
+
+			groupsWithoutFaculty = groupManager.findGroupsWithoutFaculty();
 
 			departments = departmentManager.findAll();
 
-			groupsOfFaculty = facultyManager.findGroupsByFacultyId(Integer.parseInt(facultyId));
-
-			groups = groupManagerImpl.findAll();
+			groups = groupManager.findAll();
 
 		} catch (NumberFormatException e) {
 			log.error("The id=" + facultyId + " is wrong.", e);
@@ -67,9 +67,9 @@ public class FacultyServlet extends HttpServlet {
 		}
 
 		request.setAttribute("faculty", faculty);
-		request.setAttribute("departmentsOfFaculty", departmentsOfFaculty);
 		request.setAttribute("departments", departments);
-		request.setAttribute("groupsOfFaculty", groupsOfFaculty);
+		request.setAttribute("departmentsWithoutFaculty", departmentsWithoutFaculty);
+		request.setAttribute("groupsWithoutFaculty", groupsWithoutFaculty);
 		request.setAttribute("groups", groups);
 
 		request.getRequestDispatcher("/faculty.jsp").forward(request, response);

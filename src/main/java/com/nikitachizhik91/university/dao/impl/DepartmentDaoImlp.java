@@ -40,6 +40,8 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	private static final String DELETE_ALL_SUBJECTS_FROM_DEPARTMENT = "delete from departments_subjects where department_id=?";
 	private static final String DELETE_SUBJECT_FROM_DEPARTMENT = "delete from departments_subjects where subject_id=?";
 
+	private static final String FIND_DEPARTMENTS_WITHOUT_FACULTY = "SELECT id FROM departments d WHERE NOT EXISTS(SELECT NULL FROM faculties_departments fd WHERE fd.department_id = d.id)";
+
 	public DepartmentDaoImlp() {
 		connector = new Connector();
 	}
@@ -208,14 +210,14 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	public void addSubject(int departmentId, int subjectId) throws DaoException {
 		log.trace("Started addSubject() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		
+
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT);) {
 
 			statement.setInt(1, departmentId);
 			statement.setInt(2, subjectId);
 			log.trace("Statement :" + statement + " is received.");
-			
+
 			statement.executeUpdate();
 			log.debug("Executed query :" + statement);
 
@@ -390,5 +392,34 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		log.info("Deleted Subejct with id=" + subjectId);
 		log.trace("Finished deleteSubjectFromDepartment() method.");
 
+	}
+
+	public List<Department> findDepartmentsWithoutFaculty() throws DaoException {
+		log.trace("Started findDepartmentsWithoutFaculty() method.");
+
+		List<Department> departments = new ArrayList<Department>();
+
+		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENTS_WITHOUT_FACULTY);
+				ResultSet resultSet = statement.executeQuery();) {
+
+			log.debug("Executed query :" + statement);
+			log.trace("Got the result set.");
+
+			while (resultSet.next()) {
+
+				Department department = findById(resultSet.getInt("id"));
+				departments.add(department);
+			}
+
+		} catch (SQLException e) {
+			log.error("Cannot find all departments which are without faculty.", e);
+			throw new DaoException("Cannot find all departments which are without faculty.", e);
+		}
+		log.info("Found all departments which are without faculty.");
+		log.trace("Finished findDepartmentsWithoutFaculty() method.");
+
+		return departments;
 	}
 }

@@ -38,24 +38,21 @@ public class DepartmentServlet extends HttpServlet {
 		Department department = null;
 		DepartmentManager departmentManager = new DepartmentManagerImpl();
 
-		List<Subject> subjectsOfDepartment = null;
 		SubjectManager subjectManager = new SubjectManagerImpl();
 		List<Subject> subjectsWithoutDepartment = null;
 
-		List<Teacher> teachersOfDepartment = null;
-		TeacherManager teacherManagerImpl = new TeacherManagerImpl();
+		TeacherManager teacherManager = new TeacherManagerImpl();
 		List<Teacher> teachers = null;
+		List<Teacher> teachersWithoutDepartment = null;
 
 		try {
 			department = departmentManager.findById(Integer.parseInt(departmentId));
 
-			subjectsOfDepartment = departmentManager.findSubjectsByDepartmentId(Integer.parseInt(departmentId));
-
 			subjectsWithoutDepartment = subjectManager.findSubjectsWithoutDepartment();
 
-			teachersOfDepartment = departmentManager.findTeachersByDepartmentId(Integer.parseInt(departmentId));
+			teachersWithoutDepartment = teacherManager.findTeachersWithoutDepartment();
 
-			teachers = teacherManagerImpl.findAll();
+			teachers = teacherManager.findAll();
 
 		} catch (NumberFormatException e) {
 			log.error("The id=" + departmentId + " is wrong.", e);
@@ -67,9 +64,8 @@ public class DepartmentServlet extends HttpServlet {
 		}
 
 		request.setAttribute("department", department);
-		request.setAttribute("subjectsOfDepartment", subjectsOfDepartment);
 		request.setAttribute("subjectsWithoutDepartment", subjectsWithoutDepartment);
-		request.setAttribute("teachersOfDepartment", teachersOfDepartment);
+		request.setAttribute("teachersWithoutDepartment", teachersWithoutDepartment);
 		request.setAttribute("teachers", teachers);
 
 		request.getRequestDispatcher("/department.jsp").forward(request, response);

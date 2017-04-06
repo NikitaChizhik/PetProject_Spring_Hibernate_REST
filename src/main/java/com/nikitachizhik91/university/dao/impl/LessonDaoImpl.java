@@ -432,6 +432,7 @@ public class LessonDaoImpl implements LessonDao {
 		}
 		log.info("Got " + lessons.size() + " lessons for Student timetable for Day");
 		log.trace("Finished getStudentTimetableForDay() method.");
+
 		return lessons;
 	}
 
