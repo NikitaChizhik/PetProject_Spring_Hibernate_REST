@@ -328,21 +328,18 @@ public class LessonDaoImpl implements LessonDao {
 
 			statement.setInt(1, teacher.getId());
 
-			GregorianCalendar gregorianCalendar = new GregorianCalendar();
-			gregorianCalendar.setTime(date);
-			gregorianCalendar.set(Calendar.DAY_OF_MONTH, 01);
-			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
-			gregorianCalendar.set(Calendar.MINUTE, 00);
-			gregorianCalendar.set(Calendar.SECOND, 00);
-			Timestamp startDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			Timestamp startDate = new Timestamp(date.getTime());
 			statement.setTimestamp(2, startDate);
 
-			gregorianCalendar.set(Calendar.DAY_OF_MONTH,
-					gregorianCalendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
-			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 23);
-			gregorianCalendar.set(Calendar.MINUTE, 59);
-			gregorianCalendar.set(Calendar.SECOND, 59);
-			Timestamp endDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+			calendar.set(Calendar.HOUR_OF_DAY, 23);
+			calendar.set(Calendar.MINUTE, 59);
+			calendar.set(Calendar.SECOND, 23);
+			Date lastDayOfMonth = calendar.getTime();
+
+			Timestamp endDate = new Timestamp(lastDayOfMonth.getTime());
 			statement.setTimestamp(3, endDate);
 
 			try (ResultSet resultSet = statement.executeQuery()) {
@@ -436,7 +433,7 @@ public class LessonDaoImpl implements LessonDao {
 		return lessons;
 	}
 
-	public List<Lesson> getStudentTimetableFoMonth(Student student, Date date) throws DaoException {
+	public List<Lesson> getStudentTimetableForMonth(Student student, Date date) throws DaoException {
 		log.trace("Started getStudentTimetableFoMonth().");
 
 		List<Lesson> lessons = new ArrayList<Lesson>();
@@ -447,21 +444,18 @@ public class LessonDaoImpl implements LessonDao {
 
 			statement.setInt(1, student.getId());
 
-			GregorianCalendar gregorianCalendar = new GregorianCalendar();
-			gregorianCalendar.setTime(date);
-			gregorianCalendar.set(Calendar.DAY_OF_MONTH, 01);
-			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
-			gregorianCalendar.set(Calendar.MINUTE, 00);
-			gregorianCalendar.set(Calendar.SECOND, 00);
-			Timestamp startDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			Timestamp startDate = new Timestamp(date.getTime());
 			statement.setTimestamp(2, startDate);
 
-			gregorianCalendar.set(Calendar.DAY_OF_MONTH,
-					gregorianCalendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
-			gregorianCalendar.set(Calendar.HOUR_OF_DAY, 23);
-			gregorianCalendar.set(Calendar.MINUTE, 59);
-			gregorianCalendar.set(Calendar.SECOND, 59);
-			Timestamp endDate = new Timestamp(gregorianCalendar.getTimeInMillis());
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+			calendar.set(Calendar.HOUR_OF_DAY, 23);
+			calendar.set(Calendar.MINUTE, 59);
+			calendar.set(Calendar.SECOND, 23);
+			Date lastDayOfMonth = calendar.getTime();
+
+			Timestamp endDate = new Timestamp(lastDayOfMonth.getTime());
 			statement.setTimestamp(3, endDate);
 
 			try (ResultSet resultSet = statement.executeQuery()) {

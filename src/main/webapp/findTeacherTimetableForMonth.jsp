@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<title>StudentForMonth</title>
+<title>TeacherForMonth</title>
 <link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
@@ -25,16 +25,16 @@
 
 		<div id="content">
 
-			<h2>Find Student Timetable for Day</h2>
+			<h2>Find Teacher Timetable for Month</h2>
 
 
 
 
-			<form action="displayStudentTimetableForDay" method="get">
+			<form action="displayTeacherTimetableForMonth" method="get">
 				<table>
 
 					<tr>
-						<th>Student</th>
+						<th>Teacher</th>
 						<th>Date</th>
 						<th></th>
 
@@ -44,12 +44,12 @@
 
 
 					<tr>
-						<td><select name="studentIdAndName" class="button">
-								<c:forEach var="student" items="${students}">
-									<option value="${student.id},${student.name}">${student.name}</option>
+						<td><select name="teacherIdAndName" class="button">
+								<c:forEach var="teacher" items="${teachers}">
+									<option value="${teacher.id},${teacher.name}">${teacher.name}</option>
 								</c:forEach>
 						</select></td>
-						<td><input type="text" name="date" value="2017/03/01" /></td>
+						<td><input type="text" name="date" value="2017/03" /></td>
 
 						<td><input type="submit" value="FIND" class="button" /></td>
 					</tr>
@@ -60,7 +60,7 @@
 
 
 
-			<h2>Student : ${studentName }</h2>
+			<h2>Teacher : ${teacherName  }</h2>
 
 
 			<table>

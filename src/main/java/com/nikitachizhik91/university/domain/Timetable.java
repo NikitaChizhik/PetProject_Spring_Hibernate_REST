@@ -135,7 +135,7 @@ public class Timetable {
 
 		try {
 			log.trace("Finding required lessons.");
-			lessons = lessonDaoImpl.getStudentTimetableFoMonth(student, date);
+			lessons = lessonDaoImpl.getStudentTimetableForMonth(student, date);
 		} catch (DaoException e) {
 			log.error("Cannot getStudentTimetableFoMonth() for Student :" + student + " and Date :" + date, e);
 			throw new DomainException(

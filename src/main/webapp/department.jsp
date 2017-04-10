@@ -58,7 +58,7 @@
 
 		<c:if test="${not empty subjectsWithoutDepartment}">
 
-			<form action="departmentSubject" method="post">
+			<form action="addSubject" method="post">
 
 
 				<select name="subjectId" class="button">
@@ -86,7 +86,7 @@
 					<c:param name="subjectId" value="${subject.id}" />
 				</c:url>
 
-				<c:url var="deleteSubjectLink" value="departmentSubject">
+				<c:url var="deleteSubjectLink" value="/deleteSubject">
 					<c:param name="subjectId" value="${subject.id}" />
 					<c:param name="departmentId" value="${department.id}" />
 				</c:url>

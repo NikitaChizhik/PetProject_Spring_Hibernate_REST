@@ -73,8 +73,8 @@ public class TeachersServlet extends HttpServlet {
 			teacher.setSubject(subject);
 
 		} catch (NumberFormatException e) {
-			log.error("The id=" + subjectId + " is wrong.", e);
-			throw new WebException("The id=" + subjectId + " is wrong.", e);
+			log.error("The subject id=" + subjectId + " is wrong.", e);
+			throw new WebException("The subject id=" + subjectId + " is wrong.", e);
 
 		} catch (DomainException e) {
 			log.error("Can't find subject with id=" + subjectId, e);

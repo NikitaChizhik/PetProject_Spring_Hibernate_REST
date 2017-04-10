@@ -3,9 +3,7 @@ package com.nikitachizhik91.university.domain;
 import java.util.Date;
 import java.util.List;
 
-import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.model.Lesson;
-import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
 
 public interface LessonManager {
@@ -20,11 +18,11 @@ public interface LessonManager {
 
 	public abstract void delete(int id) throws DomainException;
 
-	public abstract List<Lesson> getTeacherTimetableForDay(Teacher teacher, Date date) throws DomainException;
+	public abstract List<Lesson> getTeacherTimetableForDay(int teacherId, Date date) throws DomainException;
 
-	public abstract List<Lesson> getTeacherTimetableForMonth(Teacher teacher, Date date) throws DomainException;
+	public abstract List<Lesson> getTeacherTimetableForMonth(int teacherId, Date date) throws DomainException;
 
-	public abstract List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DomainException;
+	public abstract List<Lesson> getStudentTimetableForDay(int studentId, Date date) throws DomainException;
 
-	public abstract List<Lesson> getStudentTimetableFoMonth(Student student, Date date) throws DomainException;
+	public abstract List<Lesson> getStudentTimetableForMonth(int studentId, Date date) throws DomainException;
 }

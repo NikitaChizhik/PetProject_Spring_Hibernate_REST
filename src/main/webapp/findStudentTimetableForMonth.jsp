@@ -25,12 +25,12 @@
 
 		<div id="content">
 
-			<h2>Find Student Timetable for Day</h2>
+			<h2>Find Student Timetable for Month</h2>
 
 
 
 
-			<form action="displayStudentTimetableForDay" method="get">
+			<form action="displayStudentTimetableForMonth" method="get">
 				<table>
 
 					<tr>
@@ -49,7 +49,7 @@
 									<option value="${student.id},${student.name}">${student.name}</option>
 								</c:forEach>
 						</select></td>
-						<td><input type="text" name="date" value="2017/03/01" /></td>
+						<td><input type="text" name="date" value="2017/03" /></td>
 
 						<td><input type="submit" value="FIND" class="button" /></td>
 					</tr>
@@ -60,7 +60,7 @@
 
 
 
-			<h2>Student : ${studentName }</h2>
+			<h2>Student : ${studentName  }</h2>
 
 
 			<table>

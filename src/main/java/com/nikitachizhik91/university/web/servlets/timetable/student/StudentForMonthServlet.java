@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.web.servlets.timetable;
+package com.nikitachizhik91.university.web.servlets.timetable.student;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,16 +18,16 @@ import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/studentTimetableForDay")
-public class StudentForDayServlet extends HttpServlet {
+@WebServlet("/studentTimetableForMonth")
+public class StudentForMonthServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(StudentForDayServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(StudentForMonthServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findAll() method.");
+		log.trace("Started studentTimetableForMonth servlet.");
 
 		List<Student> students = null;
 		StudentManager studentManager = new StudentManagerImpl();
@@ -42,9 +42,9 @@ public class StudentForDayServlet extends HttpServlet {
 		}
 
 		request.setAttribute("students", students);
-		request.getRequestDispatcher("/findStudentTimetableForDay.jsp").forward(request, response);
+		request.getRequestDispatcher("/findStudentTimetableForMonth.jsp").forward(request, response);
 
-		log.trace("Finished findAll() method.");
+		log.trace("Finished studentTimetableForMonth servlet.");
 	}
 
 }

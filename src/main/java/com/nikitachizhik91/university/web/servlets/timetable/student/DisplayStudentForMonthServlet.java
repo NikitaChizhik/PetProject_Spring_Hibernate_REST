@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.web.servlets.timetable;
+package com.nikitachizhik91.university.web.servlets.timetable.student;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -24,21 +24,22 @@ import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/displayStudentTimetableForDay")
-public class DisplayStudentForDayServlet extends HttpServlet {
+@WebServlet("/displayStudentTimetableForMonth")
+public class DisplayStudentForMonthServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(DisplayStudentForDayServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(DisplayStudentForMonthServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addStudent() method.");
+		log.trace("Started displayStudentTimetableForMonth servlet.");
 
-		String studentId = request.getParameter("studentId");
+		String[] parameters = request.getParameter("studentIdAndName").split(",");
+		String studentId = parameters[0];
 		String dateString = request.getParameter("date");
 
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM");
 		Date date = null;
 		try {
 			date = formatter.parse(dateString);
@@ -50,31 +51,33 @@ public class DisplayStudentForDayServlet extends HttpServlet {
 		LessonManager lessonManager = new LessonManagerImpl();
 		StudentManager studentManager = new StudentManagerImpl();
 
-		Student student = null;
 		List<Lesson> lessons = null;
 		List<Student> students = null;
 
 		try {
 
-			student = studentManager.findById(Integer.parseInt(studentId));
-
-			lessons = lessonManager.getStudentTimetableForDay(student, date);
+			lessons = lessonManager.getStudentTimetableForMonth(Integer.parseInt(studentId), date);
 
 			students = studentManager.findAll();
 
 		} catch (DomainException e) {
-			// NumberFormatException
-			log.error("Cannot getStudentTimetableForDay() for Student :" + student + " and Date :" + date, e);
-			throw new WebException("Cannot getStudentTimetableForDay() for Student :" + student + " and Date :" + date,
+
+			log.error("Cannot getStudentTimetableForMonth() for Student with id=:" + studentId + " and Date :" + date,
 					e);
+			throw new WebException(
+					"Cannot getStudentTimetableForMonth() for Student with id=:" + studentId + " and Date :" + date, e);
+		} catch (NumberFormatException e) {
+
+			log.error("The student id=" + studentId + " is wrong.", e);
+			throw new WebException("The student id=" + studentId + " is wrong.", e);
 		}
 
 		request.setAttribute("students", students);
 		request.setAttribute("lessons", lessons);
-		request.setAttribute("student", student);
-		request.getRequestDispatcher("/findStudentTimetableForDay.jsp").forward(request, response);
+		request.setAttribute("studentName", parameters[1]);
+		request.getRequestDispatcher("/findStudentTimetableForMonth.jsp").forward(request, response);
 
-		log.trace("Finished addStudent() method.");
+		log.trace("Finished displayStudentTimetableForMonth servlet.");
 	}
 
 }

@@ -16,37 +16,16 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.impl.DepartmentManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/departmentSubject")
-public class DepartmentSubjectServlet extends HttpServlet {
+@WebServlet("/addSubject")
+public class DepartmentAddSubjectServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(DepartmentSubjectServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(DepartmentAddSubjectServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started deleteSubjectFromDepartment() method.");
-
-		DepartmentManager departmentManager = new DepartmentManagerImpl();
-		String subjectId = request.getParameter("subjectId");
-		String departmentId = request.getParameter("departmentId");
-
-		try {
-			departmentManager.deleteSubjectFromDepartment(Integer.parseInt(subjectId));
-
-		} catch (NumberFormatException e) {
-			log.error("The id=" + subjectId + " is wrong.", e);
-			throw new WebException("The id=" + subjectId + " is wrong.", e);
-
-		} catch (DomainException e) {
-			log.error("Cannot delete subject with id=" + subjectId + " from group with id=" + departmentId, e);
-			throw new WebException("Cannot delete subject with id=" + subjectId + " from group with id=" + departmentId,
-					e);
-		}
-
-		response.sendRedirect("department?departmentId=" + departmentId);
-
-		log.trace("Finished deleteSubjectFromDepartment() method.");
+		doPost(request, response);
 	}
 
 	@Override
