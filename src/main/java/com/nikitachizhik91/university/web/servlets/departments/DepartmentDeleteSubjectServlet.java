@@ -16,17 +16,11 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.impl.DepartmentManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/deleteSubject")
+@WebServlet("/department/deleteSubject")
 public class DepartmentDeleteSubjectServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(DepartmentDeleteSubjectServlet.class.getName());
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doPost(request, response);
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -50,7 +44,7 @@ public class DepartmentDeleteSubjectServlet extends HttpServlet {
 					e);
 		}
 
-		response.sendRedirect("department?departmentId=" + departmentId);
+		response.sendRedirect("/university/department?departmentId=" + departmentId);
 
 		log.trace("Finished deleteSubjectFromDepartment() method.");
 	}

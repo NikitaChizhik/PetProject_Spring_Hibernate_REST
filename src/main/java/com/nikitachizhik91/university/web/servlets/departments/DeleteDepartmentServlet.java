@@ -16,13 +16,13 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.impl.DepartmentManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/departmentDelete")
+@WebServlet("/department/delete")
 public class DeleteDepartmentServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(DeleteDepartmentServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		log.trace("Started delete() method.");
 
@@ -41,7 +41,7 @@ public class DeleteDepartmentServlet extends HttpServlet {
 			throw new WebException("Cannot delete department with id=" + departmentId, e);
 		}
 
-		response.sendRedirect("departments");
+		response.sendRedirect("/university/departments");
 
 		log.trace("Finished delete() method.");
 	}

@@ -58,7 +58,7 @@
 
 		<c:if test="${not empty subjectsWithoutDepartment}">
 
-			<form action="addSubject" method="post">
+			<form action="department/addSubject" method="post">
 
 
 				<select name="subjectId" class="button">
@@ -86,16 +86,17 @@
 					<c:param name="subjectId" value="${subject.id}" />
 				</c:url>
 
-				<c:url var="deleteSubjectLink" value="/deleteSubject">
-					<c:param name="subjectId" value="${subject.id}" />
-					<c:param name="departmentId" value="${department.id}" />
-				</c:url>
 
 				<tr>
 					<td><a href="${subjectLink}">${subject.name}</a></td>
-					<td><a href="${deleteSubjectLink}"
-						onclick="if (!(confirm('Are you sure you want to delete this subject?'))) return false">
-							Delete</a></td>
+
+					<td><form action="department/deleteSubject" method="post">
+
+							<input type="hidden" name="departmentId" value="${department.id}" />
+							<input type="hidden" name="subjectId" value="${subject.id}" /> <input
+								type="submit" value="Delete" class="button"
+								onclick="if (!(confirm('Are you sure you want to delete this subject?'))) return false" />
+						</form></td>
 				</tr>
 			</c:forEach>
 		</table>

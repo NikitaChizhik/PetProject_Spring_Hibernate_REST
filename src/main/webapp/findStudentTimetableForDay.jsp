@@ -44,9 +44,9 @@
 
 
 					<tr>
-						<td><select name="studentIdAndName" class="button">
+						<td><select name="studentId" class="button">
 								<c:forEach var="student" items="${students}">
-									<option value="${student.id},${student.name}">${student.name}</option>
+									<option value="${student.id}">${student.name}</option>
 								</c:forEach>
 						</select></td>
 						<td><input type="text" name="date" value="2017/03/01" /></td>
@@ -60,7 +60,7 @@
 
 
 
-			<h2>Student : ${studentName }</h2>
+			<h2>Student : ${student.name }</h2>
 
 
 			<table>

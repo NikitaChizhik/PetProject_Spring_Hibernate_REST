@@ -35,8 +35,7 @@ public class DisplayStudentForDayServlet extends HttpServlet {
 			throws ServletException, IOException {
 		log.trace("Started displayStudentTimetableForDay servlet.");
 
-		String[] parameters = request.getParameter("studentIdAndName").split(",");
-		String studentId = parameters[0];
+		String studentId = request.getParameter("studentId");
 		String dateString = request.getParameter("date");
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -53,8 +52,11 @@ public class DisplayStudentForDayServlet extends HttpServlet {
 
 		List<Lesson> lessons = null;
 		List<Student> students = null;
+		Student student = null;
 
 		try {
+
+			student = studentManager.findById(Integer.parseInt(studentId));
 
 			lessons = lessonManager.getStudentTimetableForDay(Integer.parseInt(studentId), date);
 
@@ -73,7 +75,7 @@ public class DisplayStudentForDayServlet extends HttpServlet {
 
 		request.setAttribute("students", students);
 		request.setAttribute("lessons", lessons);
-		request.setAttribute("studentName", parameters[1]);
+		request.setAttribute("student", student);
 		request.getRequestDispatcher("/findStudentTimetableForDay.jsp").forward(request, response);
 
 		log.trace("Finished displayStudentTimetableForDay servlet.");
