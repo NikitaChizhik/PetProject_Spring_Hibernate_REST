@@ -42,9 +42,11 @@ public class LessonServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findById() method.");
 
 		String lessonId = request.getParameter("lessonId");
+
+		log.trace("Get request to find lesson by id=" + lessonId);
+
 		Lesson lesson = null;
 		LessonManager lessonManager = new LessonManagerImpl();
 
@@ -91,13 +93,12 @@ public class LessonServlet extends HttpServlet {
 
 		request.getRequestDispatcher("/lesson.jsp").forward(request, response);
 
-		log.trace("Finished findById() method.");
+		log.trace("Found lesson by id=" + lessonId);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started update() method.");
 
 		String lessonId = request.getParameter("lessonId");
 		String number = request.getParameter("number");
@@ -107,8 +108,13 @@ public class LessonServlet extends HttpServlet {
 		String roomId = request.getParameter("roomId");
 		String dateString = request.getParameter("date");
 
+		log.trace("Post request to update lesson with id=" + lessonId + " on number=" + number + ",subjectId="
+				+ subjectId + ",groupId=" + groupId + ",teacherId=" + teacherId + ",roomId=" + roomId + ",date="
+				+ dateString);
+
 		Lesson lesson = null;
 		LessonManager lessonManager = new LessonManagerImpl();
+
 		SubjectManager subjectManager = new SubjectManagerImpl();
 		GroupManager groupManager = new GroupManagerImpl();
 		TeacherManager teacherManager = new TeacherManagerImpl();
@@ -155,7 +161,7 @@ public class LessonServlet extends HttpServlet {
 
 		response.sendRedirect("lesson?lessonId=" + lessonId);
 
-		log.trace("Finished update() method.");
+		log.trace("Updated lesson with id=" + lessonId + " on number=" + number + ",subjectId=" + subjectId
+				+ ",groupId=" + groupId + ",teacherId=" + teacherId + ",roomId=" + roomId + ",date=" + dateString);
 	}
-
 }

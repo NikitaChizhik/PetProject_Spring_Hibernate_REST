@@ -27,10 +27,11 @@ public class RoomsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findAll() method.");
 
-		List<Room> rooms = null;
+		log.trace("Get request to find all rooms");
+
 		RoomManager roomManager = new RoomManagerImpl();
+		List<Room> rooms = null;
 
 		try {
 			rooms = roomManager.findAll();
@@ -44,15 +45,16 @@ public class RoomsServlet extends HttpServlet {
 		request.setAttribute("rooms", rooms);
 		request.getRequestDispatcher("/rooms.jsp").forward(request, response);
 
-		log.trace("Finished findAll() method.");
+		log.trace("Found all rooms");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addRoom() method.");
 
 		String number = request.getParameter("number");
+
+		log.trace("Post request to create room with number=" + number);
 
 		Room room = new Room();
 		room.setNumber(number);
@@ -70,7 +72,6 @@ public class RoomsServlet extends HttpServlet {
 
 		response.sendRedirect("rooms");
 
-		log.trace("Finished addRoom() method.");
+		log.trace("Created room with number=" + number);
 	}
-
 }

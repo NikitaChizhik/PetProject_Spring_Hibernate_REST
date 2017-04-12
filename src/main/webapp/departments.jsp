@@ -46,14 +46,13 @@
 						<c:param name="departmentId" value="${department.id}" />
 					</c:url>
 
-					<!--<c:url var="deleteLink" value="departmentDelete">
-						<c:param name="departmentId" value="${department.id}" />
-					</c:url> -->
+
 
 					<tr>
 						<td><a href="${departmentLink}">${department.name}</a></td>
 						<td>${fn:length(department.subjects)}</td>
 						<td>${fn:length(department.teachers)}</td>
+
 						<td><form action="department/delete" method="post">
 
 								<input type="hidden" name="departmentId"
@@ -61,6 +60,7 @@
 									value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this department?'))) return false" />
 							</form></td>
+
 					</tr>
 
 				</c:forEach>
@@ -75,10 +75,5 @@
 	</p>
 
 </body>
-<!-- <td><a href="${deleteLink}"
-							onclick="if (!(confirm('Are you sure you want to delete this department?'))) return false">
-								Delete</a></td> -->
-<!-- onclick="if (!(confirm('Are you sure you want to delete this department?'))) return false" -->
-
 
 </html>

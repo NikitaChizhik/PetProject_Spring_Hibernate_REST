@@ -27,10 +27,11 @@ public class GroupsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findAll() method.");
 
-		List<Group> groups = null;
+		log.trace("Get request to find all groups");
+
 		GroupManager groupManager = new GroupManagerImpl();
+		List<Group> groups = null;
 
 		try {
 			groups = groupManager.findAll();
@@ -50,9 +51,10 @@ public class GroupsServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addGroup() method.");
 
 		String name = request.getParameter("name");
+
+		log.trace("Post request to create group with name=" + name);
 
 		Group group = new Group();
 		group.setName(name);
@@ -70,7 +72,6 @@ public class GroupsServlet extends HttpServlet {
 
 		response.sendRedirect("groups");
 
-		log.trace("Finished addGroup() method.");
+		log.trace("Created group with name=" + name);
 	}
-
 }

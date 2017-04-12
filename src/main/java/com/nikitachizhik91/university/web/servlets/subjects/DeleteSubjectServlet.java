@@ -22,14 +22,17 @@ public class DeleteSubjectServlet extends HttpServlet {
 	private final static Logger log = LogManager.getLogger(DeleteSubjectServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started delete() method.");
 
-		SubjectManager subjectManager = new SubjectManagerImpl();
 		String subjectId = request.getParameter("subjectId");
 
+		log.trace("Post request to delete subject with id=" + subjectId);
+
+		SubjectManager subjectManager = new SubjectManagerImpl();
+
 		try {
+
 			subjectManager.delete(Integer.parseInt(subjectId));
 
 		} catch (NumberFormatException e) {
@@ -43,7 +46,6 @@ public class DeleteSubjectServlet extends HttpServlet {
 
 		response.sendRedirect("subjects");
 
-		log.trace("Finished delete() method.");
+		log.trace("Deleted subject with id=" + subjectId);
 	}
-
 }

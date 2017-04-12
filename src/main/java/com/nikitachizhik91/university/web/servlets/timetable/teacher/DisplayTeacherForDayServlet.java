@@ -33,16 +33,22 @@ public class DisplayTeacherForDayServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started displayTeacherTimetableForDay servlet.");
 
 		String teacherId = request.getParameter("teacherId");
 		String dateString = request.getParameter("date");
 
+		log.trace("Get request to find teacher timetable for day,with teacher id=" + teacherId + " and date="
+				+ dateString);
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = null;
+
 		try {
+
 			date = formatter.parse(dateString);
+
 		} catch (ParseException e) {
+
 			log.error("Date=" + date + " is wrong.", e);
 			throw new WebException("Date=" + date + " is wrong.", e);
 		}
@@ -78,6 +84,6 @@ public class DisplayTeacherForDayServlet extends HttpServlet {
 		request.setAttribute("teacher", teacher);
 		request.getRequestDispatcher("/findTeacherTimetableForDay.jsp").forward(request, response);
 
-		log.trace("Finished displayTeacherTimetableForDay servlet.");
+		log.trace("Found " + lessons.size() + " lessons for teacher with id=" + teacherId + " and date=" + dateString);
 	}
 }

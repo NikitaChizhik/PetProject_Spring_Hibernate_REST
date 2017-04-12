@@ -16,35 +16,38 @@ import com.nikitachizhik91.university.domain.GroupManager;
 import com.nikitachizhik91.university.domain.impl.GroupManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/groupDelete")
-public class GroupDeleteServlet extends HttpServlet {
+@WebServlet("/group/deleteStudent")
+public class DeleteStudentServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(GroupDeleteServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(DeleteStudentServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String groupId = request.getParameter("groupId");
+		String studentId = request.getParameter("studentId");
 
-		log.trace("Post request to delete group with id=" + groupId);
+		log.trace("Post request to delete student with id=" + studentId + "from group.");
 
 		GroupManager groupManager = new GroupManagerImpl();
 
 		try {
-			groupManager.delete(Integer.parseInt(groupId));
+			groupManager.deleteStudentFromGroup(Integer.parseInt(studentId));
 
 		} catch (NumberFormatException e) {
-			log.error("The id=" + groupId + " is wrong.", e);
-			throw new WebException("The id=" + groupId + " is wrong.", e);
+			log.error("The id=" + studentId + " is wrong.", e);
+			throw new WebException("The id=" + studentId + " is wrong.", e);
 
 		} catch (DomainException e) {
-			log.error("Cannot delete group with id=" + groupId, e);
-			throw new WebException("Cannot delete group with id=" + groupId, e);
+			log.error("Cannot delete student with id=" + studentId + " from group with id="
+					+ request.getParameter("groupId"), e);
+			throw new WebException("Cannot delete student with id=" + studentId + " from group with id="
+					+ request.getParameter("groupId"), e);
 		}
 
-		response.sendRedirect("groups");
+		response.sendRedirect("/university/group?groupId=" + request.getParameter("groupId"));
 
-		log.trace("Deleted group with id=" + groupId);
+		log.trace("Deleted student with id=" + studentId + "from group.");
 	}
 }

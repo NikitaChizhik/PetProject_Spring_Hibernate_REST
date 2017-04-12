@@ -16,36 +16,38 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.impl.DepartmentManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/department/deleteSubject")
-public class DepartmentDeleteSubjectServlet extends HttpServlet {
+@WebServlet("/department/deleteTeacher")
+public class DeleteTeacherServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(DepartmentDeleteSubjectServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(DeleteTeacherServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started deleteSubjectFromDepartment() method.");
 
-		DepartmentManager departmentManager = new DepartmentManagerImpl();
-		String subjectId = request.getParameter("subjectId");
+		String teacherId = request.getParameter("teacherId");
 		String departmentId = request.getParameter("departmentId");
 
+		log.trace("Post request to delete teacher with id=" + teacherId + " from department with id=" + departmentId);
+
+		DepartmentManager departmentManager = new DepartmentManagerImpl();
+
 		try {
-			departmentManager.deleteSubjectFromDepartment(Integer.parseInt(subjectId));
+			departmentManager.deleteTeacherFromDepartment(Integer.parseInt(teacherId));
 
 		} catch (NumberFormatException e) {
-			log.error("The id=" + subjectId + " is wrong.", e);
-			throw new WebException("The id=" + subjectId + " is wrong.", e);
+			log.error("The id=" + teacherId + " is wrong.", e);
+			throw new WebException("The id=" + teacherId + " is wrong.", e);
 
 		} catch (DomainException e) {
-			log.error("Cannot delete subject with id=" + subjectId + " from group with id=" + departmentId, e);
-			throw new WebException("Cannot delete subject with id=" + subjectId + " from group with id=" + departmentId,
+			log.error("Cannot delete teacher with id=" + teacherId + " from group with id=" + departmentId, e);
+			throw new WebException("Cannot delete teacher with id=" + teacherId + " from group with id=" + departmentId,
 					e);
 		}
 
 		response.sendRedirect("/university/department?departmentId=" + departmentId);
 
-		log.trace("Finished deleteSubjectFromDepartment() method.");
+		log.trace("Deleted teacher with id=" + teacherId + " from department with id=" + departmentId);
 	}
 }

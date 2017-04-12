@@ -16,46 +16,21 @@ import com.nikitachizhik91.university.domain.GroupManager;
 import com.nikitachizhik91.university.domain.impl.GroupManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/groupStudent")
-public class GroupStudentServlet extends HttpServlet {
+@WebServlet("/group/addStudent")
+public class AddStudentServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(GroupStudentServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(AddStudentServlet.class.getName());
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		log.trace("Started deleteStudentFromGroup() method.");
-
-		GroupManager groupManager = new GroupManagerImpl();
-		String studentId = request.getParameter("studentId");
-
-		try {
-			groupManager.deleteStudentFromGroup(Integer.parseInt(studentId));
-
-		} catch (NumberFormatException e) {
-			log.error("The id=" + studentId + " is wrong.", e);
-			throw new WebException("The id=" + studentId + " is wrong.", e);
-
-		} catch (DomainException e) {
-			log.error("Cannot delete student with id=" + studentId + " from group with id="
-					+ request.getParameter("groupId"), e);
-			throw new WebException("Cannot delete student with id=" + studentId + " from group with id="
-					+ request.getParameter("groupId"), e);
-		}
-
-		response.sendRedirect("group?groupId=" + request.getParameter("groupId"));
-
-		log.trace("Finished deleteStudentFromGroup() method.");
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addStudent() method.");
 
 		String studentId = request.getParameter("studentId");
 		String groupId = request.getParameter("groupId");
+
+		log.trace("Post request to add student with id=" + studentId + "to group with id=" + groupId);
+
 		GroupManager groupManager = new GroupManagerImpl();
 
 		try {
@@ -71,8 +46,8 @@ public class GroupStudentServlet extends HttpServlet {
 
 		}
 
-		response.sendRedirect("group?groupId=" + groupId);
+		response.sendRedirect("/university/group?groupId=" + groupId);
 
-		log.trace("Finished addStudent() method.");
+		log.trace("Added student with id=" + studentId + "to group with id=" + groupId);
 	}
 }

@@ -30,15 +30,19 @@ public class TeacherServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findById() method.");
 
 		String teacherId = request.getParameter("teacherId");
-		Teacher teacher = null;
+
+		log.trace("Get request to find teacher by id=" + teacherId);
+
 		TeacherManager teacherManager = new TeacherManagerImpl();
+		Teacher teacher = null;
+
 		List<Subject> subjects = new ArrayList<Subject>();
 		SubjectManager subjectManager = new SubjectManagerImpl();
 
 		try {
+
 			teacher = teacherManager.findById(Integer.parseInt(teacherId));
 
 			subjects = subjectManager.findAll();
@@ -56,22 +60,26 @@ public class TeacherServlet extends HttpServlet {
 		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher("/teacher.jsp").forward(request, response);
 
-		log.trace("Finished findById() method.");
+		log.trace("Found teacher by id=" + teacherId);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started update() method.");
 
 		String name = request.getParameter("name");
 		String subjectId = request.getParameter("subjectId");
 		String teacherId = request.getParameter("teacherId");
-		Teacher teacher = null;
-		TeacherManager teacherManager = new TeacherManagerImpl();
+
+		log.trace(
+				"Post request to update teacher with id=" + teacherId + " on name=" + name + ",subjectId=" + subjectId);
+
 		SubjectManager subjectManager = new SubjectManagerImpl();
+		TeacherManager teacherManager = new TeacherManagerImpl();
+		Teacher teacher = null;
 
 		try {
+
 			teacher = teacherManager.findById(Integer.parseInt(teacherId));
 			teacher.setName(name);
 			teacher.setSubject(subjectManager.findById(Integer.parseInt(subjectId)));
@@ -89,7 +97,6 @@ public class TeacherServlet extends HttpServlet {
 
 		response.sendRedirect("teacher?teacherId=" + teacherId);
 
-		log.trace("Finished update() method.");
+		log.trace("Updated teacher with id=" + teacherId + " on name=" + name + ",subjectId=" + subjectId);
 	}
-
 }

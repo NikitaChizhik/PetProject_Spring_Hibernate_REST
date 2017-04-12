@@ -22,14 +22,17 @@ public class DeleteTeacherServlet extends HttpServlet {
 	private final static Logger log = LogManager.getLogger(DeleteTeacherServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started delete() method.");
 
-		TeacherManager teacherManager = new TeacherManagerImpl();
 		String teacherId = request.getParameter("teacherId");
 
+		log.trace("Post request to delete teacher with id=" + teacherId);
+
+		TeacherManager teacherManager = new TeacherManagerImpl();
+
 		try {
+
 			teacherManager.delete(Integer.parseInt(teacherId));
 
 		} catch (NumberFormatException e) {
@@ -43,7 +46,6 @@ public class DeleteTeacherServlet extends HttpServlet {
 
 		response.sendRedirect("teachers");
 
-		log.trace("Finished delete() method.");
+		log.trace("Deleted teacher with id=" + teacherId);
 	}
-
 }

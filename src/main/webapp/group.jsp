@@ -49,7 +49,7 @@
 
 		<c:if test="${not empty students}">
 
-			<form action="groupStudent" method="post">
+			<form action="group/addStudent" method="post">
 				<select name="studentId" class="button">
 
 					<c:forEach var="student" items="${students}">
@@ -73,15 +73,16 @@
 					<c:param name="studentId" value="${student.id}" />
 				</c:url>
 
-				<c:url var="studentDelete" value="groupStudent">
-					<c:param name="studentId" value="${student.id}" />
-					<c:param name="groupId" value="${group.id}" />
-				</c:url>
-
 
 				<tr>
 					<td><a href="${studentLink}">${student.name}</a></td>
-					<td><a href="${studentDelete}">Delete</a></td>
+					<td><form action="group/deleteStudent" method="post">
+
+							<input type="hidden" name="groupId" value="${group.id}" /> <input
+								type="hidden" name="studentId" value="${student.id}" /> <input
+								type="submit" value="Delete" class="button"
+								onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false" />
+						</form></td>
 				</tr>
 
 			</c:forEach>

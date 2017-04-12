@@ -43,15 +43,17 @@
 						<c:param name="roomId" value="${room.id}" />
 					</c:url>
 
-					<c:url var="deleteLink" value="roomDelete">
-						<c:param name="roomId" value="${room.id}" />
-					</c:url>
+					
 
 					<tr>
 						<td><a href="${roomLink}">${room.number}</a></td>
-						<td><a href="${deleteLink}"
-							onclick="if (!(confirm('Are you sure you want to delete this room?'))) return false">
-								Delete</a></td>
+
+						<td><form action="roomDelete" method="post">
+
+								<input type="hidden" name="roomId" value="${room.id}" /> <input
+									type="submit" value="Delete" class="button"
+									onclick="if (!(confirm('Are you sure you want to delete this room?'))) return false" />
+							</form></td>
 					</tr>
 
 				</c:forEach>

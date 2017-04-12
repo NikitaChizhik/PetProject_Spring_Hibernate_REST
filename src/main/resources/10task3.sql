@@ -10,7 +10,7 @@ CREATE DATABASE "university2"
 
 CREATE TABLE public.departments
 (
-    name character(80) COLLATE pg_catalog."default",
+    name name,
     id serial ,
     CONSTRAINT departments_pkey PRIMARY KEY (id)
 )
@@ -28,7 +28,7 @@ ALTER TABLE public.departments
 
 CREATE TABLE public.faculties
 (
-    name character(80) COLLATE pg_catalog."default",
+    name name,
     id serial ,
     CONSTRAINT faculties_pkey PRIMARY KEY (id)
 )
@@ -47,7 +47,7 @@ ALTER TABLE public.faculties
 
 CREATE TABLE public.groups
 (
-    name character(80) COLLATE pg_catalog."default",
+    name name,
      id serial ,
     CONSTRAINT groups_pkey PRIMARY KEY (id)
 )
@@ -64,7 +64,7 @@ ALTER TABLE public.groups
 CREATE TABLE public.rooms
 (
     id serial ,
-    "number" character(50) COLLATE pg_catalog."default" NOT NULL,
+    "number" name NOT NULL,
     CONSTRAINT room2_pkey PRIMARY KEY (id)
 )
 WITH (
@@ -80,7 +80,7 @@ ALTER TABLE public.rooms
 
 CREATE TABLE public.students
 (
-    name character(80) COLLATE pg_catalog."default",
+   name name,
      id serial ,
     CONSTRAINT students_pkey PRIMARY KEY (id)
 )
@@ -97,7 +97,7 @@ ALTER TABLE public.students
 
 CREATE TABLE public.subjects
 (
-    name character(80) COLLATE pg_catalog."default",
+    name name,
    id serial ,
     CONSTRAINT subjects_pkey PRIMARY KEY (id)
 )
@@ -115,7 +115,7 @@ ALTER TABLE public.subjects
 
 CREATE TABLE public.teachers
 (
-    name character(80) COLLATE pg_catalog."default",
+   name name,
     id serial ,
     subject_id integer,
     CONSTRAINT teachers_pkey PRIMARY KEY (id),

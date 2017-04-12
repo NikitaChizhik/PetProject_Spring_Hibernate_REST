@@ -46,17 +46,19 @@
 						<c:param name="facultyId" value="${faculty.id}" />
 					</c:url>
 
-					<c:url var="deleteLink" value="facultyDelete">
-						<c:param name="facultyId" value="${faculty.id}" />
-					</c:url>
 
 					<tr>
 						<td><a href="${facultyLink}">${faculty.name}</a></td>
 						<td>${fn:length(faculty.departments)}</td>
 						<td>${fn:length(faculty.groups)}</td>
-						<td><a href="${deleteLink}"
-							onclick="if (!(confirm('Are you sure you want to delete this faculty?'))) return false">
-								Delete</a></td>
+
+						<td><form action="faculty/delete" method="post">
+
+								<input type="hidden" name="facultyId" value="${faculty.id}" />
+								<input type="submit" value="Delete" class="button"
+									onclick="if (!(confirm('Are you sure you want to delete this faculty?'))) return false" />
+							</form></td>
+
 					</tr>
 
 				</c:forEach>

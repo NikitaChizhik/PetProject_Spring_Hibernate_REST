@@ -22,12 +22,14 @@ public class DeleteLessonServlet extends HttpServlet {
 	private final static Logger log = LogManager.getLogger(DeleteLessonServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started delete() method.");
+
+		String lessonId = request.getParameter("lessonId");
+
+		log.trace("Post request to delete lesson with id=" + lessonId);
 
 		LessonManager lessonManager = new LessonManagerImpl();
-		String lessonId = request.getParameter("lessonId");
 
 		try {
 			lessonManager.delete(Integer.parseInt(lessonId));
@@ -43,7 +45,6 @@ public class DeleteLessonServlet extends HttpServlet {
 
 		response.sendRedirect("lessons");
 
-		log.trace("Finished delete() method.");
+		log.trace("Deleted lesson with id=" + lessonId);
 	}
-
 }

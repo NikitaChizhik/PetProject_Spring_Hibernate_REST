@@ -32,9 +32,11 @@ public class DepartmentServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findById() method.");
 
 		String departmentId = request.getParameter("departmentId");
+
+		log.trace("Get request to find department with id=" + departmentId);
+
 		Department department = null;
 		DepartmentManager departmentManager = new DepartmentManagerImpl();
 
@@ -66,18 +68,20 @@ public class DepartmentServlet extends HttpServlet {
 
 		request.getRequestDispatcher("/department.jsp").forward(request, response);
 
-		log.trace("Finished findById() method.");
+		log.trace("Found department with id=" + departmentId);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started update() method.");
 
+		String departmentId = request.getParameter("departmentId");
 		String name = request.getParameter("name");
+
+		log.trace("Post request to update department with id=" + departmentId + " on name=" + name);
+
 		Department department = null;
 		DepartmentManager departmentManager = new DepartmentManagerImpl();
-		String departmentId = request.getParameter("departmentId");
 
 		try {
 			department = departmentManager.findById(Integer.parseInt(departmentId));
@@ -96,7 +100,6 @@ public class DepartmentServlet extends HttpServlet {
 
 		response.sendRedirect("department?departmentId=" + departmentId);
 
-		log.trace("Finished update() method.");
+		log.trace("Updated department with id=" + departmentId + " on name=" + name);
 	}
-
 }

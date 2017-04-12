@@ -16,35 +16,38 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.impl.DepartmentManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/department/addSubject")
-public class DepartmentAddSubjectServlet extends HttpServlet {
+@WebServlet("/department/addTeacher")
+public class AddTeacherServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(DepartmentAddSubjectServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(AddTeacherServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addSubject() method.");
 
-		String subjectId = request.getParameter("subjectId");
+		String teacherId = request.getParameter("teacherId");
 		String departmentId = request.getParameter("departmentId");
+
+		log.trace("Post request to add teacher with id=" + teacherId + " to department with id=" + departmentId);
+
 		DepartmentManager departmentManager = new DepartmentManagerImpl();
 
 		try {
-			departmentManager.addSubject(Integer.parseInt(departmentId), Integer.parseInt(subjectId));
+			departmentManager.addTeacher(Integer.parseInt(departmentId), Integer.parseInt(teacherId));
 
 		} catch (DomainException e) {
-			log.error("Cannot add subject with id=" + subjectId + " to department with id=" + departmentId, e);
-			throw new WebException("Cannot add subject with id=" + subjectId + " to department with id=" + departmentId,
+			log.error("Cannot add teacher with id=" + teacherId + " to department with id=" + departmentId, e);
+			throw new WebException("Cannot add teacher with id=" + teacherId + " to department with id=" + departmentId,
 					e);
 
 		} catch (NumberFormatException e) {
 			log.error("The id=" + departmentId + " is wrong.", e);
 			throw new WebException("The id=" + departmentId + " is wrong.", e);
 		}
+
 		response.sendRedirect("/university/department?departmentId=" + departmentId);
 
-		log.trace("Finished addSubject() method.");
+		log.trace("Added teacher with id=" + teacherId + " to department with id=" + departmentId);
 	}
 }

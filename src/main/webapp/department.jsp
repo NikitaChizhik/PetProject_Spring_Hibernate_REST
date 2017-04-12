@@ -111,10 +111,11 @@
 
 
 		<c:if test="${not empty teachersWithoutDepartment}">
-			<form action="departmentTeacher" method="post">
+			<form action="department/addTeacher" method="post">
 
 
 				<select name="teacherId" class="button">
+
 					<c:forEach var="teacher" items="${teachersWithoutDepartment}">
 						<option value="${teacher.id}">${teacher.name}</option>
 					</c:forEach>
@@ -136,19 +137,22 @@
 			<c:forEach var="teacher" items="${department.teachers}">
 
 				<c:url var="teacherLink" value="teacher">
-					<c:param name="subjectId" value="${subject.id}" />
+					<c:param name="teacherId" value="${teacher.id}" />
 				</c:url>
 
-				<c:url var="deleteTeacherLink" value="departmentTeacher">
-					<c:param name="teacherId" value="${teacher.id}" />
-					<c:param name="departmentId" value="${department.id}" />
-				</c:url>
+
 
 				<tr>
 					<td><a href="${teacherLink}">${teacher.name}</a></td>
-					<td><a href="${deleteTeacherLink}"
-						onclick="if (!(confirm('Are you sure you want to delete this teacher	?'))) return false">
-							Delete</a></td>
+
+					<td><form action="department/deleteTeacher" method="post">
+
+							<input type="hidden" name="departmentId" value="${department.id}" />
+							<input type="hidden" name="teacherId" value="${teacher.id}" /> <input
+								type="submit" value="Delete" class="button"
+								onclick="if (!(confirm('Are you sure you want to delete this teacher?'))) return false" />
+						</form></td>
+
 				</tr>
 			</c:forEach>
 		</table>

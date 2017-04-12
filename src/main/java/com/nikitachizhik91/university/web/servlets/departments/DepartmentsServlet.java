@@ -27,7 +27,8 @@ public class DepartmentsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findAll() method.");
+
+		log.trace("Get request to find all departments");
 
 		List<Department> departments = null;
 		DepartmentManager departmentManager = new DepartmentManagerImpl();
@@ -44,15 +45,16 @@ public class DepartmentsServlet extends HttpServlet {
 		request.setAttribute("departments", departments);
 		request.getRequestDispatcher("/departments.jsp").forward(request, response);
 
-		log.trace("Finished findAll() method.");
+		log.trace("Found all departments");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addDepartment() method.");
 
 		String name = request.getParameter("name");
+
+		log.trace("Get request to create department with name=" + name);
 
 		Department department = new Department();
 		department.setName(name);
@@ -70,7 +72,6 @@ public class DepartmentsServlet extends HttpServlet {
 
 		response.sendRedirect("departments");
 
-		log.trace("Finished addDepartment() method.");
+		log.trace("Created department with name=" + name);
 	}
-
 }

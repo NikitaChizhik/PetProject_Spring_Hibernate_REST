@@ -116,9 +116,7 @@
 						<c:param name="lessonId" value="${lesson.id}" />
 					</c:url>
 
-					<c:url var="deleteLink" value="lessonDelete">
-						<c:param name="lessonId" value="${lesson.id}" />
-					</c:url>
+					
 
 					<tr>
 						<td>${lesson.group.name }</td>
@@ -128,12 +126,16 @@
 
 						<td><fmt:formatDate pattern="dd/MM HH:mm"
 								value="${lesson.date }" /></td>
-						<!--  	<td>${lesson.date }"</td>-->
+						
 						<td>${lesson.number }</td>
 						<td>${lesson.teacher.name }</td>
-						<td><a href="${deleteLink}"
-							onclick="if (!(confirm('Are you sure you want to delete this lesson?'))) return false">
-								Delete</a></td>
+
+						<td><form action="lessonDelete" method="post">
+
+								<input type="hidden" name="lessonId" value="${lesson.id}" /> <input
+									type="submit" value="Delete" class="button"
+									onclick="if (!(confirm('Are you sure you want to delete this lesson?'))) return false" />
+							</form></td>
 
 					</tr>
 

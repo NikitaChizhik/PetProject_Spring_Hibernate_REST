@@ -22,12 +22,14 @@ public class DeleteRoomServlet extends HttpServlet {
 	private final static Logger log = LogManager.getLogger(DeleteRoomServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started delete() method.");
+
+		String roomId = request.getParameter("roomId");
+
+		log.trace("Post request to delete room with id=" + roomId);
 
 		RoomManager roomManager = new RoomManagerImpl();
-		String roomId = request.getParameter("roomId");
 
 		try {
 			roomManager.delete(Integer.parseInt(roomId));
@@ -43,7 +45,6 @@ public class DeleteRoomServlet extends HttpServlet {
 
 		response.sendRedirect("rooms");
 
-		log.trace("Finished delete() method.");
+		log.trace("Delete room with id=" + roomId);
 	}
-
 }

@@ -33,16 +33,22 @@ public class DisplayStudentForMonthServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started displayStudentTimetableForMonth servlet.");
 
 		String studentId = request.getParameter("studentId");
 		String dateString = request.getParameter("date");
 
+		log.trace("Get request to find student timetable for month,with student id=" + studentId + " and date="
+				+ dateString);
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM");
 		Date date = null;
+
 		try {
+
 			date = formatter.parse(dateString);
+
 		} catch (ParseException e) {
+
 			log.error("Date=" + date + " is wrong.", e);
 			throw new WebException("Date=" + date + " is wrong.", e);
 		}
@@ -68,6 +74,7 @@ public class DisplayStudentForMonthServlet extends HttpServlet {
 					e);
 			throw new WebException(
 					"Cannot getStudentTimetableForMonth() for Student with id=:" + studentId + " and Date :" + date, e);
+
 		} catch (NumberFormatException e) {
 
 			log.error("The student id=" + studentId + " is wrong.", e);
@@ -79,7 +86,6 @@ public class DisplayStudentForMonthServlet extends HttpServlet {
 		request.setAttribute("student", student);
 		request.getRequestDispatcher("/findStudentTimetableForMonth.jsp").forward(request, response);
 
-		log.trace("Finished displayStudentTimetableForMonth servlet.");
+		log.trace("Found " + lessons.size() + " lessons for student with id=" + studentId + " and date=" + dateString);
 	}
-
 }

@@ -27,10 +27,11 @@ public class StudentsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findAll() method.");
 
-		List<Student> students = null;
+		log.trace("Get request to find all students");
+
 		StudentManager studentManager = new StudentManagerImpl();
+		List<Student> students = null;
 
 		try {
 			students = studentManager.findAll();
@@ -44,15 +45,16 @@ public class StudentsServlet extends HttpServlet {
 		request.setAttribute("students", students);
 		request.getRequestDispatcher("/students.jsp").forward(request, response);
 
-		log.trace("Finished findAll() method.");
+		log.trace("Found all students");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addStudent() method.");
 
 		String name = request.getParameter("name");
+
+		log.trace("Post request to create student with name=" + name);
 
 		Student student = new Student();
 		student.setName(name);
@@ -70,7 +72,6 @@ public class StudentsServlet extends HttpServlet {
 
 		response.sendRedirect("students");
 
-		log.trace("Finished addStudent() method.");
+		log.trace("Created student with name=" + name);
 	}
-
 }

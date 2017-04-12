@@ -46,16 +46,18 @@
 						<c:param name="groupId" value="${group.id}" />
 					</c:url>
 
-					<c:url var="deleteLink" value="groupDelete">
-						<c:param name="groupId" value="${group.id}" />
-					</c:url>
+
 
 					<tr>
 						<td><a href="${groupLink}">${group.name}</a></td>
 						<td>${fn:length(group.students)}</td>
-						<td><a href="${deleteLink}"
-							onclick="if (!(confirm('Are you sure you want to delete this group?'))) return false">
-								Delete</a></td>
+
+						<td><form action="groupDelete" method="post">
+
+								<input type="hidden" name="groupId" value="${group.id}" /> <input
+									type="submit" value="Delete" class="button"
+									onclick="if (!(confirm('Are you sure you want to delete this group?'))) return false" />
+							</form></td>
 					</tr>
 
 				</c:forEach>

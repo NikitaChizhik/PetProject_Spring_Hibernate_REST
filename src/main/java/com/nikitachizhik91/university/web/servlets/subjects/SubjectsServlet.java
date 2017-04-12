@@ -13,11 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.RoomManager;
 import com.nikitachizhik91.university.domain.SubjectManager;
-import com.nikitachizhik91.university.domain.impl.RoomManagerImpl;
 import com.nikitachizhik91.university.domain.impl.SubjectManagerImpl;
-import com.nikitachizhik91.university.model.Room;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.web.WebException;
 
@@ -30,12 +27,14 @@ public class SubjectsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findAll() method.");
 
-		List<Subject> subjects = null;
+		log.trace("Get request to find all subjects");
+
 		SubjectManager subjectManager = new SubjectManagerImpl();
+		List<Subject> subjects = null;
 
 		try {
+			
 			subjects = subjectManager.findAll();
 
 		} catch (DomainException e) {
@@ -47,22 +46,24 @@ public class SubjectsServlet extends HttpServlet {
 		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher("/subjects.jsp").forward(request, response);
 
-		log.trace("Finished findAll() method.");
+		log.trace("Found all subjects");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addSubject() method.");
 
-		String number = request.getParameter("name");
+		String name = request.getParameter("name");
+
+		log.trace("Post request to create subject with name=" + name);
 
 		Subject subject = new Subject();
-		subject.setName(number);
+		subject.setName(name);
 
 		SubjectManager subjectManager = new SubjectManagerImpl();
 
 		try {
+
 			subjectManager.create(subject);
 
 		} catch (DomainException e) {
@@ -73,7 +74,6 @@ public class SubjectsServlet extends HttpServlet {
 
 		response.sendRedirect("subjects");
 
-		log.trace("Finished addSubject() method.");
+		log.trace("Created subject with name=" + name);
 	}
-
 }

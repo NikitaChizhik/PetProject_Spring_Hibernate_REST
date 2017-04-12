@@ -22,12 +22,14 @@ public class DeleteStudentServlet extends HttpServlet {
 	private final static Logger log = LogManager.getLogger(DeleteStudentServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started delete() method.");
+
+		String studentId = request.getParameter("studentId");
+
+		log.trace("Post request to delete student with id=" + studentId);
 
 		StudentManager studentManager = new StudentManagerImpl();
-		String studentId = request.getParameter("studentId");
 
 		try {
 			studentManager.delete(Integer.parseInt(studentId));
@@ -43,7 +45,6 @@ public class DeleteStudentServlet extends HttpServlet {
 
 		response.sendRedirect("students");
 
-		log.trace("Finished delete() method.");
+		log.trace("Deleted student with id=" + studentId);
 	}
-
 }

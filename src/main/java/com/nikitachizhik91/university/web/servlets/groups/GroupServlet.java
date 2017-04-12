@@ -29,11 +29,14 @@ public class GroupServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findById() method.");
 
 		String groupId = request.getParameter("groupId");
-		Group group = null;
+
+		log.trace("Get request to find group by id=" + groupId);
+
 		GroupManager groupManager = new GroupManagerImpl();
+		Group group = null;
+
 		StudentManager studentManager = new StudentManagerImpl();
 		List<Student> students = null;
 
@@ -53,21 +56,23 @@ public class GroupServlet extends HttpServlet {
 
 		request.setAttribute("group", group);
 		request.setAttribute("students", students);
-		
+
 		request.getRequestDispatcher("/group.jsp").forward(request, response);
 
-		log.trace("Finished findById() method.");
+		log.trace("Found group by id=" + groupId);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started update() method.");
 
-		String name = request.getParameter("name");
-		Group group = null;
-		GroupManager groupManager = new GroupManagerImpl();
 		String groupId = request.getParameter("groupId");
+		String name = request.getParameter("name");
+
+		log.trace("Post request to update group with id=" + groupId + " on name" + name);
+
+		GroupManager groupManager = new GroupManagerImpl();
+		Group group = null;
 
 		try {
 			group = groupManager.findById(Integer.parseInt(groupId));
@@ -86,7 +91,6 @@ public class GroupServlet extends HttpServlet {
 
 		response.sendRedirect("group?groupId=" + groupId);
 
-		log.trace("Finished update() method.");
+		log.trace("Updated group with id=" + groupId + " on name" + name);
 	}
-
 }

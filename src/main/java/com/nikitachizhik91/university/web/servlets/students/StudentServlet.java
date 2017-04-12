@@ -25,11 +25,13 @@ public class StudentServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findById() method.");
 
 		String studentId = request.getParameter("studentId");
-		Student student = null;
+
+		log.trace("Get request to find student by id=" + studentId);
+
 		StudentManager studentManager = new StudentManagerImpl();
+		Student student = null;
 
 		try {
 			student = studentManager.findById(Integer.parseInt(studentId));
@@ -46,18 +48,20 @@ public class StudentServlet extends HttpServlet {
 		request.setAttribute("student", student);
 		request.getRequestDispatcher("/student.jsp").forward(request, response);
 
-		log.trace("Finished findById() method.");
+		log.trace("Found student by id=" + studentId);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started update() method.");
 
-		String name = request.getParameter("name");
-		Student student = null;
-		StudentManager studentManager = new StudentManagerImpl();
 		String studentId = request.getParameter("studentId");
+		String name = request.getParameter("name");
+
+		log.trace("Post request to update student with id=" + studentId + " on name=" + name);
+
+		StudentManager studentManager = new StudentManagerImpl();
+		Student student = null;
 
 		try {
 			student = studentManager.findById(Integer.parseInt(studentId));
@@ -76,7 +80,6 @@ public class StudentServlet extends HttpServlet {
 
 		response.sendRedirect("student?studentId=" + studentId);
 
-		log.trace("Finished update() method.");
+		log.trace("Updated student with id=" + studentId + " on name=" + name);
 	}
-
 }

@@ -33,16 +33,21 @@ public class DisplayTeacherForMonthServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started displayTeacherTimetableForMonth servlet.");
 
 		String teacherId = request.getParameter("teacherId");
 		String dateString = request.getParameter("date");
 
+		log.trace("Get request to find teacher timetable for month,with teacher id=" + teacherId + " and date="
+				+ dateString);
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM");
 		Date date = null;
 		try {
+
 			date = formatter.parse(dateString);
+
 		} catch (ParseException e) {
+
 			log.error("Date=" + date + " is wrong.", e);
 			throw new WebException("Date=" + date + " is wrong.", e);
 		}
@@ -68,6 +73,7 @@ public class DisplayTeacherForMonthServlet extends HttpServlet {
 					e);
 			throw new WebException(
 					"Cannot getTeacherTimetableForMonth() for teacher with id=:" + teacherId + " and Date :" + date, e);
+
 		} catch (NumberFormatException e) {
 
 			log.error("The teacher id=" + teacherId + " is wrong.", e);
@@ -79,6 +85,6 @@ public class DisplayTeacherForMonthServlet extends HttpServlet {
 		request.setAttribute("teacher", teacher);
 		request.getRequestDispatcher("/findTeacherTimetableForMonth.jsp").forward(request, response);
 
-		log.trace("Finished displayTeacherTimetableForMonth servlet.");
+		log.trace("Found " + lessons.size() + " lessons for teacher with id=" + teacherId + " and date=" + dateString);
 	}
 }

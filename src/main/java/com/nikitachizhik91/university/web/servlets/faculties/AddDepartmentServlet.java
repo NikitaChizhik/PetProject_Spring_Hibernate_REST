@@ -16,46 +16,21 @@ import com.nikitachizhik91.university.domain.FacultyManager;
 import com.nikitachizhik91.university.domain.impl.FacultyManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/facultyDepartment")
-public class FacultyDepartmentServlet extends HttpServlet {
+@WebServlet("/faculty/addDepartment")
+public class AddDepartmentServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(FacultyDepartmentServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(AddDepartmentServlet.class.getName());
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		log.trace("Started deleteDepartmentFromFaculty() method.");
-
-		FacultyManager facultyManager = new FacultyManagerImpl();
-		String departmentId = request.getParameter("departmentId");
-		String facultyId = request.getParameter("facultyId");
-
-		try {
-			facultyManager.deleteDepartmentFromFaculty(Integer.parseInt(departmentId));
-
-		} catch (NumberFormatException e) {
-			log.error("The id=" + departmentId + " is wrong.", e);
-			throw new WebException("The id=" + departmentId + " is wrong.", e);
-
-		} catch (DomainException e) {
-			log.error("Cannot delete department with id=" + departmentId + " from faculty with id=" + facultyId, e);
-			throw new WebException(
-					"Cannot delete department with id=" + departmentId + " from faculty with id=" + facultyId, e);
-		}
-
-		response.sendRedirect("faculty?facultyId=" + facultyId);
-
-		log.trace("Finished deleteDepartmentFromFaculty() method.");
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addDepartment() method.");
 
 		String departmentId = request.getParameter("departmentId");
 		String facultyId = request.getParameter("facultyId");
+
+		log.trace("Post request to add department with id=" + departmentId + " to faculty with id=" + facultyId);
+
 		FacultyManager facultyManager = new FacultyManagerImpl();
 
 		try {
@@ -70,8 +45,9 @@ public class FacultyDepartmentServlet extends HttpServlet {
 			throw new WebException("Cannot add department with id=" + departmentId + " to faculty with id=" + facultyId,
 					e);
 		}
-		response.sendRedirect("faculty?facultyId=" + facultyId);
+		response.sendRedirect("/university/faculty?facultyId=" + facultyId);
 
-		log.trace("Finished addDepartment() method.");
+		log.trace("Added department with id=" + departmentId + " to faculty with id=" + facultyId);
+
 	}
 }

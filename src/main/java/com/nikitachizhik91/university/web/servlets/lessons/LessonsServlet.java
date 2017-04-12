@@ -43,7 +43,8 @@ public class LessonsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findAll() method.");
+
+		log.trace("Get request to find all lessons.");
 
 		List<Lesson> lessons = null;
 		LessonManager lessonManager = new LessonManagerImpl();
@@ -87,13 +88,12 @@ public class LessonsServlet extends HttpServlet {
 		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher("/lessons.jsp").forward(request, response);
 
-		log.trace("Finished findAll() method.");
+		log.trace("Found all lessons.");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addLesson() method.");
 
 		String number = request.getParameter("number");
 		String subjectId = request.getParameter("subjectId");
@@ -101,6 +101,9 @@ public class LessonsServlet extends HttpServlet {
 		String teacherId = request.getParameter("teacherId");
 		String roomId = request.getParameter("roomId");
 		String dateString = request.getParameter("date");
+
+		log.trace("Post request to create lesson" + "with number=" + number + ",subjectId=" + subjectId + ",groupId="
+				+ groupId + ",teacherId=" + teacherId + ",roomId=" + roomId + ",date=" + dateString);
 
 		Lesson lesson = new Lesson();
 		lesson.setNumber(Integer.parseInt(number));
@@ -134,6 +137,7 @@ public class LessonsServlet extends HttpServlet {
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = null;
+
 		try {
 			date = formatter.parse(dateString);
 		} catch (ParseException e) {
@@ -154,6 +158,7 @@ public class LessonsServlet extends HttpServlet {
 		}
 		response.sendRedirect("lessons");
 
-		log.trace("Finished addLesson() method.");
+		log.trace("Created lesson" + "with number=" + number + ",subjectId=" + subjectId + ",groupId=" + groupId
+				+ ",teacherId=" + teacherId + ",roomId=" + roomId + ",date=" + dateString);
 	}
 }

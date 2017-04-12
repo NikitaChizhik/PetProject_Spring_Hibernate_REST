@@ -25,13 +25,16 @@ public class SubjectServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findById() method.");
 
 		String subjectId = request.getParameter("subjectId");
-		Subject subject = null;
+
+		log.trace("Get request to find subject by id=" + subjectId);
+
 		SubjectManager subjectManager = new SubjectManagerImpl();
+		Subject subject = null;
 
 		try {
+
 			subject = subjectManager.findById(Integer.parseInt(subjectId));
 
 		} catch (NumberFormatException e) {
@@ -46,20 +49,23 @@ public class SubjectServlet extends HttpServlet {
 		request.setAttribute("subject", subject);
 		request.getRequestDispatcher("/subject.jsp").forward(request, response);
 
-		log.trace("Finished findById() method.");
+		log.trace("Found subject by id=" + subjectId);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started update() method.");
 
-		String name = request.getParameter("name");
-		Subject subject = null;
-		SubjectManager subjectManager = new SubjectManagerImpl();
 		String subjectId = request.getParameter("subjectId");
+		String name = request.getParameter("name");
+
+		log.trace("Post request to update subject with id=" + subjectId + " on name=" + name);
+
+		SubjectManager subjectManager = new SubjectManagerImpl();
+		Subject subject = null;
 
 		try {
+
 			subject = subjectManager.findById(Integer.parseInt(subjectId));
 			subject.setName(name);
 
@@ -76,7 +82,6 @@ public class SubjectServlet extends HttpServlet {
 
 		response.sendRedirect("subject?subjectId=" + subjectId);
 
-		log.trace("Finished update() method.");
+		log.trace("Updated subject with id=" + subjectId + " on name=" + name);
 	}
-
 }

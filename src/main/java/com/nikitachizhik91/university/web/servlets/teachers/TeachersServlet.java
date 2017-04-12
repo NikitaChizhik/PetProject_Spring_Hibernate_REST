@@ -31,7 +31,8 @@ public class TeachersServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findAll() method.");
+
+		log.trace("Get request to find all teachers");
 
 		List<Teacher> teachers = null;
 		TeacherManager teacherManager = new TeacherManagerImpl();
@@ -39,6 +40,7 @@ public class TeachersServlet extends HttpServlet {
 		SubjectManager subjectManager = new SubjectManagerImpl();
 
 		try {
+
 			teachers = teacherManager.findAll();
 
 			subjects = subjectManager.findAll();
@@ -53,23 +55,28 @@ public class TeachersServlet extends HttpServlet {
 		request.setAttribute("subjects", subjects);
 		request.getRequestDispatcher("/teachers.jsp").forward(request, response);
 
-		log.trace("Finished findAll() method.");
+		log.trace("Found all teachers");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addSubject() method.");
 
 		String name = request.getParameter("name");
 		String subjectId = request.getParameter("subjectId");
 
+		log.trace("Post request to create teacher with name=" + name + " subjectId=" + subjectId);
+
 		Teacher teacher = new Teacher();
 		teacher.setName(name);
+
 		SubjectManager subjectManager = new SubjectManagerImpl();
+		Subject subject = null;
 
 		try {
-			Subject subject = subjectManager.findById(Integer.parseInt(subjectId));
+
+			subject = subjectManager.findById(Integer.parseInt(subjectId));
+
 			teacher.setSubject(subject);
 
 		} catch (NumberFormatException e) {
@@ -84,6 +91,7 @@ public class TeachersServlet extends HttpServlet {
 		TeacherManager teacherManager = new TeacherManagerImpl();
 
 		try {
+
 			teacherManager.create(teacher);
 
 		} catch (DomainException e) {
@@ -94,7 +102,6 @@ public class TeachersServlet extends HttpServlet {
 
 		response.sendRedirect("teachers");
 
-		log.trace("Finished addTeacher() method.");
+		log.trace("Created teacher with name=" + name + " subjectId=" + subjectId);
 	}
-
 }

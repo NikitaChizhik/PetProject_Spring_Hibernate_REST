@@ -27,12 +27,14 @@ public class TeacherForDayServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started teacherTimetableForDay servlet.");
 
-		List<Teacher> teachers = null;
+		log.trace("Get request to find all teachers");
+
 		TeacherManager teacherManager = new TeacherManagerImpl();
+		List<Teacher> teachers = null;
 
 		try {
+
 			teachers = teacherManager.findAll();
 
 		} catch (DomainException e) {
@@ -44,7 +46,6 @@ public class TeacherForDayServlet extends HttpServlet {
 		request.setAttribute("teachers", teachers);
 		request.getRequestDispatcher("/findTeacherTimetableForDay.jsp").forward(request, response);
 
-		log.trace("Finished teacherTimetableForDay servlet.");
+		log.trace("Found all teachers");
 	}
-
 }

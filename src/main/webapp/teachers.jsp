@@ -61,16 +61,18 @@
 						<c:param name="teacherId" value="${teacher.id}" />
 					</c:url>
 
-					<c:url var="deleteLink" value="teacherDelete">
-						<c:param name="teacherId" value="${teacher.id}" />
-					</c:url>
+
 
 					<tr>
 						<td><a href="${teacherLink}">${teacher.name}</a></td>
 						<td>${teacher.subject.name}</td>
-						<td><a href="${deleteLink}"
-							onclick="if (!(confirm('Are you sure you want to delete this teacher?'))) return false">
-								Delete</a></td>
+
+						<td><form action="teacherDelete" method="post">
+
+								<input type="hidden" name="teacherId" value="${teacher.id}" />
+								<input type="submit" value="Delete" class="button"
+									onclick="if (!(confirm('Are you sure you want to delete this teacher?'))) return false" />
+							</form></td>
 					</tr>
 
 				</c:forEach>

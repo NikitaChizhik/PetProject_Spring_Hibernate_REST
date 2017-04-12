@@ -27,7 +27,8 @@ public class FacultiesServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findAll() method.");
+
+		log.trace("Get request to find all faculties");
 
 		List<Faculty> faculties = null;
 		FacultyManager facultyManager = new FacultyManagerImpl();
@@ -44,20 +45,21 @@ public class FacultiesServlet extends HttpServlet {
 		request.setAttribute("faculties", faculties);
 		request.getRequestDispatcher("/faculties.jsp").forward(request, response);
 
-		log.trace("Finished findAll() method.");
+		log.trace("Found all faculties");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started addFaculty() method.");
 
 		String name = request.getParameter("name");
 
-		Faculty faculty = new Faculty();
-		faculty.setName(name);
+		log.trace("Post request to create the faculty with name=" + name);
 
 		FacultyManager facultyManager = new FacultyManagerImpl();
+
+		Faculty faculty = new Faculty();
+		faculty.setName(name);
 
 		try {
 			facultyManager.create(faculty);
@@ -70,6 +72,6 @@ public class FacultiesServlet extends HttpServlet {
 
 		response.sendRedirect("faculties");
 
-		log.trace("Finished addFaculty() method.");
+		log.trace("Created the faculty with name=" + name);
 	}
 }

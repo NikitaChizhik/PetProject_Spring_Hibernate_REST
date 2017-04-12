@@ -16,38 +16,37 @@ import com.nikitachizhik91.university.domain.FacultyManager;
 import com.nikitachizhik91.university.domain.impl.FacultyManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/faculty/delete")
-public class DeleteFacultyServlet extends HttpServlet {
+@WebServlet("/faculty/deleteGroup")
+public class DeleteGroupServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(DeleteFacultyServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(DeleteGroupServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String groupId = request.getParameter("groupId");
 		String facultyId = request.getParameter("facultyId");
 
-		log.trace("Post request to delete faculty with id=" + facultyId);
+		log.trace("Post request to delete group with id=" + groupId + " from faculty with id=" + facultyId);
 
 		FacultyManager facultyManager = new FacultyManagerImpl();
 
 		try {
-			facultyManager.delete(Integer.parseInt(facultyId));
+			facultyManager.deleteGroupFromFaculty(Integer.parseInt(groupId));
 
 		} catch (NumberFormatException e) {
-
-			log.error("The id=" + facultyId + " is wrong.", e);
-			throw new WebException("The id=" + facultyId + " is wrong.", e);
+			log.error("The id=" + groupId + " is wrong.", e);
+			throw new WebException("The id=" + groupId + " is wrong.", e);
 
 		} catch (DomainException e) {
-
-			log.error("Cannot delete faculty with id=" + facultyId, e);
-			throw new WebException("Cannot delete faculty with id=" + facultyId, e);
+			log.error("Cannot delete group with id=" + groupId + " from faculty with id=" + facultyId, e);
+			throw new WebException("Cannot delete group with id=" + groupId + " from faculty with id=" + facultyId, e);
 		}
 
-		response.sendRedirect("/university/faculties");
+		response.sendRedirect("/university/faculty?facultyId=" + facultyId);
 
-		log.trace("Deleted faculty with id=" + facultyId);
+		log.trace("Deleted group with id=" + groupId + " from faculty with id=" + facultyId);
 	}
-
 }

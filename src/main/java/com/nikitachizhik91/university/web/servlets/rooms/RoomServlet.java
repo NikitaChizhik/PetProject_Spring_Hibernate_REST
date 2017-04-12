@@ -7,7 +7,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.SendResult;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,11 +25,13 @@ public class RoomServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started findById() method.");
 
 		String roomId = request.getParameter("roomId");
-		Room room = null;
+
+		log.trace("Get request to find room by id=" + roomId);
+
 		RoomManager roomManager = new RoomManagerImpl();
+		Room room = null;
 
 		try {
 			room = roomManager.findById(Integer.parseInt(roomId));
@@ -47,23 +48,25 @@ public class RoomServlet extends HttpServlet {
 		request.setAttribute("room", room);
 		request.getRequestDispatcher("/room.jsp").forward(request, response);
 
-		log.trace("Finished findById() method.");
+		log.trace("Found room by id=" + roomId);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started update() method.");
 
-		String number = request.getParameter("number");
-		Room room = null;
-		RoomManager studentManager = new RoomManagerImpl();
 		String roomId = request.getParameter("roomId");
+		String number = request.getParameter("number");
+
+		log.trace("Post request to update room wtih id=" + roomId + " on number=" + number);
+
+		RoomManager studentManager = new RoomManagerImpl();
+		Room room = null;
 
 		try {
 			room = studentManager.findById(Integer.parseInt(roomId));
 			room.setNumber(number);
-			
+
 			studentManager.update(room);
 
 		} catch (DomainException e) {
@@ -77,7 +80,6 @@ public class RoomServlet extends HttpServlet {
 
 		response.sendRedirect("room?roomId=" + roomId);
 
-		log.trace("Finished update() method.");
+		log.trace("Updated room wtih id=" + roomId + " on number=" + number);
 	}
-
 }

@@ -16,36 +16,38 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.impl.DepartmentManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/department/delete")
-public class DeleteDepartmentServlet extends HttpServlet {
+@WebServlet("/department/deleteSubject")
+public class DeleteSubjectServlet extends HttpServlet {
 
-	private final static Logger log = LogManager.getLogger(DeleteDepartmentServlet.class.getName());
+	private final static Logger log = LogManager.getLogger(DeleteSubjectServlet.class.getName());
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String subjectId = request.getParameter("subjectId");
 		String departmentId = request.getParameter("departmentId");
 
-		log.trace("Post request to delete department with id=" + departmentId);
+		log.trace("Post request to delete subject with id=" + subjectId + " from department with id=" + departmentId);
 
 		DepartmentManager departmentManager = new DepartmentManagerImpl();
 
 		try {
-			departmentManager.delete(Integer.parseInt(departmentId));
+			departmentManager.deleteSubjectFromDepartment(Integer.parseInt(subjectId));
 
 		} catch (NumberFormatException e) {
-			log.error("The id=" + departmentId + " is wrong.", e);
-			throw new WebException("The id=" + departmentId + " is wrong.", e);
+			log.error("The id=" + subjectId + " is wrong.", e);
+			throw new WebException("The id=" + subjectId + " is wrong.", e);
 
 		} catch (DomainException e) {
-			log.error("Cannot delete department with id=" + departmentId, e);
-			throw new WebException("Cannot delete department with id=" + departmentId, e);
+			log.error("Cannot delete subject with id=" + subjectId + " from group with id=" + departmentId, e);
+			throw new WebException("Cannot delete subject with id=" + subjectId + " from group with id=" + departmentId,
+					e);
 		}
 
-		response.sendRedirect("/university/departments");
+		response.sendRedirect("/university/department?departmentId=" + departmentId);
 
-		log.trace("Deleted department with id=" + departmentId);
+		log.trace("Deleted subject with id=" + subjectId + " from department with id=" + departmentId);
 	}
-
 }

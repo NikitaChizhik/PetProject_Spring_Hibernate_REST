@@ -43,15 +43,16 @@
 						<c:param name="subjectId" value="${subject.id}" />
 					</c:url>
 
-					<c:url var="deleteLink" value="subjectDelete">
-						<c:param name="subjectId" value="${subject.id}" />
-					</c:url>
 
 					<tr>
 						<td><a href="${subjectLink}">${subject.name}</a></td>
-						<td><a href="${deleteLink}"
-							onclick="if (!(confirm('Are you sure you want to delete this subject?'))) return false">
-								Delete</a></td>
+
+						<td><form action="subjectDelete" method="post">
+
+								<input type="hidden" name="subjectId" value="${subject.id}" />
+								<input type="submit" value="Delete" class="button"
+									onclick="if (!(confirm('Are you sure you want to delete this subject?'))) return false" />
+							</form></td>
 					</tr>
 
 				</c:forEach>

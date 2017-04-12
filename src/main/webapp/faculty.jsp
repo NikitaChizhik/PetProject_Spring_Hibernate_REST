@@ -58,7 +58,7 @@
 
 		<c:if test="${not empty departmentsWithoutFaculty}">
 
-			<form action="facultyDepartment" method="post">
+			<form action="faculty/addDepartment" method="post">
 
 
 				<select name="departmentId" class="button">
@@ -86,16 +86,17 @@
 					<c:param name="departmentId" value="${department.id}" />
 				</c:url>
 
-				<c:url var="deleteDepartmentLink" value="facultyDepartment">
-					<c:param name="departmentId" value="${department.id}" />
-					<c:param name="facultyId" value="${faculty.id}" />
-				</c:url>
+
 
 				<tr>
 					<td><a href="${departmentLink}">${department.name}</a></td>
-					<td><a href="${deleteDepartmentLink}"
-						onclick="if (!(confirm('Are you sure you want to delete this department?'))) return false">
-							Delete</a></td>
+					<td><form action="faculty/deleteDepartment" method="post">
+
+							<input type="hidden" name="facultyId" value="${faculty.id}" /> <input
+								type="hidden" name="departmentId" value="${department.id}" /> <input
+								type="submit" value="Delete" class="button"
+								onclick="if (!(confirm('Are you sure you want to delete this department?'))) return false" />
+						</form></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -110,7 +111,7 @@
 
 
 		<c:if test="${not empty groupsWithoutFaculty}">
-			<form action="facultyGroup" method="post">
+			<form action="faculty/addGroup" method="post">
 
 
 				<select name="groupId" class="button">
@@ -145,9 +146,13 @@
 
 				<tr>
 					<td><a href="${groupLink}">${group.name}</a></td>
-					<td><a href="${deleteGroupLink}"
-						onclick="if (!(confirm('Are you sure you want to delete this group	?'))) return false">
-							Delete</a></td>
+					<td><form action="faculty/deleteGroup" method="post">
+
+							<input type="hidden" name="facultyId" value="${faculty.id}" /> <input
+								type="hidden" name="groupId" value="${group.id}" /> <input
+								type="submit" value="Delete" class="button"
+								onclick="if (!(confirm('Are you sure you want to delete this group?'))) return false" />
+						</form></td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -35,8 +35,11 @@ public class FacultyServlet extends HttpServlet {
 		log.trace("Started findById() method.");
 
 		String facultyId = request.getParameter("facultyId");
-		Faculty faculty = null;
+
+		log.trace("Get request to find faculty by id=" + facultyId);
+
 		FacultyManager facultyManager = new FacultyManagerImpl();
+		Faculty faculty = null;
 
 		List<Department> departmentsWithoutFaculty = null;
 		DepartmentManager departmentManager = new DepartmentManagerImpl();
@@ -74,18 +77,20 @@ public class FacultyServlet extends HttpServlet {
 
 		request.getRequestDispatcher("/faculty.jsp").forward(request, response);
 
-		log.trace("Finished findById() method.");
+		log.trace("Found faculty by id=" + facultyId);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		log.trace("Started update() method.");
 
-		String name = request.getParameter("name");
-		Faculty faculty = null;
-		FacultyManager facultyManager = new FacultyManagerImpl();
 		String facultyId = request.getParameter("facultyId");
+		String name = request.getParameter("name");
+
+		log.trace("Post request to update faculty with id=" + facultyId + " on name=" + name);
+
+		FacultyManager facultyManager = new FacultyManagerImpl();
+		Faculty faculty = null;
 
 		try {
 			faculty = facultyManager.findById(Integer.parseInt(facultyId));
@@ -104,7 +109,6 @@ public class FacultyServlet extends HttpServlet {
 
 		response.sendRedirect("faculty?facultyId=" + facultyId);
 
-		log.trace("Finished update() method.");
+		log.trace("Updated faculty with id=" + facultyId + " on name=" + name);
 	}
-
 }
