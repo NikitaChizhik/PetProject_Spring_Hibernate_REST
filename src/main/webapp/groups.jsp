@@ -1,44 +1,76 @@
-<%@page import="com.nikitachizhik91.university.model.Group"%>
-<%@page
-	import="com.nikitachizhik91.university.domain.impl.GroupManagerImpl"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+
+<title>allGroups</title>
+<link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
-<h2>All Groups</h2>
+
+
 <body>
-	<br>
 
-	<%
-		GroupManagerImpl groupManager = new GroupManagerImpl();
-	%>
+	<div id="wrapper">
+		<div id="header">
+			<h2>University</h2>
+		</div>
+	</div>
 
-	<table border="2">
-		<tr>
-			<td>Order</td>
-			<td>Name</td>
-			<td>Amount of students</td>
-			<td>id</td>
-		</tr>
-		<%
-			int i = 1;
-			for (Group group : groupManager.findAll()) {
-		%>
-		<tr>
-			<td><%=i++%></td>
-			<td><a href="group.jsp?id=<%=group.getId()%>"><%=group.getName()%></a></td>
+	<div id="container">
 
-			<td><%=group.getStudents().size()%></td>
-			<td><%=group.getId()%></td>
-		</tr>
-		<%
-			}
-		%>
+		<div id="content">
 
-	</table>
+			<form action="groups" method="post">
+
+				<input type="text" name="name" /> <input type="submit"
+					value="Add Group" class="button" />
+			</form>
+
+			<table>
+
+				<tr>
+					<th>Name</th>
+					<th>Students</th>
+					<th>Delete</th>
+
+				</tr>
+
+				<c:forEach var="group" items="${groups}">
+
+					<c:url var="groupLink" value="group">
+						<c:param name="groupId" value="${group.id}" />
+					</c:url>
+
+
+
+					<tr>
+						<td><a href="${groupLink}">${group.name}</a></td>
+						<td>${fn:length(group.students)}</td>
+
+						<td><form action="groupDelete" method="post">
+
+								<input type="hidden" name="groupId" value="${group.id}" /> <input
+									type="submit" value="Delete" class="button"
+									onclick="if (!(confirm('Are you sure you want to delete this group?'))) return false" />
+							</form></td>
+					</tr>
+
+				</c:forEach>
+
+			</table>
+
+		</div>
+
+	</div>
+	<p>
+		<a href="index.html">Back to University</a>
+	</p>
 </body>
+
+
 </html>

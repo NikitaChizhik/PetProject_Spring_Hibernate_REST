@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="info">
 	<Properties>
-		<Property name="log-path">D:\1nikita\installs\REPOSITORY\Task9DomainLayer\resources
+		<Property name="log-path">D:\nikita\Java\workspaceNeon3\Task9DomainLayer\src\main\resources
 		</Property>
 	</Properties>
 	<Appenders>

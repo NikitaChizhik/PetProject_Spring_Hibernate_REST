@@ -1,46 +1,73 @@
-<!DOCTYPE HTML>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%@page
-	import="com.nikitachizhik91.university.domain.impl.StudentManagerImpl"%>
-<%@page import="com.nikitachizhik91.university.model.Student"%>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>name of the site above</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<title>allStudents</title>
+<link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
+
 
 <body>
 
-	<br>
-	<br>
-	<%
-		StudentManagerImpl studentManager = new StudentManagerImpl();
-	%>
-	<br> All students:
+	<div id="wrapper">
+		<div id="header">
+			<h2>University</h2>
+		</div>
+	</div>
 
-	<table border="2">
-		<tr>
-			<td>Order</td>
-			<td>Name</td>
+	<div id="container">
 
-		</tr>
-		<%
-			int i = 1;
-			for (Student student : studentManager.findAll()) {
-		%>
-		<tr>
-			<td><%=i++%></td>
-			<td><a href="student.jsp?id=<%=student.getId()%>"><%=student.getName()%></a></td>
+		<div id="content">
 
-		</tr>
-		<%
-			}
-		%>
-		<br>
+			<form action="students" method="post">
 
+				<input type="text" name="name" /> <input type="submit"
+					value="Add Student" class="button" />
+			</form>
 
-	</table>
+			<table>
+
+				<tr>
+					<th>Name</th>
+					<th>Delete</th>
+				</tr>
+
+				<c:forEach var="student" items="${students}">
+
+					<c:url var="studentLink" value="student">
+						<c:param name="studentId" value="${student.id}" />
+					</c:url>
+
+					
+
+					<tr>
+						<td><a href="${studentLink}">${student.name}</a></td>
+
+						<td><form action="studentDelete" method="post">
+
+								<input type="hidden" name="studentId" value="${student.id}" />
+								<input type="submit" value="Delete" class="button"
+									onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false" />
+							</form></td>
+					</tr>
+
+				</c:forEach>
+
+			</table>
+
+		</div>
+
+	</div>
+	<p>
+		<a href="index.html">Back to University</a>
+	</p>
 
 </body>
-</html>
 
+
+</html>

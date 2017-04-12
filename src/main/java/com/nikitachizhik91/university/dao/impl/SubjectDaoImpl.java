@@ -25,6 +25,8 @@ public class SubjectDaoImpl implements SubjectDao {
 	private static final String UPDATE_SUBJECT = "update subjects set name=? where id =?";
 	private static final String DELETE_SUBJECT = "delete from subjects where id =?";
 
+	private static final String FIND_SUBJECTS_WITHOUT_DEPARTMENT = "SELECT id FROM subjects s WHERE NOT EXISTS(SELECT NULL FROM departments_subjects ds WHERE ds.subject_id = s.id)";
+
 	public SubjectDaoImpl() {
 		connector = new Connector();
 	}
@@ -177,6 +179,34 @@ public class SubjectDaoImpl implements SubjectDao {
 		}
 		log.info("Deleted Subject with id=" + id);
 		log.trace("Finished delete() method.");
+	}
+
+	public List<Subject> findSubjectsWithoutDepartment() throws DaoException {
+		log.trace("Started findSubjectsWithoutDepartment() method.");
+
+		List<Subject> subjects = new ArrayList<Subject>();
+
+		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(FIND_SUBJECTS_WITHOUT_DEPARTMENT);
+				ResultSet resultSet = statement.executeQuery();) {
+
+			log.debug("Executed query :" + statement);
+			log.trace("Got the result set.");
+
+			while (resultSet.next()) {
+
+				Subject subject = findById(resultSet.getInt("id"));
+				subjects.add(subject);
+			}
+		} catch (SQLException e) {
+			log.error("Cannot find all subjects which are without department.", e);
+			throw new DaoException("Cannot find all subjects which are without department.", e);
+		}
+		log.info("Found all subjects which are without department.");
+		log.trace("Finished findSubjectsWithoutDepartment() method.");
+
+		return subjects;
 	}
 
 }

@@ -26,6 +26,7 @@ public class TeacherDaoImpl implements TeacherDao {
 	private static final String UPDATE_TEACHER = "update teachers set name=?,subject_id=? where id =?";
 	private static final String DELETE_TEACHER = "delete from teachers where id =?";
 	private SubjectDao subjectDao;
+	private static final String FIND_TEACHERS_WITHOUT_DEPARTMENT = "SELECT id FROM teachers t WHERE NOT EXISTS(SELECT NULL FROM departments_teachers dt WHERE dt.teacher_id = t.id)";
 
 	public TeacherDaoImpl() {
 		connector = new Connector();
@@ -43,6 +44,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
 			statement.setString(1, teacherArg.getName());
 			statement.setInt(2, teacherArg.getSubject().getId());
+
 			log.trace("Statement :" + statement + " is received.");
 			statement.executeUpdate();
 			log.debug("Executed query :" + statement);
@@ -189,4 +191,32 @@ public class TeacherDaoImpl implements TeacherDao {
 		log.trace("Finished delete() method.");
 	}
 
+	public List<Teacher> findTeachersWithoutDepartment() throws DaoException {
+		log.trace("Started findTeachersWithoutDepartment() method.");
+
+		List<Teacher> teachers = new ArrayList<Teacher>();
+
+		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(FIND_TEACHERS_WITHOUT_DEPARTMENT);
+				ResultSet resultSet = statement.executeQuery();) {
+
+			log.debug("Executed query :" + statement);
+			log.trace("Got the result set.");
+
+			while (resultSet.next()) {
+
+				Teacher teacher = findById(resultSet.getInt("id"));
+				teachers.add(teacher);
+			}
+			
+		} catch (SQLException e) {
+			log.error("Cannot find all teachers who are without department.", e);
+			throw new DaoException("Cannot find all teachers who are without department.", e);
+		}
+		log.info("Found all teachers who are without department.");
+		log.trace("Finished findTeachersWithoutDepartment() method.");
+
+		return teachers;
+	}
 }

@@ -6,13 +6,15 @@ import com.nikitachizhik91.university.model.Student;
 
 public interface StudentManager {
 
-	public abstract Student create(Student entity) throws DomainException;
+	public abstract Student create(Student student) throws DomainException;
 
 	public abstract Student findById(int id) throws DomainException;
 
 	public abstract List<Student> findAll() throws DomainException;
 
-	public abstract Student update(Student entity) throws DomainException;
+	public abstract Student update(Student student) throws DomainException;
 
 	public abstract void delete(int id) throws DomainException;
+
+	public abstract List<Student> findStudentsWithoutGroup() throws DomainException;
 }

@@ -23,7 +23,6 @@ public class Timetable {
 
 	public Timetable() {
 		lessonDaoImpl = new LessonDaoImpl();
-
 	}
 
 	public void addLesson(Lesson lesson) throws DomainException {
@@ -67,8 +66,8 @@ public class Timetable {
 			lessons = lessonDaoImpl.getTeacherTimetableForDay(teacher, date);
 		} catch (DaoException e) {
 			log.error("Cannot getTeacherTimetableForDay() ffor Teacher :" + teacher + " and Date :" + date, e);
-			throw new DomainException("Cannot getTeacherTimetableForDay() for Teacher :" + teacher + " and Date :"
-					+ date, e);
+			throw new DomainException(
+					"Cannot getTeacherTimetableForDay() for Teacher :" + teacher + " and Date :" + date, e);
 		}
 
 		log.info("Found " + lessons.size() + " lessons for teacher:" + teacher + " and Date:" + date);
@@ -89,9 +88,9 @@ public class Timetable {
 			log.trace("Finding required lessons.");
 			lessons = lessonDaoImpl.getTeacherTimetableForMonth(teacher, date);
 		} catch (DaoException e) {
-			log.error("Cannot getTeacherTimetableForMonth() ffor Teacher :" + teacher + " and Date :" + date, e);
-			throw new DomainException("Cannot getTeacherTimetableForMonth() for Teacher :" + teacher + " and Date :"
-					+ date, e);
+			log.error("Cannot getTeacherTimetableForMonth() for Teacher :" + teacher + " and Date :" + date, e);
+			throw new DomainException(
+					"Cannot getTeacherTimetableForMonth() for Teacher :" + teacher + " and Date :" + date, e);
 		}
 
 		log.info("Found " + lessons.size() + " lessons for teacher:" + teacher + " and Date:" + date);
@@ -103,8 +102,8 @@ public class Timetable {
 	public List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DomainException {
 		log.trace("Started getStudentTimetableForDay().");
 		if (student == null || date == null) {
-			log.error("Teacher or date == null");
-			throw new IllegalArgumentException("Teacher or Date == null");
+			log.error("Student or date == null");
+			throw new IllegalArgumentException("Student or Date == null");
 		}
 		log.trace("Finding all lessons.");
 
@@ -114,12 +113,12 @@ public class Timetable {
 			log.trace("Finding required lessons.");
 			lessons = lessonDaoImpl.getStudentTimetableForDay(student, date);
 		} catch (DaoException e) {
-			log.error("Cannot getStudentTimetableForDay() ffor Teacher :" + student + " and Date :" + date, e);
-			throw new DomainException("Cannot getStudentTimetableForDay() for Teacher :" + student + " and Date :"
-					+ date, e);
+			log.error("Cannot getStudentTimetableForDay() for Student :" + student + " and Date :" + date, e);
+			throw new DomainException(
+					"Cannot getStudentTimetableForDay() for Student :" + student + " and Date :" + date, e);
 		}
 
-		log.info("Found " + lessons.size() + " lessons for teacher:" + student + " and Date:" + date);
+		log.info("Found " + lessons.size() + " lessons for Student:" + student + " and Date:" + date);
 		log.trace("Finished getStudentTimetableForDay().");
 		return lessons;
 	}
@@ -127,8 +126,8 @@ public class Timetable {
 	public List<Lesson> getStudentTimetableFoMonth(Student student, Date date) throws DomainException {
 		log.trace("Started getStudentTimetableFoMonth().");
 		if (student == null || date == null) {
-			log.error("Teacher or date == null");
-			throw new IllegalArgumentException("Teacher or Date == null");
+			log.error("Student or date == null");
+			throw new IllegalArgumentException("Student or Date == null");
 		}
 		log.trace("Finding all lessons.");
 
@@ -136,14 +135,14 @@ public class Timetable {
 
 		try {
 			log.trace("Finding required lessons.");
-			lessons = lessonDaoImpl.getStudentTimetableFoMonth(student, date);
+			lessons = lessonDaoImpl.getStudentTimetableForMonth(student, date);
 		} catch (DaoException e) {
-			log.error("Cannot getStudentTimetableFoMonth() ffor Teacher :" + student + " and Date :" + date, e);
-			throw new DomainException("Cannot getStudentTimetableFoMonth() for Teacher :" + student + " and Date :"
-					+ date, e);
+			log.error("Cannot getStudentTimetableFoMonth() for Student :" + student + " and Date :" + date, e);
+			throw new DomainException(
+					"Cannot getStudentTimetableFoMonth() for Student :" + student + " and Date :" + date, e);
 		}
 
-		log.info("Found " + lessons.size() + " lessons for teacher:" + student + " and Date:" + date);
+		log.info("Found " + lessons.size() + " lessons for Student:" + student + " and Date:" + date);
 		log.trace("Finished getStudentTimetableFoMonth().");
 		return lessons;
 	}

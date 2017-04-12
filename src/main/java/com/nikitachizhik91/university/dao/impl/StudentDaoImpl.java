@@ -25,6 +25,8 @@ public class StudentDaoImpl implements StudentDao {
 	private static final String UPDATE_STUDENT = "update students set name=? where id =?";
 	private static final String DELETE_STUDENT = "delete from students where id =?";
 
+	private static final String FIND_STUDENTS_WITHOUT_GROUP = "SELECT id FROM students s WHERE NOT EXISTS(SELECT NULL FROM groups_students gs WHERE gs.student_id = s.id)";
+
 	public StudentDaoImpl() {
 		connector = new Connector();
 	}
@@ -118,8 +120,9 @@ public class StudentDaoImpl implements StudentDao {
 			log.error("Cannot find all students.", e);
 			throw new DaoException("Cannot find all students.", e);
 		}
-		log.info("Found all students :");
+		log.info("Found all students.");
 		log.trace("Finished findAll() method.");
+
 		return students;
 	}
 
@@ -180,4 +183,31 @@ public class StudentDaoImpl implements StudentDao {
 		log.trace("Finished delete() method.");
 	}
 
+	public List<Student> findStudentsWithoutGroup() throws DaoException {
+		log.trace("Started findStudentsWithoutGroup() method.");
+
+		List<Student> students = new ArrayList<Student>();
+
+		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
+		try (Connection connection = connector.getConnection();
+				PreparedStatement statement = connection.prepareStatement(FIND_STUDENTS_WITHOUT_GROUP);
+				ResultSet resultSet = statement.executeQuery();) {
+
+			log.debug("Executed query :" + statement);
+			log.trace("Got the result set.");
+
+			while (resultSet.next()) {
+
+				Student student = findById(resultSet.getInt("id"));
+				students.add(student);
+			}
+		} catch (SQLException e) {
+			log.error("Cannot find all students who are without group.", e);
+			throw new DaoException("Cannot find all students who are without group.", e);
+		}
+		log.info("Found all students who are without group.");
+		log.trace("Finished findStudentsWithoutGroup() method.");
+
+		return students;
+	}
 }
