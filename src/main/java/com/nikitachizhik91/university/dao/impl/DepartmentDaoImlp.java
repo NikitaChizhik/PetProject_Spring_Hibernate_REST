@@ -21,8 +21,9 @@ import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
 public class DepartmentDaoImlp implements DepartmentDao {
+
 	private final static Logger log = LogManager.getLogger(DepartmentDaoImlp.class.getName());
-	Connector connector;
+	private Connector connector;
 	private static final String INSERT_DEPARTMENT = "insert into departments (name) values(?)";
 	private static final String FIND_DEPARTMENT_BY_ID = "select * from departments where id=?";
 	private static final String FIND_ALL_DEPARTMENTS = "select * from departments";
@@ -52,6 +53,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		Department department = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
+
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_DEPARTMENT,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -121,6 +123,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		List<Department> departments = new ArrayList<Department>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
+
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_DEPARTMENTS);
 				ResultSet resultSet = statement.executeQuery();) {
