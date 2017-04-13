@@ -24,7 +24,7 @@ public class Connector {
 		try {
 			Context context = (Context) new InitialContext().lookup("java:comp/env");
 
-			dataSource = (DataSource) context.lookup("resource");
+			dataSource = (DataSource) context.lookup("jdbc/university2");
 
 			connection = dataSource.getConnection();
 
