@@ -26,7 +26,7 @@ import com.nikitachizhik91.university.model.Teacher;
 public class DepartmentDaoImlp implements DepartmentDao {
 
 	private final static Logger log = LogManager.getLogger(DepartmentDaoImlp.class.getName());
-	Connector connector;
+	private Connector connector;
 	private static final String INSERT_DEPARTMENT = "insert into departments (name) values(?)";
 	private static final String FIND_DEPARTMENT_BY_ID = "select * from departments where id=?";
 	private static final String FIND_ALL_DEPARTMENTS = "select * from departments";
