@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -33,7 +32,7 @@ public class Connector {
 
 			context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
 
-			dataSource = context.getBean("dataSource", BasicDataSource.class);
+			dataSource = context.getBean("dataSource", DataSource.class);
 
 			connection = dataSource.getConnection();
 
@@ -55,7 +54,3 @@ public class Connector {
 		return connection;
 	}
 }
-// Context context = (Context) new
-// InitialContext().lookup("java:comp/env");
-
-// dataSource = (DataSource) context.lookup("jdbc/university2");
