@@ -20,17 +20,8 @@ public class Connector {
 		log.trace("Started getConnection() method.");
 
 		Connection connection;
-		ClassPathXmlApplicationContext context = null;
 
-		try {
-
-			if (dataSource != null) {
-
-				connection = dataSource.getConnection();
-				return connection;
-			}
-
-			context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");) {
 
 			dataSource = context.getBean("dataSource", DataSource.class);
 
@@ -40,13 +31,6 @@ public class Connector {
 
 			log.error("Cannot get connection", e);
 			throw new DaoException("Cannot get connection", e);
-
-		} finally {
-
-			if (context != null) {
-				context.close();
-			}
-
 		}
 
 		log.trace("Finished getConnection().");
