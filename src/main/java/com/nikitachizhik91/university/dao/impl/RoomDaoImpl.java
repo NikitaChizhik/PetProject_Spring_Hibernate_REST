@@ -17,6 +17,7 @@ import com.nikitachizhik91.university.dao.RoomDao;
 import com.nikitachizhik91.university.model.Room;
 
 public class RoomDaoImpl implements RoomDao {
+	
 	private final static Logger log = LogManager.getLogger(RoomDaoImpl.class.getName());
 	private Connector connector;
 	private static final String INSERT_ROOM = "insert into rooms (number) values(?)";
@@ -34,6 +35,7 @@ public class RoomDaoImpl implements RoomDao {
 		Room room = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
+		
 		try (Connection connection = connector.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_ROOM, Statement.RETURN_GENERATED_KEYS);) {
 

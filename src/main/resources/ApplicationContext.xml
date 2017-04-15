@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- add entry to enable component scanning <context:component-scan base-package="com.luv2code.springdemo" 
+		<property name="initialSize" value="3" /> <property name="maxActive" value="20" 
+		/> <property name="maxIdle" value="5" /> <property name="maxWait" value="10000" 
+		/>/> destroy-method="close" <bean id="connector" class="com.nikitachizhik91.university.dao.Connector"> 
+		<property name="dataSource" ref="dataSource" /> </bean> -->
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://127.0.0.1:5432/university2" />
+		<property name="username" value="postgres" />
+		<property name="password" value="HolyBible" />
+
+	</bean>
+
+
+
+
+</beans>
