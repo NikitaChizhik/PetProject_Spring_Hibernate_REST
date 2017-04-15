@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Connector {
@@ -15,15 +16,24 @@ public class Connector {
 
 	private DataSource dataSource;
 
+	public Connector() {
+
+		ApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+
+		dataSource = context.getBean("dataSource", DataSource.class);
+
+		if (context != null) {
+			((ClassPathXmlApplicationContext) context).close();
+		}
+	}
+
 	public Connection getConnection() throws DaoException {
 
 		log.trace("Started getConnection() method.");
 
 		Connection connection;
 
-		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");) {
-
-			dataSource = context.getBean("dataSource", DataSource.class);
+		try {
 
 			connection = dataSource.getConnection();
 
