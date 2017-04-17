@@ -28,6 +28,7 @@ import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
 
 public class LessonDaoImpl implements LessonDao {
+	
 	private final static Logger log = LogManager.getLogger(LessonDaoImpl.class.getName());
 	private Connector connector;
 	private static final String INSERT_LESSON = "insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(?,?,?,?,?,?)";
@@ -40,12 +41,14 @@ public class LessonDaoImpl implements LessonDao {
 	private static final String GET_TEACHER_TIMETABLE_FOR_MONTH = "select * from lessons where teacher_id=? and date between ? and ?";
 	private static final String GET_STUDENT_TIMETABLE_FOR_DAY = "select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?";
 	private static final String GET_STUDENT_TIMETABLE_FOR_MONTH = "select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?";
+	
 	private GroupDao groupDao;
 	private RoomDao roomDao;
 	private SubjectDao subjectDao;
 	private TeacherDao teacherDao;
 
 	public LessonDaoImpl() {
+		
 		connector = new Connector();
 
 		groupDao = new GroupDaoImpl();
