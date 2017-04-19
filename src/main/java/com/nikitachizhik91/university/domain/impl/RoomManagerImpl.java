@@ -4,22 +4,21 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.RoomDao;
-import com.nikitachizhik91.university.dao.impl.RoomDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.RoomManager;
 import com.nikitachizhik91.university.model.Room;
 
+@Service
 public class RoomManagerImpl implements RoomManager {
 
 	private final static Logger log = LogManager.getLogger(RoomManagerImpl.class.getName());
+	@Autowired
 	private RoomDao roomDao;
-
-	public RoomManagerImpl() {
-		roomDao = new RoomDaoImpl();
-	}
 
 	@Override
 	public Room create(Room room) throws DomainException {

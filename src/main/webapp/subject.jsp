@@ -38,8 +38,7 @@
 					<td>${subject.id}</td>
 					<td>${subject.name}</td>
 					<td><input type="text" name="name" value="${subject.name}" /></td>
-					<td><input type="submit" value="Save"
-						class="button" />
+					<td><input type="submit" value="Save" class="button" />
 					<td>
 				</tr>
 
@@ -53,7 +52,7 @@
 	<p>
 		<a href="subjects">Back to list of all subjects</a>
 	</p>
-	
+
 </body>
 
 </html>

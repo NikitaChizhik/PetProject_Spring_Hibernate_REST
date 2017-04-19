@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +16,7 @@ import com.nikitachizhik91.university.domain.RoomManager;
 import com.nikitachizhik91.university.domain.impl.RoomManagerImpl;
 import com.nikitachizhik91.university.model.Room;
 import com.nikitachizhik91.university.web.WebException;
-
-@WebServlet("/rooms")
+//webservlet/rooms
 public class RoomsServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(RoomsServlet.class.getName());
@@ -42,8 +40,9 @@ public class RoomsServlet extends HttpServlet {
 			throw new WebException("Cannot find all rooms.", e);
 		}
 
-		request.setAttribute("rooms", rooms);
-		request.getRequestDispatcher("/rooms.jsp").forward(request, response);
+		// .setAttribute("rooms", rooms);
+		// request.getRequestDispatcher("/rooms.jsp").forward(request,
+		// response);
 
 		log.trace("Found all rooms");
 	}

@@ -8,10 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.DepartmentDao;
 import com.nikitachizhik91.university.dao.SubjectDao;
@@ -23,7 +25,8 @@ import com.nikitachizhik91.university.model.Teacher;
 public class DepartmentDaoImlp implements DepartmentDao {
 
 	private final static Logger log = LogManager.getLogger(DepartmentDaoImlp.class.getName());
-	private Connector connector;
+	@Autowired
+	private DataSource dataSource;
 	private static final String INSERT_DEPARTMENT = "insert into departments (name) values(?)";
 	private static final String FIND_DEPARTMENT_BY_ID = "select * from departments where id=?";
 	private static final String FIND_ALL_DEPARTMENTS = "select * from departments";
@@ -43,10 +46,6 @@ public class DepartmentDaoImlp implements DepartmentDao {
 
 	private static final String FIND_DEPARTMENTS_WITHOUT_FACULTY = "SELECT id FROM departments d WHERE NOT EXISTS(SELECT NULL FROM faculties_departments fd WHERE fd.department_id = d.id)";
 
-	public DepartmentDaoImlp() {
-		connector = new Connector();
-	}
-
 	public Department create(Department departmentArg) throws DaoException {
 		log.trace("Started create() method.");
 
@@ -54,7 +53,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 
 		log.trace("Getting Conncetion and creating prepared statement.");
 
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_DEPARTMENT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -88,7 +87,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		Department department = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENT_BY_ID)) {
 
 			statement.setInt(1, id);
@@ -124,7 +123,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
 
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_DEPARTMENTS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -156,7 +155,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		Department department = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_DEPARTMENT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -193,7 +192,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_DEPARTMENT);) {
 
 			statement.setInt(1, id);
@@ -214,7 +213,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		log.trace("Started addSubject() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
 
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT);) {
 
 			statement.setInt(1, departmentId);
@@ -235,7 +234,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	public void addTeacher(int departmentId, int teacherId) throws DaoException {
 		log.trace("Started addTeacher() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER);) {
 
 			statement.setInt(1, departmentId);
@@ -256,7 +255,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		log.trace("Started findTeachersByDepartmentId() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
 		List<Teacher> teachers = new ArrayList<Teacher>();
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_TEACHERS_BY_DEPARTMENT_ID)) {
 
 			statement.setInt(1, departmentId);
@@ -286,7 +285,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	public void deleteAllTeachersFromDepartment(int departmentId) throws DaoException {
 		log.trace("Started deleteAllTeachersFromDepartment() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_TEACHERS_FROM_DEPARTMENT);) {
 
 			statement.setInt(1, departmentId);
@@ -306,7 +305,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	public void deleteTeacherFromDepartment(int teacherId) throws DaoException {
 		log.trace("Started deleteTeacherFromDepartment() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_TEACHER_FROM_DEPARTMENT);) {
 
 			statement.setInt(1, teacherId);
@@ -328,7 +327,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		log.trace("Started findSubjectsByDepartmentId() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
 		List<Subject> subjects = new ArrayList<Subject>();
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_SUBJECTS_BY_DEPARTMENT_ID)) {
 
 			statement.setInt(1, departmentId);
@@ -359,7 +358,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	public void deleteAllSubjectsFromDepartment(int departmentId) throws DaoException {
 		log.trace("Started deleteAllSubjectsFromDepartment() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_SUBJECTS_FROM_DEPARTMENT);) {
 
 			statement.setInt(1, departmentId);
@@ -379,7 +378,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	public void deleteSubjectFromDepartment(int subjectId) throws DaoException {
 		log.trace("Started deleteSubjectFromDepartment() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT_FROM_DEPARTMENT);) {
 
 			statement.setInt(1, subjectId);
@@ -403,7 +402,7 @@ public class DepartmentDaoImlp implements DepartmentDao {
 		List<Department> departments = new ArrayList<Department>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENTS_WITHOUT_FACULTY);
 				ResultSet resultSet = statement.executeQuery();) {
 

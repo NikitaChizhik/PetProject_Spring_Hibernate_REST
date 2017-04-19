@@ -8,17 +8,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.model.Subject;
 
 public class SubjectDaoImpl implements SubjectDao {
+
 	private final static Logger log = LogManager.getLogger(SubjectDaoImpl.class.getName());
-	private Connector connector;
+	@Autowired
+	private DataSource dataSource;
 	private static final String INSERT_SUBJECT = "insert into subjects (name) values(?)";
 	private static final String FIND_SUBJECT_BY_ID = "select * from subjects where id=?";
 	private static final String FIND_ALL_SUBJECTS = "select * from subjects";
@@ -27,16 +31,12 @@ public class SubjectDaoImpl implements SubjectDao {
 
 	private static final String FIND_SUBJECTS_WITHOUT_DEPARTMENT = "SELECT id FROM subjects s WHERE NOT EXISTS(SELECT NULL FROM departments_subjects ds WHERE ds.subject_id = s.id)";
 
-	public SubjectDaoImpl() {
-		connector = new Connector();
-	}
-
 	public Subject create(Subject subjectArg) throws DaoException {
 		log.trace("Started create() method.");
 		Subject subject = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -70,7 +70,7 @@ public class SubjectDaoImpl implements SubjectDao {
 		Subject subject = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_SUBJECT_BY_ID)) {
 
 			statement.setInt(1, id);
@@ -102,7 +102,7 @@ public class SubjectDaoImpl implements SubjectDao {
 		List<Subject> subjects = new ArrayList<Subject>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_SUBJECTS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -130,7 +130,7 @@ public class SubjectDaoImpl implements SubjectDao {
 		Subject subject = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_SUBJECT,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -164,7 +164,7 @@ public class SubjectDaoImpl implements SubjectDao {
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT);) {
 
 			statement.setInt(1, id);
@@ -187,7 +187,7 @@ public class SubjectDaoImpl implements SubjectDao {
 		List<Subject> subjects = new ArrayList<Subject>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_SUBJECTS_WITHOUT_DEPARTMENT);
 				ResultSet resultSet = statement.executeQuery();) {
 

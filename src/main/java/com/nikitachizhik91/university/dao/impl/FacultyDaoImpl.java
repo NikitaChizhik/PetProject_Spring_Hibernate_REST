@@ -8,10 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.DepartmentDao;
 import com.nikitachizhik91.university.dao.FacultyDao;
@@ -21,8 +23,10 @@ import com.nikitachizhik91.university.model.Faculty;
 import com.nikitachizhik91.university.model.Group;
 
 public class FacultyDaoImpl implements FacultyDao {
+
 	private final static Logger log = LogManager.getLogger(FacultyDaoImpl.class.getName());
-	private Connector connector;
+	@Autowired
+	private DataSource dataSource;
 	private static final String INSERT_FACULTY = "insert into faculties (name) values(?)";
 	private static final String FIND_FACULTY_BY_ID = "select * from faculties where id=?";
 	private static final String FIND_ALL_FACULTIES = "select * from faculties";
@@ -40,18 +44,13 @@ public class FacultyDaoImpl implements FacultyDao {
 	private static final String DELETE_ALL_GROUPS_FROM_FACULTY = "delete from faculties_groups where faculty_id=?";
 	private static final String DELETE_GROUP_FROM_FACULTY = "delete from faculties_groups where group_id=?";
 
-	public FacultyDaoImpl() {
-		connector = new Connector();
-
-	}
-
 	public Faculty create(Faculty facultyArg) throws DaoException {
 		log.trace("Started create() method.");
 
 		Faculty faculty = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_FACULTY,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -85,7 +84,7 @@ public class FacultyDaoImpl implements FacultyDao {
 		Faculty faculty = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_FACULTY_BY_ID)) {
 
 			statement.setInt(1, id);
@@ -120,7 +119,7 @@ public class FacultyDaoImpl implements FacultyDao {
 		List<Faculty> faculties = new ArrayList<Faculty>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_FACULTIES);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -152,7 +151,7 @@ public class FacultyDaoImpl implements FacultyDao {
 		Faculty faculty = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_FACULTY,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -191,7 +190,7 @@ public class FacultyDaoImpl implements FacultyDao {
 		log.trace("Started delete() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
 
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_FACULTY);) {
 
 			statement.setInt(1, id);
@@ -213,7 +212,7 @@ public class FacultyDaoImpl implements FacultyDao {
 		log.trace("Started addDepartment() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
 
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_DEPARTMENT);) {
 
 			statement.setInt(1, facultyId);
@@ -235,7 +234,7 @@ public class FacultyDaoImpl implements FacultyDao {
 		log.trace("Started addGroup() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
 
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_GROUP);) {
 
 			statement.setInt(1, facultyId);
@@ -259,7 +258,7 @@ public class FacultyDaoImpl implements FacultyDao {
 
 		List<Department> departments = new ArrayList<Department>();
 
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENTS_BY_FACULTY_ID)) {
 
 			statement.setInt(1, facultyId);
@@ -291,7 +290,7 @@ public class FacultyDaoImpl implements FacultyDao {
 		log.trace("Started findGroupsByFacultyId() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
 		List<Group> groups = new ArrayList<Group>();
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_GROUPS_BY_FACULTY_ID)) {
 
 			statement.setInt(1, facultyId);
@@ -321,7 +320,7 @@ public class FacultyDaoImpl implements FacultyDao {
 	public void deleteAllDepartmentsFromFaculty(int facultyId) throws DaoException {
 		log.trace("Started deleteAllDepartmentsFromFaculty() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_DEPARTMENTS_FROM_FACULTY);) {
 
 			statement.setInt(1, facultyId);
@@ -341,7 +340,7 @@ public class FacultyDaoImpl implements FacultyDao {
 	public void deleteAllGroupsFromFaculty(int facultyId) throws DaoException {
 		log.trace("Started deleteAllGroupsFromFaculty() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_GROUPS_FROM_FACULTY);) {
 
 			statement.setInt(1, facultyId);
@@ -361,7 +360,7 @@ public class FacultyDaoImpl implements FacultyDao {
 	public void deleteDepartmentFromFaculty(int departmentId) throws DaoException {
 		log.trace("Started deleteDepartmentFromFaculty() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_DEPARTMENT_FROM_FACULTY);) {
 
 			statement.setInt(1, departmentId);
@@ -382,7 +381,7 @@ public class FacultyDaoImpl implements FacultyDao {
 	public void deleteGroupFromFaculty(int groupId) throws DaoException {
 		log.trace("Started deleteGroupFromFaculty() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_GROUP_FROM_FACULTY);) {
 
 			statement.setInt(1, groupId);

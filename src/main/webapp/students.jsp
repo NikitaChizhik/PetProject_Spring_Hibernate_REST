@@ -43,7 +43,7 @@
 						<c:param name="studentId" value="${student.id}" />
 					</c:url>
 
-					
+
 
 					<tr>
 						<td><a href="${studentLink}">${student.name}</a></td>

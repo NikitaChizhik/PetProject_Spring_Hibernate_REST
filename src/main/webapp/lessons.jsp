@@ -116,7 +116,7 @@
 						<c:param name="lessonId" value="${lesson.id}" />
 					</c:url>
 
-					
+
 
 					<tr>
 						<td>${lesson.group.name }</td>
@@ -126,7 +126,7 @@
 
 						<td><fmt:formatDate pattern="dd/MM HH:mm"
 								value="${lesson.date }" /></td>
-						
+
 						<td>${lesson.number }</td>
 						<td>${lesson.teacher.name }</td>
 

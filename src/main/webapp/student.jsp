@@ -41,8 +41,7 @@
 					<td>${student.id}</td>
 					<td>${student.name}</td>
 					<td><input type="text" name="name" value="${student.name}" /></td>
-					<td><input type="submit" value="Save"
-						class="button" />
+					<td><input type="submit" value="Save" class="button" />
 					<td>
 				</tr>
 

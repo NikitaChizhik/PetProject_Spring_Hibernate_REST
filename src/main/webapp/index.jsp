@@ -1,5 +1,6 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -30,7 +31,7 @@
 					<td><a href="/university/groups">Groups</a><br> <br></td>
 				</tr>
 				<tr>
-					<td><a href="/university/rooms">Rooms</a><br> <br></td>
+					<td><a href="rooms">Rooms</a><br> <br></td>
 				</tr>
 				<tr>
 					<td><a href="/university/subjects">Subjects</a><br> <br></td>

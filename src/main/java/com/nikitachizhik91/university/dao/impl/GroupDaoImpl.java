@@ -8,10 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.dao.StudentDao;
@@ -19,8 +21,10 @@ import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Student;
 
 public class GroupDaoImpl implements GroupDao {
+	
 	private final static Logger log = LogManager.getLogger(GroupDaoImpl.class.getName());
-	private Connector connector;
+	@Autowired
+	private DataSource dataSource;
 	private static final String INSERT_GROUP = "insert into groups (name) values(?)";
 	private static final String FIND_GROUP_BY_ID = "select * from groups where id=?";
 	private static final String FIND_ALL_GROUPS = "select * from groups";
@@ -34,16 +38,12 @@ public class GroupDaoImpl implements GroupDao {
 
 	private static final String FIND_GROUPS_WITHOUT_FACULTY = "SELECT id FROM groups g WHERE NOT EXISTS(SELECT NULL FROM faculties_groups fg WHERE fg.group_id = g.id)";
 
-	public GroupDaoImpl() {
-		connector = new Connector();
-	}
-
 	public Group create(Group groupArg) throws DaoException {
 		log.trace("Started create() method.");
 		Group group = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_GROUP,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -77,7 +77,7 @@ public class GroupDaoImpl implements GroupDao {
 		Group group = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_GROUP_BY_ID)) {
 
 			statement.setInt(1, id);
@@ -111,7 +111,7 @@ public class GroupDaoImpl implements GroupDao {
 		List<Group> groups = new ArrayList<Group>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_GROUPS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -141,7 +141,7 @@ public class GroupDaoImpl implements GroupDao {
 		Group group = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -177,7 +177,7 @@ public class GroupDaoImpl implements GroupDao {
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_GROUP);) {
 
 			statement.setInt(1, id);
@@ -197,7 +197,7 @@ public class GroupDaoImpl implements GroupDao {
 	public void addStudent(int studentId, int groupId) throws DaoException {
 		log.trace("Started addStudent() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT);) {
 
 			statement.setInt(1, groupId);
@@ -218,7 +218,7 @@ public class GroupDaoImpl implements GroupDao {
 		log.trace("Started findStudentsByGroupId() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
 		List<Student> students = new ArrayList<Student>();
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_STUDENTS_BY_GROUP_ID)) {
 
 			statement.setInt(1, groupId);
@@ -249,7 +249,7 @@ public class GroupDaoImpl implements GroupDao {
 	public void deleteAllStudentsFromGroup(int groupId) throws DaoException {
 		log.trace("Started deleteAllStudentsFromGroup() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_STUDENTS_FROM_GROUP);) {
 
 			statement.setInt(1, groupId);
@@ -269,7 +269,7 @@ public class GroupDaoImpl implements GroupDao {
 	public void deleteStudentFromGroup(int studentId) throws DaoException {
 		log.trace("Started deleteStudentFromGroup() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_STUDENT_FROM_GROUP);) {
 
 			statement.setInt(1, studentId);
@@ -293,7 +293,7 @@ public class GroupDaoImpl implements GroupDao {
 		List<Group> groups = new ArrayList<Group>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_GROUPS_WITHOUT_FACULTY);
 				ResultSet resultSet = statement.executeQuery();) {
 
