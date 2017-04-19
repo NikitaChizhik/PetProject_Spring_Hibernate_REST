@@ -2,6 +2,9 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,11 +27,17 @@
 
 		<div id="content">
 
-			<form action="students" method="post">
+			<form:form action="student/create" method="post"
+				modelAttribute="student">
 
-				<input type="text" name="name" /> <input type="submit"
-					value="Add Student" class="button" />
-			</form>
+				<form:hidden path="id" />
+
+				<form:label path="name">Name:</form:label>
+				<form:input path="name" />
+
+
+				<input type="submit" value="Add Student" class="button" />
+			</form:form>
 
 			<table>
 
@@ -39,18 +48,13 @@
 
 				<c:forEach var="student" items="${students}">
 
-					<c:url var="studentLink" value="student">
-						<c:param name="studentId" value="${student.id}" />
-					</c:url>
-
-
 
 					<tr>
-						<td><a href="${studentLink}">${student.name}</a></td>
+						<td><a href="student/${student.id}">${student.name}</a></td>
 
-						<td><form action="studentDelete" method="post">
+						<td><form action="student/delete/${student.id} "
+								method="post">
 
-								<input type="hidden" name="studentId" value="${student.id}" />
 								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false" />
 							</form></td>
@@ -64,7 +68,7 @@
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 
 </body>

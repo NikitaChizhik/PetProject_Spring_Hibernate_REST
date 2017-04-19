@@ -18,7 +18,7 @@ import com.nikitachizhik91.university.domain.impl.SubjectManagerImpl;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/subjects")
+//@WebServlet("/subjects")
 public class SubjectsServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(SubjectsServlet.class.getName());

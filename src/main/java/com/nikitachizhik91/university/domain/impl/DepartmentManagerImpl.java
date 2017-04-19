@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.impl.DepartmentDaoImlp;
@@ -13,14 +15,13 @@ import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
+@Service
 public class DepartmentManagerImpl implements DepartmentManager {
 
 	private final static Logger log = LogManager.getLogger(DepartmentManagerImpl.class.getName());
-	private DepartmentDaoImlp departmentDaoImpl;
 
-	public DepartmentManagerImpl() {
-		departmentDaoImpl = new DepartmentDaoImlp();
-	}
+	@Autowired
+	private DepartmentDaoImlp departmentDaoImpl;
 
 	@Override
 	public Department create(Department department) throws DomainException {

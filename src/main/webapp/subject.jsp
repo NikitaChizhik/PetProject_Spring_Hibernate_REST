@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,8 +25,9 @@
 	<div id="container">
 		<h3>Subject</h3>
 
-		<form action="subject" method="post">
-			<input type="hidden" name="subjectId" value="${subject.id}" />
+		<form:form action="update" method="post" modelAttribute="subject">
+
+			<form:hidden path="id" />
 
 			<table>
 				<tr>
@@ -37,7 +41,10 @@
 				<tr>
 					<td>${subject.id}</td>
 					<td>${subject.name}</td>
-					<td><input type="text" name="name" value="${subject.name}" /></td>
+
+					<td><form:label path="name">Name:</form:label> <form:input
+							path="name" /></td>
+
 					<td><input type="submit" value="Save" class="button" />
 					<td>
 				</tr>
@@ -46,11 +53,11 @@
 
 			</table>
 
-		</form>
+		</form:form>
 	</div>
 
 	<p>
-		<a href="subjects">Back to list of all subjects</a>
+		<a href="../subjects">Back to list of all subjects</a>
 	</p>
 
 </body>

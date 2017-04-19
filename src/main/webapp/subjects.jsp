@@ -2,6 +2,9 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,12 +27,17 @@
 
 		<div id="content">
 
-			<form action="subjects" method="post">
+			<form:form action="subject/create" method="post"
+				modelAttribute="subject">
 
-				<input type="text" name="name" /> <input type="submit"
-					value="Add Subject" class="button" />
-			</form>
+				<form:hidden path="id" />
 
+				<form:label path="name">Name:</form:label>
+				<form:input path="name" />
+
+
+				<input type="submit" value="Add Subject" class="button" />
+			</form:form>
 			<table>
 
 				<tr>
@@ -39,17 +47,15 @@
 
 				<c:forEach var="subject" items="${subjects}">
 
-					<c:url var="subjectLink" value="subject">
-						<c:param name="subjectId" value="${subject.id}" />
-					</c:url>
+
 
 
 					<tr>
-						<td><a href="${subjectLink}">${subject.name}</a></td>
+						<td><a href="subject/${subject.id}">${subject.name}</a></td>
 
-						<td><form action="subjectDelete" method="post">
+						<td><form action="subject/delete/${subject.id} "
+								method="post">
 
-								<input type="hidden" name="subjectId" value="${subject.id}" />
 								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this subject?'))) return false" />
 							</form></td>
@@ -63,7 +69,7 @@
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 
 </body>

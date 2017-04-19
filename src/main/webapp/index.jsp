@@ -25,7 +25,7 @@
 			<table>
 
 				<tr>
-					<td><a href="/university/students">Students</a> <br> <br>
+					<td><a href="students">Students</a> <br> <br>
 					</td>
 				<tr>
 					<td><a href="/university/groups">Groups</a><br> <br></td>
@@ -34,7 +34,7 @@
 					<td><a href="rooms">Rooms</a><br> <br></td>
 				</tr>
 				<tr>
-					<td><a href="/university/subjects">Subjects</a><br> <br></td>
+					<td><a href="subjects">Subjects</a><br> <br></td>
 				</tr>
 
 				<tr>

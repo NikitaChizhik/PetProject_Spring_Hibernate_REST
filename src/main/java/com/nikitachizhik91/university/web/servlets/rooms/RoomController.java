@@ -150,7 +150,7 @@ public class RoomController {
 			throw new WebException("Cannot delete room with id=" + roomId, e);
 		}
 
-		log.trace("Delete room with id=" + roomId);
+		log.trace("Deleted room with id=" + roomId);
 
 		return "redirect:/rooms";
 	}

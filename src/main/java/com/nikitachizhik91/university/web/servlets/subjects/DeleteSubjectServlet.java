@@ -16,7 +16,7 @@ import com.nikitachizhik91.university.domain.SubjectManager;
 import com.nikitachizhik91.university.domain.impl.SubjectManagerImpl;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/subjectDelete")
+//@WebServlet("/subjectDelete")
 public class DeleteSubjectServlet extends HttpServlet {
 
 	private final static Logger log = LogManager.getLogger(DeleteSubjectServlet.class.getName());

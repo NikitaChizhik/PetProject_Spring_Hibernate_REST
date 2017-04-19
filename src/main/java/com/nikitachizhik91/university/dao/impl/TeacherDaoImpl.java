@@ -13,12 +13,14 @@ import javax.sql.DataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.model.Teacher;
 
+@Repository
 public class TeacherDaoImpl implements TeacherDao {
 	
 	private final static Logger log = LogManager.getLogger(TeacherDaoImpl.class.getName());

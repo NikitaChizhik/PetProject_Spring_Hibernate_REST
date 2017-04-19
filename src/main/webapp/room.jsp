@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Room</title>
+
 <link type="text/css" rel="stylesheet" href="css/style.css">
 
 </head>
@@ -45,7 +46,7 @@
 				<tr>
 					<td>${room.id}</td>
 					<td>${room.number}</td>
-					
+
 					<td><form:label path="number">Number:</form:label> <form:input
 							path="number" /></td>
 

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.impl.TeacherDaoImpl;
@@ -11,14 +13,13 @@ import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.TeacherManager;
 import com.nikitachizhik91.university.model.Teacher;
 
+@Service
 public class TeacherManagerImpl implements TeacherManager {
 
 	private final static Logger log = LogManager.getLogger(TeacherManagerImpl.class.getName());
-	private TeacherDaoImpl teacherDao;
 
-	public TeacherManagerImpl() {
-		teacherDao = new TeacherDaoImpl();
-	}
+	@Autowired
+	private TeacherDaoImpl teacherDao;
 
 	@Override
 	public Teacher create(Teacher teacher) throws DomainException {

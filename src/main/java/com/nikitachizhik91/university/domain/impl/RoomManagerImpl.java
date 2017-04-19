@@ -17,6 +17,7 @@ import com.nikitachizhik91.university.model.Room;
 public class RoomManagerImpl implements RoomManager {
 
 	private final static Logger log = LogManager.getLogger(RoomManagerImpl.class.getName());
+	
 	@Autowired
 	private RoomDao roomDao;
 
