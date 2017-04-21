@@ -61,18 +61,23 @@ public class GroupManagerImpl implements GroupManager {
 
 	@Override
 	public List<Group> findAll() throws DomainException {
+		
 		log.trace("Started findAll() method.");
 
 		List<Group> groups = null;
+		
 		try {
+			
 			log.trace("Finding all groups");
 
 			groups = groupDao.findAll();
 
 		} catch (DaoException e) {
+			
 			log.error("Cannot find all groups.", e);
 			throw new DomainException("Cannot find all groups.", e);
 		}
+		
 		log.trace("Finished findAll() method.");
 
 		return groups;
@@ -80,18 +85,23 @@ public class GroupManagerImpl implements GroupManager {
 
 	@Override
 	public Group update(Group group) throws DomainException {
+		
 		log.trace("Started update() method.");
 
 		Group groupTemp = null;
+		
 		try {
+			
 			log.trace("Updating group.");
 
 			groupTemp = groupDao.update(group);
 
 		} catch (DaoException e) {
+			
 			log.error("Cannot update group=" + group, e);
 			throw new DomainException("Cannot update group=" + group, e);
 		}
+		
 		log.trace("Finished update() method.");
 
 		return groupTemp;

@@ -1,6 +1,7 @@
 package com.nikitachizhik91.university.model;
 
 public class Teacher {
+	
 	private int id;
 	private String name;
 	private Subject subject;

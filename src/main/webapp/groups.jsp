@@ -1,15 +1,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+
+
 <title>allGroups</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
+
 </head>
 
 
@@ -25,15 +30,20 @@
 
 		<div id="content">
 
-			<form action="groups" method="post">
+			<form:form action="group/create" method="post" modelAttribute="group">
 
-				<input type="text" name="name" /> <input type="submit"
-					value="Add Group" class="button" />
-			</form>
+				<form:hidden path="id" />
+
+				<td><form:input path="name" /></td>
+
+				<td><input type="submit" value="Add Group" class="button" /></td>
+
+			</form:form>
 
 			<table>
 
 				<tr>
+
 					<th>Name</th>
 					<th>Students</th>
 					<th>Delete</th>
@@ -42,20 +52,15 @@
 
 				<c:forEach var="group" items="${groups}">
 
-					<c:url var="groupLink" value="group">
-						<c:param name="groupId" value="${group.id}" />
-					</c:url>
-
-
 
 					<tr>
-						<td><a href="${groupLink}">${group.name}</a></td>
+
+						<td><a href="group/${group.id}">${group.name}</a></td>
 						<td>${fn:length(group.students)}</td>
 
-						<td><form action="groupDelete" method="post">
+						<td><form action="group/delete/${group.id} " method="post">
 
-								<input type="hidden" name="groupId" value="${group.id}" /> <input
-									type="submit" value="Delete" class="button"
+								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this group?'))) return false" />
 							</form></td>
 					</tr>
@@ -68,7 +73,7 @@
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 </body>
 

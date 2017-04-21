@@ -1,14 +1,20 @@
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+
+
 <title>allTeachers</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
 
@@ -23,7 +29,15 @@
 	<div id="container">
 
 		<div id="content">
-			<form action="teachers" method="post">
+
+
+
+
+			<form:form action="teacher/create" method="post"
+				modelAttribute="teacher">
+
+				<form:hidden path="id" />
+
 				<table>
 
 					<tr>
@@ -32,18 +46,23 @@
 						<th></th>
 					</tr>
 					<tr>
-						<td><select name="subjectId" class="button">
+
+						<td><form:select path="subject.id">
+
 								<c:forEach var="subject" items="${subjects}">
 									<option value="${subject.id }">${subject.name}</option>
 								</c:forEach>
-						</select></td>
 
-						<td><input type="text" name="name" /></td>
+							</form:select></td>
+
+
+
+						<td><form:input path="name" /></td>
 						<td><input type="submit" value="Add Teacher" class="button" /></td>
 
 					</tr>
 				</table>
-			</form>
+			</form:form>
 
 
 
@@ -64,12 +83,12 @@
 
 
 					<tr>
-						<td><a href="${teacherLink}">${teacher.name}</a></td>
+						<td><a href="teacher/${teacher.id}">${teacher.name}</a></td>
 						<td>${teacher.subject.name}</td>
 
-						<td><form action="teacherDelete" method="post">
+						<td><form action="teacher/delete/${teacher.id} "
+								method="post">
 
-								<input type="hidden" name="teacherId" value="${teacher.id}" />
 								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this teacher?'))) return false" />
 							</form></td>
@@ -83,7 +102,7 @@
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 
 </body>

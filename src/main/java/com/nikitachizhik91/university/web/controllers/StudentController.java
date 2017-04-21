@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.web.servlets.students;
+package com.nikitachizhik91.university.web.controllers;
 
 import java.util.List;
 
@@ -6,15 +6,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.StudentManager;
-import com.nikitachizhik91.university.model.Room;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.web.WebException;
 
@@ -25,7 +24,7 @@ public class StudentController {
 	@Autowired
 	private StudentManager studentManager;
 
-	@RequestMapping(value = "students", method = RequestMethod.GET)
+	@GetMapping(value = "/students")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
 
 		log.trace("Get request to find all students");
@@ -50,7 +49,7 @@ public class StudentController {
 		return model;
 	}
 
-	@RequestMapping(value = "student/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/student/{id}")
 	public ModelAndView findById(ModelAndView model, @PathVariable("id") int studentId) throws WebException {
 
 		log.trace("Get request to find student by id=" + studentId);
@@ -80,7 +79,7 @@ public class StudentController {
 		return model;
 	}
 
-	@RequestMapping(value = "student/create", method = RequestMethod.POST)
+	@PostMapping(value = "/student/create")
 	public String create(@ModelAttribute("student") Student student) throws WebException {
 
 		log.trace("Post request to create student with name=" + student.getName());
@@ -100,18 +99,14 @@ public class StudentController {
 		return "redirect:/students";
 	}
 
-	@RequestMapping(value = "student/update", method = RequestMethod.POST)
+	@PostMapping(value = "/student/update")
 	public String update(@ModelAttribute("student") Student student) throws WebException {
 
 		int studentId = student.getId();
-		String name = student.getName();
 
-		log.trace("Post request to update student wtih id=" + studentId + " on name=" + name);
+		log.trace("Post request to update student wtih id=" + studentId + " on name=" + student.getName());
 
 		try {
-
-			student = studentManager.findById(studentId);
-			student.setName(name);
 
 			studentManager.update(student);
 
@@ -126,12 +121,12 @@ public class StudentController {
 			throw new WebException("The id=" + studentId + " is wrong.", e);
 		}
 
-		log.trace("Updated student wtih id=" + studentId + " on name=" + name);
+		log.trace("Updated student wtih id=" + studentId + " on name=" + student.getName());
 
 		return "redirect:/student/" + studentId;
 	}
 
-	@RequestMapping(value = "student/delete/{id}", method = RequestMethod.POST)
+	@PostMapping(value = "/student/delete/{id}")
 	public String delete(@PathVariable("id") int studentId) throws WebException {
 
 		log.trace("Post request to delete student with id=" + studentId);

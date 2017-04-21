@@ -1,12 +1,17 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+
+
 <title>Main page</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
 
@@ -25,10 +30,9 @@
 			<table>
 
 				<tr>
-					<td><a href="students">Students</a> <br> <br>
-					</td>
+					<td><a href="students">Students</a> <br> <br></td>
 				<tr>
-					<td><a href="/university/groups">Groups</a><br> <br></td>
+					<td><a href="groups">Groups</a><br> <br></td>
 				</tr>
 				<tr>
 					<td><a href="rooms">Rooms</a><br> <br></td>
@@ -38,19 +42,18 @@
 				</tr>
 
 				<tr>
-					<td><a href="/university/teachers">Teachers</a><br> <br></td>
+					<td><a href="teachers">Teachers</a><br> <br></td>
 				</tr>
 				<tr>
 					<td><a href="/university/lessons">Lessons</a><br> <br></td>
 				</tr>
 
 				<tr>
-					<td><a href="/university/departments">Departments</a><br>
-						<br></td>
+					<td><a href="departments">Departments</a><br> <br></td>
 				</tr>
 
 				<tr>
-					<td><a href="/university/faculties">Faculties</a><br> <br></td>
+					<td><a href="faculties">Faculties</a><br> <br></td>
 				</tr>
 				<tr>
 					<td><a href="/university/studentTimetableForDay">StudentForDay</a><br>

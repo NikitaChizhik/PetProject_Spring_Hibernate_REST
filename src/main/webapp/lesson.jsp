@@ -8,8 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+
+<link href="<c:url value="/resources/add-student-style.css" />"
+	rel="stylesheet">
+
 <title>Lesson</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
 
 </head>
 

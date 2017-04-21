@@ -47,6 +47,10 @@ public class DepartmentDaoImlp implements DepartmentDao {
 	private static final String DELETE_SUBJECT_FROM_DEPARTMENT = "delete from departments_subjects where subject_id=?";
 
 	private static final String FIND_DEPARTMENTS_WITHOUT_FACULTY = "SELECT id FROM departments d WHERE NOT EXISTS(SELECT NULL FROM faculties_departments fd WHERE fd.department_id = d.id)";
+	@Autowired
+	TeacherDao teacherDao;
+	@Autowired
+	SubjectDao subjectDao;
 
 	public Department create(Department departmentArg) throws DaoException {
 		log.trace("Started create() method.");
@@ -261,7 +265,6 @@ public class DepartmentDaoImlp implements DepartmentDao {
 				PreparedStatement statement = connection.prepareStatement(FIND_TEACHERS_BY_DEPARTMENT_ID)) {
 
 			statement.setInt(1, departmentId);
-			TeacherDao teacherDao = new TeacherDaoImpl();
 
 			log.trace("Statement :" + statement + " is received.");
 			log.trace("Getting the result set.");
@@ -333,7 +336,6 @@ public class DepartmentDaoImlp implements DepartmentDao {
 				PreparedStatement statement = connection.prepareStatement(FIND_SUBJECTS_BY_DEPARTMENT_ID)) {
 
 			statement.setInt(1, departmentId);
-			SubjectDao subjectDao = new SubjectDaoImpl();
 
 			log.trace("Statement :" + statement + " is received.");
 			log.trace("Getting the result set.");

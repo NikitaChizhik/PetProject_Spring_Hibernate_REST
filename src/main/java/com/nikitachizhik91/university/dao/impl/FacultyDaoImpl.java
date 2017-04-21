@@ -45,6 +45,10 @@ public class FacultyDaoImpl implements FacultyDao {
 	private static final String FIND_GROUPS_BY_FACULTY_ID = "select group_id from faculties_groups where faculty_id=?";
 	private static final String DELETE_ALL_GROUPS_FROM_FACULTY = "delete from faculties_groups where faculty_id=?";
 	private static final String DELETE_GROUP_FROM_FACULTY = "delete from faculties_groups where group_id=?";
+	@Autowired
+	private DepartmentDao departmentDao;
+	@Autowired
+	private GroupDao groupDao;
 
 	public Faculty create(Faculty facultyArg) throws DaoException {
 		log.trace("Started create() method.");
@@ -264,7 +268,6 @@ public class FacultyDaoImpl implements FacultyDao {
 				PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENTS_BY_FACULTY_ID)) {
 
 			statement.setInt(1, facultyId);
-			DepartmentDao departmentDao = new DepartmentDaoImlp();
 
 			log.trace("Statement :" + statement + " is received.");
 			log.trace("Getting the result set.");
@@ -289,18 +292,22 @@ public class FacultyDaoImpl implements FacultyDao {
 	}
 
 	public List<Group> findGroupsByFacultyId(int facultyId) throws DaoException {
+
 		log.trace("Started findGroupsByFacultyId() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
+
 		List<Group> groups = new ArrayList<Group>();
+
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_GROUPS_BY_FACULTY_ID)) {
 
 			statement.setInt(1, facultyId);
-			GroupDao groupDao = new GroupDaoImpl();
 
 			log.trace("Statement :" + statement + " is received.");
 			log.trace("Getting the result set.");
+
 			try (ResultSet resultSet = statement.executeQuery();) {
+
 				log.debug("Executed query :" + statement);
 				log.trace("Got the result set.");
 
@@ -310,9 +317,11 @@ public class FacultyDaoImpl implements FacultyDao {
 				}
 			}
 		} catch (SQLException e) {
+
 			log.error("Cannot find Groups by Faculty id=" + facultyId, e);
 			throw new DaoException("Cannot find groups by Faculty id=" + facultyId, e);
 		}
+
 		log.info("Found " + groups.size() + " Groups by Faculty id=" + facultyId);
 		log.trace("Finished findGroupsByFacultyId() method.");
 

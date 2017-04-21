@@ -22,8 +22,9 @@ import com.nikitachizhik91.university.model.Teacher;
 
 @Repository
 public class TeacherDaoImpl implements TeacherDao {
-	
+
 	private final static Logger log = LogManager.getLogger(TeacherDaoImpl.class.getName());
+
 	@Autowired
 	private DataSource dataSource;
 	private static final String INSERT_TEACHER = "insert into teachers (name,subject_id) values(?,?)";
@@ -89,6 +90,7 @@ public class TeacherDaoImpl implements TeacherDao {
 				log.trace("Got the result set.");
 
 				if (resultSet.next()) {
+					
 					teacher = new Teacher();
 					teacher.setId(resultSet.getInt("id"));
 					teacher.setName(resultSet.getString("name"));

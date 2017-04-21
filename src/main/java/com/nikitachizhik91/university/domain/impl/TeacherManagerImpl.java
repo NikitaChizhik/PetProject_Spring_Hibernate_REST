@@ -83,15 +83,18 @@ public class TeacherManagerImpl implements TeacherManager {
 		log.trace("Started update() method.");
 
 		Teacher teacherTemp = null;
+		
 		try {
 			log.trace("Updating teacher.");
 
 			teacherTemp = teacherDao.update(teacher);
 
 		} catch (DaoException e) {
+			
 			log.error("Cannot update teacher=" + teacher, e);
 			throw new DomainException("Cannot update teacher=" + teacher, e);
 		}
+		
 		log.trace("Finished update() method.");
 
 		return teacherTemp;

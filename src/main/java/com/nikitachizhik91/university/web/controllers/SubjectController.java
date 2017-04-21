@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.web.servlets.subjects;
+package com.nikitachizhik91.university.web.controllers;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
@@ -24,7 +24,7 @@ public class SubjectController {
 	@Autowired
 	private SubjectManager subjectManager;
 
-	@RequestMapping(value = "subjects", method = RequestMethod.GET)
+	@GetMapping(value = "/subjects")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
 
 		log.trace("Get request to find all subjects");
@@ -49,7 +49,7 @@ public class SubjectController {
 		return model;
 	}
 
-	@RequestMapping(value = "subject/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/subject/{id}")
 	public ModelAndView findById(ModelAndView model, @PathVariable("id") int subjectId) throws WebException {
 
 		log.trace("Get request to find subject by id=" + subjectId);
@@ -79,7 +79,7 @@ public class SubjectController {
 		return model;
 	}
 
-	@RequestMapping(value = "subject/create", method = RequestMethod.POST)
+	@PostMapping(value = "/subject/create")
 	public String create(@ModelAttribute("subject") Subject subject) throws WebException {
 
 		log.trace("Post request to create subject with name=" + subject.getName());
@@ -99,18 +99,14 @@ public class SubjectController {
 		return "redirect:/subjects";
 	}
 
-	@RequestMapping(value = "subject/update", method = RequestMethod.POST)
+	@PostMapping(value = "/subject/update")
 	public String update(@ModelAttribute("subject") Subject subject) throws WebException {
 
 		int subjectId = subject.getId();
-		String name = subject.getName();
 
-		log.trace("Post request to update subject wtih id=" + subjectId + " on name=" + name);
+		log.trace("Post request to update subject wtih id=" + subjectId + " on name=" + subject.getName());
 
 		try {
-
-			subject = subjectManager.findById(subjectId);
-			subject.setName(name);
 
 			subjectManager.update(subject);
 
@@ -125,12 +121,12 @@ public class SubjectController {
 			throw new WebException("The id=" + subjectId + " is wrong.", e);
 		}
 
-		log.trace("Updated subject wtih id=" + subjectId + " on name=" + name);
+		log.trace("Updated subject wtih id=" + subjectId + " on name=" + subject.getName());
 
 		return "redirect:/subject/" + subjectId;
 	}
 
-	@RequestMapping(value = "subject/delete/{id}", method = RequestMethod.POST)
+	@PostMapping(value = "/subject/delete/{id}")
 	public String delete(@PathVariable("id") int subjectId) throws WebException {
 
 		log.trace("Post request to delete subject with id=" + subjectId);

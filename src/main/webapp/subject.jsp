@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
@@ -8,8 +9,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+
+	
 <title>Subject</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -42,7 +45,7 @@
 					<td>${subject.id}</td>
 					<td>${subject.name}</td>
 
-					<td><form:label path="name">Name:</form:label> <form:input
+					<td><form:label path="name"></form:label> <form:input
 							path="name" /></td>
 
 					<td><input type="submit" value="Save" class="button" />

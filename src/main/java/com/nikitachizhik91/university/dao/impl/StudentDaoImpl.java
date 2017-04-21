@@ -21,8 +21,9 @@ import com.nikitachizhik91.university.model.Student;
 
 @Repository
 public class StudentDaoImpl implements StudentDao {
-	
+
 	private final static Logger log = LogManager.getLogger(StudentDaoImpl.class.getName());
+	
 	@Autowired
 	private DataSource dataSource;
 	private static final String INSERT_STUDENT = "insert into students (name) values(?)";
@@ -34,10 +35,13 @@ public class StudentDaoImpl implements StudentDao {
 	private static final String FIND_STUDENTS_WITHOUT_GROUP = "SELECT id FROM students s WHERE NOT EXISTS(SELECT NULL FROM groups_students gs WHERE gs.student_id = s.id)";
 
 	public Student create(Student studentArg) throws DaoException {
+		
 		log.trace("Started create() method.");
+		
 		Student student = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
+		
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -48,8 +52,11 @@ public class StudentDaoImpl implements StudentDao {
 			log.debug("Executed query :" + statement);
 
 			log.trace("Getting the result set.");
+			
 			try (ResultSet resultSet = statement.getGeneratedKeys();) {
+				
 				log.trace("Got the result set.");
+				
 				while (resultSet.next()) {
 					student = new Student();
 					student.setId(resultSet.getInt("id"));
@@ -57,12 +64,15 @@ public class StudentDaoImpl implements StudentDao {
 				}
 			}
 		} catch (SQLException e) {
+			
 			log.error("Cannot create Student :" + studentArg, e);
 			throw new DaoException("Cannot create Student :", e);
 
 		}
+		
 		log.info("Created a Student :" + studentArg);
 		log.trace("Finished create() method.");
+		
 		return student;
 	}
 
@@ -72,15 +82,17 @@ public class StudentDaoImpl implements StudentDao {
 		Student student = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
 
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_STUDENT_BY_ID)) {
 
 			statement.setInt(1, id);
 
 			log.trace("Statement :" + statement + " is received.");
 			log.trace("Getting the result set.");
+			
 			try (ResultSet resultSet = statement.executeQuery()) {
+				
 				log.debug("Executed query :" + statement);
 				log.trace("Got the result set.");
 
@@ -90,12 +102,16 @@ public class StudentDaoImpl implements StudentDao {
 					student.setName(resultSet.getString("name"));
 				}
 			}
+			
 		} catch (SQLException e) {
+
 			log.error("Cannot find Student with id=" + id, e);
 			throw new DaoException("Cannot find Student with id=" + id, e);
 		}
+
 		log.info("Found the Student :" + student);
 		log.trace("Finished findById() method.");
+		
 		return student;
 	}
 

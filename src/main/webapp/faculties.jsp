@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -7,9 +8,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
 <title>allFaculties</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
 
@@ -25,11 +25,16 @@
 
 		<div id="content">
 
-			<form action="faculties" method="post">
+			<form:form action="faculty/create" method="post"
+				modelAttribute="faculty">
 
-				<input type="text" name="name" /> <input type="submit"
-					value="Add Faculty" class="button" />
-			</form>
+				<form:hidden path="id" />
+
+				<td><form:input path="name" /></td>
+
+				<td><input type="submit" value="Add Faculty" class="button" /></td>
+
+			</form:form>
 
 			<table>
 
@@ -42,19 +47,15 @@
 
 				<c:forEach var="faculty" items="${faculties}">
 
-					<c:url var="facultyLink" value="faculty">
-						<c:param name="facultyId" value="${faculty.id}" />
-					</c:url>
-
 
 					<tr>
-						<td><a href="${facultyLink}">${faculty.name}</a></td>
+						<td><a href="faculty/${faculty.id}">${faculty.name}</a></td>
 						<td>${fn:length(faculty.departments)}</td>
 						<td>${fn:length(faculty.groups)}</td>
 
-						<td><form action="faculty/delete" method="post">
+						<td><form action="faculty/delete/${faculty.id }"
+								method="post">
 
-								<input type="hidden" name="facultyId" value="${faculty.id}" />
 								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this faculty?'))) return false" />
 							</form></td>
@@ -69,7 +70,7 @@
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 
 </body>

@@ -1,4 +1,4 @@
-package com.nikitachizhik91.university.web.servlets.rooms;
+package com.nikitachizhik91.university.web.controllers;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
@@ -24,7 +24,7 @@ public class RoomController {
 	@Autowired
 	private RoomManager roomManager;
 
-	@RequestMapping(value = "rooms", method = RequestMethod.GET)
+	@GetMapping(value = "/rooms")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
 
 		log.trace("Get request to find all rooms");
@@ -32,6 +32,7 @@ public class RoomController {
 		List<Room> rooms = null;
 
 		try {
+
 			rooms = roomManager.findAll();
 
 		} catch (DomainException e) {
@@ -49,7 +50,7 @@ public class RoomController {
 		return model;
 	}
 
-	@RequestMapping(value = "room/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/room/{id}")
 	public ModelAndView findById(ModelAndView model, @PathVariable("id") int roomId) throws WebException {
 
 		log.trace("Get request to find room by id=" + roomId);
@@ -79,7 +80,7 @@ public class RoomController {
 		return model;
 	}
 
-	@RequestMapping(value = "room/create", method = RequestMethod.POST)
+	@PostMapping(value = "/room/create")
 	public String create(@ModelAttribute("room") Room room) throws WebException {
 
 		log.trace("Post request to create room with number=" + room.getNumber());
@@ -99,18 +100,14 @@ public class RoomController {
 		return "redirect:/rooms";
 	}
 
-	@RequestMapping(value = "room/update", method = RequestMethod.POST)
+	@PostMapping(value = "/room/update")
 	public String update(@ModelAttribute("room") Room room) throws WebException {
 
 		int roomId = room.getId();
-		String number = room.getNumber();
 
-		log.trace("Post request to update room wtih id=" + roomId + " on number=" + number);
+		log.trace("Post request to update room wtih id=" + roomId + " on number=" + room.getNumber());
 
 		try {
-
-			room = roomManager.findById(roomId);
-			room.setNumber(number);
 
 			roomManager.update(room);
 
@@ -125,12 +122,12 @@ public class RoomController {
 			throw new WebException("The id=" + roomId + " is wrong.", e);
 		}
 
-		log.trace("Updated room wtih id=" + roomId + " on number=" + number);
+		log.trace("Updated room wtih id=" + roomId + " on number=" + room.getNumber());
 
 		return "redirect:/room/" + roomId;
 	}
 
-	@RequestMapping(value = "room/delete/{id}", method = RequestMethod.POST)
+	@PostMapping(value = "/room/delete/{id}")
 	public String delete(@PathVariable("id") int roomId) throws WebException {
 
 		log.trace("Post request to delete room with id=" + roomId);

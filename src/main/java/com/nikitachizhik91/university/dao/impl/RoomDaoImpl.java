@@ -23,6 +23,7 @@ import com.nikitachizhik91.university.model.Room;
 public class RoomDaoImpl implements RoomDao {
 
 	private final static Logger log = LogManager.getLogger(RoomDaoImpl.class.getName());
+	
 	@Autowired
 	private DataSource dataSource;
 	private static final String INSERT_ROOM = "insert into rooms (number) values(?)";

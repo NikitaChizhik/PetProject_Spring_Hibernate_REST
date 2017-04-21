@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -7,9 +8,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
 <title>allDepartments</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
 
@@ -25,11 +25,16 @@
 
 		<div id="content">
 
-			<form action="departments" method="post">
+			<form:form action="department/create" method="post"
+				modelAttribute="department">
 
-				<input type="text" name="name" /> <input type="submit"
-					value="Add Department" class="button" />
-			</form>
+				<form:hidden path="id" />
+
+				<td><form:input path="name" /></td>
+
+				<td><input type="submit" value="Add Department" class="button" /></td>
+
+			</form:form>
 
 			<table>
 
@@ -42,22 +47,16 @@
 
 				<c:forEach var="department" items="${departments}">
 
-					<c:url var="departmentLink" value="department">
-						<c:param name="departmentId" value="${department.id}" />
-					</c:url>
-
-
 
 					<tr>
-						<td><a href="${departmentLink}">${department.name}</a></td>
+						<td><a href="department/${department.id}">${department.name}</a></td>
 						<td>${fn:length(department.subjects)}</td>
 						<td>${fn:length(department.teachers)}</td>
 
-						<td><form action="department/delete" method="post">
+						<td><form action="department/delete/${department.id }"
+								method="post">
 
-								<input type="hidden" name="departmentId"
-									value="${department.id}" /> <input type="submit"
-									value="Delete" class="button"
+								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this department?'))) return false" />
 							</form></td>
 
@@ -71,7 +70,7 @@
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 
 </body>

@@ -23,8 +23,9 @@ import com.nikitachizhik91.university.model.Student;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
-	
+
 	private final static Logger log = LogManager.getLogger(GroupDaoImpl.class.getName());
+
 	@Autowired
 	private DataSource dataSource;
 	private static final String INSERT_GROUP = "insert into groups (name) values(?)";
@@ -39,6 +40,9 @@ public class GroupDaoImpl implements GroupDao {
 	private static final String DELETE_STUDENT_FROM_GROUP = "delete from groups_students where student_id=?";
 
 	private static final String FIND_GROUPS_WITHOUT_FACULTY = "SELECT id FROM groups g WHERE NOT EXISTS(SELECT NULL FROM faculties_groups fg WHERE fg.group_id = g.id)";
+
+	@Autowired
+	StudentDao studentDao;
 
 	public Group create(Group groupArg) throws DaoException {
 		log.trace("Started create() method.");
@@ -138,11 +142,13 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	public Group update(Group groupArg) throws DaoException {
+		
 		log.trace("Started update() method.");
 
 		Group group = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
+		
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP,
 						Statement.RETURN_GENERATED_KEYS);) {
@@ -217,18 +223,22 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	public List<Student> findStudentsByGroupId(int groupId) throws DaoException {
+
 		log.trace("Started findStudentsByGroupId() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
+
 		List<Student> students = new ArrayList<Student>();
+
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_STUDENTS_BY_GROUP_ID)) {
 
 			statement.setInt(1, groupId);
-			StudentDao studentDao = new StudentDaoImpl();
 
 			log.trace("Statement :" + statement + " is received.");
 			log.trace("Getting the result set.");
+
 			try (ResultSet resultSet = statement.executeQuery();) {
+
 				log.debug("Executed query :" + statement);
 				log.trace("Got the result set.");
 
@@ -239,9 +249,11 @@ public class GroupDaoImpl implements GroupDao {
 			}
 
 		} catch (SQLException e) {
+
 			log.error("Cannot find Students by Group id=" + groupId, e);
 			throw new DaoException("Cannot find Students by Group id=" + groupId, e);
 		}
+
 		log.info("Found " + students.size() + " Students by Group id=" + groupId);
 		log.trace("Finished findStudentsByGroupId() method.");
 

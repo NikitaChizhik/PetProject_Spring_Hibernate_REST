@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -10,9 +10,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<title>Student</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
 
+
+
+<title>Student</title>
 </head>
 
 
@@ -45,7 +47,7 @@
 					<td>${student.id}</td>
 					<td>${student.name}</td>
 
-					<td><form:label path="name">Name:</form:label> <form:input
+					<td><form:label path="name"></form:label> <form:input
 							path="name" /></td>
 
 					<td><input type="submit" value="Save" class="button" />
