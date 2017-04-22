@@ -1,41 +1,63 @@
-package com.nikitachizhik91.university.web.servlets.timetable.student;
+package com.nikitachizhik91.university.web.controllers;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.LessonManager;
 import com.nikitachizhik91.university.domain.StudentManager;
-import com.nikitachizhik91.university.domain.impl.LessonManagerImpl;
-import com.nikitachizhik91.university.domain.impl.StudentManagerImpl;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.web.WebException;
 
-@WebServlet("/displayStudentTimetableForDay")
-public class DisplayStudentForDayServlet extends HttpServlet {
+@Controller
+public class StudentForDayController {
 
-	private final static Logger log = LogManager.getLogger(DisplayStudentForDayServlet.class.getName());
-	private static final long serialVersionUID = 1L;
+	private final static Logger log = LogManager.getLogger(StudentForDayController.class.getName());
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	@Autowired
+	private StudentManager studentManager;
+	@Autowired
+	private LessonManager lessonManager;
 
-		String studentId = request.getParameter("studentId");
-		String dateString = request.getParameter("date");
+	@GetMapping(value = "/studentTimetableForDay")
+	public ModelAndView showAllStudents(ModelAndView model) throws WebException {
+
+		log.trace("Get request to find all students");
+
+		List<Student> students = null;
+
+		try {
+			students = studentManager.findAll();
+
+		} catch (DomainException e) {
+
+			log.error("Cannot find all students.", e);
+			throw new WebException("Cannot find all students.", e);
+		}
+
+		model.addObject("students", students);
+		model.setViewName("findStudentTimetableForDay");
+
+		log.trace("Found all students");
+
+		return model;
+	}
+
+	@PostMapping(value = "/displayStudentTimetableForDay")
+	public ModelAndView displayStudentTimetableForDay(@RequestParam("studentId") String studentId,
+			@RequestParam("date") String dateString) throws WebException {
 
 		log.trace("Get request to find student timetable for day,with student id=" + studentId + " and date="
 				+ dateString);
@@ -51,9 +73,6 @@ public class DisplayStudentForDayServlet extends HttpServlet {
 			log.error("Date=" + date + " is wrong.", e);
 			throw new WebException("Date=" + date + " is wrong.", e);
 		}
-
-		LessonManager lessonManager = new LessonManagerImpl();
-		StudentManager studentManager = new StudentManagerImpl();
 
 		List<Lesson> lessons = null;
 		List<Student> students = null;
@@ -78,11 +97,15 @@ public class DisplayStudentForDayServlet extends HttpServlet {
 			throw new WebException("The student id=" + studentId + " is wrong.", e);
 		}
 
-		request.setAttribute("students", students);
-		request.setAttribute("lessons", lessons);
-		request.setAttribute("student", student);
-		request.getRequestDispatcher("/findStudentTimetableForDay.jsp").forward(request, response);
+		ModelAndView model = new ModelAndView();
+
+		model.addObject("students", students);
+		model.addObject("lessons", lessons);
+		model.addObject("student", student);
+		model.setViewName("findStudentTimetableForDay");
 
 		log.trace("Found " + lessons.size() + " lessons for student with id=" + studentId + " and date=" + dateString);
+
+		return model;
 	}
 }

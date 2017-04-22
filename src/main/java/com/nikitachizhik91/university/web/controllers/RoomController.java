@@ -42,7 +42,7 @@ public class RoomController {
 		}
 
 		model.addObject("rooms", rooms);
-		model.addObject("room", new Room());
+		// model.addObject("room", new Room());
 		model.setViewName("rooms");
 
 		log.trace("Found all rooms");

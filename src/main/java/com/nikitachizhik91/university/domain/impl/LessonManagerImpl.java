@@ -12,8 +12,6 @@ import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.LessonDao;
 import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.dao.TeacherDao;
-import com.nikitachizhik91.university.dao.impl.StudentDaoImpl;
-import com.nikitachizhik91.university.dao.impl.TeacherDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.LessonManager;
 import com.nikitachizhik91.university.model.Lesson;
@@ -27,6 +25,10 @@ public class LessonManagerImpl implements LessonManager {
 
 	@Autowired
 	private LessonDao lessonDao;
+	@Autowired
+	private StudentDao studentDao;
+	@Autowired
+	private TeacherDao teacherDao;
 
 	@Override
 	public Lesson create(Lesson lesson) throws DomainException {
@@ -91,6 +93,7 @@ public class LessonManagerImpl implements LessonManager {
 		log.trace("Started update() method.");
 
 		Lesson lessonTemp = null;
+		
 		try {
 			log.trace("Updating lesson.");
 
@@ -132,7 +135,6 @@ public class LessonManagerImpl implements LessonManager {
 
 		List<Lesson> lessons = null;
 		Teacher teacher = new Teacher();
-		TeacherDao teacherDao = new TeacherDaoImpl();
 
 		try {
 			log.trace("Finding required lessons.");
@@ -163,7 +165,6 @@ public class LessonManagerImpl implements LessonManager {
 
 		List<Lesson> lessons = null;
 		Teacher teacher = new Teacher();
-		TeacherDao teacherDao = new TeacherDaoImpl();
 
 		try {
 			log.trace("Finding required lessons.");
@@ -195,7 +196,6 @@ public class LessonManagerImpl implements LessonManager {
 
 		List<Lesson> lessons = null;
 		Student student = new Student();
-		StudentDao studentDao = new StudentDaoImpl();
 
 		try {
 			log.trace("Finding required lessons.");
@@ -225,7 +225,6 @@ public class LessonManagerImpl implements LessonManager {
 
 		List<Lesson> lessons = null;
 		Student student = new Student();
-		StudentDao studentDao = new StudentDaoImpl();
 
 		try {
 			log.trace("Finding required lessons.");

@@ -29,7 +29,7 @@
 
 
 
-			<form action="displayTeacherTimetableForDay" method="get">
+			<form action="displayTeacherTimetableForDay" method="post">
 				<table>
 
 					<tr>
@@ -96,7 +96,7 @@
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 
 </body>

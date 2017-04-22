@@ -45,7 +45,7 @@
 					<td><a href="teachers">Teachers</a><br> <br></td>
 				</tr>
 				<tr>
-					<td><a href="/university/lessons">Lessons</a><br> <br></td>
+					<td><a href="lessons">Lessons</a><br> <br></td>
 				</tr>
 
 				<tr>
@@ -56,19 +56,19 @@
 					<td><a href="faculties">Faculties</a><br> <br></td>
 				</tr>
 				<tr>
-					<td><a href="/university/studentTimetableForDay">StudentForDay</a><br>
+					<td><a href="studentTimetableForDay">StudentForDay</a><br>
 						<br></td>
 				</tr>
 				<tr>
-					<td><a href="/university/studentTimetableForMonth">StudentForMonth</a><br>
+					<td><a href="studentTimetableForMonth">StudentForMonth</a><br>
 						<br></td>
 				</tr>
 				<tr>
-					<td><a href="/university/teacherTimetableForDay">TeacherForDay</a><br>
+					<td><a href="teacherTimetableForDay">TeacherForDay</a><br>
 						<br></td>
 				</tr>
 				<tr>
-					<td><a href="/university/teacherTimetableForMonth">TeacherForMonth</a><br>
+					<td><a href="teacherTimetableForMonth">TeacherForMonth</a><br>
 						<br></td>
 				</tr>
 

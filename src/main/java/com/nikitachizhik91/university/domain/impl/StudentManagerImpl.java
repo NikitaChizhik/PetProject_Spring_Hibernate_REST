@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.impl.StudentDaoImpl;
+import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.StudentManager;
 import com.nikitachizhik91.university.model.Student;
@@ -19,7 +19,7 @@ public class StudentManagerImpl implements StudentManager {
 	private final static Logger log = LogManager.getLogger(StudentManagerImpl.class.getName());
 
 	@Autowired
-	private StudentDaoImpl studentDao;
+	private StudentDao studentDao;
 
 	@Override
 	public Student create(Student student) throws DomainException {

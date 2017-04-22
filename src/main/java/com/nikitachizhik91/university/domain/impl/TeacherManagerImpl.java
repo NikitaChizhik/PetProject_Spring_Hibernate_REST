@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.impl.TeacherDaoImpl;
+import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.TeacherManager;
 import com.nikitachizhik91.university.model.Teacher;
@@ -19,7 +19,7 @@ public class TeacherManagerImpl implements TeacherManager {
 	private final static Logger log = LogManager.getLogger(TeacherManagerImpl.class.getName());
 
 	@Autowired
-	private TeacherDaoImpl teacherDao;
+	private TeacherDao teacherDao;
 
 	@Override
 	public Teacher create(Teacher teacher) throws DomainException {
@@ -83,18 +83,18 @@ public class TeacherManagerImpl implements TeacherManager {
 		log.trace("Started update() method.");
 
 		Teacher teacherTemp = null;
-		
+
 		try {
 			log.trace("Updating teacher.");
 
 			teacherTemp = teacherDao.update(teacher);
 
 		} catch (DaoException e) {
-			
+
 			log.error("Cannot update teacher=" + teacher, e);
 			throw new DomainException("Cannot update teacher=" + teacher, e);
 		}
-		
+
 		log.trace("Finished update() method.");
 
 		return teacherTemp;

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.impl.SubjectDaoImpl;
+import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.SubjectManager;
 import com.nikitachizhik91.university.model.Subject;
@@ -19,7 +19,7 @@ public class SubjectManagerImpl implements SubjectManager {
 	private final static Logger log = LogManager.getLogger(SubjectManagerImpl.class.getName());
 
 	@Autowired
-	private SubjectDaoImpl subjectDao;
+	private SubjectDao subjectDao;
 
 	@Override
 	public Subject create(Subject subject) throws DomainException {
