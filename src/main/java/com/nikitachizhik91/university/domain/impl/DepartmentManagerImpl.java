@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.impl.DepartmentDaoImlp;
+import com.nikitachizhik91.university.dao.impl.DepartmentDaoImpl;
 import com.nikitachizhik91.university.domain.DepartmentManager;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.model.Department;
@@ -21,7 +21,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 	private final static Logger log = LogManager.getLogger(DepartmentManagerImpl.class.getName());
 
 	@Autowired
-	private DepartmentDaoImlp departmentDaoImpl;
+	private DepartmentDaoImpl departmentDaoImpl;
 
 	@Override
 	public Department create(Department department) throws DomainException {

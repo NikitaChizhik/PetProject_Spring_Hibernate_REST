@@ -64,7 +64,7 @@ public class SubjectManagerImpl implements SubjectManager {
 		log.trace("Started findAll() method.");
 
 		List<Subject> subjects = null;
-		
+
 		try {
 			log.trace("Finding all subjects");
 

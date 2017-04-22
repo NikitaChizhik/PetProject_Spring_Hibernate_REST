@@ -24,9 +24,9 @@ import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
 @Repository
-public class DepartmentDaoImlp implements DepartmentDao {
+public class DepartmentDaoImpl implements DepartmentDao {
 
-	private final static Logger log = LogManager.getLogger(DepartmentDaoImlp.class.getName());
+	private final static Logger log = LogManager.getLogger(DepartmentDaoImpl.class.getName());
 	@Autowired
 	private DataSource dataSource;
 	private static final String INSERT_DEPARTMENT = "insert into departments (name) values(?)";
@@ -48,9 +48,9 @@ public class DepartmentDaoImlp implements DepartmentDao {
 
 	private static final String FIND_DEPARTMENTS_WITHOUT_FACULTY = "SELECT id FROM departments d WHERE NOT EXISTS(SELECT NULL FROM faculties_departments fd WHERE fd.department_id = d.id)";
 	@Autowired
-	TeacherDao teacherDao;
+	private TeacherDao teacherDao;
 	@Autowired
-	SubjectDao subjectDao;
+	private SubjectDao subjectDao;
 
 	public Department create(Department departmentArg) throws DaoException {
 		log.trace("Started create() method.");

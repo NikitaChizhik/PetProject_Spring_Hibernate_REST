@@ -42,7 +42,7 @@ public class GroupDaoImpl implements GroupDao {
 	private static final String FIND_GROUPS_WITHOUT_FACULTY = "SELECT id FROM groups g WHERE NOT EXISTS(SELECT NULL FROM faculties_groups fg WHERE fg.group_id = g.id)";
 
 	@Autowired
-	StudentDao studentDao;
+	private StudentDao studentDao;
 
 	public Group create(Group groupArg) throws DaoException {
 		log.trace("Started create() method.");
@@ -142,13 +142,13 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	public Group update(Group groupArg) throws DaoException {
-		
+
 		log.trace("Started update() method.");
 
 		Group group = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		
+
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP,
 						Statement.RETURN_GENERATED_KEYS);) {

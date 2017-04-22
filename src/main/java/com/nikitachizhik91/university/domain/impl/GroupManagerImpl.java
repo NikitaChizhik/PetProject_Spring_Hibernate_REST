@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.impl.GroupDaoImpl;
+import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.GroupManager;
 import com.nikitachizhik91.university.model.Group;
@@ -19,7 +19,7 @@ public class GroupManagerImpl implements GroupManager {
 	private final static Logger log = LogManager.getLogger(GroupManagerImpl.class.getName());
 
 	@Autowired
-	private GroupDaoImpl groupDao;
+	private GroupDao groupDao;
 
 	@Override
 	public Group create(Group group) throws DomainException {
