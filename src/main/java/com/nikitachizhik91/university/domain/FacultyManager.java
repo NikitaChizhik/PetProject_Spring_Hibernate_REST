@@ -26,10 +26,6 @@ public interface FacultyManager {
 
 	public abstract List<Group> findGroupsByFacultyId(int facultyId) throws DomainException;
 
-	public abstract void deleteAllDepartmentsFromFaculty(int facultyId) throws DomainException;
-
-	public abstract void deleteAllGroupsFromFaculty(int facultyId) throws DomainException;
-
 	public abstract void deleteDepartmentFromFaculty(int departmentId) throws DomainException;
 
 	public abstract void deleteGroupFromFaculty(int groupId) throws DomainException;

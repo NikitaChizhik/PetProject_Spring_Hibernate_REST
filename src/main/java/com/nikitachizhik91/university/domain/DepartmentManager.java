@@ -26,10 +26,6 @@ public interface DepartmentManager {
 
 	public abstract List<Subject> findSubjectsByDepartmentId(int departmentId) throws DomainException;
 
-	public abstract void deleteAllTeachersFromDepartment(int departmentId) throws DomainException;
-
-	public abstract void deleteAllSubjectsFromDepartment(int departmentId) throws DomainException;
-
 	public abstract void deleteTeacherFromDepartment(int teacherId) throws DomainException;
 
 	public abstract void deleteSubjectFromDepartment(int subjectId) throws DomainException;

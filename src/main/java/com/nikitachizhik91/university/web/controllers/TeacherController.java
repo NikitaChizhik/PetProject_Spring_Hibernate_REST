@@ -28,7 +28,7 @@ public class TeacherController {
 	private TeacherManager teacherManager;
 
 	@Autowired
-	SubjectManager subjectManager;
+	private SubjectManager subjectManager;
 
 	@GetMapping(value = "/teachers")
 	public ModelAndView findAll(ModelAndView model) throws WebException {

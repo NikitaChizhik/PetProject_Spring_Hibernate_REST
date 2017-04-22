@@ -39,11 +39,9 @@ public class FacultyDaoImpl implements FacultyDao {
 	private static final String INSERT_GROUP = "insert into faculties_groups (faculty_id,group_id) values (?,?)";
 
 	private static final String FIND_DEPARTMENTS_BY_FACULTY_ID = "select department_id from faculties_departments where faculty_id=?";
-	private static final String DELETE_ALL_DEPARTMENTS_FROM_FACULTY = "delete from faculties_departments where faculty_id=?";
 	private static final String DELETE_DEPARTMENT_FROM_FACULTY = "delete from faculties_departments where department_id=?";
 
 	private static final String FIND_GROUPS_BY_FACULTY_ID = "select group_id from faculties_groups where faculty_id=?";
-	private static final String DELETE_ALL_GROUPS_FROM_FACULTY = "delete from faculties_groups where faculty_id=?";
 	private static final String DELETE_GROUP_FROM_FACULTY = "delete from faculties_groups where group_id=?";
 	@Autowired
 	private DepartmentDao departmentDao;
@@ -326,46 +324,6 @@ public class FacultyDaoImpl implements FacultyDao {
 		log.trace("Finished findGroupsByFacultyId() method.");
 
 		return groups;
-	}
-
-	public void deleteAllDepartmentsFromFaculty(int facultyId) throws DaoException {
-		log.trace("Started deleteAllDepartmentsFromFaculty() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_DEPARTMENTS_FROM_FACULTY);) {
-
-			statement.setInt(1, facultyId);
-
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-		} catch (SQLException e) {
-			log.error("Cannot delete all Departments from Faculty with id=" + facultyId, e);
-			throw new DaoException("Cannot delete all Departments from Faculty with id=" + facultyId, e);
-		}
-		log.info("Deleted all Departments from Faculty with id=" + facultyId);
-		log.trace("Finished deleteAllDepartmentsFromFaculty() method.");
-	}
-
-	public void deleteAllGroupsFromFaculty(int facultyId) throws DaoException {
-		log.trace("Started deleteAllGroupsFromFaculty() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_GROUPS_FROM_FACULTY);) {
-
-			statement.setInt(1, facultyId);
-
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-		} catch (SQLException e) {
-			log.error("Cannot delete all Groups from Faculty with id=" + facultyId, e);
-			throw new DaoException("Cannot delete all Groups from Faculty with id=" + facultyId, e);
-		}
-		log.info("Deleted all Groups from Faculty with id=" + facultyId);
-		log.trace("Finished deleteAllGroupsFromFaculty() method.");
 	}
 
 	public void deleteDepartmentFromFaculty(int departmentId) throws DaoException {

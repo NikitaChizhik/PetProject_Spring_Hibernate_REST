@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.impl.FacultyDaoImpl;
+import com.nikitachizhik91.university.dao.FacultyDao;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.FacultyManager;
 import com.nikitachizhik91.university.model.Department;
@@ -21,7 +21,7 @@ public class FacultyManagerImpl implements FacultyManager {
 	private final static Logger log = LogManager.getLogger(FacultyManagerImpl.class.getName());
 
 	@Autowired
-	private FacultyDaoImpl facultyDaoImpl;
+	private FacultyDao facultyDao;
 
 	@Override
 	public Faculty create(Faculty faculty) throws DomainException {
@@ -31,7 +31,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Creating student.");
 
-			facultyTemp = facultyDaoImpl.create(faculty);
+			facultyTemp = facultyDao.create(faculty);
 
 		} catch (DaoException e) {
 			log.error("Cannot create faculty=" + faculty, e);
@@ -50,7 +50,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Finding faculty by id.");
 
-			faculty = facultyDaoImpl.findById(facultyId);
+			faculty = facultyDao.findById(facultyId);
 
 		} catch (DaoException e) {
 			log.error("Cannot find faculty by id=" + facultyId, e);
@@ -69,7 +69,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Finding all faculties");
 
-			faculties = facultyDaoImpl.findAll();
+			faculties = facultyDao.findAll();
 
 		} catch (DaoException e) {
 			log.error("Cannot find all faculties.", e);
@@ -88,7 +88,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Updating faculty.");
 
-			facultyTemp = facultyDaoImpl.update(faculty);
+			facultyTemp = facultyDao.update(faculty);
 
 		} catch (DaoException e) {
 			log.error("Cannot update faculty=" + faculty, e);
@@ -106,7 +106,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Deleting faculty by id=" + facultyId);
 
-			facultyDaoImpl.delete(facultyId);
+			facultyDao.delete(facultyId);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete faculty with id=" + facultyId, e);
@@ -123,7 +123,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Adding department.");
 
-			facultyDaoImpl.addDepartment(facultyId, departmentId);
+			facultyDao.addDepartment(facultyId, departmentId);
 
 		} catch (DaoException e) {
 			log.error("Cannot add department with id=" + departmentId + " to faculty with id=" + facultyId, e);
@@ -141,7 +141,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Adding group.");
 
-			facultyDaoImpl.addGroup(facultyId, groupId);
+			facultyDao.addGroup(facultyId, groupId);
 
 		} catch (DaoException e) {
 			log.error("Cannot add group with id=" + groupId + " to faculty with id=" + facultyId, e);
@@ -160,7 +160,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Finding departments by faculty id.");
 
-			departments = facultyDaoImpl.findDepartmentsByFacultyId(facultyId);
+			departments = facultyDao.findDepartmentsByFacultyId(facultyId);
 
 		} catch (DaoException e) {
 			log.error("Cannot find departments by faculty id=" + facultyId, e);
@@ -180,7 +180,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Finding groups by faculty id.");
 
-			groups = facultyDaoImpl.findGroupsByFacultyId(facultyId);
+			groups = facultyDao.findGroupsByFacultyId(facultyId);
 
 		} catch (DaoException e) {
 			log.error("Cannot find groups by faculty id=" + facultyId, e);
@@ -192,14 +192,6 @@ public class FacultyManagerImpl implements FacultyManager {
 	}
 
 	@Override
-	public void deleteAllDepartmentsFromFaculty(int facultyId) throws DomainException {
-	}
-
-	@Override
-	public void deleteAllGroupsFromFaculty(int facultyId) throws DomainException {
-	}
-
-	@Override
 	public void deleteDepartmentFromFaculty(int departmentId) throws DomainException {
 
 		log.trace("Started deleteDepartmentFromFaculty() method.");
@@ -207,7 +199,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Deleting department from faculty.");
 
-			facultyDaoImpl.deleteDepartmentFromFaculty(departmentId);
+			facultyDao.deleteDepartmentFromFaculty(departmentId);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete department with id=" + departmentId + " from faculties_departments table", e);
@@ -225,7 +217,7 @@ public class FacultyManagerImpl implements FacultyManager {
 		try {
 			log.trace("Deleting group from faculty.");
 
-			facultyDaoImpl.deleteGroupFromFaculty(groupId);
+			facultyDao.deleteGroupFromFaculty(groupId);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete department with id=" + groupId + " from faculties_groups table", e);

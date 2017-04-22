@@ -76,11 +76,6 @@
 
 				<c:forEach var="teacher" items="${teachers}">
 
-					<c:url var="teacherLink" value="teacher">
-						<c:param name="teacherId" value="${teacher.id}" />
-					</c:url>
-
-
 
 					<tr>
 						<td><a href="teacher/${teacher.id}">${teacher.name}</a></td>

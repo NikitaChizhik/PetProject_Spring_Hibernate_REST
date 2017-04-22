@@ -491,5 +491,4 @@ public class LessonDaoImpl implements LessonDao {
 
 		return lessons;
 	}
-
 }

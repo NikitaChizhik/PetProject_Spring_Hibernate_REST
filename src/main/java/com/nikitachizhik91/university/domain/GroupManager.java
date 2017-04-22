@@ -3,7 +3,6 @@ package com.nikitachizhik91.university.domain;
 import java.util.List;
 
 import com.nikitachizhik91.university.model.Group;
-import com.nikitachizhik91.university.model.Student;
 
 public interface GroupManager {
 
@@ -18,10 +17,6 @@ public interface GroupManager {
 	public abstract void delete(int id) throws DomainException;
 
 	public void addStudent(int studentId, int groupId) throws DomainException;
-
-	public List<Student> findStudentsByGroupId(int groupId) throws DomainException;
-
-	public void deleteAllStudentsFromGroup(int groupId) throws DomainException;
 
 	public void deleteStudentFromGroup(int studentId) throws DomainException;
 

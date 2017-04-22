@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.impl.DepartmentDaoImpl;
+import com.nikitachizhik91.university.dao.DepartmentDao;
 import com.nikitachizhik91.university.domain.DepartmentManager;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.model.Department;
@@ -21,7 +21,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 	private final static Logger log = LogManager.getLogger(DepartmentManagerImpl.class.getName());
 
 	@Autowired
-	private DepartmentDaoImpl departmentDaoImpl;
+	private DepartmentDao departmentDao;
 
 	@Override
 	public Department create(Department department) throws DomainException {
@@ -31,7 +31,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Creating student.");
 
-			departmentTemp = departmentDaoImpl.create(department);
+			departmentTemp = departmentDao.create(department);
 
 		} catch (DaoException e) {
 			log.error("Cannot create department=" + department, e);
@@ -50,7 +50,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Finding department by id.");
 
-			department = departmentDaoImpl.findById(id);
+			department = departmentDao.findById(id);
 
 		} catch (DaoException e) {
 			log.error("Cannot find department by id=" + id, e);
@@ -69,7 +69,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Finding all departments");
 
-			departments = departmentDaoImpl.findAll();
+			departments = departmentDao.findAll();
 
 		} catch (DaoException e) {
 			log.error("Cannot find all departments.", e);
@@ -88,7 +88,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Updating department.");
 
-			departmentTemp = departmentDaoImpl.update(department);
+			departmentTemp = departmentDao.update(department);
 
 		} catch (DaoException e) {
 			log.error("Cannot update department=" + department, e);
@@ -106,7 +106,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Deleting department by id=" + id);
 
-			departmentDaoImpl.delete(id);
+			departmentDao.delete(id);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete department with id=" + id, e);
@@ -123,7 +123,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Adding subject.");
 
-			departmentDaoImpl.addSubject(departmentId, subjectId);
+			departmentDao.addSubject(departmentId, subjectId);
 
 		} catch (DaoException e) {
 			log.error("Cannot add subject with id=" + subjectId + " to department with id=" + departmentId, e);
@@ -141,7 +141,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Adding teacher.");
 
-			departmentDaoImpl.addTeacher(departmentId, teacherId);
+			departmentDao.addTeacher(departmentId, teacherId);
 
 		} catch (DaoException e) {
 			log.error("Cannot add teacher with id=" + teacherId + " to department with id=" + departmentId, e);
@@ -160,7 +160,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Finding teachers by department id.");
 
-			teachers = departmentDaoImpl.findTeachersByDepartmentId(departmentId);
+			teachers = departmentDao.findTeachersByDepartmentId(departmentId);
 
 		} catch (DaoException e) {
 			log.error("Cannot find teachers by department id=" + departmentId, e);
@@ -180,7 +180,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Finding subjects by department id.");
 
-			subjects = departmentDaoImpl.findSubjectsByDepartmentId(departmentId);
+			subjects = departmentDao.findSubjectsByDepartmentId(departmentId);
 
 		} catch (DaoException e) {
 			log.error("Cannot find subjects by department id=" + departmentId, e);
@@ -192,14 +192,6 @@ public class DepartmentManagerImpl implements DepartmentManager {
 	}
 
 	@Override
-	public void deleteAllTeachersFromDepartment(int departmentId) throws DomainException {
-	}
-
-	@Override
-	public void deleteAllSubjectsFromDepartment(int departmentId) throws DomainException {
-	}
-
-	@Override
 	public void deleteTeacherFromDepartment(int teacherId) throws DomainException {
 
 		log.trace("Started deleteTeacherFromDepartment() method.");
@@ -207,7 +199,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Deleting teacher from department.");
 
-			departmentDaoImpl.deleteTeacherFromDepartment(teacherId);
+			departmentDao.deleteTeacherFromDepartment(teacherId);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete teacher with id=" + teacherId + " from departments_teachers table", e);
@@ -225,7 +217,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Deleting subject from department.");
 
-			departmentDaoImpl.deleteSubjectFromDepartment(subjectId);
+			departmentDao.deleteSubjectFromDepartment(subjectId);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete subject with id=" + subjectId + " from departments_subjects table", e);
@@ -243,7 +235,7 @@ public class DepartmentManagerImpl implements DepartmentManager {
 		try {
 			log.trace("Finding all departments which are without faculty.");
 
-			departments = departmentDaoImpl.findDepartmentsWithoutFaculty();
+			departments = departmentDao.findDepartmentsWithoutFaculty();
 
 		} catch (DaoException e) {
 			log.error("Cannot find all departments which are without faculty.", e);

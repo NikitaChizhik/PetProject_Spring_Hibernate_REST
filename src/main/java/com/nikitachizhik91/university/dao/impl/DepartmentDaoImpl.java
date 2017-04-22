@@ -39,11 +39,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	private static final String INSERT_TEACHER = "insert into departments_teachers (department_id,teacher_id) values (?,?)";
 
 	private static final String FIND_TEACHERS_BY_DEPARTMENT_ID = "select teacher_id from departments_teachers where department_id=?";
-	private static final String DELETE_ALL_TEACHERS_FROM_DEPARTMENT = "delete from departments_teachers where department_id=?";
 	private static final String DELETE_TEACHER_FROM_DEPARTMENT = "delete from departments_teachers where teacher_id=?";
 
 	private static final String FIND_SUBJECTS_BY_DEPARTMENT_ID = "select subject_id from departments_subjects where department_id=?";
-	private static final String DELETE_ALL_SUBJECTS_FROM_DEPARTMENT = "delete from departments_subjects where department_id=?";
 	private static final String DELETE_SUBJECT_FROM_DEPARTMENT = "delete from departments_subjects where subject_id=?";
 
 	private static final String FIND_DEPARTMENTS_WITHOUT_FACULTY = "SELECT id FROM departments d WHERE NOT EXISTS(SELECT NULL FROM faculties_departments fd WHERE fd.department_id = d.id)";
@@ -287,26 +285,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		return teachers;
 	}
 
-	public void deleteAllTeachersFromDepartment(int departmentId) throws DaoException {
-		log.trace("Started deleteAllTeachersFromDepartment() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_TEACHERS_FROM_DEPARTMENT);) {
-
-			statement.setInt(1, departmentId);
-
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-		} catch (SQLException e) {
-			log.error("Cannot delete all Teachers from Department with id=" + departmentId, e);
-			throw new DaoException("Cannot delete all Teachers from Department with id=" + departmentId, e);
-		}
-		log.info("Deleted all Teachers from Department with id=" + departmentId);
-		log.trace("Finished deleteAllTeachersFromDepartment() method.");
-	}
-
 	public void deleteTeacherFromDepartment(int teacherId) throws DaoException {
 		log.trace("Started deleteTeacherFromDepartment() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
@@ -359,26 +337,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		return subjects;
 	}
 
-	public void deleteAllSubjectsFromDepartment(int departmentId) throws DaoException {
-		log.trace("Started deleteAllSubjectsFromDepartment() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_ALL_SUBJECTS_FROM_DEPARTMENT);) {
-
-			statement.setInt(1, departmentId);
-
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-		} catch (SQLException e) {
-			log.error("Cannot delete all Subjects from Department with id=" + departmentId, e);
-			throw new DaoException("Cannot delete all Subjects from Department with id=" + departmentId, e);
-		}
-		log.info("Deleted all Subjects from Department with id=" + departmentId);
-		log.trace("Finished deleteAllSubjectsFromDepartment() method.");
-	}
-
 	public void deleteSubjectFromDepartment(int subjectId) throws DaoException {
 		log.trace("Started deleteSubjectFromDepartment() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
@@ -428,4 +386,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 		return departments;
 	}
+
+	
 }

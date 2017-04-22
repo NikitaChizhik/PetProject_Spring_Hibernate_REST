@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -25,7 +27,11 @@
 		<div id="content">
 
 
-			<form action="lessons" method="post">
+			<form:form action="lesson/create" method="post"
+				modelAttribute="lesson">
+
+				<form:hidden path="id" />
+
 				<table>
 
 					<tr>
@@ -35,23 +41,54 @@
 
 					</tr>
 					<tr>
-						<td><select name="number" class="button">
+
+						<td><form:select path="number" class="button">
+
+								<c:forEach var="number" items="${numbers}">
+									<option value="${number }">${number}</option>
+								</c:forEach>
+
+							</form:select></td>
+
+
+						<!-- <td>  <select name="number" class="button">
 								<c:forEach var="number" items="${numbers}">
 									<option value="${number}">${number}</option>
 								</c:forEach>
-						</select></td>
+								
+						</select></td> -->
 
-						<td><select name="subjectId" class="button">
+
+						<td><form:select path="subject.id" class="button">
+
 								<c:forEach var="subject" items="${subjects}">
 									<option value="${subject.id }">${subject.name}</option>
 								</c:forEach>
-						</select></td>
 
-						<td><select name="groupId" class="button">
+							</form:select></td>
+
+
+						<!-- <td><select name="subjectId" class="button">
+								<c:forEach var="subject" items="${subjects}">
+									<option value="${subject.id }">${subject.name}</option>
+								</c:forEach>
+						</select></td> -->
+
+
+
+						<td><form:select path="group.id" class="button">
+
 								<c:forEach var="group" items="${groups}">
 									<option value="${group.id }">${group.name}</option>
 								</c:forEach>
-						</select></td>
+
+							</form:select></td>
+
+						<!-- <td><select name="groupId" class="button">
+								<c:forEach var="group" items="${groups}">
+									<option value="${group.id }">${group.name}</option>
+								</c:forEach>
+						</select></td> -->
 
 
 
@@ -70,22 +107,40 @@
 					<tr>
 
 
-						<td><select name="teacherId" class="button">
+						<td><form:select path="teacher.id" class="button">
+
 								<c:forEach var="teacher" items="${teachers}">
 									<option value="${teacher.id }">${teacher.name}</option>
 								</c:forEach>
-						</select></td>
 
-						<td><select name="roomId" class="button">
+							</form:select></td>
+
+						<!-- <td><select name="teacherId" class="button">
+								<c:forEach var="teacher" items="${teachers}">
+									<option value="${teacher.id }">${teacher.name}</option>
+								</c:forEach>
+						</select></td> -->
+
+						<td><form:select path="room.id" class="button">
+
 								<c:forEach var="room" items="${rooms}">
 									<option value="${room.id }">${room.number}</option>
 								</c:forEach>
-						</select></td>
+
+							</form:select></td>
+
+						<!-- <td><select name="roomId" class="button">
+								<c:forEach var="room" items="${rooms}">
+									<option value="${room.id }">${room.number}</option>
+								</c:forEach>
+						</select></td> -->
 
 
+						<td><form:input path="date" value="2017/03/30 12:30:00"
+								class="button" /></td>
 
-						<td><input type="text" name="date"
-							value="2017/03/30 12:30:00" /></td>
+						<!-- <td><input type="text" name="date"
+							value="2017/03/30 12:30:00" /></td> -->
 
 
 						<td><input type="submit" value="Add Lesson" class="button" /></td>
@@ -93,7 +148,7 @@
 					</tr>
 				</table>
 
-			</form>
+			</form:form>
 
 
 
@@ -119,7 +174,7 @@
 
 					<tr>
 						<td>${lesson.group.name }</td>
-						<td><a href="${lessonLink}">${lesson.subject.name}</a></td>
+						<td><a href="lesson/${lesson.id}">${lesson.subject.name}</a></td>
 
 
 
@@ -129,10 +184,9 @@
 						<td>${lesson.number }</td>
 						<td>${lesson.teacher.name }</td>
 
-						<td><form action="lessonDelete" method="post">
+						<td><form action="lesson/delete/${lesson.id} " method="post">
 
-								<input type="hidden" name="lessonId" value="${lesson.id}" /> <input
-									type="submit" value="Delete" class="button"
+								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this lesson?'))) return false" />
 							</form></td>
 
@@ -141,12 +195,11 @@
 				</c:forEach>
 
 			</table>
-
 		</div>
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 
 </body>

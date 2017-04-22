@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.nikitachizhik91.university.model.Lesson;
-import com.nikitachizhik91.university.model.Teacher;
 
 public interface LessonManager {
 

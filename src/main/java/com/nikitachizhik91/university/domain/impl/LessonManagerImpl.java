@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
+import com.nikitachizhik91.university.dao.LessonDao;
 import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.dao.TeacherDao;
-import com.nikitachizhik91.university.dao.impl.LessonDaoImpl;
 import com.nikitachizhik91.university.dao.impl.StudentDaoImpl;
 import com.nikitachizhik91.university.dao.impl.TeacherDaoImpl;
 import com.nikitachizhik91.university.domain.DomainException;
@@ -26,7 +26,7 @@ public class LessonManagerImpl implements LessonManager {
 	private final static Logger log = LogManager.getLogger(LessonManagerImpl.class.getName());
 
 	@Autowired
-	private LessonDaoImpl lessonDaoImpl;
+	private LessonDao lessonDao;
 
 	@Override
 	public Lesson create(Lesson lesson) throws DomainException {
@@ -36,7 +36,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Creating lesson.");
 
-			lessonTemp = lessonDaoImpl.create(lesson);
+			lessonTemp = lessonDao.create(lesson);
 
 		} catch (DaoException e) {
 			log.error("Cannot create lesson=" + lesson, e);
@@ -55,7 +55,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Finding lesson by id.");
 
-			teacher = lessonDaoImpl.findById(id);
+			teacher = lessonDao.findById(id);
 
 		} catch (DaoException e) {
 			log.error("Cannot find lesson by id=" + id, e);
@@ -75,7 +75,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Finding all lessons");
 
-			lessons = lessonDaoImpl.findAll();
+			lessons = lessonDao.findAll();
 
 		} catch (DaoException e) {
 			log.error("Cannot find all lessons.", e);
@@ -94,7 +94,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Updating lesson.");
 
-			lessonTemp = lessonDaoImpl.update(lesson);
+			lessonTemp = lessonDao.update(lesson);
 
 		} catch (DaoException e) {
 			log.error("Cannot update lesson=" + lesson, e);
@@ -112,7 +112,7 @@ public class LessonManagerImpl implements LessonManager {
 		try {
 			log.trace("Deleting lesson by id.");
 
-			lessonDaoImpl.delete(id);
+			lessonDao.delete(id);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete lesson by id=" + id, e);
@@ -139,7 +139,7 @@ public class LessonManagerImpl implements LessonManager {
 
 			teacher = teacherDao.findById(teacherId);
 
-			lessons = lessonDaoImpl.getTeacherTimetableForDay(teacher, date);
+			lessons = lessonDao.getTeacherTimetableForDay(teacher, date);
 
 		} catch (DaoException e) {
 			log.error("Cannot getTeacherTimetableForDay() for teacher :" + teacherId + " and Date :" + date, e);
@@ -170,7 +170,7 @@ public class LessonManagerImpl implements LessonManager {
 
 			teacher = teacherDao.findById(teacherId);
 
-			lessons = lessonDaoImpl.getTeacherTimetableForMonth(teacher, date);
+			lessons = lessonDao.getTeacherTimetableForMonth(teacher, date);
 
 		} catch (DaoException e) {
 			log.error("Cannot getStudentTimetableForMonth() for teacher :" + teacher + " and Date :" + date, e);
@@ -202,7 +202,7 @@ public class LessonManagerImpl implements LessonManager {
 
 			student = studentDao.findById(studentId);
 
-			lessons = lessonDaoImpl.getStudentTimetableForDay(student, date);
+			lessons = lessonDao.getStudentTimetableForDay(student, date);
 
 		} catch (DaoException e) {
 			log.error("Cannot getStudentTimetableForDay() for Student :" + studentId + " and Date :" + date, e);
@@ -232,7 +232,7 @@ public class LessonManagerImpl implements LessonManager {
 
 			student = studentDao.findById(studentId);
 
-			lessons = lessonDaoImpl.getStudentTimetableForMonth(student, date);
+			lessons = lessonDao.getStudentTimetableForMonth(student, date);
 
 		} catch (DaoException e) {
 			log.error("Cannot getStudentTimetableForMonth() for Student :" + student + " and Date :" + date, e);

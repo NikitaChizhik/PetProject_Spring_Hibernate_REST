@@ -12,7 +12,6 @@ import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.GroupManager;
 import com.nikitachizhik91.university.model.Group;
-import com.nikitachizhik91.university.model.Student;
 
 @Service
 public class GroupManagerImpl implements GroupManager {
@@ -61,23 +60,23 @@ public class GroupManagerImpl implements GroupManager {
 
 	@Override
 	public List<Group> findAll() throws DomainException {
-		
+
 		log.trace("Started findAll() method.");
 
 		List<Group> groups = null;
-		
+
 		try {
-			
+
 			log.trace("Finding all groups");
 
 			groups = groupDao.findAll();
 
 		} catch (DaoException e) {
-			
+
 			log.error("Cannot find all groups.", e);
 			throw new DomainException("Cannot find all groups.", e);
 		}
-		
+
 		log.trace("Finished findAll() method.");
 
 		return groups;
@@ -85,23 +84,23 @@ public class GroupManagerImpl implements GroupManager {
 
 	@Override
 	public Group update(Group group) throws DomainException {
-		
+
 		log.trace("Started update() method.");
 
 		Group groupTemp = null;
-		
+
 		try {
-			
+
 			log.trace("Updating group.");
 
 			groupTemp = groupDao.update(group);
 
 		} catch (DaoException e) {
-			
+
 			log.error("Cannot update group=" + group, e);
 			throw new DomainException("Cannot update group=" + group, e);
 		}
-		
+
 		log.trace("Finished update() method.");
 
 		return groupTemp;
@@ -138,15 +137,6 @@ public class GroupManagerImpl implements GroupManager {
 			throw new DomainException("Cannot add student with id=" + studentId + " to group with id=" + groupId, e);
 		}
 		log.trace("Finished addStudent() method.");
-	}
-
-	@Override
-	public List<Student> findStudentsByGroupId(int groupId) throws DomainException {
-		return null;
-	}
-
-	@Override
-	public void deleteAllStudentsFromGroup(int groupId) throws DomainException {
 	}
 
 	@Override
