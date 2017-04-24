@@ -41,7 +41,6 @@ public class SubjectController {
 		}
 
 		model.addObject("subjects", subjects);
-		model.addObject("subject", new Subject());
 		model.setViewName("subjects");
 
 		log.trace("Found all subjects");

@@ -3,7 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -28,17 +27,14 @@
 
 		<div id="content">
 
-			<form:form action="student/create" method="post"
-				modelAttribute="student">
 
-				<form:hidden path="id" />
+			<form action="student/create" method="post">
 
-				<form:label path="name">Name:</form:label>
-				<form:input path="name" />
-
-
+				<input type="text" name="name" />
 				<input type="submit" value="Add Student" class="button" />
-			</form:form>
+			</form>
+
+
 
 			<table>
 
@@ -51,14 +47,17 @@
 
 
 					<tr>
-						<td><a href="student/${student.id}">${student.name}</a></td>
+						<td>
+							<a href="student/${student.id}">${student.name}</a>
+						</td>
 
-						<td><form action="student/delete/${student.id} "
-								method="post">
+						<td>
+							<form action="student/delete/${student.id} " method="post">
 
 								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false" />
-							</form></td>
+							</form>
+						</td>
 					</tr>
 
 				</c:forEach>

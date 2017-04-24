@@ -2,7 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -36,8 +35,8 @@
 
 			<form action="room/create" method="post">
 
-				<input type="text" name="number" /> <input type="submit"
-					value="Add Room" class="button" />
+				<input type="text" name="number" />
+				<input type="submit" value="Add Room" class="button" />
 			</form>
 
 
@@ -52,13 +51,17 @@
 				<c:forEach var="room" items="${rooms}">
 
 					<tr>
-						<td><a href="room/${room.id}">${room.number}</a></td>
+						<td>
+							<a href="room/${room.id}">${room.number}</a>
+						</td>
 
-						<td><form action="room/delete/${room.id} " method="post">
+						<td>
+							<form action="room/delete/${room.id} " method="post">
 
 								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this room?'))) return false" />
-							</form></td>
+							</form>
+						</td>
 					</tr>
 
 				</c:forEach>

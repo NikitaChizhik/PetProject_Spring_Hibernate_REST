@@ -41,7 +41,6 @@ public class StudentController {
 		}
 
 		model.addObject("students", students);
-		model.addObject("student", new Student());
 		model.setViewName("students");
 
 		log.trace("Found all students");

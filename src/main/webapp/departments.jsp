@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -25,16 +24,13 @@
 
 		<div id="content">
 
-			<form:form action="department/create" method="post"
-				modelAttribute="department">
 
-				<form:hidden path="id" />
+			<form action="department/create" method="post">
 
-				<td><form:input path="name" /></td>
+				<input type="text" name="name" />
+				<input type="submit" value="Add Department" class="button" />
+			</form>
 
-				<td><input type="submit" value="Add Department" class="button" /></td>
-
-			</form:form>
 
 			<table>
 
@@ -49,16 +45,19 @@
 
 
 					<tr>
-						<td><a href="department/${department.id}">${department.name}</a></td>
+						<td>
+							<a href="department/${department.id}">${department.name}</a>
+						</td>
 						<td>${fn:length(department.subjects)}</td>
 						<td>${fn:length(department.teachers)}</td>
 
-						<td><form action="department/delete/${department.id }"
-								method="post">
+						<td>
+							<form action="department/delete/${department.id }" method="post">
 
 								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this department?'))) return false" />
-							</form></td>
+							</form>
+						</td>
 
 					</tr>
 

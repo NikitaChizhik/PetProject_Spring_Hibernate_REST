@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -30,15 +29,14 @@
 
 		<div id="content">
 
-			<form:form action="group/create" method="post" modelAttribute="group">
 
-				<form:hidden path="id" />
+			<form action="group/create" method="post">
 
-				<td><form:input path="name" /></td>
+				<input type="text" name="name" />
+				<input type="submit" value="Add Group" class="button" />
+			</form>
 
-				<td><input type="submit" value="Add Group" class="button" /></td>
 
-			</form:form>
 
 			<table>
 
@@ -55,14 +53,18 @@
 
 					<tr>
 
-						<td><a href="group/${group.id}">${group.name}</a></td>
+						<td>
+							<a href="group/${group.id}">${group.name}</a>
+						</td>
 						<td>${fn:length(group.students)}</td>
 
-						<td><form action="group/delete/${group.id} " method="post">
+						<td>
+							<form action="group/delete/${group.id} " method="post">
 
 								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this group?'))) return false" />
-							</form></td>
+							</form>
+						</td>
 					</tr>
 
 				</c:forEach>

@@ -52,7 +52,6 @@ public class DepartmentController {
 		}
 
 		model.addObject("departments", departments);
-		model.addObject("department", new Department());
 		model.setViewName("departments");
 
 		log.trace("Found all departments");

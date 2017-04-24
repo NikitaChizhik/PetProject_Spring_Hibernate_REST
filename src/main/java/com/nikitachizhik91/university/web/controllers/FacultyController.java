@@ -52,7 +52,6 @@ public class FacultyController {
 		}
 
 		model.addObject("faculties", faculties);
-		model.addObject("faculty", new Faculty());
 		model.setViewName("faculties");
 
 		log.trace("Found all faculties");

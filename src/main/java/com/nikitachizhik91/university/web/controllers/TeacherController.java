@@ -52,7 +52,6 @@ public class TeacherController {
 
 		model.addObject("teachers", teachers);
 		model.addObject("subjects", subjects);
-		model.addObject("teacher", new Teacher());
 		model.setViewName("teachers");
 
 		log.trace("Found all teachers");

@@ -48,7 +48,6 @@ public class GroupController {
 		}
 
 		model.addObject("groups", groups);
-		model.addObject("group", new Group());
 		model.setViewName("groups");
 
 		log.trace("Found all groups");

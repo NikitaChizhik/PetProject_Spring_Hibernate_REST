@@ -83,7 +83,6 @@ public class LessonController {
 		model.addObject("numbers", numbers);
 		model.addObject("lessons", lessons);
 		model.addObject("subjects", subjects);
-		model.addObject("lesson", new Lesson());
 		model.setViewName("lessons");
 
 		log.trace("Found all lessons");
