@@ -32,16 +32,15 @@
 
 		<div id="content">
 
-			<form:form action="room/create" method="post" modelAttribute="room">
-
-				<form:hidden path="id" />
-
-				<form:label path="number"></form:label>
-				<form:input path="number" />
 
 
-				<input type="submit" value="Add Room" class="button" />
-			</form:form>
+			<form action="room/create" method="post">
+
+				<input type="text" name="number" /> <input type="submit"
+					value="Add Room" class="button" />
+			</form>
+
+
 
 			<table>
 
@@ -52,25 +51,8 @@
 
 				<c:forEach var="room" items="${rooms}">
 
-					<!--<c:url var="roomLink" value="room">
-						<c:param name="roomId" value="${room.id}" />
-					</c:url>-->
-
 					<tr>
 						<td><a href="room/${room.id}">${room.number}</a></td>
-
-						<!--	<tr>
-						<td><form:form action="room/update" method="post"
-								modelAttribute="room">
-
-								<form:hidden path="id" />
-								<form:hidden path="number" />
-								
-
-							</form:form></td>-->
-
-
-						<!-- <input type="hidden" name="roomId" value="${room.id}" />  -->
 
 						<td><form action="room/delete/${room.id} " method="post">
 
