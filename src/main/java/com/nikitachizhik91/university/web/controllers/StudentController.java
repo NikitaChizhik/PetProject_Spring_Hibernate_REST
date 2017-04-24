@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.StudentManager;
+import com.nikitachizhik91.university.domain.StudentService;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.web.WebException;
 
@@ -22,7 +22,7 @@ public class StudentController {
 	private final static Logger log = LogManager.getLogger(StudentController.class.getName());
 
 	@Autowired
-	private StudentManager studentManager;
+	private StudentService studentService;
 
 	@GetMapping(value = "/students")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
@@ -32,7 +32,7 @@ public class StudentController {
 		List<Student> students = null;
 
 		try {
-			students = studentManager.findAll();
+			students = studentService.findAll();
 
 		} catch (DomainException e) {
 
@@ -57,7 +57,7 @@ public class StudentController {
 
 		try {
 
-			student = studentManager.findById(studentId);
+			student = studentService.findById(studentId);
 
 		} catch (NumberFormatException e) {
 
@@ -85,7 +85,7 @@ public class StudentController {
 
 		try {
 
-			student = studentManager.create(student);
+			student = studentService.create(student);
 
 		} catch (DomainException e) {
 
@@ -107,7 +107,7 @@ public class StudentController {
 
 		try {
 
-			studentManager.update(student);
+			studentService.update(student);
 
 		} catch (DomainException e) {
 
@@ -132,7 +132,7 @@ public class StudentController {
 
 		try {
 
-			studentManager.delete(studentId);
+			studentService.delete(studentId);
 
 		} catch (NumberFormatException e) {
 

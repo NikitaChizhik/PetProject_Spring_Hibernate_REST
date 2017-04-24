@@ -13,15 +13,15 @@ import com.nikitachizhik91.university.dao.LessonDao;
 import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.LessonManager;
+import com.nikitachizhik91.university.domain.LessonService;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
 
 @Service
-public class LessonManagerImpl implements LessonManager {
+public class LessonServiceImpl implements LessonService {
 
-	private final static Logger log = LogManager.getLogger(LessonManagerImpl.class.getName());
+	private final static Logger log = LogManager.getLogger(LessonServiceImpl.class.getName());
 
 	@Autowired
 	private LessonDao lessonDao;

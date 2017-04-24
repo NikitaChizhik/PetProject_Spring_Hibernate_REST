@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nikitachizhik91.university.model.Room;
 
-public interface RoomManager {
+public interface RoomService {
 
 	public abstract Room create(Room room) throws DomainException;
 

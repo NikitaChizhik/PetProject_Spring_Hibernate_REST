@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.LessonManager;
-import com.nikitachizhik91.university.domain.TeacherManager;
+import com.nikitachizhik91.university.domain.LessonService;
+import com.nikitachizhik91.university.domain.TeacherService;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Teacher;
 import com.nikitachizhik91.university.web.WebException;
@@ -27,9 +27,9 @@ public class TeacherForDayController {
 	private final static Logger log = LogManager.getLogger(TeacherForDayController.class.getName());
 
 	@Autowired
-	private TeacherManager TeacherManager;
+	private TeacherService teacherService;
 	@Autowired
-	private LessonManager lessonManager;
+	private LessonService lessonService;
 
 	@GetMapping(value = "/teacherTimetableForDay")
 	public ModelAndView showAllStudents(ModelAndView model) throws WebException {
@@ -39,7 +39,7 @@ public class TeacherForDayController {
 		List<Teacher> teachers = null;
 
 		try {
-			teachers = TeacherManager.findAll();
+			teachers = teacherService.findAll();
 
 		} catch (DomainException e) {
 
@@ -80,11 +80,11 @@ public class TeacherForDayController {
 
 		try {
 
-			teacher = TeacherManager.findById(Integer.parseInt(teacherId));
+			teacher = teacherService.findById(Integer.parseInt(teacherId));
 
-			lessons = lessonManager.getTeacherTimetableForDay(Integer.parseInt(teacherId), date);
+			lessons = lessonService.getTeacherTimetableForDay(Integer.parseInt(teacherId), date);
 
-			teachers = TeacherManager.findAll();
+			teachers = teacherService.findAll();
 
 		} catch (DomainException e) {
 

@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.RoomDao;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.RoomManager;
+import com.nikitachizhik91.university.domain.RoomService;
 import com.nikitachizhik91.university.model.Room;
 
 @Service
-public class RoomManagerImpl implements RoomManager {
+public class RoomServiceImpl implements RoomService {
 
-	private final static Logger log = LogManager.getLogger(RoomManagerImpl.class.getName());
+	private final static Logger log = LogManager.getLogger(RoomServiceImpl.class.getName());
 	
 	@Autowired
 	private RoomDao roomDao;

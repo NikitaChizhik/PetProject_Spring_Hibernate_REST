@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nikitachizhik91.university.model.Student;
 
-public interface StudentManager {
+public interface StudentService {
 
 	public abstract Student create(Student student) throws DomainException;
 

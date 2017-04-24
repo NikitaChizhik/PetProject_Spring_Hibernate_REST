@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nikitachizhik91.university.model.Group;
 
-public interface GroupManager {
+public interface GroupService {
 
 	public abstract Group create(Group group) throws DomainException;
 

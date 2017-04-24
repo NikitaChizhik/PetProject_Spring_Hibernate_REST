@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.SubjectManager;
+import com.nikitachizhik91.university.domain.SubjectService;
 import com.nikitachizhik91.university.model.Subject;
 
 @Service
-public class SubjectManagerImpl implements SubjectManager {
+public class SubjectServiceImpl implements SubjectService {
 
-	private final static Logger log = LogManager.getLogger(SubjectManagerImpl.class.getName());
+	private final static Logger log = LogManager.getLogger(SubjectServiceImpl.class.getName());
 
 	@Autowired
 	private SubjectDao subjectDao;

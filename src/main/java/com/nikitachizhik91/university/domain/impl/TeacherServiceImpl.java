@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.TeacherManager;
+import com.nikitachizhik91.university.domain.TeacherService;
 import com.nikitachizhik91.university.model.Teacher;
 
 @Service
-public class TeacherManagerImpl implements TeacherManager {
+public class TeacherServiceImpl implements TeacherService {
 
-	private final static Logger log = LogManager.getLogger(TeacherManagerImpl.class.getName());
+	private final static Logger log = LogManager.getLogger(TeacherServiceImpl.class.getName());
 
 	@Autowired
 	private TeacherDao teacherDao;

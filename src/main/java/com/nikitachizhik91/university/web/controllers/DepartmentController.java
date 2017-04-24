@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nikitachizhik91.university.domain.DepartmentManager;
+import com.nikitachizhik91.university.domain.DepartmentService;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.SubjectManager;
-import com.nikitachizhik91.university.domain.TeacherManager;
+import com.nikitachizhik91.university.domain.SubjectService;
+import com.nikitachizhik91.university.domain.TeacherService;
 import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
@@ -28,11 +28,11 @@ public class DepartmentController {
 	private final static Logger log = LogManager.getLogger(DepartmentController.class.getName());
 
 	@Autowired
-	private DepartmentManager departmentManager;
+	private DepartmentService departmentService;
 	@Autowired
-	private SubjectManager subjectManager;
+	private SubjectService subjectService;
 	@Autowired
-	private TeacherManager teacherManager;
+	private TeacherService teacherService;
 
 	@GetMapping(value = "/departments")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
@@ -43,7 +43,7 @@ public class DepartmentController {
 
 		try {
 
-			departments = departmentManager.findAll();
+			departments = departmentService.findAll();
 
 		} catch (DomainException e) {
 
@@ -72,11 +72,11 @@ public class DepartmentController {
 
 		try {
 
-			department = departmentManager.findById(departmentId);
+			department = departmentService.findById(departmentId);
 
-			subjectsWithoutDepartment = subjectManager.findSubjectsWithoutDepartment();
+			subjectsWithoutDepartment = subjectService.findSubjectsWithoutDepartment();
 
-			teachersWithoutDepartment = teacherManager.findTeachersWithoutDepartment();
+			teachersWithoutDepartment = teacherService.findTeachersWithoutDepartment();
 
 		} catch (NumberFormatException e) {
 
@@ -106,7 +106,7 @@ public class DepartmentController {
 
 		try {
 
-			department = departmentManager.create(department);
+			department = departmentService.create(department);
 
 		} catch (DomainException e) {
 
@@ -128,7 +128,7 @@ public class DepartmentController {
 
 		try {
 
-			departmentManager.update(department);
+			departmentService.update(department);
 
 		} catch (DomainException e) {
 
@@ -153,7 +153,7 @@ public class DepartmentController {
 
 		try {
 
-			departmentManager.delete(departmentId);
+			departmentService.delete(departmentId);
 
 		} catch (NumberFormatException e) {
 
@@ -179,7 +179,7 @@ public class DepartmentController {
 
 		try {
 
-			departmentManager.addTeacher(departmentId, teacherId);
+			departmentService.addTeacher(departmentId, teacherId);
 
 		} catch (DomainException e) {
 
@@ -206,7 +206,7 @@ public class DepartmentController {
 
 		try {
 
-			departmentManager.deleteTeacherFromDepartment(teacherId);
+			departmentService.deleteTeacherFromDepartment(teacherId);
 
 		} catch (DomainException e) {
 
@@ -232,7 +232,7 @@ public class DepartmentController {
 
 		try {
 
-			departmentManager.addSubject(departmentId, subjectId);
+			departmentService.addSubject(departmentId, subjectId);
 
 		} catch (DomainException e) {
 
@@ -259,7 +259,7 @@ public class DepartmentController {
 
 		try {
 
-			departmentManager.deleteSubjectFromDepartment(subjectId);
+			departmentService.deleteSubjectFromDepartment(subjectId);
 
 		} catch (DomainException e) {
 

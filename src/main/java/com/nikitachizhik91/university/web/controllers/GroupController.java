@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.GroupManager;
-import com.nikitachizhik91.university.domain.StudentManager;
+import com.nikitachizhik91.university.domain.GroupService;
+import com.nikitachizhik91.university.domain.StudentService;
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.web.WebException;
@@ -26,9 +26,9 @@ public class GroupController {
 	private final static Logger log = LogManager.getLogger(GroupController.class.getName());
 
 	@Autowired
-	private GroupManager groupManager;
+	private GroupService groupService;
 	@Autowired
-	private StudentManager studentManager;
+	private StudentService studentService;
 
 	@GetMapping(value = "/groups")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
@@ -39,7 +39,7 @@ public class GroupController {
 
 		try {
 
-			groups = groupManager.findAll();
+			groups = groupService.findAll();
 
 		} catch (DomainException e) {
 
@@ -65,9 +65,9 @@ public class GroupController {
 
 		try {
 
-			group = groupManager.findById(groupId);
+			group = groupService.findById(groupId);
 
-			students = studentManager.findStudentsWithoutGroup();
+			students = studentService.findStudentsWithoutGroup();
 
 		} catch (NumberFormatException e) {
 
@@ -96,7 +96,7 @@ public class GroupController {
 
 		try {
 
-			group = groupManager.create(group);
+			group = groupService.create(group);
 
 		} catch (DomainException e) {
 
@@ -118,7 +118,7 @@ public class GroupController {
 
 		try {
 
-			groupManager.update(group);
+			groupService.update(group);
 
 		} catch (DomainException e) {
 
@@ -143,7 +143,7 @@ public class GroupController {
 
 		try {
 
-			groupManager.delete(groupId);
+			groupService.delete(groupId);
 
 		} catch (NumberFormatException e) {
 
@@ -169,7 +169,7 @@ public class GroupController {
 
 		try {
 
-			groupManager.addStudent(studentId, groupId);
+			groupService.addStudent(studentId, groupId);
 
 		} catch (DomainException e) {
 
@@ -195,7 +195,7 @@ public class GroupController {
 
 		try {
 
-			groupManager.deleteStudentFromGroup(studentId);
+			groupService.deleteStudentFromGroup(studentId);
 
 		} catch (DomainException e) {
 

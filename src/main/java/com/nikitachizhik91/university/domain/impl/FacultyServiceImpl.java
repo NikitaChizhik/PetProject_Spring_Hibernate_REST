@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.FacultyDao;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.FacultyManager;
+import com.nikitachizhik91.university.domain.FacultyService;
 import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Faculty;
 import com.nikitachizhik91.university.model.Group;
 
 @Service
-public class FacultyManagerImpl implements FacultyManager {
+public class FacultyServiceImpl implements FacultyService {
 
-	private final static Logger log = LogManager.getLogger(FacultyManagerImpl.class.getName());
+	private final static Logger log = LogManager.getLogger(FacultyServiceImpl.class.getName());
 
 	@Autowired
 	private FacultyDao facultyDao;

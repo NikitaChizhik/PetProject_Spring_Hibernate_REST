@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.DepartmentDao;
-import com.nikitachizhik91.university.domain.DepartmentManager;
+import com.nikitachizhik91.university.domain.DepartmentService;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
 @Service
-public class DepartmentManagerImpl implements DepartmentManager {
+public class DepartmentServiceImpl implements DepartmentService {
 
-	private final static Logger log = LogManager.getLogger(DepartmentManagerImpl.class.getName());
+	private final static Logger log = LogManager.getLogger(DepartmentServiceImpl.class.getName());
 
 	@Autowired
 	private DepartmentDao departmentDao;

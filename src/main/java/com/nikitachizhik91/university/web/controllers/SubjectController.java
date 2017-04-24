@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.SubjectManager;
+import com.nikitachizhik91.university.domain.SubjectService;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.web.WebException;
 
@@ -22,7 +22,7 @@ public class SubjectController {
 	private final static Logger log = LogManager.getLogger(SubjectController.class.getName());
 
 	@Autowired
-	private SubjectManager subjectManager;
+	private SubjectService subjectService;
 
 	@GetMapping(value = "/subjects")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
@@ -32,7 +32,7 @@ public class SubjectController {
 		List<Subject> subjects = null;
 
 		try {
-			subjects = subjectManager.findAll();
+			subjects = subjectService.findAll();
 
 		} catch (DomainException e) {
 
@@ -57,7 +57,7 @@ public class SubjectController {
 
 		try {
 
-			subject = subjectManager.findById(subjectId);
+			subject = subjectService.findById(subjectId);
 
 		} catch (NumberFormatException e) {
 
@@ -85,7 +85,7 @@ public class SubjectController {
 
 		try {
 
-			subject = subjectManager.create(subject);
+			subject = subjectService.create(subject);
 
 		} catch (DomainException e) {
 
@@ -107,7 +107,7 @@ public class SubjectController {
 
 		try {
 
-			subjectManager.update(subject);
+			subjectService.update(subject);
 
 		} catch (DomainException e) {
 
@@ -132,7 +132,7 @@ public class SubjectController {
 
 		try {
 
-			subjectManager.delete(subjectId);
+			subjectService.delete(subjectId);
 
 		} catch (NumberFormatException e) {
 

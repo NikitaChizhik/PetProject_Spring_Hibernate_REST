@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.GroupManager;
-import com.nikitachizhik91.university.domain.LessonManager;
-import com.nikitachizhik91.university.domain.RoomManager;
-import com.nikitachizhik91.university.domain.SubjectManager;
-import com.nikitachizhik91.university.domain.TeacherManager;
+import com.nikitachizhik91.university.domain.GroupService;
+import com.nikitachizhik91.university.domain.LessonService;
+import com.nikitachizhik91.university.domain.RoomService;
+import com.nikitachizhik91.university.domain.SubjectService;
+import com.nikitachizhik91.university.domain.TeacherService;
 import com.nikitachizhik91.university.model.Group;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Room;
@@ -32,15 +32,15 @@ public class LessonController {
 	private final static Logger log = LogManager.getLogger(LessonController.class.getName());
 
 	@Autowired
-	private LessonManager lessonManager;
+	private LessonService lessonService;
 	@Autowired
-	private SubjectManager subjectManager;
+	private SubjectService subjectService;
 	@Autowired
-	private GroupManager groupManager;
+	private GroupService groupService;
 	@Autowired
-	private TeacherManager teacherManager;
+	private TeacherService teacherService;
 	@Autowired
-	private RoomManager roomManager;
+	private RoomService roomService;
 
 	@GetMapping(value = "/lessons")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
@@ -59,15 +59,15 @@ public class LessonController {
 
 		try {
 
-			lessons = lessonManager.findAll();
+			lessons = lessonService.findAll();
 
-			subjects = subjectManager.findAll();
+			subjects = subjectService.findAll();
 
-			groups = groupManager.findAll();
+			groups = groupService.findAll();
 
-			teachers = teacherManager.findAll();
+			teachers = teacherService.findAll();
 
-			rooms = roomManager.findAll();
+			rooms = roomService.findAll();
 
 		} catch (DomainException e) {
 
@@ -107,15 +107,15 @@ public class LessonController {
 
 		try {
 
-			lesson = lessonManager.findById(lessonId);
+			lesson = lessonService.findById(lessonId);
 
-			subjects = subjectManager.findAll();
+			subjects = subjectService.findAll();
 
-			groups = groupManager.findAll();
+			groups = groupService.findAll();
 
-			teachers = teacherManager.findAll();
+			teachers = teacherService.findAll();
 
-			rooms = roomManager.findAll();
+			rooms = roomService.findAll();
 
 		} catch (NumberFormatException e) {
 
@@ -150,7 +150,7 @@ public class LessonController {
 
 		try {
 
-			lesson = lessonManager.create(lesson);
+			lesson = lessonService.create(lesson);
 
 		} catch (DomainException e) {
 
@@ -170,7 +170,7 @@ public class LessonController {
 
 		try {
 
-			lesson = lessonManager.update(lesson);
+			lesson = lessonService.update(lesson);
 
 		} catch (DomainException e) {
 
@@ -191,7 +191,7 @@ public class LessonController {
 
 		try {
 
-			lessonManager.delete(lessonId);
+			lessonService.delete(lessonId);
 
 		} catch (NumberFormatException e) {
 

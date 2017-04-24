@@ -6,7 +6,7 @@ import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
-public interface DepartmentManager {
+public interface DepartmentService {
 
 	public abstract Department create(Department department) throws DomainException;
 

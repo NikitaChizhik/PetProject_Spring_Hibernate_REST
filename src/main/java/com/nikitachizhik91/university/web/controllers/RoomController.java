@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.RoomManager;
+import com.nikitachizhik91.university.domain.RoomService;
 import com.nikitachizhik91.university.model.Room;
 import com.nikitachizhik91.university.web.WebException;
 
@@ -22,7 +22,7 @@ public class RoomController {
 	private final static Logger log = LogManager.getLogger(RoomController.class.getName());
 
 	@Autowired
-	private RoomManager roomManager;
+	private RoomService roomService;
 
 	@GetMapping(value = "/rooms")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
@@ -33,7 +33,7 @@ public class RoomController {
 
 		try {
 
-			rooms = roomManager.findAll();
+			rooms = roomService.findAll();
 
 		} catch (DomainException e) {
 
@@ -58,7 +58,7 @@ public class RoomController {
 
 		try {
 
-			room = roomManager.findById(roomId);
+			room = roomService.findById(roomId);
 
 		} catch (NumberFormatException e) {
 
@@ -86,7 +86,7 @@ public class RoomController {
 
 		try {
 
-			room = roomManager.create(room);
+			room = roomService.create(room);
 
 		} catch (DomainException e) {
 
@@ -108,7 +108,7 @@ public class RoomController {
 
 		try {
 
-			roomManager.update(room);
+			roomService.update(room);
 
 		} catch (DomainException e) {
 
@@ -133,7 +133,7 @@ public class RoomController {
 
 		try {
 
-			roomManager.delete(roomId);
+			roomService.delete(roomId);
 
 		} catch (NumberFormatException e) {
 

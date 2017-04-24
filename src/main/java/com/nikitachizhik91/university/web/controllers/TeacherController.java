@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.SubjectManager;
-import com.nikitachizhik91.university.domain.TeacherManager;
+import com.nikitachizhik91.university.domain.SubjectService;
+import com.nikitachizhik91.university.domain.TeacherService;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 import com.nikitachizhik91.university.web.WebException;
@@ -25,10 +25,10 @@ public class TeacherController {
 	private final static Logger log = LogManager.getLogger(TeacherController.class.getName());
 
 	@Autowired
-	private TeacherManager teacherManager;
+	private TeacherService teacherService;
 
 	@Autowired
-	private SubjectManager subjectManager;
+	private SubjectService subjectManager;
 
 	@GetMapping(value = "/teachers")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
@@ -40,7 +40,7 @@ public class TeacherController {
 
 		try {
 
-			teachers = teacherManager.findAll();
+			teachers = teacherService.findAll();
 
 			subjects = subjectManager.findAll();
 
@@ -69,7 +69,7 @@ public class TeacherController {
 
 		try {
 
-			teacher = teacherManager.findById(teacherId);
+			teacher = teacherService.findById(teacherId);
 
 			subjects = subjectManager.findAll();
 
@@ -101,7 +101,7 @@ public class TeacherController {
 
 		try {
 
-			teacher = teacherManager.create(teacher);
+			teacher = teacherService.create(teacher);
 
 		} catch (DomainException e) {
 
@@ -124,7 +124,7 @@ public class TeacherController {
 
 		try {
 
-			teacherManager.update(teacher);
+			teacherService.update(teacher);
 
 		} catch (DomainException e) {
 
@@ -150,7 +150,7 @@ public class TeacherController {
 
 		try {
 
-			teacherManager.delete(teacherId);
+			teacherService.delete(teacherId);
 
 		} catch (NumberFormatException e) {
 

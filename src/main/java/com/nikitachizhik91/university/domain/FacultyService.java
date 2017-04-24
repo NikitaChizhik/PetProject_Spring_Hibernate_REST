@@ -6,7 +6,7 @@ import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Faculty;
 import com.nikitachizhik91.university.model.Group;
 
-public interface FacultyManager {
+public interface FacultyService {
 
 	public abstract Faculty create(Faculty faculty) throws DomainException;
 

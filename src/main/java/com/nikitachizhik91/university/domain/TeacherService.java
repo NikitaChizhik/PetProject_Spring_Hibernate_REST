@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nikitachizhik91.university.model.Teacher;
 
-public interface TeacherManager {
+public interface TeacherService {
 
 	public abstract Teacher create(Teacher teacher) throws DomainException;
 

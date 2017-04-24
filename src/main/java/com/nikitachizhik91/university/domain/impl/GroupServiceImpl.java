@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.GroupManager;
+import com.nikitachizhik91.university.domain.GroupService;
 import com.nikitachizhik91.university.model.Group;
 
 @Service
-public class GroupManagerImpl implements GroupManager {
-	private final static Logger log = LogManager.getLogger(GroupManagerImpl.class.getName());
+public class GroupServiceImpl implements GroupService {
+	private final static Logger log = LogManager.getLogger(GroupServiceImpl.class.getName());
 
 	@Autowired
 	private GroupDao groupDao;

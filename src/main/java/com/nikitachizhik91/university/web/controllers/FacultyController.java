@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nikitachizhik91.university.domain.DepartmentManager;
+import com.nikitachizhik91.university.domain.DepartmentService;
 import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.FacultyManager;
-import com.nikitachizhik91.university.domain.GroupManager;
+import com.nikitachizhik91.university.domain.FacultyService;
+import com.nikitachizhik91.university.domain.GroupService;
 import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Faculty;
 import com.nikitachizhik91.university.model.Group;
@@ -28,11 +28,11 @@ public class FacultyController {
 	private final static Logger log = LogManager.getLogger(FacultyController.class.getName());
 
 	@Autowired
-	private FacultyManager facultyManager;
+	private FacultyService facultyService;
 	@Autowired
-	private DepartmentManager departmentManager;
+	private DepartmentService departmentService;
 	@Autowired
-	private GroupManager groupManager;
+	private GroupService groupService;
 
 	@GetMapping(value = "/faculties")
 	public ModelAndView findAll(ModelAndView model) throws WebException {
@@ -43,7 +43,7 @@ public class FacultyController {
 
 		try {
 
-			faculties = facultyManager.findAll();
+			faculties = facultyService.findAll();
 
 		} catch (DomainException e) {
 
@@ -72,11 +72,11 @@ public class FacultyController {
 
 		try {
 
-			faculty = facultyManager.findById(facultyId);
+			faculty = facultyService.findById(facultyId);
 
-			departmentsWithoutFaculty = departmentManager.findDepartmentsWithoutFaculty();
+			departmentsWithoutFaculty = departmentService.findDepartmentsWithoutFaculty();
 
-			groupsWithoutFaculty = groupManager.findGroupsWithoutFaculty();
+			groupsWithoutFaculty = groupService.findGroupsWithoutFaculty();
 
 		} catch (NumberFormatException e) {
 
@@ -106,7 +106,7 @@ public class FacultyController {
 
 		try {
 
-			faculty = facultyManager.create(faculty);
+			faculty = facultyService.create(faculty);
 
 		} catch (DomainException e) {
 
@@ -128,7 +128,7 @@ public class FacultyController {
 
 		try {
 
-			facultyManager.update(faculty);
+			facultyService.update(faculty);
 
 		} catch (DomainException e) {
 
@@ -153,7 +153,7 @@ public class FacultyController {
 
 		try {
 
-			facultyManager.delete(facultyId);
+			facultyService.delete(facultyId);
 
 		} catch (NumberFormatException e) {
 
@@ -179,7 +179,7 @@ public class FacultyController {
 
 		try {
 
-			facultyManager.addDepartment(facultyId, departmentId);
+			facultyService.addDepartment(facultyId, departmentId);
 
 		} catch (DomainException e) {
 
@@ -206,7 +206,7 @@ public class FacultyController {
 
 		try {
 
-			facultyManager.deleteDepartmentFromFaculty(departmentId);
+			facultyService.deleteDepartmentFromFaculty(departmentId);
 
 		} catch (DomainException e) {
 
@@ -233,7 +233,7 @@ public class FacultyController {
 
 		try {
 
-			facultyManager.addGroup(facultyId, groupId);
+			facultyService.addGroup(facultyId, groupId);
 
 		} catch (DomainException e) {
 
@@ -259,7 +259,7 @@ public class FacultyController {
 
 		try {
 
-			facultyManager.deleteGroupFromFaculty(groupId);
+			facultyService.deleteGroupFromFaculty(groupId);
 
 		} catch (DomainException e) {
 
