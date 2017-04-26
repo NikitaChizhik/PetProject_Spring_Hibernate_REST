@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,7 +9,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <title>Group</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
+
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+
 
 </head>
 
@@ -23,8 +27,10 @@
 	<div id="container">
 		<h3>Group</h3>
 
-		<form action="group" method="post">
-			<input type="hidden" name="groupId" value="${group.id}" />
+		<form:form action="update" method="post" modelAttribute="group">
+
+			<form:hidden path="id" />
+
 
 			<table>
 				<tr>
@@ -38,18 +44,18 @@
 				<tr>
 					<td>${group.id}</td>
 					<td>${group.name}</td>
-					<td><input type="text" name="name" value="${group.name}" /></td>
-					<td><input type="submit" value="Save" class="button" />
-					<td>
+
+					<td><form:input path="name" /></td>
+					<td><input type="submit" value="Save" class="button" /></td>
 				</tr>
 			</table>
-		</form>
+		</form:form>
 
 		<h3>Students</h3>
 
 		<c:if test="${not empty students}">
 
-			<form action="group/addStudent" method="post">
+			<form action="addStudent" method="post">
 				<select name="studentId" class="button">
 
 					<c:forEach var="student" items="${students}">
@@ -69,14 +75,10 @@
 
 			<c:forEach var="student" items="${group.students}">
 
-				<c:url var="studentLink" value="student">
-					<c:param name="studentId" value="${student.id}" />
-				</c:url>
-
 
 				<tr>
-					<td><a href="${studentLink}">${student.name}</a></td>
-					<td><form action="group/deleteStudent" method="post">
+					<td><a href="../student/${student.id}">${student.name}</a></td>
+					<td><form action="deleteStudent" method="post">
 
 							<input type="hidden" name="groupId" value="${group.id}" /> <input
 								type="hidden" name="studentId" value="${student.id}" /> <input
@@ -94,7 +96,7 @@
 	</div>
 
 	<p>
-		<a href="groups">Back to list of groups</a>
+		<a href="../groups">Back to list of groups</a>
 	</p>
 </body>
 

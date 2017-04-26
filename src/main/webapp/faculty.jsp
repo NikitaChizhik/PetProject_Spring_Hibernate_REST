@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -7,8 +9,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+
+
 <title>Faculty</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -25,8 +29,9 @@
 		<h3>Faculty</h3>
 
 
-		<form action="faculty" method="post">
-			<input type="hidden" name="facultyId" value="${faculty.id}" />
+		<form:form action="update" method="post" modelAttribute="faculty">
+
+			<form:hidden path="id" />
 
 			<table>
 				<tr>
@@ -40,13 +45,13 @@
 				<tr>
 					<td>${faculty.id}</td>
 					<td>${faculty.name}</td>
-					<td><input type="text" name="name" value="${faculty.name}" /></td>
+					<td><form:input path="name" /></td>
 					<td><input type="submit" value="Save" class="button" />
 					<td>
 				</tr>
 
 			</table>
-		</form>
+		</form:form>
 
 
 
@@ -58,7 +63,7 @@
 
 		<c:if test="${not empty departmentsWithoutFaculty}">
 
-			<form action="faculty/addDepartment" method="post">
+			<form action="addDepartment" method="post">
 
 
 				<select name="departmentId" class="button">
@@ -82,15 +87,10 @@
 
 			<c:forEach var="department" items="${faculty.departments}">
 
-				<c:url var="departmentLink" value="department">
-					<c:param name="departmentId" value="${department.id}" />
-				</c:url>
-
-
 
 				<tr>
-					<td><a href="${departmentLink}">${department.name}</a></td>
-					<td><form action="faculty/deleteDepartment" method="post">
+					<td><a href="../department/${department.id}">${department.name}</a></td>
+					<td><form action="deleteDepartment" method="post">
 
 							<input type="hidden" name="facultyId" value="${faculty.id}" /> <input
 								type="hidden" name="departmentId" value="${department.id}" /> <input
@@ -111,10 +111,11 @@
 
 
 		<c:if test="${not empty groupsWithoutFaculty}">
-			<form action="faculty/addGroup" method="post">
+			<form action="addGroup" method="post">
 
 
 				<select name="groupId" class="button">
+
 					<c:forEach var="group" items="${groupsWithoutFaculty}">
 						<option value="${group.id}">${group.name}</option>
 					</c:forEach>
@@ -135,18 +136,11 @@
 
 			<c:forEach var="group" items="${faculty.groups}">
 
-				<c:url var="groupLink" value="group">
-					<c:param name="groupId" value="${group.id}" />
-				</c:url>
-
-				<c:url var="deleteGroupLink" value="facultyGroup">
-					<c:param name="groupId" value="${group.id}" />
-					<c:param name="facultyId" value="${faculty.id}" />
-				</c:url>
 
 				<tr>
-					<td><a href="${groupLink}">${group.name}</a></td>
-					<td><form action="faculty/deleteGroup" method="post">
+					<td><a href="../group/${group.id}">${group.name}</a></td>
+
+					<td><form action="deleteGroup" method="post">
 
 							<input type="hidden" name="facultyId" value="${faculty.id}" /> <input
 								type="hidden" name="groupId" value="${group.id}" /> <input
@@ -161,7 +155,7 @@
 	</div>
 
 	<p>
-		<a href="faculties">Back to list of all departments</a>
+		<a href="../faculties">Back to list of all departments</a>
 	</p>
 
 </body>

@@ -8,27 +8,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.RoomDao;
 import com.nikitachizhik91.university.model.Room;
 
+@Repository
 public class RoomDaoImpl implements RoomDao {
 
 	private final static Logger log = LogManager.getLogger(RoomDaoImpl.class.getName());
-	private Connector connector;
+	
+	@Autowired
+	private DataSource dataSource;
 	private static final String INSERT_ROOM = "insert into rooms (number) values(?)";
 	private static final String FIND_ROOM_BY_ID = "select * from rooms where id=?";
 	private static final String FIND_ALL_ROOMS = "select * from rooms";
 	private static final String UPDATE_ROOM = "update rooms set number=? where id =?";
 	private static final String DELETE_ROOM = "delete from rooms where id =?";
-
-	public RoomDaoImpl() {
-		connector = new Connector();
-	}
 
 	public Room create(Room roomArg) throws DaoException {
 		log.trace("Started create() method.");
@@ -36,7 +38,7 @@ public class RoomDaoImpl implements RoomDao {
 
 		log.trace("Getting Conncetion and creating prepared statement.");
 
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_ROOM,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -70,7 +72,7 @@ public class RoomDaoImpl implements RoomDao {
 		Room room = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ROOM_BY_ID)) {
 
 			statement.setInt(1, id);
@@ -103,7 +105,7 @@ public class RoomDaoImpl implements RoomDao {
 		List<Room> rooms = new ArrayList<Room>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_ROOMS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -131,7 +133,7 @@ public class RoomDaoImpl implements RoomDao {
 		Room room = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_ROOM,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -165,7 +167,7 @@ public class RoomDaoImpl implements RoomDao {
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_ROOM);) {
 
 			statement.setInt(1, id);

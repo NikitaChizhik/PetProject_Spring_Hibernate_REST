@@ -7,9 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
 <title>TeacherForMonth</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
 
@@ -30,7 +29,7 @@
 
 
 
-			<form action="displayTeacherTimetableForMonth" method="get">
+			<form action="displayTeacherTimetableForMonth" method="post">
 				<table>
 
 					<tr>
@@ -97,7 +96,7 @@
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 
 </body>

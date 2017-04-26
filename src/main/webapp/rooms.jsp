@@ -1,14 +1,21 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+
+
+
 <title>allRooms</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
+
+
 </head>
 
 
@@ -24,11 +31,15 @@
 
 		<div id="content">
 
-			<form action="rooms" method="post">
 
-				<input type="text" name="number" /> <input type="submit"
-					value="Add Room" class="button" />
+
+			<form action="room/create" method="post">
+
+				<input type="text" name="number" />
+				<input type="submit" value="Add Room" class="button" />
 			</form>
+
+
 
 			<table>
 
@@ -39,21 +50,18 @@
 
 				<c:forEach var="room" items="${rooms}">
 
-					<c:url var="roomLink" value="room">
-						<c:param name="roomId" value="${room.id}" />
-					</c:url>
-
-					
-
 					<tr>
-						<td><a href="${roomLink}">${room.number}</a></td>
+						<td>
+							<a href="room/${room.id}">${room.number}</a>
+						</td>
 
-						<td><form action="roomDelete" method="post">
+						<td>
+							<form action="room/delete/${room.id} " method="post">
 
-								<input type="hidden" name="roomId" value="${room.id}" /> <input
-									type="submit" value="Delete" class="button"
+								<input type="submit" value="Delete" class="button"
 									onclick="if (!(confirm('Are you sure you want to delete this room?'))) return false" />
-							</form></td>
+							</form>
+						</td>
 					</tr>
 
 				</c:forEach>
@@ -64,7 +72,7 @@
 
 	</div>
 	<p>
-		<a href="index.html">Back to University</a>
+		<a href="index.jsp">Back to University</a>
 	</p>
 
 </body>

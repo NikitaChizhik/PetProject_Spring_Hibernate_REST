@@ -1,6 +1,7 @@
 package com.nikitachizhik91.university.model;
 
 public class Subject {
+
 	private int id;
 	private String name;
 

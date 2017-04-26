@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.impl.LessonDaoImpl;
+import com.nikitachizhik91.university.dao.LessonDao;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
@@ -16,21 +18,19 @@ import com.nikitachizhik91.university.model.Teacher;
  * @author nikita
  *
  */
-
+@Service
 public class Timetable {
-	private final static Logger log = LogManager.getLogger(Timetable.class.getName());
-	private LessonDaoImpl lessonDaoImpl;
 
-	public Timetable() {
-		lessonDaoImpl = new LessonDaoImpl();
-	}
+	private final static Logger log = LogManager.getLogger(Timetable.class.getName());
+	@Autowired
+	private LessonDao lessonDao;
 
 	public void addLesson(Lesson lesson) throws DomainException {
 		log.trace("Started addLesson().");
 
 		try {
 			log.trace("Saving the lesson.");
-			lessonDaoImpl.create(lesson);
+			lessonDao.create(lesson);
 		} catch (DaoException e) {
 			log.error("Cannot add lesson." + lesson, e);
 			throw new DomainException("Cannot add lesson.", e);
@@ -43,7 +43,7 @@ public class Timetable {
 		log.trace("Started deleteLesson().");
 		try {
 			log.trace("Deleting the lesson.");
-			lessonDaoImpl.delete(lesson.getId());
+			lessonDao.delete(lesson.getId());
 		} catch (DaoException e) {
 			log.error("Cannot delete lesson." + lesson, e);
 			throw new DomainException("Cannot delete lesson.", e);
@@ -63,7 +63,7 @@ public class Timetable {
 
 		try {
 			log.trace("Finding required lessons.");
-			lessons = lessonDaoImpl.getTeacherTimetableForDay(teacher, date);
+			lessons = lessonDao.getTeacherTimetableForDay(teacher, date);
 		} catch (DaoException e) {
 			log.error("Cannot getTeacherTimetableForDay() ffor Teacher :" + teacher + " and Date :" + date, e);
 			throw new DomainException(
@@ -86,7 +86,7 @@ public class Timetable {
 
 		try {
 			log.trace("Finding required lessons.");
-			lessons = lessonDaoImpl.getTeacherTimetableForMonth(teacher, date);
+			lessons = lessonDao.getTeacherTimetableForMonth(teacher, date);
 		} catch (DaoException e) {
 			log.error("Cannot getTeacherTimetableForMonth() for Teacher :" + teacher + " and Date :" + date, e);
 			throw new DomainException(
@@ -111,7 +111,7 @@ public class Timetable {
 
 		try {
 			log.trace("Finding required lessons.");
-			lessons = lessonDaoImpl.getStudentTimetableForDay(student, date);
+			lessons = lessonDao.getStudentTimetableForDay(student, date);
 		} catch (DaoException e) {
 			log.error("Cannot getStudentTimetableForDay() for Student :" + student + " and Date :" + date, e);
 			throw new DomainException(
@@ -135,7 +135,7 @@ public class Timetable {
 
 		try {
 			log.trace("Finding required lessons.");
-			lessons = lessonDaoImpl.getStudentTimetableForMonth(student, date);
+			lessons = lessonDao.getStudentTimetableForMonth(student, date);
 		} catch (DaoException e) {
 			log.error("Cannot getStudentTimetableFoMonth() for Student :" + student + " and Date :" + date, e);
 			throw new DomainException(

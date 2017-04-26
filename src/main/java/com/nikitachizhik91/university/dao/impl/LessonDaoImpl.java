@@ -12,10 +12,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.DateConverter;
 import com.nikitachizhik91.university.dao.GroupDao;
@@ -27,10 +30,12 @@ import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.model.Teacher;
 
+@Repository
 public class LessonDaoImpl implements LessonDao {
-	
+
 	private final static Logger log = LogManager.getLogger(LessonDaoImpl.class.getName());
-	private Connector connector;
+	@Autowired
+	private DataSource dataSource;
 	private static final String INSERT_LESSON = "insert into lessons (number,date,subject_id,teacher_id,group_id,room_id) values(?,?,?,?,?,?)";
 	private static final String FIND_LESSON_BY_ID = "select * from lessons where id=?";
 	private static final String FIND_ALL_LESSONS = "select * from lessons";
@@ -41,21 +46,14 @@ public class LessonDaoImpl implements LessonDao {
 	private static final String GET_TEACHER_TIMETABLE_FOR_MONTH = "select * from lessons where teacher_id=? and date between ? and ?";
 	private static final String GET_STUDENT_TIMETABLE_FOR_DAY = "select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?";
 	private static final String GET_STUDENT_TIMETABLE_FOR_MONTH = "select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?";
-	
+	@Autowired
 	private GroupDao groupDao;
+	@Autowired
 	private RoomDao roomDao;
+	@Autowired
 	private SubjectDao subjectDao;
+	@Autowired
 	private TeacherDao teacherDao;
-
-	public LessonDaoImpl() {
-		
-		connector = new Connector();
-
-		groupDao = new GroupDaoImpl();
-		roomDao = new RoomDaoImpl();
-		subjectDao = new SubjectDaoImpl();
-		teacherDao = new TeacherDaoImpl();
-	}
 
 	public Lesson create(Lesson lessonArg) throws DaoException {
 		log.trace("Started create() method.");
@@ -63,7 +61,7 @@ public class LessonDaoImpl implements LessonDao {
 		Lesson lesson = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_LESSON,
 						Statement.RETURN_GENERATED_KEYS)) {
 
@@ -115,7 +113,7 @@ public class LessonDaoImpl implements LessonDao {
 		Lesson lesson = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_LESSON_BY_ID)) {
 
 			statement.setInt(1, id);
@@ -157,7 +155,7 @@ public class LessonDaoImpl implements LessonDao {
 		List<Lesson> lessons = new ArrayList<Lesson>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_LESSONS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -197,7 +195,7 @@ public class LessonDaoImpl implements LessonDao {
 		Lesson lesson = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_LESSON,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -246,7 +244,7 @@ public class LessonDaoImpl implements LessonDao {
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_LESSON);) {
 
 			statement.setInt(1, id);
@@ -269,7 +267,7 @@ public class LessonDaoImpl implements LessonDao {
 		List<Lesson> lessons = new ArrayList<Lesson>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(GET_TEACHER_TIMETABLE_FOR_DAY);) {
 
 			statement.setInt(1, teacher.getId());
@@ -326,7 +324,7 @@ public class LessonDaoImpl implements LessonDao {
 		List<Lesson> lessons = new ArrayList<Lesson>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(GET_TEACHER_TIMETABLE_FOR_MONTH);) {
 
 			statement.setInt(1, teacher.getId());
@@ -384,7 +382,7 @@ public class LessonDaoImpl implements LessonDao {
 		List<Lesson> lessons = new ArrayList<Lesson>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(GET_STUDENT_TIMETABLE_FOR_DAY);) {
 
 			statement.setInt(1, student.getId());
@@ -442,7 +440,7 @@ public class LessonDaoImpl implements LessonDao {
 		List<Lesson> lessons = new ArrayList<Lesson>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(GET_STUDENT_TIMETABLE_FOR_MONTH);) {
 
 			statement.setInt(1, student.getId());
@@ -493,5 +491,4 @@ public class LessonDaoImpl implements LessonDao {
 
 		return lessons;
 	}
-
 }

@@ -8,37 +8,40 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.nikitachizhik91.university.dao.Connector;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.model.Teacher;
 
+@Repository
 public class TeacherDaoImpl implements TeacherDao {
+
 	private final static Logger log = LogManager.getLogger(TeacherDaoImpl.class.getName());
-	private Connector connector;
+
+	@Autowired
+	private DataSource dataSource;
 	private static final String INSERT_TEACHER = "insert into teachers (name,subject_id) values(?,?)";
 	private static final String FIND_TEACHER_BY_ID = "select * from teachers where id=?";
 	private static final String FIND_ALL_TEACHERS = "select * from teachers";
 	private static final String UPDATE_TEACHER = "update teachers set name=?,subject_id=? where id =?";
 	private static final String DELETE_TEACHER = "delete from teachers where id =?";
+	@Autowired
 	private SubjectDao subjectDao;
 	private static final String FIND_TEACHERS_WITHOUT_DEPARTMENT = "SELECT id FROM teachers t WHERE NOT EXISTS(SELECT NULL FROM departments_teachers dt WHERE dt.teacher_id = t.id)";
-
-	public TeacherDaoImpl() {
-		connector = new Connector();
-		subjectDao = new SubjectDaoImpl();
-	}
 
 	public Teacher create(Teacher teacherArg) throws DaoException {
 		log.trace("Started create() method.");
 		Teacher teacher = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -75,7 +78,7 @@ public class TeacherDaoImpl implements TeacherDao {
 		Teacher teacher = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_TEACHER_BY_ID)) {
 
 			statement.setInt(1, id);
@@ -87,6 +90,7 @@ public class TeacherDaoImpl implements TeacherDao {
 				log.trace("Got the result set.");
 
 				if (resultSet.next()) {
+					
 					teacher = new Teacher();
 					teacher.setId(resultSet.getInt("id"));
 					teacher.setName(resultSet.getString("name"));
@@ -108,7 +112,7 @@ public class TeacherDaoImpl implements TeacherDao {
 		List<Teacher> teachers = new ArrayList<Teacher>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_ALL_TEACHERS);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -138,7 +142,7 @@ public class TeacherDaoImpl implements TeacherDao {
 		Teacher teacher = null;
 
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(UPDATE_TEACHER,
 						Statement.RETURN_GENERATED_KEYS);) {
 
@@ -174,7 +178,7 @@ public class TeacherDaoImpl implements TeacherDao {
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
 		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(DELETE_TEACHER);) {
 
 			statement.setInt(1, id);
@@ -197,7 +201,7 @@ public class TeacherDaoImpl implements TeacherDao {
 		List<Teacher> teachers = new ArrayList<Teacher>();
 
 		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = connector.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(FIND_TEACHERS_WITHOUT_DEPARTMENT);
 				ResultSet resultSet = statement.executeQuery();) {
 
@@ -209,7 +213,7 @@ public class TeacherDaoImpl implements TeacherDao {
 				Teacher teacher = findById(resultSet.getInt("id"));
 				teachers.add(teacher);
 			}
-			
+
 		} catch (SQLException e) {
 			log.error("Cannot find all teachers who are without department.", e);
 			throw new DaoException("Cannot find all teachers who are without department.", e);

@@ -1,14 +1,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<link href="<c:url value="/resources/style.css" />" rel="stylesheet">
+
+
 <title>Department</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -25,8 +28,10 @@
 		<h3>Department</h3>
 
 
-		<form action="department" method="post">
-			<input type="hidden" name="departmentId" value="${department.id}" />
+		<form:form action="update" method="post" modelAttribute="department">
+
+			<form:hidden path="id" />
+
 
 			<table>
 				<tr>
@@ -40,13 +45,13 @@
 				<tr>
 					<td>${department.id}</td>
 					<td>${department.name}</td>
-					<td><input type="text" name="name" value="${department.name}" /></td>
+					<td><form:input path="name" /></td>
 					<td><input type="submit" value="Save" class="button" />
 					<td>
 				</tr>
 
 			</table>
-		</form>
+		</form:form>
 
 
 
@@ -58,7 +63,7 @@
 
 		<c:if test="${not empty subjectsWithoutDepartment}">
 
-			<form action="department/addSubject" method="post">
+			<form action="addSubject" method="post">
 
 
 				<select name="subjectId" class="button">
@@ -82,15 +87,11 @@
 
 			<c:forEach var="subject" items="${department.subjects}">
 
-				<c:url var="subjectLink" value="subject">
-					<c:param name="subjectId" value="${subject.id}" />
-				</c:url>
-
 
 				<tr>
-					<td><a href="${subjectLink}">${subject.name}</a></td>
+					<td><a href="../subject/${subject.id}">${subject.name}</a></td>
 
-					<td><form action="department/deleteSubject" method="post">
+					<td><form action="deleteSubject" method="post">
 
 							<input type="hidden" name="departmentId" value="${department.id}" />
 							<input type="hidden" name="subjectId" value="${subject.id}" /> <input
@@ -111,7 +112,7 @@
 
 
 		<c:if test="${not empty teachersWithoutDepartment}">
-			<form action="department/addTeacher" method="post">
+			<form action="addTeacher" method="post">
 
 
 				<select name="teacherId" class="button">
@@ -136,16 +137,11 @@
 
 			<c:forEach var="teacher" items="${department.teachers}">
 
-				<c:url var="teacherLink" value="teacher">
-					<c:param name="teacherId" value="${teacher.id}" />
-				</c:url>
-
-
 
 				<tr>
-					<td><a href="${teacherLink}">${teacher.name}</a></td>
+					<td><a href="../teacher/${teacher.id}">${teacher.name}</a></td>
 
-					<td><form action="department/deleteTeacher" method="post">
+					<td><form action="deleteTeacher" method="post">
 
 							<input type="hidden" name="departmentId" value="${department.id}" />
 							<input type="hidden" name="teacherId" value="${teacher.id}" /> <input
@@ -161,7 +157,7 @@
 	</div>
 
 	<p>
-		<a href="departments">Back to list of all departments</a>
+		<a href="../departments">Back to list of all departments</a>
 	</p>
 
 </body>
