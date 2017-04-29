@@ -56,9 +56,6 @@
 
 
 
-
-
-
 		<h3>Departments</h3>
 
 		<c:if test="${not empty departmentsWithoutFaculty}">
@@ -90,6 +87,7 @@
 
 				<tr>
 					<td><a href="../department/${department.id}">${department.name}</a></td>
+					
 					<td><form action="deleteDepartment" method="post">
 
 							<input type="hidden" name="facultyId" value="${faculty.id}" /> <input
