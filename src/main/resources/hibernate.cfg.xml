@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+  "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.enable_lazy_load_no_trans">true</property>
+		<property name="hibernate.connection.datasource">java:comp/env/jdbc/university2</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+		<property name="show_sql">true</property>
+
+		<!-- <mapping class="ua.foxminded.telyatko.university.model.CellSchedule" 
+			/> <mapping class="ua.foxminded.telyatko.university.model.Department" /> 
+			<mapping class="ua.foxminded.telyatko.university.model.Group" /> <mapping 
+			class="ua.foxminded.telyatko.university.model.Lecturer" /> <mapping class="ua.foxminded.telyatko.university.model.Student" 
+			/> <mapping class="ua.foxminded.telyatko.university.model.Subject" /> <mapping 
+			class="ua.foxminded.telyatko.university.model.Faculty" /> -->
+		<mapping class="com.nikitachizhik91.university.model.Room" />
+
+
+	</session-factory>
+</hibernate-configuration>

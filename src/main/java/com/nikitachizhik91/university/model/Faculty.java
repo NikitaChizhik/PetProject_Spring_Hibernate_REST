@@ -3,10 +3,24 @@ package com.nikitachizhik91.university.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "faculties")
 public class Faculty {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column
 	private int id;
+	@Column
 	private String name;
+
 	private List<Department> departments;
 	private List<Group> groups;
 

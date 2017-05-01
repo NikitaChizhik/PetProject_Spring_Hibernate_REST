@@ -2,13 +2,40 @@ package com.nikitachizhik91.university.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "lessons")
 public class Lesson {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column
 	private int id;
+
+	@Column
 	private int number;
+
+	@OneToOne
+	@JoinColumn(name = "subject_id")
 	private Subject subject;
+	@OneToOne
+	@JoinColumn(name = "group_id")
 	private Group group;
+	@OneToOne
+	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
+	@OneToOne
+	@JoinColumn(name = "room_id")
 	private Room room;
+	@Column
 	private Date date;
 
 	public int getNumber() {

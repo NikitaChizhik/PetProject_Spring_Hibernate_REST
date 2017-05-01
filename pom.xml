@@ -19,11 +19,22 @@
 		<javax.servlet.jsp>2.3.1</javax.servlet.jsp>
 		<jstl.version>1.2</jstl.version>
 		<spring.version>4.3.6.RELEASE</spring.version>
+		<hibernate.version>5.1.0.Final</hibernate.version>
+
 	</properties>
 
 
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+
+
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>

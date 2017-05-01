@@ -1,8 +1,22 @@
 package com.nikitachizhik91.university.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "rooms")
 public class Room {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
+
+	@Column(name = "number")
 	private String number;
 
 	public String getNumber() {
