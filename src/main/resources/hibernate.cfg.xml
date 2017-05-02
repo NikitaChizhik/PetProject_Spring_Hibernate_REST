@@ -10,13 +10,10 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 		<property name="show_sql">true</property>
 
-		<!-- <mapping class="ua.foxminded.telyatko.university.model.CellSchedule" 
-			/> <mapping class="ua.foxminded.telyatko.university.model.Department" /> 
-			<mapping class="ua.foxminded.telyatko.university.model.Group" /> <mapping 
-			class="ua.foxminded.telyatko.university.model.Lecturer" /> <mapping class="ua.foxminded.telyatko.university.model.Student" 
-			/> <mapping class="ua.foxminded.telyatko.university.model.Subject" /> <mapping 
-			class="ua.foxminded.telyatko.university.model.Faculty" /> -->
+
+
 		<mapping class="com.nikitachizhik91.university.model.Room" />
+		<mapping class="com.nikitachizhik91.university.model.Student" />
 
 
 	</session-factory>

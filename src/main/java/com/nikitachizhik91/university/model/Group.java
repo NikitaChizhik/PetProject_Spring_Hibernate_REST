@@ -5,11 +5,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,8 +22,12 @@ public class Group {
 	@Column
 	private String name;
 
-	//@OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+	// @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	// @JoinTable(name = "groups_students", joinColumns = { @JoinColumn(name =
+	// "group_id") }, inverseJoinColumns = {
+	// @JoinColumn(name = "student_id") })
 	private List<Student> students;
+	//
 
 	public Group() {
 		students = new ArrayList<Student>();

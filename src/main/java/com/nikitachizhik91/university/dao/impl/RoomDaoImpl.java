@@ -21,21 +21,21 @@ public class RoomDaoImpl implements RoomDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public Room create(Room roomArg) throws DaoException {
+	public Room create(Room room) throws DaoException {
 
 		log.trace("Started create() method.");
 
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
-			session.save(roomArg);
+			Integer id = (Integer) session.save(room);
 			session.getTransaction().commit();
+			room.setId(id);
 		}
 
-		log.info("Created a Room :" + roomArg);
+		log.info("Created a Room :" + room);
 		log.trace("Finished create() method.");
 
-		return roomArg;
-
+		return room;
 	}
 
 	public Room findById(int id) throws DaoException {
@@ -62,13 +62,12 @@ public class RoomDaoImpl implements RoomDao {
 
 		log.info("Found all rooms :");
 		log.trace("Finished findAll() method.");
+
 		return rooms;
 	}
 
-	public Room update(Room roomArg) throws DaoException {
+	public Room update(Room room) throws DaoException {
 		log.trace("Started update() method.");
-
-		Room room = null;
 
 		try (Session session = sessionFactory.openSession()) {
 
@@ -77,14 +76,14 @@ public class RoomDaoImpl implements RoomDao {
 			session.getTransaction().commit();
 		}
 
-		log.info("Updated Room :" + roomArg);
+		log.info("Updated Room :" + room);
 		log.trace("Finished update() method.");
+
 		return room;
 	}
 
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
 
 		try (Session session = sessionFactory.openSession()) {
 
