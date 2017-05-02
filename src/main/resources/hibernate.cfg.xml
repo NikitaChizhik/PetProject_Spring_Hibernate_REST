@@ -16,6 +16,7 @@
 		<mapping class="com.nikitachizhik91.university.model.Room" />
 		<mapping class="com.nikitachizhik91.university.model.Student" />
 		<mapping class="com.nikitachizhik91.university.model.Subject" />
+		<mapping class="com.nikitachizhik91.university.model.Teacher" />
 
 
 	</session-factory>

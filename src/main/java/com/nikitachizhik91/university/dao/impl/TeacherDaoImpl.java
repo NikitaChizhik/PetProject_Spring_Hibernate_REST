@@ -12,12 +12,15 @@ import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.dao.TeacherDao;
+import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
 @Repository
@@ -26,49 +29,26 @@ public class TeacherDaoImpl implements TeacherDao {
 	private final static Logger log = LogManager.getLogger(TeacherDaoImpl.class.getName());
 
 	@Autowired
-	private DataSource dataSource;
-	private static final String INSERT_TEACHER = "insert into teachers (name,subject_id) values(?,?)";
-	private static final String FIND_TEACHER_BY_ID = "select * from teachers where id=?";
-	private static final String FIND_ALL_TEACHERS = "select * from teachers";
-	private static final String UPDATE_TEACHER = "update teachers set name=?,subject_id=? where id =?";
-	private static final String DELETE_TEACHER = "delete from teachers where id =?";
-	@Autowired
 	private SubjectDao subjectDao;
 	private static final String FIND_TEACHERS_WITHOUT_DEPARTMENT = "SELECT id FROM teachers t WHERE NOT EXISTS(SELECT NULL FROM departments_teachers dt WHERE dt.teacher_id = t.id)";
 
-	public Teacher create(Teacher teacherArg) throws DaoException {
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public Teacher create(Teacher teacher) throws DaoException {
+
 		log.trace("Started create() method.");
-		Teacher teacher = null;
 
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER,
-						Statement.RETURN_GENERATED_KEYS);) {
-
-			statement.setString(1, teacherArg.getName());
-			statement.setInt(2, teacherArg.getSubject().getId());
-
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-			log.trace("Getting the result set.");
-			try (ResultSet resultSet = statement.getGeneratedKeys();) {
-				log.trace("Got the result set.");
-				while (resultSet.next()) {
-					teacher = new Teacher();
-					teacher.setId(resultSet.getInt("id"));
-					teacher.setName(resultSet.getString("name"));
-					teacher.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
-				}
-			}
-		} catch (SQLException e) {
-			log.error("Cannot create Teacher :" + teacherArg, e);
-			throw new DaoException("Cannot create Teacher :", e);
-
+		try (Session session = sessionFactory.openSession()) {
+			session.beginTransaction();
+			Integer id = (Integer) session.save(teacher);
+			session.getTransaction().commit();
+			teacher.setId(id);
 		}
-		log.info("Created a Teacher :" + teacherArg);
+
+		log.info("Created a Teacher :" + teacher);
 		log.trace("Finished create() method.");
+
 		return teacher;
 	}
 
@@ -77,148 +57,82 @@ public class TeacherDaoImpl implements TeacherDao {
 
 		Teacher teacher = null;
 
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(FIND_TEACHER_BY_ID)) {
-
-			statement.setInt(1, id);
-
-			log.trace("Statement :" + statement + " is received.");
-			log.trace("Getting the result set.");
-			try (ResultSet resultSet = statement.executeQuery()) {
-				log.debug("Executed query :" + statement);
-				log.trace("Got the result set.");
-
-				if (resultSet.next()) {
-					
-					teacher = new Teacher();
-					teacher.setId(resultSet.getInt("id"));
-					teacher.setName(resultSet.getString("name"));
-					teacher.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
-				}
-			}
-		} catch (SQLException e) {
-			log.error("Cannot find Teacher with id=" + id, e);
-			throw new DaoException("Cannot find Teacher with id=" + id, e);
+		try (Session session = sessionFactory.openSession()) {
+			teacher = session.get(Teacher.class, id);
 		}
+
 		log.info("Found the Teacher :" + teacher);
 		log.trace("Finished findById() method.");
+
 		return teacher;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Teacher> findAll() throws DaoException {
 		log.trace("Started findAll() method.");
 
-		List<Teacher> teachers = new ArrayList<Teacher>();
-
-		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(FIND_ALL_TEACHERS);
-				ResultSet resultSet = statement.executeQuery();) {
-
-			log.debug("Executed query :" + statement);
-			log.trace("Got the result set.");
-
-			while (resultSet.next()) {
-				Teacher teacher = new Teacher();
-				teacher.setId(resultSet.getInt("id"));
-				teacher.setName(resultSet.getString("name"));
-				teacher.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
-
-				teachers.add(teacher);
-			}
-		} catch (SQLException e) {
-			log.error("Cannot find all teachers.", e);
-			throw new DaoException("Cannot find all teachers.", e);
+		List<Teacher> teachers = null;
+		try (Session session = sessionFactory.openSession()) {
+			teachers = (List<Teacher>) session.createQuery("from Teacher").list();
 		}
-		log.info("Found all teachers :");
+
+		log.info("Found all Teachers :");
 		log.trace("Finished findAll() method.");
+
 		return teachers;
 	}
 
-	public Teacher update(Teacher teacherArg) throws DaoException {
+	public Teacher update(Teacher teacher) throws DaoException {
 		log.trace("Started update() method.");
 
-		Teacher teacher = null;
+		try (Session session = sessionFactory.openSession()) {
 
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(UPDATE_TEACHER,
-						Statement.RETURN_GENERATED_KEYS);) {
-
-			statement.setString(1, teacherArg.getName());
-			statement.setInt(2, teacherArg.getSubject().getId());
-			statement.setInt(3, teacherArg.getId());
-
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-			log.trace("Getting the result set.");
-			try (ResultSet resultSet = statement.getGeneratedKeys();) {
-				log.trace("Got the result set.");
-
-				while (resultSet.next()) {
-					teacher = new Teacher();
-					teacher.setId(resultSet.getInt("id"));
-					teacher.setName(resultSet.getString("name"));
-					teacher.setSubject(subjectDao.findById(resultSet.getInt("subject_id")));
-				}
-			}
-
-		} catch (SQLException e) {
-			log.error("Cannot update Teacher :" + teacherArg, e);
-			throw new DaoException("Cannot update Teacher :" + teacherArg, e);
+			session.beginTransaction();
+			session.update(teacher);
+			session.getTransaction().commit();
 		}
-		log.info("Updated Lesson :" + teacherArg);
+
+		log.info("Updated Teacher :" + teacher);
 		log.trace("Finished update() method.");
+
 		return teacher;
 	}
 
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_TEACHER);) {
 
-			statement.setInt(1, id);
+		try (Session session = sessionFactory.openSession()) {
 
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-		} catch (SQLException e) {
-			log.error("Cannot delete Teacher with id=" + id, e);
-			throw new DaoException("Cannot delete Teacher with id=" + id, e);
+			session.beginTransaction();
+			session.delete(session.get(Teacher.class, id));
+			session.getTransaction().commit();
 		}
+
 		log.info("Deleted Teacher with id=" + id);
 		log.trace("Finished delete() method.");
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Teacher> findTeachersWithoutDepartment() throws DaoException {
 		log.trace("Started findTeachersWithoutDepartment() method.");
 
-		List<Teacher> teachers = new ArrayList<Teacher>();
+		List<Teacher> teachers = new ArrayList<>();
+		List<Integer> ids;
 
-		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(FIND_TEACHERS_WITHOUT_DEPARTMENT);
-				ResultSet resultSet = statement.executeQuery();) {
+		try (Session session = sessionFactory.openSession()) {
 
-			log.debug("Executed query :" + statement);
-			log.trace("Got the result set.");
-
-			while (resultSet.next()) {
-
-				Teacher teacher = findById(resultSet.getInt("id"));
-				teachers.add(teacher);
-			}
-
-		} catch (SQLException e) {
-			log.error("Cannot find all teachers who are without department.", e);
-			throw new DaoException("Cannot find all teachers who are without department.", e);
+			ids = (List<Integer>) session
+					.createSQLQuery(
+							"SELECT id FROM teachers t WHERE NOT EXISTS(SELECT NULL FROM departments_teachers dt WHERE dt.teacher_id = t.id)")
+					.list();
 		}
-		log.info("Found all teachers who are without department.");
+
+		for (Integer id : ids) {
+			Teacher teacher = findById(id);
+			teachers.add(teacher);
+		}
+
+		log.info("Found all Teachers which are without department.");
 		log.trace("Finished findTeachersWithoutDepartment() method.");
 
 		return teachers;
