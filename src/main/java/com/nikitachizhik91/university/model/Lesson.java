@@ -26,15 +26,19 @@ public class Lesson {
 	@OneToOne
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
+	
 	@OneToOne
 	@JoinColumn(name = "group_id")
 	private Group group;
+	
 	@OneToOne
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
+	
 	@OneToOne
 	@JoinColumn(name = "room_id")
 	private Room room;
+	
 	@Column
 	private Date date;
 
@@ -154,5 +158,4 @@ public class Lesson {
 	public String toString() {
 		return "Lesson [id=" + id + ", number=" + number + "]";
 	}
-
 }

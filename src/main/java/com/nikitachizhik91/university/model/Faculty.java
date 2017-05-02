@@ -3,11 +3,16 @@ package com.nikitachizhik91.university.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,7 +26,14 @@ public class Faculty {
 	@Column
 	private String name;
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "faculties_departments", joinColumns = {
+			@JoinColumn(name = "faculty_id") }, inverseJoinColumns = { @JoinColumn(name = "department_id") })
 	private List<Department> departments;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "faculties_groups", joinColumns = { @JoinColumn(name = "faculty_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "group_id") })
 	private List<Group> groups;
 
 	public Faculty() {

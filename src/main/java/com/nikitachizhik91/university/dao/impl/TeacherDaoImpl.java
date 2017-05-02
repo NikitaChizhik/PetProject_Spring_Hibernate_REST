@@ -1,14 +1,7 @@
 package com.nikitachizhik91.university.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,19 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nikitachizhik91.university.dao.DaoException;
-import com.nikitachizhik91.university.dao.SubjectDao;
 import com.nikitachizhik91.university.dao.TeacherDao;
-import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
 
 @Repository
 public class TeacherDaoImpl implements TeacherDao {
 
 	private final static Logger log = LogManager.getLogger(TeacherDaoImpl.class.getName());
-
-	@Autowired
-	private SubjectDao subjectDao;
-	private static final String FIND_TEACHERS_WITHOUT_DEPARTMENT = "SELECT id FROM teachers t WHERE NOT EXISTS(SELECT NULL FROM departments_teachers dt WHERE dt.teacher_id = t.id)";
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -123,7 +110,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
 			ids = (List<Integer>) session
 					.createSQLQuery(
-							"SELECT id FROM teachers t WHERE NOT EXISTS(SELECT NULL FROM departments_teachers dt WHERE dt.teacher_id = t.id)")
+							"select * from lessons where teacher_id=? and date between ? and ?")
 					.list();
 		}
 
