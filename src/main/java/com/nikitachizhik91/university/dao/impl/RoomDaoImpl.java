@@ -52,6 +52,7 @@ public class RoomDaoImpl implements RoomDao {
 		return room;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Room> findAll() throws DaoException {
 		log.trace("Started findAll() method.");
 

@@ -2,6 +2,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC
   "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
   "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
 <hibernate-configuration>
 	<session-factory>
 		<property name="hibernate.enable_lazy_load_no_trans">true</property>
@@ -14,6 +15,7 @@
 
 		<mapping class="com.nikitachizhik91.university.model.Room" />
 		<mapping class="com.nikitachizhik91.university.model.Student" />
+		<mapping class="com.nikitachizhik91.university.model.Subject" />
 
 
 	</session-factory>

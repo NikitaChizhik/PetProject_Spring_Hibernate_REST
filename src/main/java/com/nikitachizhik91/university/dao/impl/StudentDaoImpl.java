@@ -1,7 +1,6 @@
 package com.nikitachizhik91.university.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,10 +18,6 @@ import com.nikitachizhik91.university.model.Student;
 public class StudentDaoImpl implements StudentDao {
 
 	private final static Logger log = LogManager.getLogger(StudentDaoImpl.class.getName());
-
-	// private static final String FIND_STUDENTS_WITHOUT_GROUP = "SELECT id FROM
-	// students s WHERE NOT EXISTS(SELECT NULL FROM groups_students gs WHERE
-	// gs.student_id = s.id)";
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -58,6 +53,7 @@ public class StudentDaoImpl implements StudentDao {
 		return student;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Student> findAll() throws DaoException {
 		log.trace("Started findAll() method.");
 
