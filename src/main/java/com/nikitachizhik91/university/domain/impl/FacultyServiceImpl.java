@@ -11,9 +11,7 @@ import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.FacultyDao;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.FacultyService;
-import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Faculty;
-import com.nikitachizhik91.university.model.Group;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -149,46 +147,6 @@ public class FacultyServiceImpl implements FacultyService {
 		}
 		log.trace("Finished addGroup() method.");
 
-	}
-
-	@Override
-	public List<Department> findDepartmentsByFacultyId(int facultyId) throws DomainException {
-
-		log.trace("Started findDepartmentsByFacultyId() method.");
-
-		List<Department> departments = null;
-		try {
-			log.trace("Finding departments by faculty id.");
-
-			departments = facultyDao.findDepartmentsByFacultyId(facultyId);
-
-		} catch (DaoException e) {
-			log.error("Cannot find departments by faculty id=" + facultyId, e);
-			throw new DomainException("Cannot find departments by faculty id=" + facultyId, e);
-		}
-		log.trace("Finished findDepartmentsByFacultyId() method.");
-
-		return departments;
-	}
-
-	@Override
-	public List<Group> findGroupsByFacultyId(int facultyId) throws DomainException {
-
-		log.trace("Started findGroupsByFacultyId() method.");
-
-		List<Group> groups = null;
-		try {
-			log.trace("Finding groups by faculty id.");
-
-			groups = facultyDao.findGroupsByFacultyId(facultyId);
-
-		} catch (DaoException e) {
-			log.error("Cannot find groups by faculty id=" + facultyId, e);
-			throw new DomainException("Cannot find groups by faculty id=" + facultyId, e);
-		}
-		log.trace("Finished findGroupsByFacultyId() method.");
-
-		return groups;
 	}
 
 	@Override

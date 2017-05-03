@@ -110,7 +110,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
 			ids = (List<Integer>) session
 					.createSQLQuery(
-							"select * from lessons where teacher_id=? and date between ? and ?")
+							"SELECT id FROM teachers t WHERE NOT EXISTS(SELECT NULL FROM departments_teachers dt WHERE dt.teacher_id = t.id)")
 					.list();
 		}
 

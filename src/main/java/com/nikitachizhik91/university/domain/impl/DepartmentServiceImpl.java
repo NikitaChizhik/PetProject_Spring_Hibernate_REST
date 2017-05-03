@@ -12,8 +12,6 @@ import com.nikitachizhik91.university.dao.DepartmentDao;
 import com.nikitachizhik91.university.domain.DepartmentService;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.model.Department;
-import com.nikitachizhik91.university.model.Subject;
-import com.nikitachizhik91.university.model.Teacher;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -149,46 +147,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 					"Cannot add teacher with id=" + teacherId + " to department with id=" + departmentId, e);
 		}
 		log.trace("Finished addTeacher() method.");
-	}
-
-	@Override
-	public List<Teacher> findTeachersByDepartmentId(int departmentId) throws DomainException {
-
-		log.trace("Started findTeachersByDepartmentId() method.");
-
-		List<Teacher> teachers = null;
-		try {
-			log.trace("Finding teachers by department id.");
-
-			teachers = departmentDao.findTeachersByDepartmentId(departmentId);
-
-		} catch (DaoException e) {
-			log.error("Cannot find teachers by department id=" + departmentId, e);
-			throw new DomainException("Cannot find teachers by department id=" + departmentId, e);
-		}
-		log.trace("Finished findTeachersByDepartmentId() method.");
-
-		return teachers;
-	}
-
-	@Override
-	public List<Subject> findSubjectsByDepartmentId(int departmentId) throws DomainException {
-
-		log.trace("Started findSubjectsByDepartmentId() method.");
-
-		List<Subject> subjects = null;
-		try {
-			log.trace("Finding subjects by department id.");
-
-			subjects = departmentDao.findSubjectsByDepartmentId(departmentId);
-
-		} catch (DaoException e) {
-			log.error("Cannot find subjects by department id=" + departmentId, e);
-			throw new DomainException("Cannot find subjects by department id=" + departmentId, e);
-		}
-		log.trace("Finished findSubjectsByDepartmentId() method.");
-
-		return subjects;
 	}
 
 	@Override

@@ -1,87 +1,40 @@
 package com.nikitachizhik91.university.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.DepartmentDao;
-import com.nikitachizhik91.university.dao.SubjectDao;
-import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.model.Department;
-import com.nikitachizhik91.university.model.Subject;
-import com.nikitachizhik91.university.model.Teacher;
 
 @Repository
 public class DepartmentDaoImpl implements DepartmentDao {
 
 	private final static Logger log = LogManager.getLogger(DepartmentDaoImpl.class.getName());
+
 	@Autowired
-	private DataSource dataSource;
-	private static final String INSERT_DEPARTMENT = "insert into departments (name) values(?)";
-	private static final String FIND_DEPARTMENT_BY_ID = "select * from departments where id=?";
-	private static final String FIND_ALL_DEPARTMENTS = "select * from departments";
-	private static final String UPDATE_DEPARTMENT = "update departments set name=? where id =?";
-	private static final String DELETE_DEPARTMENT = "delete from departments where id =?";
+	private SessionFactory sessionFactory;
 
-	private static final String INSERT_SUBJECT = "insert into departments_subjects (department_id,subject_id) values (?,?)";
-	private static final String INSERT_TEACHER = "insert into departments_teachers (department_id,teacher_id) values (?,?)";
+	public Department create(Department department) throws DaoException {
 
-	private static final String FIND_TEACHERS_BY_DEPARTMENT_ID = "select teacher_id from departments_teachers where department_id=?";
-	private static final String DELETE_TEACHER_FROM_DEPARTMENT = "delete from departments_teachers where teacher_id=?";
-
-	private static final String FIND_SUBJECTS_BY_DEPARTMENT_ID = "select subject_id from departments_subjects where department_id=?";
-	private static final String DELETE_SUBJECT_FROM_DEPARTMENT = "delete from departments_subjects where subject_id=?";
-
-	private static final String FIND_DEPARTMENTS_WITHOUT_FACULTY = "SELECT id FROM departments d WHERE NOT EXISTS(SELECT NULL FROM faculties_departments fd WHERE fd.department_id = d.id)";
-	@Autowired
-	private TeacherDao teacherDao;
-	@Autowired
-	private SubjectDao subjectDao;
-
-	public Department create(Department departmentArg) throws DaoException {
 		log.trace("Started create() method.");
 
-		Department department = null;
-
-		log.trace("Getting Conncetion and creating prepared statement.");
-
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(INSERT_DEPARTMENT,
-						Statement.RETURN_GENERATED_KEYS);) {
-
-			statement.setString(1, departmentArg.getName());
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-			log.trace("Getting the result set.");
-			try (ResultSet resultSet = statement.getGeneratedKeys();) {
-				log.trace("Got the result set.");
-
-				while (resultSet.next()) {
-					department = new Department();
-					department.setId(resultSet.getInt("id"));
-					department.setName(resultSet.getString("name"));
-				}
-			}
-		} catch (SQLException e) {
-			log.error("Cannot create Department :" + departmentArg, e);
-			throw new DaoException("Cannot create Department :", e);
+		try (Session session = sessionFactory.openSession()) {
+			session.beginTransaction();
+			Integer id = (Integer) session.save(department);
+			session.getTransaction().commit();
+			department.setId(id);
 		}
-		log.info("Created a Department :" + departmentArg);
+
+		log.info("Created a Department :" + department);
 		log.trace("Finished create() method.");
+
 		return department;
 	}
 
@@ -90,302 +43,136 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 		Department department = null;
 
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENT_BY_ID)) {
-
-			statement.setInt(1, id);
-
-			log.trace("Statement :" + statement + " is received.");
-			log.trace("Getting the result set.");
-			try (ResultSet resultSet = statement.executeQuery()) {
-				log.debug("Executed query :" + statement);
-				log.trace("Got the result set.");
-
-				if (resultSet.next()) {
-					department = new Department();
-					int departmentId = resultSet.getInt("id");
-					department.setId(departmentId);
-					department.setName(resultSet.getString("name"));
-					department.setTeachers(findTeachersByDepartmentId(departmentId));
-					department.setSubjects(findSubjectsByDepartmentId(departmentId));
-				}
-			}
-		} catch (SQLException e) {
-			log.error("Cannot find Department with id=" + id, e);
-			throw new DaoException("Cannot find Department with id=" + id, e);
+		try (Session session = sessionFactory.openSession()) {
+			department = session.get(Department.class, id);
 		}
+
 		log.info("Found the Department :" + department);
 		log.trace("Finished findById() method.");
+
 		return department;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Department> findAll() throws DaoException {
 		log.trace("Started findAll() method.");
 
-		List<Department> departments = new ArrayList<Department>();
-
-		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(FIND_ALL_DEPARTMENTS);
-				ResultSet resultSet = statement.executeQuery();) {
-
-			log.debug("Executed query :" + statement);
-			log.trace("Got the result set.");
-
-			while (resultSet.next()) {
-				Department department = new Department();
-				int departmentId = resultSet.getInt("id");
-				department.setId(departmentId);
-				department.setName(resultSet.getString("name"));
-				department.setTeachers(findTeachersByDepartmentId(departmentId));
-				department.setSubjects(findSubjectsByDepartmentId(departmentId));
-
-				departments.add(department);
-			}
-		} catch (SQLException e) {
-			log.error("Cannot find all departments.", e);
-			throw new DaoException("Cannot find all departments.", e);
+		List<Department> departments = null;
+		try (Session session = sessionFactory.openSession()) {
+			departments = (List<Department>) session.createQuery("from Department").list();
 		}
-		log.info("Found all departments :");
+
+		log.info("Found all Departments :");
 		log.trace("Finished findAll() method.");
+
 		return departments;
 	}
 
-	public Department update(Department departmentArg) throws DaoException {
+	public Department update(Department department) throws DaoException {
 		log.trace("Started update() method.");
 
-		Department department = null;
+		try (Session session = sessionFactory.openSession()) {
 
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(UPDATE_DEPARTMENT,
-						Statement.RETURN_GENERATED_KEYS);) {
-
-			statement.setString(1, departmentArg.getName());
-			statement.setInt(2, departmentArg.getId());
-
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-			log.trace("Getting the result set.");
-			try (ResultSet resultSet = statement.getGeneratedKeys();) {
-				log.trace("Got the result set.");
-
-				while (resultSet.next()) {
-					department = new Department();
-					int departmentId = resultSet.getInt("id");
-					department.setId(departmentId);
-					department.setName(resultSet.getString("name"));
-					department.setTeachers(findTeachersByDepartmentId(departmentId));
-					department.setSubjects(findSubjectsByDepartmentId(departmentId));
-				}
-			}
-
-		} catch (SQLException e) {
-			log.error("Cannot update Department :" + departmentArg, e);
-			throw new DaoException("Cannot update Department :" + departmentArg, e);
+			session.beginTransaction();
+			session.update(department);
+			session.getTransaction().commit();
 		}
-		log.info("Updated Department :" + departmentArg);
+
+		log.info("Updated Department :" + department);
 		log.trace("Finished update() method.");
+
 		return department;
 	}
 
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_DEPARTMENT);) {
 
-			statement.setInt(1, id);
+		try (Session session = sessionFactory.openSession()) {
 
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-		} catch (SQLException e) {
-			log.error("Cannot delete Department with id=" + id, e);
-			throw new DaoException("Cannot delete Department with id=" + id, e);
+			session.beginTransaction();
+			session.delete(session.get(Department.class, id));
+			session.getTransaction().commit();
 		}
+
 		log.info("Deleted Department with id=" + id);
 		log.trace("Finished delete() method.");
 	}
 
-	public void addSubject(int departmentId, int subjectId) throws DaoException {
-		log.trace("Started addSubject() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT);) {
-
-			statement.setInt(1, departmentId);
-			statement.setInt(2, subjectId);
-			log.trace("Statement :" + statement + " is received.");
-
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-		} catch (SQLException e) {
-			log.error("Cannot add Subject with id=" + subjectId, e);
-			throw new DaoException("Cannot add Subject with id=" + subjectId, e);
-		}
-		log.info("Added Subject with id=" + subjectId + " to the department with id=" + departmentId);
-		log.trace("Finished addSubject() method.");
-	}
-
+	// SQL- "insert into departments_teachers (department_id,teacher_id) values
+	// (?,?)"
 	public void addTeacher(int departmentId, int teacherId) throws DaoException {
-		log.trace("Started addTeacher() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(INSERT_TEACHER);) {
+		log.trace("Started addStudent() method.");
 
-			statement.setInt(1, departmentId);
-			statement.setInt(2, teacherId);
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
+		// "INSERT INTO Employee(firstName, lastName, salary)" + "SELECT
+		// firstName, lastName, salary FROM old_employee";
 
-		} catch (SQLException e) {
-			log.error("Cannot add Teacher with id=" + teacherId, e);
-			throw new DaoException("Cannot add Teacher with id=" + teacherId, e);
+		try (Session session = sessionFactory.openSession()) {
+			session.createQuery("insert into groups_students (group_id,student_id) values (groupId,studentId)")
+					.setParameter("groupId", teacherId).setParameter("studentId", departmentId).executeUpdate();
 		}
-		log.info("Added Teacher with id=" + teacherId + " to the Department with id=" + departmentId);
-		log.trace("Finished addTeacher() method.");
+
+		log.info("Added Student with id=" + departmentId + " to the group with id=" + teacherId);
+		log.trace("Finished addStudent() method.");
 	}
 
-	public List<Teacher> findTeachersByDepartmentId(int departmentId) throws DaoException {
-		log.trace("Started findTeachersByDepartmentId() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		List<Teacher> teachers = new ArrayList<Teacher>();
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(FIND_TEACHERS_BY_DEPARTMENT_ID)) {
+	// SQL- "insert into departments_subjects (department_id,subject_id) values
+	// (?,?)"
+	public void addSubject(int departmentId, int subjectId) throws DaoException {
+		log.trace("Started addStudent() method.");
 
-			statement.setInt(1, departmentId);
+		// "INSERT INTO Employee(firstName, lastName, salary)" + "SELECT
+		// firstName, lastName, salary FROM old_employee";
 
-			log.trace("Statement :" + statement + " is received.");
-			log.trace("Getting the result set.");
-			try (ResultSet resultSet = statement.executeQuery();) {
-				log.debug("Executed query :" + statement);
-				log.trace("Got the result set.");
-
-				while (resultSet.next()) {
-
-					teachers.add(teacherDao.findById(resultSet.getInt("teacher_id")));
-				}
-			}
-
-		} catch (SQLException e) {
-			log.error("Cannot find Teachers by Department id=" + departmentId, e);
-			throw new DaoException("Cannot find Teachers by Department id=" + departmentId, e);
+		try (Session session = sessionFactory.openSession()) {
+			session.createQuery("insert into groups_students (group_id,student_id) values (groupId,studentId)")
+					.setParameter("groupId", subjectId).setParameter("studentId", departmentId).executeUpdate();
 		}
-		log.info("Found " + teachers.size() + " Teachers by Department id=" + departmentId);
-		log.trace("Finished findTeachersByDepartmentId() method.");
-		return teachers;
+
+		log.info("Added Student with id=" + departmentId + " to the group with id=" + subjectId);
+		log.trace("Finished addStudent() method.");
 	}
 
+	// SQL-"delete from departments_teachers where teacher_id=?"
 	public void deleteTeacherFromDepartment(int teacherId) throws DaoException {
-		log.trace("Started deleteTeacherFromDepartment() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_TEACHER_FROM_DEPARTMENT);) {
+		log.trace("Started deleteStudentFromGroup() method.");
 
-			statement.setInt(1, teacherId);
-
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-		} catch (SQLException e) {
-			log.error("Cannot delete Teacher with id=" + teacherId, e);
-			throw new DaoException("Cannot delete Teacher with id=" + teacherId, e);
+		try (Session session = sessionFactory.openSession()) {
+			session.createQuery(":studentId").setParameter("studentId", teacherId).executeUpdate();
 		}
-		log.info("Deleted Teacher with id=" + teacherId);
-		log.trace("Finished deleteTeacherFromDepartment() method.");
+
+		log.info("Deleted Student with id=" + teacherId);
+		log.trace("Finished deleteStudentFromGroup() method.");
 
 	}
 
-	public List<Subject> findSubjectsByDepartmentId(int departmentId) throws DaoException {
-		log.trace("Started findSubjectsByDepartmentId() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		List<Subject> subjects = new ArrayList<Subject>();
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(FIND_SUBJECTS_BY_DEPARTMENT_ID)) {
-
-			statement.setInt(1, departmentId);
-
-			log.trace("Statement :" + statement + " is received.");
-			log.trace("Getting the result set.");
-			try (ResultSet resultSet = statement.executeQuery();) {
-				log.debug("Executed query :" + statement);
-				log.trace("Got the result set.");
-
-				while (resultSet.next()) {
-
-					subjects.add(subjectDao.findById(resultSet.getInt("subject_id")));
-				}
-			}
-
-		} catch (SQLException e) {
-			log.error("Cannot find Subjects by Department id=" + departmentId, e);
-			throw new DaoException("Cannot find Subjects by Department id=" + departmentId, e);
-		}
-		log.info("Found " + subjects.size() + " Subjects by Department id=" + departmentId);
-		log.trace("Finished findSubjectsByDepartmentId() method.");
-
-		return subjects;
-	}
-
+	// SQL-"delete from departments_subjects where subject_id=?"
 	public void deleteSubjectFromDepartment(int subjectId) throws DaoException {
-		log.trace("Started deleteSubjectFromDepartment() method.");
-		log.trace("Getting Conncetion and creating prepared statement.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT_FROM_DEPARTMENT);) {
+		log.trace("Started deleteStudentFromGroup() method.");
 
-			statement.setInt(1, subjectId);
-
-			log.trace("Statement :" + statement + " is received.");
-			statement.executeUpdate();
-			log.debug("Executed query :" + statement);
-
-		} catch (SQLException e) {
-			log.error("Cannot delete Subejct with id=" + subjectId, e);
-			throw new DaoException("Cannot delete Subejct with id=" + subjectId, e);
+		try (Session session = sessionFactory.openSession()) {
+			session.createQuery(":studentId").setParameter("studentId", subjectId).executeUpdate();
 		}
-		log.info("Deleted Subejct with id=" + subjectId);
-		log.trace("Finished deleteSubjectFromDepartment() method.");
+
+		log.info("Deleted Student with id=" + subjectId);
+		log.trace("Finished deleteStudentFromGroup() method.");
 
 	}
 
+	// SQL-"SELECT id FROM departments d WHERE NOT EXISTS(SELECT NULL FROM
+	// faculties_departments fd WHERE fd.department_id = d.id)"
 	public List<Department> findDepartmentsWithoutFaculty() throws DaoException {
-		log.trace("Started findDepartmentsWithoutFaculty() method.");
+		log.trace("Started findGroupsWithoutFaculty() method.");
 
-		List<Department> departments = new ArrayList<Department>();
+		List<Department> groups;
 
-		log.trace("Getting Conncetion and creating prepared statement and getting the result set.");
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(FIND_DEPARTMENTS_WITHOUT_FACULTY);
-				ResultSet resultSet = statement.executeQuery();) {
-
-			log.debug("Executed query :" + statement);
-			log.trace("Got the result set.");
-
-			while (resultSet.next()) {
-
-				Department department = findById(resultSet.getInt("id"));
-				departments.add(department);
-			}
-
-		} catch (SQLException e) {
-			log.error("Cannot find all departments which are without faculty.", e);
-			throw new DaoException("Cannot find all departments which are without faculty.", e);
+		try (Session session = sessionFactory.openSession()) {
+			groups = (List<Department>) session.createQuery("from Department").list();
 		}
-		log.info("Found all departments which are without faculty.");
-		log.trace("Finished findDepartmentsWithoutFaculty() method.");
 
-		return departments;
+		log.info("Found all groups which are without faculty.");
+		log.trace("Finished findGroupsWithoutFaculty() method.");
+
+		return groups;
 	}
 
-	
 }

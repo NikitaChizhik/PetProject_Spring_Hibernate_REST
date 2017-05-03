@@ -24,11 +24,6 @@ public class LessonDaoImpl implements LessonDao {
 
 	private final static Logger log = LogManager.getLogger(LessonDaoImpl.class.getName());
 
-	private static final String GET_TEACHER_TIMETABLE_FOR_DAY = "select * from lessons where teacher_id=? and date between ? and ?";
-	private static final String GET_TEACHER_TIMETABLE_FOR_MONTH = "select * from lessons where teacher_id=? and date between ? and ?";
-	private static final String GET_STUDENT_TIMETABLE_FOR_DAY = "select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?";
-	private static final String GET_STUDENT_TIMETABLE_FOR_MONTH = "select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?";
-
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -172,6 +167,8 @@ public class LessonDaoImpl implements LessonDao {
 		return lessons;
 	}
 
+	// SQL-"select * from lessons where group_id=(select group_id from
+	// groups_students where student_id=?) and date between ? and ?";
 	@SuppressWarnings("unchecked")
 	public List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DaoException {
 		log.trace("Started getStudentTimetableForDay().");
@@ -206,6 +203,8 @@ public class LessonDaoImpl implements LessonDao {
 		return lessons;
 	}
 
+	// SQL-"select * from lessons where group_id=(select group_id from
+	// groups_students where student_id=?) and date between ? and ?";
 	@SuppressWarnings("unchecked")
 	public List<Lesson> getStudentTimetableForMonth(Student student, Date date) throws DaoException {
 		log.trace("Started getStudentTimetableForMonth().");
