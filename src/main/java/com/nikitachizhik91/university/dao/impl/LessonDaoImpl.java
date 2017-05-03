@@ -184,20 +184,15 @@ public class LessonDaoImpl implements LessonDao {
 		gregorianCalendar.set(Calendar.SECOND, 59);
 		Timestamp endDate = new Timestamp(gregorianCalendar.getTimeInMillis());
 
-		List<Lesson> lessons = new ArrayList<>();
-		List<Integer> ids;
+		List<Lesson> lessons;
 		try (Session session = sessionFactory.openSession()) {
 			SQLQuery query = session.createSQLQuery(
-					"select id from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?");
+					"select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?");
 			query.setParameter(0, student.getId());
 			query.setParameter(1, startDate);
 			query.setParameter(2, endDate);
-			ids = (List<Integer>) query.list();
-
-			for (Integer id : ids) {
-				Lesson lesson = findById(id);
-				lessons.add(lesson);
-			}
+			query.addEntity(Lesson.class);
+			lessons = (List<Lesson>) query.list();
 		}
 		log.info("Got " + lessons.size() + " lessons for student timetable for day");
 		log.trace("Finished getStudentTimetableForDay() method.");
@@ -219,19 +214,14 @@ public class LessonDaoImpl implements LessonDao {
 		Timestamp endDate = new Timestamp(lastDayOfMonth.getTime());
 
 		List<Lesson> lessons = new ArrayList<>();
-		List<Integer> ids;
 		try (Session session = sessionFactory.openSession()) {
 			SQLQuery query = session.createSQLQuery(
 					"select id from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?");
 			query.setParameter(0, student.getId());
 			query.setParameter(1, startDate);
 			query.setParameter(2, endDate);
-			ids = (List<Integer>) query.list();
-
-			for (Integer id : ids) {
-				Lesson lesson = findById(id);
-				lessons.add(lesson);
-			}
+			query.addEntity(Lesson.class);
+			lessons = (List<Lesson>) query.list();
 		}
 		log.trace("Finished getStudentTimetableForMonth() method.");
 		return lessons;
