@@ -70,17 +70,13 @@ public class GroupDaoImpl implements GroupDao {
 
 	public Group update(Group group) throws DaoException {
 		log.trace("Started update() method.");
-
 		try (Session session = sessionFactory.openSession()) {
-
 			session.beginTransaction();
 			session.update(group);
 			session.getTransaction().commit();
 		}
-
 		log.info("Updated Group :" + group);
 		log.trace("Finished update() method.");
-
 		return group;
 	}
 
@@ -106,7 +102,7 @@ public class GroupDaoImpl implements GroupDao {
 		// firstName, lastName, salary FROM old_employee";
 
 		try (Session session = sessionFactory.openSession()) {
-			session.createQuery("insert into groups_students (group_id,student_id) values (groupId,studentId)")
+			session.createQuery("insert into Group.students (group_id,student_id) values (groupId,studentId)")
 					.setParameter("groupId", groupId).setParameter("studentId", studentId).executeUpdate();
 		}
 
