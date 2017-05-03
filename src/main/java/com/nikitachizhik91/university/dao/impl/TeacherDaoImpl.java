@@ -102,26 +102,20 @@ public class TeacherDaoImpl implements TeacherDao {
 	@SuppressWarnings("unchecked")
 	public List<Teacher> findTeachersWithoutDepartment() throws DaoException {
 		log.trace("Started findTeachersWithoutDepartment() method.");
-
 		List<Teacher> teachers = new ArrayList<>();
 		List<Integer> ids;
-
 		try (Session session = sessionFactory.openSession()) {
-
 			ids = (List<Integer>) session
 					.createSQLQuery(
 							"SELECT id FROM teachers t WHERE NOT EXISTS(SELECT NULL FROM departments_teachers dt WHERE dt.teacher_id = t.id)")
 					.list();
 		}
-
 		for (Integer id : ids) {
 			Teacher teacher = findById(id);
 			teachers.add(teacher);
 		}
-
 		log.info("Found all Teachers which are without department.");
 		log.trace("Finished findTeachersWithoutDepartment() method.");
-
 		return teachers;
 	}
 }
