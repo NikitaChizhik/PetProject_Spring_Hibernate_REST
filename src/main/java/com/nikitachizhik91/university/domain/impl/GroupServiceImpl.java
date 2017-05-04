@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.GroupDao;
+import com.nikitachizhik91.university.dao.StudentDao;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.GroupService;
 import com.nikitachizhik91.university.model.Group;
+import com.nikitachizhik91.university.model.Student;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -19,6 +21,8 @@ public class GroupServiceImpl implements GroupService {
 
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired
+	private StudentDao studentDao;
 
 	@Override
 	public Group create(Group group) throws DomainException {
@@ -124,13 +128,14 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	public void addStudent(int studentId, int groupId) throws DomainException {
-
 		log.trace("Started addStudent() method.");
-
 		try {
 			log.trace("Adding student.");
 
-			groupDao.addStudent(studentId, groupId);
+			Group group = groupDao.findById(groupId);
+			Student student = studentDao.findById(studentId);
+			group.addStudent(student);
+			groupDao.update(group);
 
 		} catch (DaoException e) {
 			log.error("Cannot add student with id=" + studentId + " to group with id=" + groupId, e);
@@ -140,14 +145,15 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public void deleteStudentFromGroup(int studentId) throws DomainException {
-
+	public void deleteStudentFromGroup(int studentId, int groupId) throws DomainException {
 		log.trace("Started deleteStudentFromGroup() method.");
-
 		try {
 			log.trace("Deleting student from group.");
 
-			groupDao.deleteStudentFromGroup(studentId);
+			Group group = groupDao.findById(groupId);
+			Student student = studentDao.findById(studentId);
+			group.deleteStudent(student);
+			groupDao.update(group);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete student with id=" + studentId + " from groups_students table", e);
@@ -171,7 +177,6 @@ public class GroupServiceImpl implements GroupService {
 			throw new DomainException("Cannot find all groups which are without faculty.", e);
 		}
 		log.trace("Finished findGroupsWithoutFaculty() method.");
-
 		return groups;
 	}
 }

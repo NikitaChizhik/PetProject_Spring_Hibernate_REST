@@ -195,7 +195,7 @@ public class GroupController {
 
 		try {
 
-			groupService.deleteStudentFromGroup(studentId);
+			groupService.deleteStudentFromGroup(studentId, groupId);
 
 		} catch (DomainException e) {
 

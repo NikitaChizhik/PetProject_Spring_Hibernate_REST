@@ -18,7 +18,7 @@ public interface GroupService {
 
 	public void addStudent(int studentId, int groupId) throws DomainException;
 
-	public void deleteStudentFromGroup(int studentId) throws DomainException;
+	public void deleteStudentFromGroup(int studentId, int groupId) throws DomainException;
 
 	public List<Group> findGroupsWithoutFaculty() throws DomainException;
 

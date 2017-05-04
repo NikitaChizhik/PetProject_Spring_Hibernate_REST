@@ -23,7 +23,6 @@ public class GroupDaoImpl implements GroupDao {
 	private SessionFactory sessionFactory;
 
 	public Group create(Group group) throws DaoException {
-
 		log.trace("Started create() method.");
 
 		try (Session session = sessionFactory.openSession()) {
@@ -35,7 +34,6 @@ public class GroupDaoImpl implements GroupDao {
 
 		log.info("Created a Group :" + group);
 		log.trace("Finished create() method.");
-
 		return group;
 	}
 
@@ -43,14 +41,12 @@ public class GroupDaoImpl implements GroupDao {
 		log.trace("Started findById() method.");
 
 		Group group = null;
-
 		try (Session session = sessionFactory.openSession()) {
 			group = session.get(Group.class, id);
 		}
 
 		log.info("Found the Group :" + group);
 		log.trace("Finished findById() method.");
-
 		return group;
 	}
 
@@ -65,7 +61,6 @@ public class GroupDaoImpl implements GroupDao {
 
 		log.info("Found all Groups :");
 		log.trace("Finished findAll() method.");
-
 		return groups;
 	}
 
@@ -92,39 +87,6 @@ public class GroupDaoImpl implements GroupDao {
 		log.trace("Finished delete() method.");
 	}
 
-	public void addStudent(int studentId, int groupId) throws DaoException {
-		log.trace("Started addStudent() method.");
-		try (Session session = sessionFactory.openSession()) {
-			session.beginTransaction();
-			Group group = (Group) session.get(Group.class, groupId);
-			Student student = (Student) session.get(Student.class, studentId);
-			group.getStudents().add(student);
-			session.save(group);
-			session.getTransaction().commit();
-		}
-		log.info("Added Student with id=" + studentId + " to the group with id=" + groupId);
-		log.trace("Finished addStudent() method.");
-	}
-
-	public void deleteStudentFromGroup(int studentId) throws DaoException {
-		log.trace("Started deleteStudentFromGroup() method.");
-		try (Session session = sessionFactory.openSession()) {
-			session.beginTransaction();
-			List list = session
-					.createQuery("select g from Group g inner join g.students student where student.id = :studentId")
-					.setParameter("studentId", studentId).list();
-			Group group = (Group) list.get(0);
-
-			Student student = (Student) session.get(Student.class, studentId);
-			group.getStudents().remove(student);
-			session.save(group);
-			session.getTransaction().commit();
-		}
-		log.info("Deleted Student with id=" + studentId);
-		log.trace("Finished deleteStudentFromGroup() method.");
-
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<Group> findGroupsWithoutFaculty() throws DaoException {
 		log.trace("Started findGroupsWithoutFaculty() method.");
@@ -132,7 +94,7 @@ public class GroupDaoImpl implements GroupDao {
 		try (Session session = sessionFactory.openSession()) {
 			groups = (List<Group>) session
 					.createQuery(
-							"from Group g where not exists (select f from Faculty f inner join f.groups grp where grp.id = g.id )")
+							"from Group g where not exists (from Faculty f inner join f.groups grp where grp.id = g.id )")
 					.list();
 		}
 		log.info("Found all groups which are without faculty.");

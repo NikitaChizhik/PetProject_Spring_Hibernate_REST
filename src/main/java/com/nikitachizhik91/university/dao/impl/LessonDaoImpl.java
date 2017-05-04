@@ -161,6 +161,9 @@ public class LessonDaoImpl implements LessonDao {
 		Date endDate = cal.getTime();
 		List<Lesson> lessons;
 		try (Session session = sessionFactory.openSession()) {
+			// http://docs.jboss.org/hibernate/orm/3.3/reference/en/html/queryhql.html#queryhql-examples
+			// 14.14. HQL examples
+			// lower uppercase
 			lessons = (List<Lesson>) session
 					.createQuery(
 							"FROM Lesson WHERE group = (select g from Group g inner join g.students student where student.id = :studentId) AND date BETWEEN  :startDate AND :endDate")
