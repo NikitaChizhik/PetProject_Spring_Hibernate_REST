@@ -112,29 +112,18 @@ public class LessonDaoImpl implements LessonDao {
 
 		List<Lesson> lessons;
 
-		GregorianCalendar gregorianCalendar = new GregorianCalendar();
-		gregorianCalendar.setTime(date);
-		gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
-		gregorianCalendar.set(Calendar.MINUTE, 00);
-		gregorianCalendar.set(Calendar.SECOND, 00);
-		Timestamp startDate = new Timestamp(gregorianCalendar.getTimeInMillis());
-
-		gregorianCalendar.set(Calendar.HOUR_OF_DAY, 23);
-		gregorianCalendar.set(Calendar.MINUTE, 59);
-		gregorianCalendar.set(Calendar.SECOND, 59);
-		Timestamp endDate = new Timestamp(gregorianCalendar.getTimeInMillis());
-
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, 1);
+		Date endDate = cal.getTime();
 		try (Session session = sessionFactory.openSession()) {
 			lessons = (List<Lesson>) session
 					.createQuery("FROM Lesson WHERE teacher = :teacher AND date BETWEEN  :startDate AND :endDate")
-					.setParameter("teacher", teacher).setParameter("startDate", startDate)
-					.setParameter("endDate", endDate).list();
-
+					.setParameter("teacher", teacher).setParameter("startDate", date).setParameter("endDate", endDate)
+					.list();
 		}
-
 		log.info("Got " + lessons.size() + " lessons for teacher timetable for day");
 		log.trace("Finished getTeacherTimetableForDay() method.");
-
 		return lessons;
 	}
 
@@ -143,9 +132,7 @@ public class LessonDaoImpl implements LessonDao {
 		log.trace("Started getTeacherTimetableForMonth().");
 
 		List<Lesson> lessons;
-
 		Timestamp startDate = new Timestamp(date.getTime());
-
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -153,9 +140,7 @@ public class LessonDaoImpl implements LessonDao {
 		calendar.set(Calendar.MINUTE, 59);
 		calendar.set(Calendar.SECOND, 23);
 		Date lastDayOfMonth = calendar.getTime();
-
 		Timestamp endDate = new Timestamp(lastDayOfMonth.getTime());
-
 		try (Session session = sessionFactory.openSession()) {
 			lessons = (List<Lesson>) session
 					.createQuery("FROM Lesson WHERE teacher = :teacher AND date BETWEEN  :startDate AND :endDate")
@@ -163,36 +148,24 @@ public class LessonDaoImpl implements LessonDao {
 					.setParameter("endDate", endDate).list();
 
 		}
-
 		log.trace("Finished getTeacherTimetableForMonth() method.");
-
 		return lessons;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DaoException {
 		log.trace("Started getStudentTimetableForDay().");
-		GregorianCalendar gregorianCalendar = new GregorianCalendar();
-		gregorianCalendar.setTime(date);
-		gregorianCalendar.set(Calendar.HOUR_OF_DAY, 00);
-		gregorianCalendar.set(Calendar.MINUTE, 00);
-		gregorianCalendar.set(Calendar.SECOND, 00);
-		Timestamp startDate = new Timestamp(gregorianCalendar.getTimeInMillis());
-
-		gregorianCalendar.set(Calendar.HOUR_OF_DAY, 23);
-		gregorianCalendar.set(Calendar.MINUTE, 59);
-		gregorianCalendar.set(Calendar.SECOND, 59);
-		Timestamp endDate = new Timestamp(gregorianCalendar.getTimeInMillis());
-
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, 1);
+		Date endDate = cal.getTime();
 		List<Lesson> lessons;
 		try (Session session = sessionFactory.openSession()) {
-			SQLQuery query = session.createSQLQuery(
-					"select * from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?");
-			query.setParameter(0, student.getId());
-			query.setParameter(1, startDate);
-			query.setParameter(2, endDate);
-			query.addEntity(Lesson.class);
-			lessons = (List<Lesson>) query.list();
+			lessons = (List<Lesson>) session
+					.createQuery(
+							"FROM Lesson WHERE group = (select g from Group g inner join g.students student where student.id = :studentId) AND date BETWEEN  :startDate AND :endDate")
+					.setParameter("studentId", student.getId()).setParameter("startDate", date)
+					.setParameter("endDate", endDate).list();
 		}
 		log.info("Got " + lessons.size() + " lessons for student timetable for day");
 		log.trace("Finished getStudentTimetableForDay() method.");
