@@ -102,11 +102,7 @@ public class Group {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (students == null) {
-			if (other.students != null)
-				return false;
-		} else if (!students.equals(other.students))
-			return false;
+
 		return true;
 	}
 
@@ -114,5 +110,4 @@ public class Group {
 	public String toString() {
 		return "Group [id=" + id + ", name=" + name + "]";
 	}
-
 }

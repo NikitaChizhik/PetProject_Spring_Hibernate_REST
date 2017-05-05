@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.model.Group;
-import com.nikitachizhik91.university.model.Student;
 
 @Repository
 public class GroupDaoImpl implements GroupDao {
@@ -24,14 +23,12 @@ public class GroupDaoImpl implements GroupDao {
 
 	public Group create(Group group) throws DaoException {
 		log.trace("Started create() method.");
-
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
 			Integer id = (Integer) session.save(group);
 			session.getTransaction().commit();
 			group.setId(id);
 		}
-
 		log.info("Created a Group :" + group);
 		log.trace("Finished create() method.");
 		return group;
@@ -39,12 +36,10 @@ public class GroupDaoImpl implements GroupDao {
 
 	public Group findById(int id) throws DaoException {
 		log.trace("Started findById() method.");
-
 		Group group = null;
 		try (Session session = sessionFactory.openSession()) {
 			group = session.get(Group.class, id);
 		}
-
 		log.info("Found the Group :" + group);
 		log.trace("Finished findById() method.");
 		return group;
@@ -53,12 +48,10 @@ public class GroupDaoImpl implements GroupDao {
 	@SuppressWarnings("unchecked")
 	public List<Group> findAll() throws DaoException {
 		log.trace("Started findAll() method.");
-
 		List<Group> groups = null;
 		try (Session session = sessionFactory.openSession()) {
 			groups = (List<Group>) session.createQuery("from Group").list();
 		}
-
 		log.info("Found all Groups :");
 		log.trace("Finished findAll() method.");
 		return groups;
@@ -93,8 +86,7 @@ public class GroupDaoImpl implements GroupDao {
 		List<Group> groups;
 		try (Session session = sessionFactory.openSession()) {
 			groups = (List<Group>) session
-					.createQuery(
-							"from Group g where not exists (from Faculty f inner join f.groups grp where grp.id = g.id )")
+					.createQuery("from Group g where not exists (from Faculty f where g.id in elements(f.groups))")
 					.list();
 		}
 		log.info("Found all groups which are without faculty.");

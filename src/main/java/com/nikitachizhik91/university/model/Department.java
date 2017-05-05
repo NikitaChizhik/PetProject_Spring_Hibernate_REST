@@ -52,7 +52,6 @@ public class Department {
 	}
 
 	public void deleteTeacher(Teacher teacher) {
-
 		if (teachers != null) {
 			teachers.remove(teacher);
 		}
@@ -69,7 +68,6 @@ public class Department {
 	}
 
 	public void deleteSubject(Subject subject) {
-
 		if (subjects != null) {
 			subjects.remove(subject);
 		}
@@ -134,16 +132,7 @@ public class Department {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (subjects == null) {
-			if (other.subjects != null)
-				return false;
-		} else if (!subjects.equals(other.subjects))
-			return false;
-		if (teachers == null) {
-			if (other.teachers != null)
-				return false;
-		} else if (!teachers.equals(other.teachers))
-			return false;
+
 		return true;
 	}
 
@@ -151,5 +140,4 @@ public class Department {
 	public String toString() {
 		return "Department [id=" + id + ", name=" + name + "]";
 	}
-
 }

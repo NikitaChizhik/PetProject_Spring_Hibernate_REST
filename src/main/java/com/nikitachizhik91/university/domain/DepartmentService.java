@@ -20,9 +20,9 @@ public interface DepartmentService {
 
 	public abstract void addTeacher(int departmentId, int teacherId) throws DomainException;
 
-	public abstract void deleteTeacherFromDepartment(int teacherId) throws DomainException;
+	public abstract void deleteTeacherFromDepartment(int teacherId, int departmentId) throws DomainException;
 
-	public abstract void deleteSubjectFromDepartment(int subjectId) throws DomainException;
+	public abstract void deleteSubjectFromDepartment(int subjectId, int departmentId) throws DomainException;
 
 	public List<Department> findDepartmentsWithoutFaculty() throws DomainException;
 }

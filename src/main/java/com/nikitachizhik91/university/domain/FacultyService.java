@@ -20,7 +20,7 @@ public interface FacultyService {
 
 	public abstract void addGroup(int facultyId, int groupId) throws DomainException;
 
-	public abstract void deleteDepartmentFromFaculty(int departmentId) throws DomainException;
+	public abstract void deleteDepartmentFromFaculty(int departmentId, int facultyId) throws DomainException;
 
-	public abstract void deleteGroupFromFaculty(int groupId) throws DomainException;
+	public abstract void deleteGroupFromFaculty(int groupId, int facultyId) throws DomainException;
 }

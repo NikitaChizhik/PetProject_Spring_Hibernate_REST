@@ -1,15 +1,12 @@
 package com.nikitachizhik91.university.dao.impl;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,78 +27,61 @@ public class LessonDaoImpl implements LessonDao {
 	private SessionFactory sessionFactory;
 
 	public Lesson create(Lesson lesson) throws DaoException {
-
 		log.trace("Started create() method.");
-
 		try (Session session = sessionFactory.openSession()) {
 			session.beginTransaction();
 			Integer id = (Integer) session.save(lesson);
 			session.getTransaction().commit();
 			lesson.setId(id);
 		}
-
 		log.info("Created a Lesson :" + lesson);
 		log.trace("Finished create() method.");
-
 		return lesson;
 	}
 
 	public Lesson findById(int id) throws DaoException {
 		log.trace("Started findById() method.");
-
 		Lesson lesson = null;
-
 		try (Session session = sessionFactory.openSession()) {
 			lesson = session.get(Lesson.class, id);
 		}
-
 		log.info("Found the Lesson :" + lesson);
 		log.trace("Finished findById() method.");
-
 		return lesson;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Lesson> findAll() throws DaoException {
 		log.trace("Started findAll() method.");
-
 		List<Lesson> lessons = null;
 		try (Session session = sessionFactory.openSession()) {
 			lessons = (List<Lesson>) session.createQuery("from Lesson").list();
 		}
-
 		log.info("Found all Lessons :");
 		log.trace("Finished findAll() method.");
-
 		return lessons;
 	}
 
 	public Lesson update(Lesson lesson) throws DaoException {
 		log.trace("Started update() method.");
-
 		try (Session session = sessionFactory.openSession()) {
-
 			session.beginTransaction();
 			session.update(lesson);
 			session.getTransaction().commit();
 		}
-
 		log.info("Updated Lesson :" + lesson);
 		log.trace("Finished update() method.");
-
 		return lesson;
 	}
 
 	public void delete(int id) throws DaoException {
 		log.trace("Started delete() method.");
-
 		try (Session session = sessionFactory.openSession()) {
 
 			session.beginTransaction();
 			session.delete(session.get(Lesson.class, id));
 			session.getTransaction().commit();
 		}
-
 		log.info("Deleted Lesson with id=" + id);
 		log.trace("Finished delete() method.");
 	}
@@ -109,9 +89,7 @@ public class LessonDaoImpl implements LessonDao {
 	@SuppressWarnings("unchecked")
 	public List<Lesson> getTeacherTimetableForDay(Teacher teacher, Date date) throws DaoException {
 		log.trace("Started getTeacherTimetableForDay().");
-
 		List<Lesson> lessons;
-
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.add(Calendar.DATE, 1);
@@ -130,9 +108,7 @@ public class LessonDaoImpl implements LessonDao {
 	@SuppressWarnings("unchecked")
 	public List<Lesson> getTeacherTimetableForMonth(Teacher teacher, Date date) throws DaoException {
 		log.trace("Started getTeacherTimetableForMonth().");
-
 		List<Lesson> lessons;
-		Timestamp startDate = new Timestamp(date.getTime());
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -144,9 +120,8 @@ public class LessonDaoImpl implements LessonDao {
 		try (Session session = sessionFactory.openSession()) {
 			lessons = (List<Lesson>) session
 					.createQuery("FROM Lesson WHERE teacher = :teacher AND date BETWEEN  :startDate AND :endDate")
-					.setParameter("teacher", teacher).setParameter("startDate", startDate)
-					.setParameter("endDate", endDate).list();
-
+					.setParameter("teacher", teacher).setParameter("startDate", date).setParameter("endDate", endDate)
+					.list();
 		}
 		log.trace("Finished getTeacherTimetableForMonth() method.");
 		return lessons;
@@ -161,14 +136,11 @@ public class LessonDaoImpl implements LessonDao {
 		Date endDate = cal.getTime();
 		List<Lesson> lessons;
 		try (Session session = sessionFactory.openSession()) {
-			// http://docs.jboss.org/hibernate/orm/3.3/reference/en/html/queryhql.html#queryhql-examples
-			// 14.14. HQL examples
-			// lower uppercase
 			lessons = (List<Lesson>) session
 					.createQuery(
-							"FROM Lesson WHERE group = (select g from Group g inner join g.students student where student.id = :studentId) AND date BETWEEN  :startDate AND :endDate")
-					.setParameter("studentId", student.getId()).setParameter("startDate", date)
-					.setParameter("endDate", endDate).list();
+							"from Lesson where group = (from Group g where :student in elements(g.students)) and date between  :startDate and :endDate")
+					.setParameter("student", student).setParameter("startDate", date).setParameter("endDate", endDate)
+					.list();
 		}
 		log.info("Got " + lessons.size() + " lessons for student timetable for day");
 		log.trace("Finished getStudentTimetableForDay() method.");
@@ -178,8 +150,6 @@ public class LessonDaoImpl implements LessonDao {
 	@SuppressWarnings("unchecked")
 	public List<Lesson> getStudentTimetableForMonth(Student student, Date date) throws DaoException {
 		log.trace("Started getStudentTimetableForMonth().");
-		Timestamp startDate = new Timestamp(date.getTime());
-
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -188,16 +158,13 @@ public class LessonDaoImpl implements LessonDao {
 		calendar.set(Calendar.SECOND, 23);
 		Date lastDayOfMonth = calendar.getTime();
 		Timestamp endDate = new Timestamp(lastDayOfMonth.getTime());
-
-		List<Lesson> lessons = new ArrayList<>();
+		List<Lesson> lessons;
 		try (Session session = sessionFactory.openSession()) {
-			SQLQuery query = session.createSQLQuery(
-					"select id from lessons where group_id=(select group_id from groups_students where student_id=?) and date between ? and ?");
-			query.setParameter(0, student.getId());
-			query.setParameter(1, startDate);
-			query.setParameter(2, endDate);
-			query.addEntity(Lesson.class);
-			lessons = (List<Lesson>) query.list();
+			lessons = (List<Lesson>) session
+					.createQuery(
+							"from Lesson where group = (from Group g where :student in elements(g.students)) and date between  :startDate and :endDate")
+					.setParameter("student", student).setParameter("startDate", date).setParameter("endDate", endDate)
+					.list();
 		}
 		log.trace("Finished getStudentTimetableForMonth() method.");
 		return lessons;

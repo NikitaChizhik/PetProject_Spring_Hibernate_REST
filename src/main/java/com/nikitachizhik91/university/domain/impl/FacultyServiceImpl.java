@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
+import com.nikitachizhik91.university.dao.DepartmentDao;
 import com.nikitachizhik91.university.dao.FacultyDao;
+import com.nikitachizhik91.university.dao.GroupDao;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.domain.FacultyService;
+import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Faculty;
+import com.nikitachizhik91.university.model.Group;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -20,15 +24,17 @@ public class FacultyServiceImpl implements FacultyService {
 
 	@Autowired
 	private FacultyDao facultyDao;
+	@Autowired
+	private DepartmentDao departmentDao;
+	@Autowired
+	private GroupDao groupDao;
 
 	@Override
 	public Faculty create(Faculty faculty) throws DomainException {
 		log.trace("Started create() method.");
-
 		Faculty facultyTemp = null;
 		try {
 			log.trace("Creating student.");
-
 			facultyTemp = facultyDao.create(faculty);
 
 		} catch (DaoException e) {
@@ -36,18 +42,15 @@ public class FacultyServiceImpl implements FacultyService {
 			throw new DomainException("Cannot create faculty=" + faculty, e);
 		}
 		log.trace("Finished create() method.");
-
 		return facultyTemp;
 	}
 
 	@Override
 	public Faculty findById(int facultyId) throws DomainException {
 		log.trace("Started findById() method.");
-
 		Faculty faculty = null;
 		try {
 			log.trace("Finding faculty by id.");
-
 			faculty = facultyDao.findById(facultyId);
 
 		} catch (DaoException e) {
@@ -55,18 +58,15 @@ public class FacultyServiceImpl implements FacultyService {
 			throw new DomainException("Cannot find faculty by id=" + facultyId, e);
 		}
 		log.trace("Finished findById() method.");
-
 		return faculty;
 	}
 
 	@Override
 	public List<Faculty> findAll() throws DomainException {
 		log.trace("Started findAll() method.");
-
 		List<Faculty> faculties = null;
 		try {
 			log.trace("Finding all faculties");
-
 			faculties = facultyDao.findAll();
 
 		} catch (DaoException e) {
@@ -74,18 +74,15 @@ public class FacultyServiceImpl implements FacultyService {
 			throw new DomainException("Cannot find all faculties.", e);
 		}
 		log.trace("Finished findAll() method.");
-
 		return faculties;
 	}
 
 	@Override
 	public Faculty update(Faculty faculty) throws DomainException {
 		log.trace("Started update() method.");
-
 		Faculty facultyTemp = null;
 		try {
 			log.trace("Updating faculty.");
-
 			facultyTemp = facultyDao.update(faculty);
 
 		} catch (DaoException e) {
@@ -93,17 +90,14 @@ public class FacultyServiceImpl implements FacultyService {
 			throw new DomainException("Cannot update faculty=" + faculty, e);
 		}
 		log.trace("Finished update() method.");
-
 		return facultyTemp;
 	}
 
 	@Override
 	public void delete(int facultyId) throws DomainException {
 		log.trace("Started delete() method.");
-
 		try {
 			log.trace("Deleting faculty by id=" + facultyId);
-
 			facultyDao.delete(facultyId);
 
 		} catch (DaoException e) {
@@ -115,13 +109,14 @@ public class FacultyServiceImpl implements FacultyService {
 
 	@Override
 	public void addDepartment(int facultyId, int departmentId) throws DomainException {
-
 		log.trace("Started addDepartment() method.");
-
 		try {
 			log.trace("Adding department.");
 
-			facultyDao.addDepartment(facultyId, departmentId);
+			Faculty faculty = facultyDao.findById(facultyId);
+			Department department = departmentDao.findById(departmentId);
+			faculty.addDepartment(department);
+			facultyDao.update(faculty);
 
 		} catch (DaoException e) {
 			log.error("Cannot add department with id=" + departmentId + " to faculty with id=" + facultyId, e);
@@ -133,31 +128,32 @@ public class FacultyServiceImpl implements FacultyService {
 
 	@Override
 	public void addGroup(int facultyId, int groupId) throws DomainException {
-
 		log.trace("Started addGroup() method.");
-
 		try {
 			log.trace("Adding group.");
 
-			facultyDao.addGroup(facultyId, groupId);
+			Faculty faculty = facultyDao.findById(facultyId);
+			Group group = groupDao.findById(groupId);
+			faculty.addGroup(group);
+			facultyDao.update(faculty);
 
 		} catch (DaoException e) {
 			log.error("Cannot add group with id=" + groupId + " to faculty with id=" + facultyId, e);
 			throw new DomainException("Cannot add group with id=" + groupId + " to faculty with id=" + facultyId, e);
 		}
 		log.trace("Finished addGroup() method.");
-
 	}
 
 	@Override
-	public void deleteDepartmentFromFaculty(int departmentId) throws DomainException {
-
+	public void deleteDepartmentFromFaculty(int departmentId, int facultyId) throws DomainException {
 		log.trace("Started deleteDepartmentFromFaculty() method.");
-
 		try {
 			log.trace("Deleting department from faculty.");
 
-			facultyDao.deleteDepartmentFromFaculty(departmentId);
+			Faculty faculty = facultyDao.findById(facultyId);
+			Department department = departmentDao.findById(departmentId);
+			faculty.deleteDepartment(department);
+			facultyDao.update(faculty);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete department with id=" + departmentId + " from faculties_departments table", e);
@@ -168,14 +164,15 @@ public class FacultyServiceImpl implements FacultyService {
 	}
 
 	@Override
-	public void deleteGroupFromFaculty(int groupId) throws DomainException {
-
+	public void deleteGroupFromFaculty(int groupId, int facultyId) throws DomainException {
 		log.trace("Started deleteGroupFromFaculty() method.");
-
 		try {
 			log.trace("Deleting group from faculty.");
 
-			facultyDao.deleteGroupFromFaculty(groupId);
+			Faculty faculty = facultyDao.findById(facultyId);
+			Group group = groupDao.findById(groupId);
+			faculty.deleteGroup(group);
+			facultyDao.update(faculty);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete department with id=" + groupId + " from faculties_groups table", e);

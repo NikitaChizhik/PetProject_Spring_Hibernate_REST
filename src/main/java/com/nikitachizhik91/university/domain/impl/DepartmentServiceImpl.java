@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.nikitachizhik91.university.dao.DaoException;
 import com.nikitachizhik91.university.dao.DepartmentDao;
+import com.nikitachizhik91.university.dao.SubjectDao;
+import com.nikitachizhik91.university.dao.TeacherDao;
 import com.nikitachizhik91.university.domain.DepartmentService;
 import com.nikitachizhik91.university.domain.DomainException;
 import com.nikitachizhik91.university.model.Department;
+import com.nikitachizhik91.university.model.Subject;
+import com.nikitachizhik91.university.model.Teacher;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -20,6 +24,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Autowired
 	private DepartmentDao departmentDao;
+	@Autowired
+	private SubjectDao subjectDao;
+	@Autowired
+	private TeacherDao teacherDao;
 
 	@Override
 	public Department create(Department department) throws DomainException {
@@ -114,24 +122,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public void addSubject(int departmentId, int subjectId) throws DomainException {
-
-		log.trace("Started addSubject() method.");
-
-		try {
-			log.trace("Adding subject.");
-
-			departmentDao.addSubject(departmentId, subjectId);
-
-		} catch (DaoException e) {
-			log.error("Cannot add subject with id=" + subjectId + " to department with id=" + departmentId, e);
-			throw new DomainException(
-					"Cannot add subject with id=" + subjectId + " to department with id=" + departmentId, e);
-		}
-		log.trace("Finished addSubject() method.");
-	}
-
-	@Override
 	public void addTeacher(int departmentId, int teacherId) throws DomainException {
 
 		log.trace("Started addTeacher() method.");
@@ -139,7 +129,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 		try {
 			log.trace("Adding teacher.");
 
-			departmentDao.addTeacher(departmentId, teacherId);
+			Department department = departmentDao.findById(departmentId);
+			Teacher teacher = teacherDao.findById(teacherId);
+			department.addTeacher(teacher);
+			departmentDao.update(department);
 
 		} catch (DaoException e) {
 			log.error("Cannot add teacher with id=" + teacherId + " to department with id=" + departmentId, e);
@@ -150,14 +143,38 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public void deleteTeacherFromDepartment(int teacherId) throws DomainException {
+	public void addSubject(int departmentId, int subjectId) throws DomainException {
+
+		log.trace("Started addSubject() method.");
+
+		try {
+			log.trace("Adding subject.");
+
+			Department department = departmentDao.findById(departmentId);
+			Subject subject = subjectDao.findById(subjectId);
+			department.addSubject(subject);
+			departmentDao.update(department);
+
+		} catch (DaoException e) {
+			log.error("Cannot add subject with id=" + subjectId + " to department with id=" + departmentId, e);
+			throw new DomainException(
+					"Cannot add subject with id=" + subjectId + " to department with id=" + departmentId, e);
+		}
+		log.trace("Finished addSubject() method.");
+	}
+
+	@Override
+	public void deleteTeacherFromDepartment(int teacherId, int departmentId) throws DomainException {
 
 		log.trace("Started deleteTeacherFromDepartment() method.");
 
 		try {
 			log.trace("Deleting teacher from department.");
 
-			departmentDao.deleteTeacherFromDepartment(teacherId);
+			Department department = departmentDao.findById(departmentId);
+			Teacher teacher = teacherDao.findById(teacherId);
+			department.deleteTeacher(teacher);
+			departmentDao.update(department);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete teacher with id=" + teacherId + " from departments_teachers table", e);
@@ -168,14 +185,15 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public void deleteSubjectFromDepartment(int subjectId) throws DomainException {
-
+	public void deleteSubjectFromDepartment(int subjectId, int departmentId) throws DomainException {
 		log.trace("Started deleteSubjectFromDepartment() method.");
-
 		try {
 			log.trace("Deleting subject from department.");
 
-			departmentDao.deleteSubjectFromDepartment(subjectId);
+			Department department = departmentDao.findById(departmentId);
+			Subject subject = subjectDao.findById(subjectId);
+			department.deleteSubject(subject);
+			departmentDao.update(department);
 
 		} catch (DaoException e) {
 			log.error("Cannot delete subject with id=" + subjectId + " from departments_subjects table", e);
@@ -200,7 +218,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 			throw new DomainException("Cannot find all departments which are without faculty.", e);
 		}
 		log.trace("Finished findDepartmentsWithoutFaculty() method.");
-
 		return departments;
 	}
 }
