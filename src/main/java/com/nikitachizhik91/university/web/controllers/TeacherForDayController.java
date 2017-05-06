@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.LessonService;
-import com.nikitachizhik91.university.domain.TeacherService;
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Teacher;
+import com.nikitachizhik91.university.service.DomainException;
+import com.nikitachizhik91.university.service.LessonService;
+import com.nikitachizhik91.university.service.TeacherService;
 import com.nikitachizhik91.university.web.WebException;
 
 @Controller

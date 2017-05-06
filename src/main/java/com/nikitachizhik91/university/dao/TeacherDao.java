@@ -6,5 +6,5 @@ import com.nikitachizhik91.university.model.Teacher;
 
 public interface TeacherDao extends Crud<Teacher> {
 
-	public abstract List<Teacher> findTeachersWithoutDepartment() throws DaoException;
+	List<Teacher> findTeachersWithoutDepartment() throws DaoException;
 }

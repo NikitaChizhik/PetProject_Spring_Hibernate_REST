@@ -6,5 +6,5 @@ import com.nikitachizhik91.university.model.Department;
 
 public interface DepartmentDao extends Crud<Department> {
 
-	public List<Department> findDepartmentsWithoutFaculty() throws DaoException;
+	List<Department> findDepartmentsWithoutFaculty() throws DaoException;
 }

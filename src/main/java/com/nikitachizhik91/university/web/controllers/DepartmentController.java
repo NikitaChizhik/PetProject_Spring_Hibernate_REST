@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nikitachizhik91.university.domain.DepartmentService;
-import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.SubjectService;
-import com.nikitachizhik91.university.domain.TeacherService;
 import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
+import com.nikitachizhik91.university.service.DepartmentService;
+import com.nikitachizhik91.university.service.DomainException;
+import com.nikitachizhik91.university.service.SubjectService;
+import com.nikitachizhik91.university.service.TeacherService;
 import com.nikitachizhik91.university.web.WebException;
 
 @Controller
@@ -39,6 +39,7 @@ public class DepartmentController {
 		log.trace("Get request to find all departments");
 		List<Department> departments = null;
 		try {
+
 			departments = departmentService.findAll();
 
 		} catch (DomainException e) {
@@ -58,6 +59,7 @@ public class DepartmentController {
 		List<Subject> subjectsWithoutDepartment = null;
 		List<Teacher> teachersWithoutDepartment = null;
 		try {
+
 			department = departmentService.findById(departmentId);
 			subjectsWithoutDepartment = subjectService.findSubjectsWithoutDepartment();
 			teachersWithoutDepartment = teacherService.findTeachersWithoutDepartment();
@@ -81,6 +83,7 @@ public class DepartmentController {
 	public String create(@ModelAttribute("department") Department department) throws WebException {
 		log.trace("Post request to create department with name=" + department.getName());
 		try {
+
 			department = departmentService.create(department);
 
 		} catch (DomainException e) {
@@ -97,6 +100,7 @@ public class DepartmentController {
 		int departmentId = department.getId();
 		log.trace("Post request to update department with id=" + departmentId + " on name" + department.getName());
 		try {
+
 			departmentService.update(department);
 
 		} catch (DomainException e) {
@@ -114,6 +118,7 @@ public class DepartmentController {
 	public String delete(@PathVariable("id") int departmentId) throws WebException {
 		log.trace("Post request to delete department with id=" + departmentId);
 		try {
+
 			departmentService.delete(departmentId);
 
 		} catch (NumberFormatException e) {
@@ -132,6 +137,7 @@ public class DepartmentController {
 			throws WebException {
 		log.trace("Post request to add teacher with id=" + teacherId + " to department with id=" + departmentId);
 		try {
+
 			departmentService.addTeacher(departmentId, teacherId);
 
 		} catch (DomainException e) {
@@ -151,6 +157,7 @@ public class DepartmentController {
 			@RequestParam("teacherId") int teacherId) throws WebException {
 		log.trace("Post request to delete teacher with id=" + teacherId + " from department with id=" + departmentId);
 		try {
+
 			departmentService.deleteTeacherFromDepartment(teacherId, departmentId);
 
 		} catch (DomainException e) {
@@ -170,6 +177,7 @@ public class DepartmentController {
 			throws WebException {
 		log.trace("Post request to add subject with id=" + subjectId + " to department with id=" + departmentId);
 		try {
+
 			departmentService.addSubject(departmentId, subjectId);
 
 		} catch (DomainException e) {
@@ -189,6 +197,7 @@ public class DepartmentController {
 			@RequestParam("subjectId") int subjectId) throws WebException {
 		log.trace("Post request to delete subject with id=" + subjectId + " from department with id=" + departmentId);
 		try {
+
 			departmentService.deleteSubjectFromDepartment(subjectId, departmentId);
 
 		} catch (DomainException e) {

@@ -13,5 +13,4 @@ public class HibernateConfigurator {
 		return new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
 
 	}
-
 }

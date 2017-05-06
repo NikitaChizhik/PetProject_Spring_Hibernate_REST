@@ -9,11 +9,11 @@ import com.nikitachizhik91.university.model.Teacher;
 
 public interface LessonDao extends Crud<Lesson> {
 
-	public abstract List<Lesson> getTeacherTimetableForDay(Teacher teacher, Date date) throws DaoException;
+	List<Lesson> getTeacherTimetableForDay(Teacher teacher, Date date) throws DaoException;
 
-	public abstract List<Lesson> getTeacherTimetableForMonth(Teacher teacher, Date date) throws DaoException;
+	List<Lesson> getTeacherTimetableForMonth(Teacher teacher, Date date) throws DaoException;
 
-	public abstract List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DaoException;
+	List<Lesson> getStudentTimetableForDay(Student student, Date date) throws DaoException;
 
-	public abstract List<Lesson> getStudentTimetableForMonth(Student student, Date date) throws DaoException;
+	List<Lesson> getStudentTimetableForMonth(Student student, Date date) throws DaoException;
 }

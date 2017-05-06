@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.RoomService;
 import com.nikitachizhik91.university.model.Room;
+import com.nikitachizhik91.university.service.DomainException;
+import com.nikitachizhik91.university.service.RoomService;
 import com.nikitachizhik91.university.web.WebException;
 
 @Controller

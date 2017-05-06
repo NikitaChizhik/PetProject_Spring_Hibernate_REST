@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.SubjectService;
-import com.nikitachizhik91.university.domain.TeacherService;
 import com.nikitachizhik91.university.model.Subject;
 import com.nikitachizhik91.university.model.Teacher;
+import com.nikitachizhik91.university.service.DomainException;
+import com.nikitachizhik91.university.service.SubjectService;
+import com.nikitachizhik91.university.service.TeacherService;
 import com.nikitachizhik91.university.web.WebException;
 
 @Controller

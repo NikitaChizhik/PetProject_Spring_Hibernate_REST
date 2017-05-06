@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nikitachizhik91.university.domain.DepartmentService;
-import com.nikitachizhik91.university.domain.DomainException;
-import com.nikitachizhik91.university.domain.FacultyService;
-import com.nikitachizhik91.university.domain.GroupService;
 import com.nikitachizhik91.university.model.Department;
 import com.nikitachizhik91.university.model.Faculty;
 import com.nikitachizhik91.university.model.Group;
+import com.nikitachizhik91.university.service.DepartmentService;
+import com.nikitachizhik91.university.service.DomainException;
+import com.nikitachizhik91.university.service.FacultyService;
+import com.nikitachizhik91.university.service.GroupService;
 import com.nikitachizhik91.university.web.WebException;
 
 @Controller
