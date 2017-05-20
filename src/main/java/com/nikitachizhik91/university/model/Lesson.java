@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "lessons")
+@XmlRootElement
 public class Lesson {
 
 	@Id
@@ -26,19 +28,19 @@ public class Lesson {
 	@OneToOne
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
-	
+
 	@OneToOne
 	@JoinColumn(name = "group_id")
 	private Group group;
-	
+
 	@OneToOne
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
-	
+
 	@OneToOne
 	@JoinColumn(name = "room_id")
 	private Room room;
-	
+
 	@Column
 	private Date date;
 

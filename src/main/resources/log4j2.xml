@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="info">
+<Configuration status="fatal">
 	<Properties>
-		<Property name="log-path">D:\nikita\Java\workspaceNeon3\Task9DomainLayer\src\main\resources
+		<Property name="log-path">D:\nikita\Java\workspaceNeon3\Task18WebServices\src\main\resources
 		</Property>
 	</Properties>
 	<Appenders>
@@ -47,13 +47,13 @@
 
 
 	<Loggers>
-		<Logger name="com.nikitachizhik91" level="debug" additivity="false">
+		<Logger name="com.nikitachizhik91" level="fatal" additivity="false">
 			<appender-ref ref="INFO" level="info" />
 			<appender-ref ref="TRACE" level="trace" />
 			<appender-ref ref="DEBUG" level="debug" />
 		</Logger>
 
-		<Root level="trace" additivity="false">
+		<Root level="fatal" additivity="false">
 			<AppenderRef ref="INFO" />
 		</Root>
 	</Loggers>
