@@ -84,9 +84,8 @@ public class RoomRest {
 	public Room update(Room room) throws WebException {
 		int roomId = room.getId();
 		log.trace("Post request to update room wtih id=" + roomId + " on number=" + room.getNumber());
-		Room updatedRoom = null;
 		try {
-			updatedRoom = roomService.update(room);
+			room = roomService.update(room);
 
 		} catch (DomainException e) {
 			log.error("Cannot update room=" + room, e);
@@ -96,7 +95,7 @@ public class RoomRest {
 			throw new WebException("The id=" + roomId + " is wrong.", e);
 		}
 		log.trace("Updated room wtih id=" + roomId + " on number=" + room.getNumber());
-		return updatedRoom;
+		return room;
 	}
 
 	@DELETE

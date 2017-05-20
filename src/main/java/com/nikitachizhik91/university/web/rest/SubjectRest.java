@@ -84,9 +84,8 @@ public class SubjectRest {
 	public Subject update(Subject subject) throws WebException {
 		int subjectId = subject.getId();
 		log.trace("Post request to update subject wtih id=" + subjectId + " on name=" + subject.getName());
-		Subject updatedSubject = null;
 		try {
-			updatedSubject = subjectService.update(subject);
+			subject = subjectService.update(subject);
 
 		} catch (DomainException e) {
 			log.error("Cannot update subject=" + subject, e);
@@ -96,7 +95,7 @@ public class SubjectRest {
 			throw new WebException("The id=" + subjectId + " is wrong.", e);
 		}
 		log.trace("Updated subject wtih id=" + subjectId + " on name=" + subject.getName());
-		return updatedSubject;
+		return subject;
 	}
 
 	@DELETE

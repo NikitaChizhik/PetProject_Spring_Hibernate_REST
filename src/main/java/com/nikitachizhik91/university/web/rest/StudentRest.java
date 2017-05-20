@@ -84,9 +84,8 @@ public class StudentRest {
 	public Student update(Student student) throws WebException {
 		int studentId = student.getId();
 		log.trace("Post request to update student wtih id=" + studentId + " on name=" + student.getName());
-		Student updatedStudent = null;
 		try {
-			updatedStudent = studentService.update(student);
+			student = studentService.update(student);
 
 		} catch (DomainException e) {
 			log.error("Cannot update student=" + student, e);
@@ -96,12 +95,12 @@ public class StudentRest {
 			throw new WebException("The id=" + studentId + " is wrong.", e);
 		}
 		log.trace("Updated student wtih id=" + studentId + " on name=" + student.getName());
-		return updatedStudent;
+		return student;
 	}
 
 	@DELETE
 	@Path("/studentId")
-	public String delete(@PathParam("studentId") int studentId) throws WebException {
+	public void delete(@PathParam("studentId") int studentId) throws WebException {
 		log.trace("Post request to delete student with id=" + studentId);
 		try {
 			studentService.delete(studentId);
@@ -115,6 +114,5 @@ public class StudentRest {
 			throw new WebException("Cannot delete student with id=" + studentId, e);
 		}
 		log.trace("Deleted student with id=" + studentId);
-		return "redirect:/students";
 	}
 }
