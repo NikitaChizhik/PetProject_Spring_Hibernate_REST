@@ -117,7 +117,7 @@ public class FacultyRest {
 
 	@POST
 	@Path("/{facultyId}/addDepartment_{departmentId}")
-	public void addTeacher(@PathParam("facultyId") int facultyId, @PathParam("departmentId") int departmentId)
+	public void addDepartment(@PathParam("facultyId") int facultyId, @PathParam("departmentId") int departmentId)
 			throws WebException {
 		log.trace("Post request to add department with id=" + departmentId + " to faculty with id=" + facultyId);
 		try {
@@ -136,7 +136,7 @@ public class FacultyRest {
 
 	@DELETE
 	@Path("/{facultyId}/deleteDepartment_{departmentId}")
-	public void deleteTeacher(@PathParam("facultyId") int facultyId, @PathParam("departmentId") int departmentId)
+	public void deleteDepartment(@PathParam("facultyId") int facultyId, @PathParam("departmentId") int departmentId)
 			throws WebException {
 		log.trace("Post request to delete department with id=" + departmentId + " from faculty with id=" + facultyId);
 		try {

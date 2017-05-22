@@ -97,8 +97,8 @@ public class TimetableController {
 			date = formatter.parse(dateString);
 		} catch (ParseException e) {
 
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
+			log.error("Date=" + dateString + " is wrong.", e);
+			throw new WebException("Date=" + dateString + " is wrong.", e);
 		}
 
 		List<Lesson> lessons = null;
@@ -148,8 +148,8 @@ public class TimetableController {
 			date = formatter.parse(dateString);
 
 		} catch (ParseException e) {
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
+			log.error("Date=" + dateString + " is wrong.", e);
+			throw new WebException("Date=" + dateString + " is wrong.", e);
 		}
 		List<Lesson> lessons = null;
 		List<Student> students = null;
@@ -216,8 +216,8 @@ public class TimetableController {
 			date = formatter.parse(dateString);
 		} catch (ParseException e) {
 
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
+			log.error("Date=" + dateString + " is wrong.", e);
+			throw new WebException("Date=" + dateString + " is wrong.", e);
 		}
 
 		List<Lesson> lessons = null;
@@ -294,8 +294,8 @@ public class TimetableController {
 			date = formatter.parse(dateString);
 		} catch (ParseException e) {
 
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
+			log.error("Date=" + dateString + " is wrong.", e);
+			throw new WebException("Date=" + dateString + " is wrong.", e);
 		}
 
 		List<Lesson> lessons = null;

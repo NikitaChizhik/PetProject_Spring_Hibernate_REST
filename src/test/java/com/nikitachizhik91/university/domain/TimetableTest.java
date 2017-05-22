@@ -1,6 +1,6 @@
 package com.nikitachizhik91.university.domain;
 
-//public class TimetableTest {
+public class TimetableTest {
 //	private Timetable timetable;
 //	private final Date DATE_TO_CHECK = new SimpleDateFormat("dd-M-yyyy").parse("16-02-2017");
 //	private final Date DATE_TO_CHECK2 = new SimpleDateFormat("dd-M-yyyy").parse("17-03-2017");
@@ -17,8 +17,7 @@ package com.nikitachizhik91.university.domain;
 //	}
 //
 //	@Before
-//	public void init() throws ParseException {
-//		
+//	public void init() throws ParseException, DomainException {
 //
 //		teacher1 = new Teacher();
 //		teacher1.setName("Nikita Chizhik");
@@ -33,7 +32,7 @@ package com.nikitachizhik91.university.domain;
 //
 //		group1 = new Group();
 //
-//		Set<Student> students2 = new HashSet<Student>();
+//		List<Student> students2 = new ArrayList<Student>();
 //		student3 = new Student();
 //		student3.setName("David");
 //		// student3.setGroup(group1);
@@ -51,11 +50,11 @@ package com.nikitachizhik91.university.domain;
 //		lesson2.setTeacher(teacher2);
 //		timetable.addLesson(lesson2);
 //	}
-
+//
 //	@Test
 //	public void getTeachersTimetableForMonth_General() throws ParseException {
 //
-//		List<Lesson> recivedLessons = timetable.getTeachersTimetableForMonth(teacher1, DATE_TO_CHECK).getLessons();
+//		List<Lesson> recivedLessons = timetable.getTeacherTimetableForMonth(teacher1, DATE_TO_CHECK).getLessons();
 //		assertTrue("Lessons are wrong", recivedLessons.contains(lesson1));
 //		assertTrue("Number of lessons is wrong", recivedLessons.size() == 1);
 //	}
@@ -63,7 +62,7 @@ package com.nikitachizhik91.university.domain;
 //	@Test
 //	public void getTeachersTimetableForDay_General() throws ParseException {
 //
-//		List<Lesson> recivedLessons = timetable.getTeachersTimetableForMonth(teacher2, DATE_TO_CHECK2).getLessons();
+//		List<Lesson> recivedLessons = timetable.getTeacherTimetableForMonth(teacher2, DATE_TO_CHECK2).getLessons();
 //
 //		assertTrue("Lessons are wrong", recivedLessons.contains(lesson2));
 //		assertTrue("Number of lessons is wrong", recivedLessons.size() == 1);
@@ -72,7 +71,7 @@ package com.nikitachizhik91.university.domain;
 //	@Test
 //	public void getStudentsTimetableForMonth_General() throws ParseException {
 //
-//		List<Lesson> recivedLessons = timetable.getStudentsTimetableForMonth(student3, DATE_TO_CHECK).getLessons();
+//		List<Lesson> recivedLessons = timetable.getStudentTimetableForMonth(student3, DATE_TO_CHECK).getLessons();
 //
 //		assertTrue("Lessons are wrong", recivedLessons.contains(lesson1));
 //		assertTrue("Number of lessons is wrong", recivedLessons.size() == 1);
@@ -81,7 +80,7 @@ package com.nikitachizhik91.university.domain;
 //	@Test
 //	public void getStudentsTimetableForDay_General() throws ParseException {
 //
-//		List<Lesson> recivedLessons = timetable.getStudentsTimetableForDay(student3, DATE_TO_CHECK).getLessons();
+//		List<Lesson> recivedLessons = timetable.getStudentTimetableForDay(student3, DATE_TO_CHECK).getLessons();
 //
 //		assertTrue("Lessons are wrong", recivedLessons.contains(lesson1));
 //		assertTrue("Number of lessons is wrong", recivedLessons.size() == 1);
@@ -90,8 +89,7 @@ package com.nikitachizhik91.university.domain;
 //	@Test
 //	public void getTeachersTimetableForMonth_CheckMonth() throws ParseException {
 //
-//		Date recivedDate = timetable.getTeachersTimetableForMonth(teacher1, DATE_TO_CHECK).getLessons().get(0)
-//				.getDate();
+//		Date recivedDate = timetable.getTeacherTimetableForMonth(teacher1, DATE_TO_CHECK).getLessons().get(0).getDate();
 //
 //		Calendar expected = Calendar.getInstance();
 //		expected.setTime(DATE_TO_CHECK);
@@ -105,7 +103,7 @@ package com.nikitachizhik91.university.domain;
 //	@Test
 //	public void getTeachersTimetableForMonth_CheckTeacher() throws ParseException {
 //
-//		Teacher recivedTeacher = timetable.getTeachersTimetableForMonth(teacher1, DATE_TO_CHECK).getLessons().get(0)
+//		Teacher recivedTeacher = timetable.getTeacherTimetableForMonth(teacher1, DATE_TO_CHECK).getLessons().get(0)
 //				.getTeacher();
 //
 //		assertEquals("Teacher is wrong.", teacher1, recivedTeacher);
@@ -114,24 +112,24 @@ package com.nikitachizhik91.university.domain;
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getTeachersTimetableForMonth_BothArgumentsNull_ShouldThrowException() {
 //
-//		timetable.getStudentsTimetableForDay(null, null);
+//		timetable.getStudentTimetableForDay(null, null);
 //	}
 //
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getTeachersTimetableForMonth_ArgumentsNullandDate_ShouldThrowException() throws ParseException {
 //
-//		timetable.getTeachersTimetableForMonth(null, DATE_TO_CHECK);
+//		timetable.getTeacherTimetableForMonth(null, DATE_TO_CHECK);
 //	}
 //
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getTeachersTimetableForMonth_ArgumentsTeacherandNull_ShouldThrowException() {
-//		timetable.getTeachersTimetableForMonth(teacher1, null);
+//		timetable.getTeacherTimetableForMonth(teacher1, null);
 //	}
 //
 //	@Test
 //	public void getTeachersTimetableForDay_CheckDay() throws ParseException {
 //
-//		Date recivedDate = timetable.getTeachersTimetableForDay(teacher1, DATE_TO_CHECK).getLessons().get(0).getDate();
+//		Date recivedDate = timetable.getTeacherTimetableForDay(teacher1, DATE_TO_CHECK).getLessons().get(0).getDate();
 //
 //		Calendar expected = Calendar.getInstance();
 //		expected.setTime(DATE_TO_CHECK);
@@ -145,7 +143,7 @@ package com.nikitachizhik91.university.domain;
 //	@Test
 //	public void getTeachersTimetableForDay_CheckTeacher() throws ParseException {
 //
-//		Teacher recivedTeacher = timetable.getTeachersTimetableForDay(teacher2, DATE_TO_CHECK2).getLessons().get(0)
+//		Teacher recivedTeacher = timetable.getTeacherTimetableForDay(teacher2, DATE_TO_CHECK2).getLessons().get(0)
 //				.getTeacher();
 //
 //		assertEquals("Teacher is wrong.", teacher2, recivedTeacher);
@@ -154,24 +152,24 @@ package com.nikitachizhik91.university.domain;
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getTeachersTimetableForDay_BothArgumentsNull_ShouldThrowException() {
 //
-//		timetable.getStudentsTimetableForDay(null, null);
+//		timetable.getStudentTimetableForDay(null, null);
 //	}
 //
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getTeachersTimetableForDay_ArgumentsNullandDate_ShouldThrowException() throws ParseException {
 //
-//		timetable.getTeachersTimetableForDay(null, DATE_TO_CHECK);
+//		timetable.getTeacherTimetableForDay(null, DATE_TO_CHECK);
 //	}
 //
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getTeachersTimetableForDay_ArgumentsTeacherandNull_ShouldThrowException() {
-//		timetable.getTeachersTimetableForDay(teacher1, null);
+//		timetable.getTeacherTimetableForDay(teacher1, null);
 //	}
 //
 //	@Test
 //	public void getStudentsTimetableForDay_CheckDay() throws ParseException {
 //
-//		Date recivedDate = timetable.getStudentsTimetableForDay(student3, DATE_TO_CHECK).getLessons().get(0).getDate();
+//		Date recivedDate = timetable.getStudentTimetableForDay(student3, DATE_TO_CHECK).getLessons().get(0).getDate();
 //
 //		Calendar expected = Calendar.getInstance();
 //		expected.setTime(DATE_TO_CHECK);
@@ -185,7 +183,7 @@ package com.nikitachizhik91.university.domain;
 //	@Test
 //	public void getStudentsTimetableForDay_CheckGroup() throws ParseException {
 //
-//		Group recivedGroup = timetable.getStudentsTimetableForDay(student3, DATE_TO_CHECK).getLessons().get(0)
+//		Group recivedGroup = timetable.getStudentTimetableForDay(student3, DATE_TO_CHECK).getLessons().get(0)
 //				.getGroup();
 //		// Group expectedGroup = student3.getGroup();
 //		// assertEquals("Group is wrong.", expectedGroup, recivedGroup);
@@ -200,19 +198,18 @@ package com.nikitachizhik91.university.domain;
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getStudentsTimetableForDay_ArgumentsNullAndDate_ShouldThrowException() throws ParseException {
 //
-//		timetable.getStudentsTimetableForDay(null, DATE_TO_CHECK2);
+//		timetable.getStudentTimetableForDay(null, DATE_TO_CHECK2);
 //	}
 //
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getStudentsTimetableForDay_ArgumentsStudentAndNull_ShouldThrowException() {
-//		timetable.getStudentsTimetableForDay(student1, null);
+//		timetable.getStudentTimetableForDay(student1, null);
 //	}
 //
 //	@Test
 //	public void getStudentsTimetableForMonth_CheckMonth() throws ParseException {
 //
-//		Date recivedDate = timetable.getStudentsTimetableForMonth(student3, DATE_TO_CHECK).getLessons().get(0)
-//				.getDate();
+//		Date recivedDate = timetable.getStudentTimetableForMonth(student3, DATE_TO_CHECK).getLessons().get(0).getDate();
 //
 //		Calendar expected = Calendar.getInstance();
 //		expected.setTime(DATE_TO_CHECK);
@@ -226,7 +223,7 @@ package com.nikitachizhik91.university.domain;
 //	@Test
 //	public void getStudentsTimetableForMonth_CheckGroup() throws ParseException {
 //
-//		Group recivedGroup = timetable.getStudentsTimetableForMonth(student3, DATE_TO_CHECK).getLessons().get(0)
+//		Group recivedGroup = timetable.getStudentTimetableForMonth(student3, DATE_TO_CHECK).getLessons().get(0)
 //				.getGroup();
 //		// Group expectedGroup = student3.getGroup();
 //		// assertEquals("Group is wrong.", expectedGroup, recivedGroup);
@@ -235,18 +232,18 @@ package com.nikitachizhik91.university.domain;
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getStudentsTimetableForMonth_BothArgumentsNull_ShouldThrowException() {
 //
-//		timetable.getStudentsTimetableForMonth(null, null);
+//		timetable.getStudentTimetableForMonth(null, null);
 //	}
 //
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getStudentsTimetableForMonth_ArgumentsNullAndDate_ShouldThrowException() throws ParseException {
 //
-//		timetable.getStudentsTimetableForMonth(null, DATE_TO_CHECK2);
+//		timetable.getStudentTimetableForMonth(null, DATE_TO_CHECK2);
 //	}
 //
 //	@Test(expected = IllegalArgumentException.class)
 //	public void getStudentsTimetableForMonth_ArgumentsStudentAndNull_ShouldThrowException() {
-//		timetable.getStudentsTimetableForMonth(student1, null);
+//		timetable.getStudentTimetableForMonth(student1, null);
 //	}
 //
 //	@Test
@@ -300,5 +297,5 @@ package com.nikitachizhik91.university.domain;
 //		timetable.setLessons(null);
 //		timetable.deleteLesson(null);
 //	}
-
-// }
+//
+}

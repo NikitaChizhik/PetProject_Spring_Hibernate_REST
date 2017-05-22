@@ -43,11 +43,12 @@ public class TimetableRest {
 		try {
 			date = formatter.parse(dateString);
 		} catch (ParseException e) {
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
+			log.error("Date=" + dateString + " is wrong.", e);
+			throw new WebException("Date=" + dateString + " is wrong.", e);
 		}
 		List<Lesson> lessons = null;
 		try {
+			
 			lessons = lessonService.getStudentTimetableForDay(Integer.parseInt(studentId), date);
 
 		} catch (DomainException e) {
@@ -74,8 +75,8 @@ public class TimetableRest {
 			date = formatter.parse(dateString);
 
 		} catch (ParseException e) {
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
+			log.error("Date=" + dateString + " is wrong.", e);
+			throw new WebException("Date=" + dateString + " is wrong.", e);
 		}
 
 		List<Lesson> lessons = null;
@@ -105,8 +106,8 @@ public class TimetableRest {
 		try {
 			date = formatter.parse(dateString);
 		} catch (ParseException e) {
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
+			log.error("Date=" + dateString + " is wrong.", e);
+			throw new WebException("Date=" + dateString + " is wrong.", e);
 		}
 		List<Lesson> lessons = null;
 		try {
@@ -135,8 +136,8 @@ public class TimetableRest {
 		try {
 			date = formatter.parse(dateString);
 		} catch (ParseException e) {
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
+			log.error("Date=" + dateString + " is wrong.", e);
+			throw new WebException("Date=" + dateString + " is wrong.", e);
 		}
 		List<Lesson> lessons = null;
 		try {
