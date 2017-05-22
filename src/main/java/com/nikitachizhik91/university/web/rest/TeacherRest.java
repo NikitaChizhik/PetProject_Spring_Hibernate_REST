@@ -1,8 +1,5 @@
 package com.nikitachizhik91.university.web.rest;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -20,10 +17,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Teacher;
 import com.nikitachizhik91.university.service.DomainException;
-import com.nikitachizhik91.university.service.LessonService;
 import com.nikitachizhik91.university.service.TeacherService;
 import com.nikitachizhik91.university.web.WebException;
 
@@ -36,8 +31,6 @@ public class TeacherRest {
 
 	@Autowired
 	private TeacherService teacherService;
-	@Autowired
-	private LessonService lessonService;
 
 	@GET
 	public List<Teacher> findAll() throws WebException {
@@ -126,65 +119,5 @@ public class TeacherRest {
 			throw new WebException("Cannot delete teacher with id=" + teacherId, e);
 		}
 		log.trace("Deleted teacher with id=" + teacherId);
-	}
-	@GET
-	@Path("/teacherForDay/{teacherId}/{date}")
-	public List<Lesson> displayTeacherTimetableForDay(@PathParam("teacherId") String teacherId,
-			@PathParam("date") String dateString) throws WebException {
-		log.trace("Get request to find student timetable for day,with teacherId=" + teacherId + " and date="
-				+ dateString);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = null;
-		try {
-			date = formatter.parse(dateString);
-		} catch (ParseException e) {
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
-		}
-		List<Lesson> lessons = null;
-		try {
-			lessons = lessonService.getTeacherTimetableForDay(Integer.parseInt(teacherId), date);
-
-		} catch (DomainException e) {
-			log.error("Cannot getTeacherTimetableForDay() for teacher with id=" + teacherId + " and Date :" + date, e);
-			throw new WebException(
-					"Cannot getTeacherTimetableForDay() for teacher with id=" + teacherId + " and Date :" + date, e);
-		} catch (NumberFormatException e) {
-			log.error("The teacher id=" + teacherId + " is wrong.", e);
-			throw new WebException("The teacher id=" + teacherId + " is wrong.", e);
-		}
-		log.trace("Found " + lessons.size() + " lessons for teacher with id=" + teacherId + " and date=" + dateString);
-		return lessons;
-	}
-	@GET
-	@Path("/teacherForMonth/{teacherId}/{date}")
-	public List<Lesson> displayTeacherTimetableForMonth(@PathParam("teacherId") String teacherId,
-			@PathParam("date") String dateString) throws WebException {
-		log.trace("Get request to find student timetable for month,with teacherId=" + teacherId + " and date="
-				+ dateString);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
-		Date date = null;
-		try {
-			date = formatter.parse(dateString);
-		} catch (ParseException e) {
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
-		}
-		List<Lesson> lessons = null;
-		try {
-			lessons = lessonService.getTeacherTimetableForMonth(Integer.parseInt(teacherId), date);
-
-		} catch (DomainException e) {
-			log.error("Cannot getTeacherTimetableForMonth() for teacher with id=" + teacherId + " and Date :" + date,
-					e);
-			throw new WebException(
-					"Cannot getTeacherTimetableForMonth() for teacher with id=" + teacherId + " and Date :" + date, e);
-		} catch (NumberFormatException e) {
-
-			log.error("The teacher id=" + teacherId + " is wrong.", e);
-			throw new WebException("The teacher id=" + teacherId + " is wrong.", e);
-		}
-		log.trace("Found " + lessons.size() + " lessons for teacher with id=" + teacherId + " and date=" + dateString);
-		return lessons;
 	}
 }
