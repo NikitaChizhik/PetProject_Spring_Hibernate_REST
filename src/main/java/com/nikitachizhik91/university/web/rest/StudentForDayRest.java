@@ -23,42 +23,13 @@ import com.nikitachizhik91.university.service.LessonService;
 import com.nikitachizhik91.university.web.WebException;
 
 @Controller
-@Path("/studentForDay")
+@Path("")
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class StudentForDayRest {
 	private final static Logger log = LogManager.getLogger(StudentForDayRest.class.getName());
 
-	@Autowired
-	private LessonService lessonService;
+	
 
-	@GET
-	@Path("/{studentId}/{date}")
-	public List<Lesson> displayStudentTimetableForDay(@PathParam("studentId") String studentId,
-			@PathParam("date") String dateString) throws WebException {
-		log.trace("Get request to find student timetable for day,with student id=" + studentId + " and date="
-				+ dateString);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = null;
-		try {
-			date = formatter.parse(dateString);
-		} catch (ParseException e) {
-			log.error("Date=" + date + " is wrong.", e);
-			throw new WebException("Date=" + date + " is wrong.", e);
-		}
-		List<Lesson> lessons = null;
-		try {
-			lessons = lessonService.getStudentTimetableForDay(Integer.parseInt(studentId), date);
-
-		} catch (DomainException e) {
-			log.error("Cannot getStudentTimetableForDay() for student with id=" + studentId + " and Date :" + date, e);
-			throw new WebException(
-					"Cannot getStudentTimetableForDay() for student with id=" + studentId + " and Date :" + date, e);
-		} catch (NumberFormatException e) {
-			log.error("The student id=" + studentId + " is wrong.", e);
-			throw new WebException("The student id=" + studentId + " is wrong.", e);
-		}
-		log.trace("Found " + lessons.size() + " lessons for student with id=" + studentId + " and date=" + dateString);
-		return lessons;
-	}
+	
 }

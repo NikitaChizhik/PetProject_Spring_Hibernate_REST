@@ -97,7 +97,7 @@ public class LessonRest {
 
 	@DELETE
 	@Path("/lessonId")
-	public void delete(@PathVariable("lessonId") int lessonId) throws WebException {
+	public void delete(@PathParam("lessonId") int lessonId) throws WebException {
 		log.trace("Post request to delete lesson with id=" + lessonId);
 		try {
 			lessonService.delete(lessonId);

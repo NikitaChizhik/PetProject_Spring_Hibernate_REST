@@ -1,5 +1,8 @@
 package com.nikitachizhik91.university.web.rest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -17,8 +20,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.model.Student;
 import com.nikitachizhik91.university.service.DomainException;
+import com.nikitachizhik91.university.service.LessonService;
 import com.nikitachizhik91.university.service.StudentService;
 import com.nikitachizhik91.university.web.WebException;
 
@@ -31,6 +36,8 @@ public class StudentRest {
 
 	@Autowired
 	private StudentService studentService;
+	@Autowired
+	private LessonService lessonService;
 
 	@GET
 	public List<Student> findAll() throws WebException {
@@ -114,5 +121,65 @@ public class StudentRest {
 			throw new WebException("Cannot delete student with id=" + studentId, e);
 		}
 		log.trace("Deleted student with id=" + studentId);
+	}
+	@GET
+	@Path("/studentForDay/{studentId}/{date}")
+	public List<Lesson> displayStudentTimetableForDay(@PathParam("studentId") String studentId,
+			@PathParam("date") String dateString) throws WebException {
+		log.trace("Get request to find student timetable for day,with student id=" + studentId + " and date="
+				+ dateString);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try {
+			date = formatter.parse(dateString);
+		} catch (ParseException e) {
+			log.error("Date=" + date + " is wrong.", e);
+			throw new WebException("Date=" + date + " is wrong.", e);
+		}
+		List<Lesson> lessons = null;
+		try {
+			lessons = lessonService.getStudentTimetableForDay(Integer.parseInt(studentId), date);
+
+		} catch (DomainException e) {
+			log.error("Cannot getStudentTimetableForDay() for student with id=" + studentId + " and Date :" + date, e);
+			throw new WebException(
+					"Cannot getStudentTimetableForDay() for student with id=" + studentId + " and Date :" + date, e);
+		} catch (NumberFormatException e) {
+			log.error("The student id=" + studentId + " is wrong.", e);
+			throw new WebException("The student id=" + studentId + " is wrong.", e);
+		}
+		log.trace("Found " + lessons.size() + " lessons for student with id=" + studentId + " and date=" + dateString);
+		return lessons;
+	}
+	@GET
+	@Path("/studentForMonth/{studentId}/{date}")
+	public List<Lesson> displayStudentTimetableForMonth(@PathParam("studentId") String studentId,
+			@PathParam("date") String dateString) throws WebException {
+		log.trace("Get request to find student timetable for month,with student id=" + studentId + " and date="
+				+ dateString);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+		Date date = null;
+		try {
+			date = formatter.parse(dateString);
+
+		} catch (ParseException e) {
+			log.error("Date=" + date + " is wrong.", e);
+			throw new WebException("Date=" + date + " is wrong.", e);
+		}
+
+		List<Lesson> lessons = null;
+		try {
+			lessons = lessonService.getStudentTimetableForMonth(Integer.parseInt(studentId), date);
+
+		} catch (DomainException e) {
+			log.error("Cannot getStudentTimetableForDay() for student with id=" + studentId + " and Date :" + date, e);
+			throw new WebException(
+					"Cannot getStudentTimetableForDay() for student with id=" + studentId + " and Date :" + date, e);
+		} catch (NumberFormatException e) {
+			log.error("The student id=" + studentId + " is wrong.", e);
+			throw new WebException("The student id=" + studentId + " is wrong.", e);
+		}
+		log.trace("Found " + lessons.size() + " lessons for student with id=" + studentId + " and date=" + dateString);
+		return lessons;
 	}
 }

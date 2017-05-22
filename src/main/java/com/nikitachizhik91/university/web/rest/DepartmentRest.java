@@ -38,6 +38,7 @@ public class DepartmentRest {
 		List<Department> departments = null;
 		try {
 			departments = departmentService.findAll();
+			
 
 		} catch (DomainException e) {
 			log.error("Cannot find all departments.", e);
