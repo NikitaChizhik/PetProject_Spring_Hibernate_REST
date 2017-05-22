@@ -48,7 +48,7 @@ public class SubjectRest {
 	}
 
 	@GET
-	@Path("/subjectId")
+	@Path("/{subjectId}")
 	public Subject findById(@PathParam("subjectId") int subjectId) throws WebException {
 		log.trace("Get request to find subject by id=" + subjectId);
 		Subject subject = null;

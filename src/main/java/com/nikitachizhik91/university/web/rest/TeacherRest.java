@@ -55,7 +55,7 @@ public class TeacherRest {
 	}
 
 	@GET
-	@Path("/teacherId")
+	@Path("/{teacherId}")
 	public Teacher findById(@PathParam("teacherId") int teacherId) throws WebException {
 		log.trace("Get request to find teacher by id=" + teacherId);
 		Teacher teacher = null;

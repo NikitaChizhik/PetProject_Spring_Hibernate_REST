@@ -16,7 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.nikitachizhik91.university.model.Lesson;
 import com.nikitachizhik91.university.service.DomainException;
@@ -49,7 +48,7 @@ public class LessonRest {
 	}
 
 	@GET
-	@Path("/lessonId")
+	@Path("/{lessonId}")
 	public Lesson findById(@PathParam("lessonId") int lessonId) throws WebException {
 		log.trace("Get request to find lesson by id=" + lessonId);
 		Lesson lesson = null;
@@ -96,7 +95,7 @@ public class LessonRest {
 	}
 
 	@DELETE
-	@Path("/lessonId")
+	@Path("/{lessonId}")
 	public void delete(@PathParam("lessonId") int lessonId) throws WebException {
 		log.trace("Post request to delete lesson with id=" + lessonId);
 		try {

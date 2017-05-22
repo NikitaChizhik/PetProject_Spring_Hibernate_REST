@@ -200,7 +200,7 @@ public class TeacherController {
 	}
 
 	@PostMapping(value = "/displayTeacherTimetableForDay")
-	public ModelAndView displayStudentTimetableForDay(@RequestParam("teacherId") String teacherId,
+	public ModelAndView displayTeacherTimetableForDay(@RequestParam("teacherId") String teacherId,
 			@RequestParam("date") String dateString) throws WebException {
 
 		log.trace("Get request to find student timetable for day,with teacherId=" + teacherId + " and date="

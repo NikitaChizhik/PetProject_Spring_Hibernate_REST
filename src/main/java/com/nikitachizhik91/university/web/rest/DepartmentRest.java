@@ -38,7 +38,6 @@ public class DepartmentRest {
 		List<Department> departments = null;
 		try {
 			departments = departmentService.findAll();
-			
 
 		} catch (DomainException e) {
 			log.error("Cannot find all departments.", e);
@@ -100,6 +99,7 @@ public class DepartmentRest {
 	}
 
 	@DELETE
+	@Path("/{departmentId}")
 	public void delete(@PathParam("departmentId") int departmentId) throws WebException {
 		log.trace("Post request to delete department with id=" + departmentId);
 		try {

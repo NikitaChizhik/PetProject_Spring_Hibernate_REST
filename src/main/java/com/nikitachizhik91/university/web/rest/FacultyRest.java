@@ -99,7 +99,7 @@ public class FacultyRest {
 	}
 
 	@DELETE
-	@Path("/facultyId")
+	@Path("/{facultyId}")
 	public void delete(@PathParam("facultyId") int facultyId) throws WebException {
 		log.trace("Post request to delete faculty with id=" + facultyId);
 		try {
